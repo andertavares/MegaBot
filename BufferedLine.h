@@ -7,7 +7,7 @@
 class BufferedLine : public BufferedItem
 {
 public:
-	BufferedLine(BWAPI::CoordinateType::Enum coordType, BufferedCategory::Type id, int time, int x1, int y1, int x2, int y2, BWAPI::Color color)
+	BufferedLine(BWAPI::CoordinateType::Enum coordType, BufferedCategory::Enum id, int time, int x1, int y1, int x2, int y2, BWAPI::Color color)
 		: BufferedItem(coordType, id, time)
 		, mX1(x1)
 		, mY1(y1)

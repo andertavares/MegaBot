@@ -4,7 +4,7 @@
 
 namespace BufferedCategory
 {
-	enum Type
+	enum Enum
 	{
 		Default,
 		BuildingPlacer
@@ -14,7 +14,7 @@ namespace BufferedCategory
 class BufferedItem
 {
 public:
-	BufferedItem(BWAPI::CoordinateType::Enum coordType, BufferedCategory::Type id, int frameTime) : mCoordType(coordType), mID(id), mFrameTime(frameTime) {}
+	BufferedItem(BWAPI::CoordinateType::Enum coordType, BufferedCategory::Enum id, int frameTime) : mCoordType(coordType), mID(id), mFrameTime(frameTime) {}
 	virtual ~BufferedItem(){}
 
 	virtual void draw(){};
@@ -23,6 +23,6 @@ public:
 
 protected:
 	BWAPI::CoordinateType::Enum mCoordType;
-	BufferedCategory::Type mID;
+	BufferedCategory::Enum mID;
 	int mFrameTime;
 };

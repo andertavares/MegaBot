@@ -7,7 +7,7 @@
 class BufferedCircle : public BufferedItem
 {
 public:
-	BufferedCircle(BWAPI::CoordinateType::Enum coordType, BufferedCategory::Type id, int time, int x, int y, int radius, BWAPI::Color color, bool solid)
+	BufferedCircle(BWAPI::CoordinateType::Enum coordType, BufferedCategory::Enum id, int time, int x, int y, int radius, BWAPI::Color color, bool solid)
 		: BufferedItem(coordType, id, time)
 		, mX(x)
 		, mY(y)

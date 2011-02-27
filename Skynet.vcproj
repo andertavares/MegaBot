@@ -88,7 +88,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="if not &quot;%BWAPIData%&quot; == &quot;&quot; (&#x0D;&#x0A;copy &quot;$(TargetPath)&quot; &quot;%BWAPIData%AI\&quot;&#x0D;&#x0A;copy &quot;..\bwapi.ini&quot; &quot;%BWAPIData%&quot;&#x0D;&#x0A;)"
+				CommandLine="if not &quot;%BWAPIData%&quot; == &quot;&quot; (&#x0D;&#x0A;copy &quot;$(TargetPath)&quot; &quot;%BWAPIData%AI\&quot;&#x0D;&#x0A;copy &quot;..\bwapi.ini&quot; &quot;%BWAPIData%&quot;&#x0D;&#x0A;)&#x0D;&#x0A;"
 			/>
 		</Configuration>
 		<Configuration
@@ -209,16 +209,22 @@
 			</File>
 		</Filter>
 		<Filter
-			Name="Resource Files"
-			Filter="rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav"
-			UniqueIdentifier="{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}"
-			>
-		</Filter>
-		<Filter
 			Name="DrawBuffer"
 			>
 			<File
+				RelativePath=".\BufferedBox.h"
+				>
+			</File>
+			<File
 				RelativePath=".\BufferedCircle.h"
+				>
+			</File>
+			<File
+				RelativePath=".\BufferedDot.h"
+				>
+			</File>
+			<File
+				RelativePath=".\BufferedEllipse.h"
 				>
 			</File>
 			<File
@@ -227,6 +233,14 @@
 			</File>
 			<File
 				RelativePath=".\BufferedLine.h"
+				>
+			</File>
+			<File
+				RelativePath=".\BufferedText.h"
+				>
+			</File>
+			<File
+				RelativePath=".\BufferedTriangle.h"
 				>
 			</File>
 			<File

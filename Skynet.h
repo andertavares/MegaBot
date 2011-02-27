@@ -8,4 +8,7 @@ public:
 	Skynet();
 
 	virtual void onStart();
+	virtual void onEnd(bool isWinner);
+
+	virtual void onFrame();
 };

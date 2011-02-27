@@ -88,6 +88,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
+				CommandLine="if not &quot;%BWAPIData%&quot; == &quot;&quot; (&#x0D;&#x0A;copy &quot;$(TargetPath)&quot; &quot;%BWAPIData%AI\&quot;&#x0D;&#x0A;copy &quot;..\bwapi.ini&quot; &quot;%BWAPIData%&quot;&#x0D;&#x0A;)"
 			/>
 		</Configuration>
 		<Configuration
@@ -164,6 +165,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
+				CommandLine="if not &quot;%BWAPIData%&quot; == &quot;&quot; (&#x0D;&#x0A;copy &quot;$(TargetPath)&quot; &quot;%BWAPIData%AI\&quot;&#x0D;&#x0A;copy &quot;..\bwapi.ini&quot; &quot;%BWAPIData%&quot;&#x0D;&#x0A;)&#x0D;&#x0A;"
 			/>
 		</Configuration>
 	</Configurations>
@@ -180,7 +182,11 @@
 				>
 			</File>
 			<File
-				RelativePath=".\Skynet.h"
+				RelativePath=".\Skynet.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\UnitTracker.cpp"
 				>
 			</File>
 		</Filter>
@@ -190,7 +196,15 @@
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
 			>
 			<File
-				RelativePath=".\Skynet.cpp"
+				RelativePath=".\Singleton.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Skynet.h"
+				>
+			</File>
+			<File
+				RelativePath=".\UnitTracker.h"
 				>
 			</File>
 		</Filter>
@@ -199,6 +213,30 @@
 			Filter="rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav"
 			UniqueIdentifier="{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}"
 			>
+		</Filter>
+		<Filter
+			Name="DrawBuffer"
+			>
+			<File
+				RelativePath=".\BufferedCircle.h"
+				>
+			</File>
+			<File
+				RelativePath=".\BufferedItem.h"
+				>
+			</File>
+			<File
+				RelativePath=".\BufferedLine.h"
+				>
+			</File>
+			<File
+				RelativePath=".\DrawBuffer.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\DrawBuffer.h"
+				>
+			</File>
 		</Filter>
 	</Files>
 	<Globals>

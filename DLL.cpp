@@ -8,6 +8,8 @@
 
 #include "Skynet.h"
 
+Skynet skynet;
+
 namespace BWAPI { Game* Broodwar; }
 BOOL APIENTRY DllMain( HANDLE hModule, DWORD ul_reason_for_call, LPVOID lpReserved )
 {
@@ -26,5 +28,5 @@ BOOL APIENTRY DllMain( HANDLE hModule, DWORD ul_reason_for_call, LPVOID lpReserv
 extern "C" __declspec(dllexport) BWAPI::AIModule* newAIModule(BWAPI::Game* game)
 {
 	BWAPI::Broodwar = game;
-	return new Skynet();
+	return &skynet;
 }

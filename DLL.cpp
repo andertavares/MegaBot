@@ -29,6 +29,5 @@ extern "C" __declspec(dllexport) BWAPI::AIModule* newAIModule(BWAPI::Game* game)
 {
 	BWAPI::Broodwar = game;
 
-	static Skynet skynet;
-	return &skynet;
+	return new Skynet;
 }

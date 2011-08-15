@@ -1,13 +1,13 @@
 #pragma once
 
-#include <BWAPI.h>
+#include "Interface.h"
 
 #include "BufferedItem.h"
 
 class BufferedDot : public BufferedItem
 {
 public:
-	BufferedDot(BWAPI::CoordinateType::Enum coordType, BufferedCategory::Enum id, int time, int x, int y, BWAPI::Color color)
+	BufferedDot(BWAPI::CoordinateType::Enum coordType, BufferedCategory id, int time, int x, int y, BWAPI::Color color)
 		: BufferedItem(coordType, id, time)
 		, mX(x)
 		, mY(y)

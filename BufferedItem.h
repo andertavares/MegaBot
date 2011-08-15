@@ -1,20 +1,23 @@
 #pragma once
 
-#include <BWAPI.h>
+#include "Interface.h"
 
-namespace BufferedCategory
+#include "TypeSafeEnum.h"
+
+struct BufferedCategoryDef
 {
-	enum Enum
+	enum type
 	{
 		Default,
 		BuildingPlacer
 	};
-}
+};
+typedef SafeEnum<BufferedCategoryDef> BufferedCategory;
 
 class BufferedItem
 {
 public:
-	BufferedItem(BWAPI::CoordinateType::Enum coordType, BufferedCategory::Enum id, int frameTime) : mCoordType(coordType), mID(id), mFrameTime(frameTime) {}
+	BufferedItem(BWAPI::CoordinateType::Enum coordType, BufferedCategory id, int frameTime) : mCoordType(coordType), mID(id), mFrameTime(frameTime) {}
 	virtual ~BufferedItem(){}
 
 	virtual void draw(){};
@@ -23,6 +26,6 @@ public:
 
 protected:
 	BWAPI::CoordinateType::Enum mCoordType;
-	BufferedCategory::Enum mID;
+	BufferedCategory mID;
 	int mFrameTime;
 };

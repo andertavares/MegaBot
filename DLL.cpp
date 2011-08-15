@@ -1,14 +1,10 @@
 #define WIN32_LEAN_AND_MEAN
 
 #include <windows.h>
-#include <stdio.h>
-#include <tchar.h>
 
-#include <BWAPI.h>
+#include "Interface.h"
 
 #include "Skynet.h"
-
-
 
 namespace BWAPI { Game* Broodwar; }
 BOOL APIENTRY DllMain( HANDLE hModule, DWORD ul_reason_for_call, LPVOID lpReserved )

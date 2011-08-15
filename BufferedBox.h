@@ -1,13 +1,13 @@
 #pragma once
 
-#include <BWAPI.h>
+#include "Interface.h"
 
 #include "BufferedItem.h"
 
 class BufferedBox : public BufferedItem
 {
 public:
-	BufferedBox(BWAPI::CoordinateType::Enum coordType, BufferedCategory::Enum id, int time, int left, int top, int right, int bottom, BWAPI::Color color, bool solid)
+	BufferedBox(BWAPI::CoordinateType::Enum coordType, BufferedCategory id, int time, int left, int top, int right, int bottom, BWAPI::Color color, bool solid)
 		: BufferedItem(coordType, id, time)
 		, mLeft(left)
 		, mTop(top)

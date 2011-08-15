@@ -1,13 +1,13 @@
 #pragma once
 
-#include <BWAPI.h>
+#include "Interface.h"
 
 #include "BufferedItem.h"
 
 class BufferedText : public BufferedItem
 {
 public:
-	BufferedText(BWAPI::CoordinateType::Enum coordType, BufferedCategory::Enum id, int time, int x, int y, std::string text)
+	BufferedText(BWAPI::CoordinateType::Enum coordType, BufferedCategory id, int time, int x, int y, std::string text)
 		: BufferedItem(coordType, id, time)
 		, mX(x)
 		, mY(y)

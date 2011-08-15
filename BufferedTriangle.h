@@ -1,13 +1,13 @@
 #pragma once
 
-#include <BWAPI.h>
+#include "Interface.h"
 
 #include "BufferedItem.h"
 
 class BufferedTriangle : public BufferedItem
 {
 public:
-	BufferedTriangle(BWAPI::CoordinateType::Enum coordType, BufferedCategory::Enum id, int time, int x1, int y1, int x2, int y2, int x3, int y3, BWAPI::Color color, bool solid)
+	BufferedTriangle(BWAPI::CoordinateType::Enum coordType, BufferedCategory id, int time, int x1, int y1, int x2, int y2, int x3, int y3, BWAPI::Color color, bool solid)
 		: BufferedItem(coordType, id, time)
 		, mX1(x1)
 		, mY1(y1)

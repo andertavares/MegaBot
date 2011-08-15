@@ -1,13 +1,13 @@
 #pragma once
 
-#include <BWAPI.h>
+#include "Interface.h"
 
 #include "BufferedItem.h"
 
 class BufferedEllipse : public BufferedItem
 {
 public:
-	BufferedEllipse(BWAPI::CoordinateType::Enum coordType, BufferedCategory::Enum id, int time, int x, int y, int radiusX, int radiusY, BWAPI::Color color, bool solid)
+	BufferedEllipse(BWAPI::CoordinateType::Enum coordType, BufferedCategory id, int time, int x, int y, int radiusX, int radiusY, BWAPI::Color color, bool solid)
 		: BufferedItem(coordType, id, time)
 		, mX(x)
 		, mY(y)

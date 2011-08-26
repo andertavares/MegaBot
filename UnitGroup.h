@@ -24,6 +24,7 @@ public:
 	Unit getClosestUnit(Unit unit) const;
 	Unit getClosestUnit(Position position) const;
 
+	bool isAnyInRange(const Unit &unit) const;
 	bool isAnyInRange(const UnitGroup &otherGroup) const;
 	int minDistanceBetween(const UnitGroup &otherGroup) const;
 

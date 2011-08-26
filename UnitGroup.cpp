@@ -262,6 +262,17 @@ Unit UnitGroup::getClosestUnit(Position position) const
 	return closestUnit;
 }
 
+bool UnitGroup::isAnyInRange(const Unit &unit) const
+{
+	for each(Unit groupUnit in mUnits)
+	{
+		if(groupUnit->isInRange(unit))
+			return true;
+	}
+
+	return false;
+}
+
 bool UnitGroup::isAnyInRange(const UnitGroup &otherGroup) const
 {
 	for each(Unit groupUnit in mUnits)

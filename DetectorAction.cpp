@@ -18,6 +18,9 @@ bool DetectorAction::update(const Goal &squadGoal, const UnitGroup &squadUnitGro
 		const BWAPI::UnitType &unitType = unit->getType();
 		if(unitType.hasPermanentCloak() || unitType == BWAPI::UnitTypes::Zerg_Lurker || unit->isCloaked() || unit->isBurrowed())
 		{
+			if(!squadUnitGroup.isAnyInRange(unit))
+				continue;
+
 			int thisDistance = mUnit->getDistance(unit);
 			if(thisDistance < unitDistance)
 			{
@@ -36,7 +39,6 @@ bool DetectorAction::update(const Goal &squadGoal, const UnitGroup &squadUnitGro
 		}
 	}
 
-	//TODO: give actions access to the rest of the squad
 	UnitGroup protectionUnits;
 	for each(Unit unit in squadUnitGroup)
 	{

@@ -80,10 +80,10 @@ bool WorkerScoutTask::preUpdate()
 
 bool WorkerScoutTask::update()
 {
-	//if(mData)
-	//	mData->drawDebug(BWAPI::Colors::Blue);
-	//if(mUnit)
-	//	mUnit->drawUnitPosition();
+#ifdef SKYNET_DRAW_DEBUG
+	if(mData)
+		mData->drawDebug(BWAPI::Colors::Blue);
+#endif
 
 	//TODO: change to use goal / behavior system that squads use
 	if(mUnit && mData)
@@ -155,8 +155,10 @@ bool WorkerScoutTask::update()
 									mUnit->move(pos);
 
 									doneSomething = true;
-									//BWAPI::Broodwar->drawTextMap(mUnit->getPosition().x(), mUnit->getPosition().y() - 10, "Fleeing with path");
-									//mTilePath.drawPath();
+#ifdef SKYNET_DRAW_DEBUG
+									BWAPI::Broodwar->drawTextMap(mUnit->getPosition().x(), mUnit->getPosition().y() - 10, "Fleeing with path");
+									mTilePath.drawPath();
+#endif
 									break;
 								}
 							}
@@ -178,12 +180,13 @@ bool WorkerScoutTask::update()
 					direction *= float(TILE_SIZE * 4);
 					direction += Vector(mUnit->getPosition());
 
-					//BWAPI::Broodwar->drawLineMap(mUnit->getPosition().x(), mUnit->getPosition().y(), (int)direction.x, (int)direction.y, BWAPI::Colors::Red);
-
 					mUnit->move(direction);
 
 					doneSomething = true;
-					//BWAPI::Broodwar->drawTextMap(mUnit->getPosition().x(), mUnit->getPosition().y() - 10, "Fleeing with vectors");
+#ifdef SKYNET_DRAW_DEBUG
+					BWAPI::Broodwar->drawTextMap(mUnit->getPosition().x(), mUnit->getPosition().y() - 10, "Fleeing with vectors");
+					BWAPI::Broodwar->drawLineMap(mUnit->getPosition().x(), mUnit->getPosition().y(), (int)direction.x, (int)direction.y, BWAPI::Colors::Red);
+#endif
 				}
 			}
 
@@ -221,7 +224,9 @@ bool WorkerScoutTask::update()
 					{
 						doneSomething = true;
 						mUnit->attack(closestUnit);
-						//BWAPI::Broodwar->drawTextMap(mUnit->getPosition().x(), mUnit->getPosition().y() - 10, "Attacking Unit");
+#ifdef SKYNET_DRAW_DEBUG
+						BWAPI::Broodwar->drawTextMap(mUnit->getPosition().x(), mUnit->getPosition().y() - 10, "Attacking Unit");
+#endif
 					}
 				}
 			}
@@ -232,7 +237,9 @@ bool WorkerScoutTask::update()
 				{
 					doneSomething = true;
 					mUnit->move(mData->getBase()->getCenterLocation());
-					//BWAPI::Broodwar->drawTextMap(mUnit->getPosition().x(), mUnit->getPosition().y() - 10, "Moving Closer to base");
+#ifdef SKYNET_DRAW_DEBUG
+					BWAPI::Broodwar->drawTextMap(mUnit->getPosition().x(), mUnit->getPosition().y() - 10, "Moving Closer to base");
+#endif
 				}
 			}
 
@@ -275,7 +282,7 @@ void WorkerScoutTask::giveUnit(Unit unit)
 {
 	assert(mUnit == StaticUnits::nullunit);
 	mUnit = unit;
-	mFailTime = BWAPI::Broodwar->getFrameCount() + 24*60;
+	calculateFailTime();
 }
 
 void WorkerScoutTask::returnUnit(Unit unit)
@@ -339,7 +346,16 @@ void WorkerScoutTask::getNewData()
 	}
 	else
 	{
-		mFailTime = BWAPI::Broodwar->getFrameCount() + 24*60;
+		calculateFailTime();
 		mCurrentState = ScoutState::Searching;
 	}
+}
+
+void WorkerScoutTask::calculateFailTime()
+{
+	if(mUnit)
+		mFailTime = BWAPI::Broodwar->getFrameCount() + 24*10 + int(MapHelper::getGroundDistance(mUnit->getPosition(), mData->getNextPosition(mUnit->getPosition())) / mUnit->getType().topSpeed());
+	else
+		mFailTime = BWAPI::Broodwar->getFrameCount() + 24*60;
+	BWAPI::Broodwar->printf("Calculated Fail Time : %d", (mFailTime - BWAPI::Broodwar->getFrameCount()) / 24);
 }

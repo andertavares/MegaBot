@@ -121,7 +121,9 @@ void ScoutManagerClass::update()
 
 	for(std::list<ScoutData>::iterator it = mDataRequiringScout.begin(); it != mDataRequiringScout.end();)
 	{
-		//(*it)->drawDebug(BWAPI::Colors::Red);
+#ifdef SKYNET_DRAW_DEBUG
+		(*it)->drawDebug(BWAPI::Colors::Red);
+#endif
 
 		if((*it)->isAchieved()) mDataRequiringScout.erase(it++);
 		else ++it;
@@ -130,15 +132,17 @@ void ScoutManagerClass::update()
 	updateObserverScouts();
 	updateWorkerScouts();
 
-// 	for each(Base base in BaseTracker::Instance().getAllBases())
-// 	{
-// 		int x = base->getRegion()->getCenter().x();
-// 		int y = base->getRegion()->getCenter().y();
-// 
-// 		BWAPI::Broodwar->drawTextMap(x, y, "Last Type: %s", ScoutType::getName(mLastScoutType[base].underlying()).c_str());
-// 		BWAPI::Broodwar->drawTextMap(x, y+10, "This Type: %s", ScoutType::getName(mCurrentScoutType[base].underlying()).c_str());
-// 		BWAPI::Broodwar->drawTextMap(x, y+20, "Time: %d", mLastScoutTime[base]);
-// 	}
+#ifdef SKYNET_DRAW_DEBUG
+	for each(Base base in BaseTracker::Instance().getAllBases())
+	{
+		int x = base->getRegion()->getCenter().x();
+		int y = base->getRegion()->getCenter().y();
+
+		BWAPI::Broodwar->drawTextMap(x, y, "Last Type: %s", ScoutType::getName(mLastScoutType[base].underlying()).c_str());
+		BWAPI::Broodwar->drawTextMap(x, y+10, "This Type: %s", ScoutType::getName(mCurrentScoutType[base].underlying()).c_str());
+		BWAPI::Broodwar->drawTextMap(x, y+20, "Time: %d", mLastScoutTime[base]);
+	}
+#endif
 }
 
 void ScoutManagerClass::updateWorkerScouts()

@@ -327,14 +327,14 @@ void UnitClass::drawUnitPosition()
 	AccessType access = accessibility();
 	BWAPI::Broodwar->drawTextMap(pos.x() + type.dimensionRight(), pos.y()+10, "%s", AccessType::getName(access.underlying()).c_str());
 
-	BWAPI::Broodwar->drawTextMap(pos.x() + type.dimensionRight(), pos.y()+20, "%d", (getExistTime() - BWAPI::Broodwar->getFrameCount()));
-	BWAPI::Broodwar->drawTextMap(pos.x() + type.dimensionRight(), pos.y()+30, "%d", (getCompletedTime() - BWAPI::Broodwar->getFrameCount()));
+	int existTime = getExistTime() - BWAPI::Broodwar->getFrameCount();
+	int completeTime = getCompletedTime() - BWAPI::Broodwar->getFrameCount() - existTime;
+	BWAPI::Broodwar->drawTextMap(pos.x() + type.dimensionRight(), pos.y()+20, "%d : %d", existTime, completeTime);
 
 	if(isMorphing())
-		BWAPI::Broodwar->drawTextMap(pos.x() + type.dimensionRight(), pos.y()+40, "Morphing");
-
-	if(isCompleted())
-		BWAPI::Broodwar->drawTextMap(pos.x() + type.dimensionRight(), pos.y()+50, "Completed");
+		BWAPI::Broodwar->drawTextMap(pos.x() + type.dimensionRight(), pos.y()+30, "Morphing");
+	else if(isCompleted())
+		BWAPI::Broodwar->drawTextMap(pos.x() + type.dimensionRight(), pos.y()+30, "Completed");
 
 	Position target = getTargetPosition();
 	BWAPI::Broodwar->drawLine(BWAPI::CoordinateType::Map, pos.x(), pos.y(), target.x(), target.y(), player->getColor());

@@ -8,18 +8,14 @@
 
 void PlayerTrackerClass::onBegin()
 {
-	mShowDebugInfo = true;
 	updatePlayers();
 
 	if(!isEnemyRace(BWAPI::Races::Zerg) && !isEnemyRace(BWAPI::Races::Protoss) && !isEnemyRace(BWAPI::Races::Terran))
-		BWAPI::Broodwar->sendText("Skynets behavior is currently undefined against random players");
+		BWAPI::Broodwar->sendText("Skynets behavior is currently untested against random players");
 }
 
 void PlayerTrackerClass::update()
 {
-	if(BWAPI::Broodwar->getKeyState('P'))
-		mShowDebugInfo = !mShowDebugInfo;
-
 	if(mShowDebugInfo)
 	{
 		std::stringstream ss;

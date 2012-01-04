@@ -61,6 +61,7 @@ private:
 	UnitGroup mLastUnitsTargetting;
 
 	void getNewData();
+	void calculateFailTime();
 };
 
 typedef std::tr1::shared_ptr<WorkerScoutTask> WorkerScoutTaskPointer;

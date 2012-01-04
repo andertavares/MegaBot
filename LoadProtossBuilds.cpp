@@ -174,11 +174,11 @@ void BuildOrderManagerClass::LoadProtossBuilds()
 	BuildOrder twoGate(Protoss, BuildOrderID::TwoGate, "2 Gate");
 
 	//Starting Conditions
-	twoGate.setStartingCondition(Condition(ConditionTest::isEnemyZerg) || Condition(ConditionTest::isEnemyProtoss));
+	twoGate.setStartingCondition(Condition(ConditionTest::isEnemyZerg) || Condition(ConditionTest::isEnemyProtoss) || Condition(ConditionTest::isEnemyUnknown));
 
 	// Follow Ups
 	twoGate.addNextBuild(BuildOrderID::CoreIntoStargate, Condition(ConditionTest::isEnemyZerg));
-	twoGate.addNextBuild(BuildOrderID::FourGateGoon, Condition(ConditionTest::isEnemyProtoss));
+	twoGate.addNextBuild(BuildOrderID::FourGateGoon, Condition(ConditionTest::isEnemyProtoss) || Condition(ConditionTest::isEnemyTerran) || Condition(ConditionTest::isEnemyUnknown));
 
 	//Units to Produce
 	twoGate.addProduce(Protoss_Zealot, 1);
@@ -427,6 +427,7 @@ void BuildOrderManagerClass::LoadProtossBuilds()
 
 	// Follow Ups
 	nexus.addNextBuild(BuildOrderID::PvPMidGame, Condition(ConditionTest::isEnemyProtoss));
+	nexus.addNextBuild(BuildOrderID::PvZEndGame, Condition(ConditionTest::isEnemyZerg));
 	
 	nexus.setDefaultBuild(BuildOrderID::CitadelFirst, 24*50*2);
 

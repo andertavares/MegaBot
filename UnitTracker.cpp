@@ -184,6 +184,10 @@ void UnitTrackerClass::checkUnit(Unit unit)
 {
 	unit->update();
 
+#ifdef SKYNET_DRAW_DEBUG
+	unit->drawUnitPosition();
+#endif
+
 	if(mUnitToPlayer[unit] != unit->getPlayer() || mUnitToType[unit] != unit->getType())
 		onMorphRenegade(unit);
 

@@ -42,7 +42,7 @@
 				Name="VCCLCompilerTool"
 				Optimization="0"
 				AdditionalIncludeDirectories="../include"
-				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_USRDLL;SKYNET_EXPORTS"
+				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_USRDLL;SKYNET_EXPORTS;SKYNET_DRAW_DEBUG"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
@@ -89,7 +89,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="if not &quot;%BWAPIData%&quot; == &quot;&quot; (&#x0D;&#x0A;copy &quot;$(TargetDir)\$(TargetName).pdb&quot; &quot;%BWAPIData%\AI\&quot;&#x0D;&#x0A;copy &quot;$(TargetPath)&quot; &quot;%BWAPIData%\AI\&quot;&#x0D;&#x0A;copy &quot;..\bwapi.ini&quot; &quot;%BWAPIData%&quot;&#x0D;&#x0A;)"
+				CommandLine="if not &quot;%BWAPIData%&quot; == &quot;&quot; (&#x0D;&#x0A;copy &quot;$(TargetDir)\$(TargetName).pdb&quot; &quot;%BWAPIData%\AI\&quot;&#x0D;&#x0A;copy &quot;$(TargetPath)&quot; &quot;%BWAPIData%\AI\&quot;&#x0D;&#x0A;copy &quot;..\bwapi.ini&quot; &quot;%BWAPIData%&quot;&#x0D;&#x0A;)&#x0D;&#x0A;"
 			/>
 		</Configuration>
 		<Configuration
@@ -121,7 +121,7 @@
 				EnableIntrinsicFunctions="true"
 				FavorSizeOrSpeed="1"
 				AdditionalIncludeDirectories="../include"
-				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_USRDLL;SKYNET_EXPORTS"
+				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_USRDLL;SKYNET_EXPORTS;SKYNET_DRAW_DEBUG"
 				RuntimeLibrary="2"
 				EnableFunctionLevelLinking="true"
 				UsePrecompiledHeader="0"

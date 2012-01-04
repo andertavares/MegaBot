@@ -28,6 +28,7 @@ struct ConditionTestDef
 		isEnemyZerg,
 		isEnemyProtoss,
 		isEnemyTerran,
+		isEnemyUnknown,
 		isContained,
 		canForgeExpand,
 		mapHasIsland,

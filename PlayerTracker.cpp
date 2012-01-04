@@ -8,26 +8,30 @@
 
 void PlayerTrackerClass::onBegin()
 {
+	mShowDebugInfo = true;
 	updatePlayers();
+
+	if(!isEnemyRace(BWAPI::Races::Zerg) && !isEnemyRace(BWAPI::Races::Protoss) && !isEnemyRace(BWAPI::Races::Terran))
+		BWAPI::Broodwar->sendText("Skynets behavior is currently undefined against random players");
 }
 
 void PlayerTrackerClass::update()
 {
+	if(BWAPI::Broodwar->getKeyState('P'))
+		mShowDebugInfo = !mShowDebugInfo;
+
 	if(mShowDebugInfo)
 	{
 		std::stringstream ss;
 		ss << "There are ";
 
-		if(mEnemyRaceInfo[BWAPI::Races::Zerg])
-			ss << "[Zerg]";
+		for each(BWAPI::Race race in BWAPI::Races::allRaces())
+		{
+			if(isEnemyRace(race))
+				ss << "[" << race.getName() << "] ";
+		}
 
-		if(mEnemyRaceInfo[BWAPI::Races::Terran])
-			ss << "[Terran]";
-
-		if(mEnemyRaceInfo[BWAPI::Races::Protoss])
-			ss << "[Protoss]";
-
-		ss << " Enemy Races";
+		ss << "Enemy Races";
 
 		BWAPI::Broodwar->drawText(BWAPI::CoordinateType::Screen, 15, 5, "%s", ss.str().c_str());
 
@@ -37,8 +41,9 @@ void PlayerTrackerClass::update()
 			BWAPI::Broodwar->drawTextScreen(5, y, "Enemies:");
 			for each(Player player in getEnemies())
 			{
-				y += 10;
-				BWAPI::Broodwar->drawTextScreen(15, y, "%s", player->getName().c_str());
+				std::stringstream ss2;
+				ss2 << "[" << player->getRace().getName() << "] " << player->getName();
+				BWAPI::Broodwar->drawTextScreen(15, y += 10, "%s", ss2.str().c_str());
 			}
 		}
 

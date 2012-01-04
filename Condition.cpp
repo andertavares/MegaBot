@@ -165,6 +165,8 @@ bool Condition::passesValue() const
 		return PlayerTracker::Instance().isEnemyRace(BWAPI::Races::Zerg) == mNeededValue;
 	case ConditionTest::isEnemyTerran:
 		return PlayerTracker::Instance().isEnemyRace(BWAPI::Races::Terran) == mNeededValue;
+	case ConditionTest::isEnemyUnknown:
+		return PlayerTracker::Instance().isEnemyRace(BWAPI::Races::Unknown) == mNeededValue;
 	case ConditionTest::enemyHasResearched:
 		return PlayerTracker::Instance().enemyHasReseached(mTech);
 	case ConditionTest::mapSize:

@@ -353,9 +353,13 @@ void WorkerScoutTask::getNewData()
 
 void WorkerScoutTask::calculateFailTime()
 {
+	mFailTime = BWAPI::Broodwar->getFrameCount() + 24*60;
+
 	if(mUnit)
-		mFailTime = BWAPI::Broodwar->getFrameCount() + 24*10 + int(MapHelper::getGroundDistance(mUnit->getPosition(), mData->getNextPosition(mUnit->getPosition())) / mUnit->getType().topSpeed());
-	else
-		mFailTime = BWAPI::Broodwar->getFrameCount() + 24*60;
-	BWAPI::Broodwar->printf("Calculated Fail Time : %d", (mFailTime - BWAPI::Broodwar->getFrameCount()) / 24);
+	{
+		int groundDistance = MapHelper::getGroundDistance(mUnit->getPosition(), mData->getNextPosition(mUnit->getPosition()));
+		if(groundDistance != std::numeric_limits<int>::max())
+			mFailTime = BWAPI::Broodwar->getFrameCount() + 24*10 + int(groundDistance / mUnit->getType().topSpeed());
+	}
+	
 }

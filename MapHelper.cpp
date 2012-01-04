@@ -227,7 +227,11 @@ int MapHelper::getGroundDistance(Position start, Position end)
 	if(!BWAPI::Broodwar->hasPath(start, end))
 		return std::numeric_limits<int>::max();
 
-	int groundDistance = PathFinder::Instance().CreateCheapWalkPath(start, end).getLength();
+	PositionPath path = PathFinder::Instance().CreateCheapWalkPath(start, end);
+	if(!path.isComplete)
+		return std::numeric_limits<int>::max();
+
+	int groundDistance = path.getLength();
 	int linearDistance = start.getApproxDistance(end);
 
 	if(groundDistance < linearDistance)

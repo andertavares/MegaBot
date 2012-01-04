@@ -177,6 +177,13 @@ RegionPath PathFinderClass::CreateRegionPath(Region start, Region target)
 
 		for each(Chokepoint choke in region->getChokepoints())
 		{
+			if(!choke)
+				BWAPI::Broodwar->printf("Chokepoint choke in PathFinderClass::CreateRegionPath null");
+			if(!choke->getRegions().first)
+				BWAPI::Broodwar->printf("choke->getRegions().first in PathFinderClass::CreateRegionPath null");
+			if(!choke->getRegions().second)
+				BWAPI::Broodwar->printf("choke->getRegions().second in PathFinderClass::CreateRegionPath null");
+
 			Region other = choke->getRegions().first;
 			if(other == region)
 				other = choke->getRegions().second;
@@ -202,8 +209,11 @@ PositionPath PathFinderClass::CreateCheapWalkPath(Position start, Position targe
 	if(!BWAPI::Broodwar->hasPath(start, target))
 		return PositionPath();
 
-	Region startRegion = TerrainAnaysis::Instance().getRegion(TilePosition(start));
+	Region startRegion = TerrainAnaysis::Instance().getRegion(TilePosition(start));//TODO: explore why there may be a null region returned from this
 	Region endRegion = TerrainAnaysis::Instance().getRegion(TilePosition(target));
+
+	if(!startRegion || !endRegion)
+		return PositionPath();
 
 	PositionPath path;
 
@@ -220,8 +230,6 @@ PositionPath PathFinderClass::CreateCheapWalkPath(Position start, Position targe
 
 	if(!regionPath.isComplete)
 		return path;
-
-	regionPath.drawPath();
 
 	path.path.push_back(start);
 
@@ -309,14 +317,6 @@ WalkPositionPath PathFinderClass::CreateWalkPath(WalkPosition start, WalkPositio
 				}
 			}
 		}
-	}
-
-	for each(std::pair<WalkPosition, int> pos in gmap)
-	{
-//		DrawBuffer::Instance().drawBufferedLine(BWAPI::CoordinateType::Map, pos.first.x*8, pos.first.y*8, parent[pos.first].x*8, parent[pos.first].y*8, 999999);
-// 		String_Builder string;
-// 		string << pos.second;
-// 		DrawBuffer::Instance().drawBufferedText(BWAPI::CoordinateType::Map, pos.first.x * 8, pos.first.y * 8, string, 999999);
 	}
 
 	if(!openTiles.empty())

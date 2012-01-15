@@ -85,6 +85,8 @@ void ResourceManagerClass::update()
 
 	if(!BuildOrderManager::Instance().getOrder(Order::TrainWorkers))
 		neededWorkers = 0;
+	else
+		neededWorkers += 4;
 
 	unsigned int numWorkers = UnitTracker::Instance().selectAllUnits(BWAPI::Broodwar->self()->getRace().getWorker()).size();
 

@@ -104,8 +104,8 @@ bool DefaultSquadTask::update()
 		if(mUnits.minDistanceBetween(unitGroup) > 540)
 			continue;
 
-		const int rating = mUnits.ratingDifference(unitGroup);
-		if(mySupply < 360 && ((!mEngageFull && rating < -350) || rating < -1000))
+		const int ratingDiff = mUnits.ratingDifference(unitGroup);
+		if(mySupply < 360 && ratingDiff < -2000)
 			avoidGroup += unitGroup;
 		else if(mUnits.canMajorityAttack(unitGroup) && (mUnits.isWorthEngaging(unitGroup) || unitGroup.isAnyInRange(mUnits)))
 			engageGroup += unitGroup;
@@ -117,7 +117,7 @@ bool DefaultSquadTask::update()
 	else if(baseUnderAttack)
 	{
 		const int rating = mUnits.ratingDifference(baseToDefend->getEnemyThreats());
-		if(rating >= 0 || (rating > -1000 && baseUnderAttack))
+		if(rating > -1000)
 			squadsGoal = Goal(ActionType::Defend, baseToDefend->getEnemyThreats(), avoidGroup);
 	}
 

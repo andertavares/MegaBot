@@ -71,16 +71,13 @@ void TerrainAnaysisClass::finaliseConnectivity()
 
 void TerrainAnaysisClass::calculateWalkTileClearance()
 {
-	int mapWidth = BWAPI::Broodwar->mapWidth() * 4;
-	int mapHeight = BWAPI::Broodwar->mapHeight() * 4;
-
-	mTileClearance.resize(mapWidth, mapHeight, -1);
-	mTileClosestObstacle.resize(mapWidth, mapHeight);
+	mTileClearance.resize(mMapWidth, mMapHeight, -1);
+	mTileClosestObstacle.resize(mMapWidth, mMapHeight);
 
 	Heap<WalkPosition, int> unvisitedTiles(true);
-	for(int x = 0; x < mapWidth; ++x)
+	for(int x = 0; x < mMapWidth; ++x)
 	{
-		for(int y = 0; y < mapHeight; ++y)
+		for(int y = 0; y < mMapHeight; ++y)
 		{
 			if(!BWAPI::Broodwar->isWalkable(x, y))
 			{
@@ -89,10 +86,10 @@ void TerrainAnaysisClass::calculateWalkTileClearance()
 				if(mSmallObstacles.count(mTileConnectivity[x][y]) == 0)
 					unvisitedTiles.set(WalkPosition(x, y), 0);
 			}
-			else if(x == 0 || y == 0 || x == mapWidth-1 || y == mapHeight-1)
+			else if(x == 0 || y == 0 || x == mMapWidth-1 || y == mMapHeight-1)
 			{
 				mTileClearance[x][y] = 10;
-				mTileClosestObstacle[x][y] = WalkPosition((x == 0 ? -1 : (x == mapWidth-1 ? mapWidth : x)), (y == 0 ? -1 : (y == mapHeight-1 ? mapHeight : y)));
+				mTileClosestObstacle[x][y] = WalkPosition((x == 0 ? -1 : (x == mMapWidth-1 ? mMapWidth : x)), (y == 0 ? -1 : (y == mMapHeight-1 ? mMapHeight : y)));
 				unvisitedTiles.set(WalkPosition(x, y), 10);
 			}
 		}
@@ -112,8 +109,8 @@ void TerrainAnaysisClass::calculateWalkTileClearance()
 
 		const bool canGoWest = west >= 0;
 		const bool canGoNorth = north >= 0;
-		const bool canGoEast = east < mapWidth;
-		const bool canGoSouth = south < mapHeight;
+		const bool canGoEast = east < mMapWidth;
+		const bool canGoSouth = south < mMapHeight;
 
 		const WalkPosition &currentParent = mTileClosestObstacle[tile.x][tile.y];
 
@@ -236,14 +233,14 @@ std::pair<WalkPosition, WalkPosition> TerrainAnaysisClass::findChokePoint(WalkPo
 
 void TerrainAnaysisClass::calculateConnectivity()
 {
-	int mapWidth = BWAPI::Broodwar->mapWidth() * 4;
-	int mapHeight = BWAPI::Broodwar->mapHeight() * 4;
+	mMapWidth = BWAPI::Broodwar->mapWidth() * 4;
+	mMapHeight = BWAPI::Broodwar->mapHeight() * 4;
 
 	int currentRegion = 1;
-	mTileConnectivity.resize(mapWidth, mapHeight, 0);
-	for(int x = 0; x < mapWidth; ++x)
+	mTileConnectivity.resize(mMapWidth, mMapHeight, 0);
+	for(int x = 0; x < mMapWidth; ++x)
 	{
-		for(int y = 0; y < mapHeight; ++y)
+		for(int y = 0; y < mMapHeight; ++y)
 		{
 			if(mTileConnectivity[x][y] != 0)
 				continue;
@@ -266,9 +263,9 @@ void TerrainAnaysisClass::calculateConnectivity()
 				if(tile->y > 0 && BWAPI::Broodwar->isWalkable(tile->x, tile->y-1) == walkable && mTileConnectivity[tile->x][tile->y-1] == 0)
 					unvisitedTiles.insert(WalkPosition(tile->x, tile->y-1));
 
-				if(tile->x < mapWidth-1 && BWAPI::Broodwar->isWalkable(tile->x+1, tile->y) == walkable && mTileConnectivity[tile->x+1][tile->y] == 0)
+				if(tile->x < mMapWidth-1 && BWAPI::Broodwar->isWalkable(tile->x+1, tile->y) == walkable && mTileConnectivity[tile->x+1][tile->y] == 0)
 					unvisitedTiles.insert(WalkPosition(tile->x+1, tile->y));
-				if(tile->y < mapHeight-1 && BWAPI::Broodwar->isWalkable(tile->x, tile->y+1) == walkable && mTileConnectivity[tile->x][tile->y+1] == 0)
+				if(tile->y < mMapHeight-1 && BWAPI::Broodwar->isWalkable(tile->x, tile->y+1) == walkable && mTileConnectivity[tile->x][tile->y+1] == 0)
 					unvisitedTiles.insert(WalkPosition(tile->x, tile->y+1));
 
 				unvisitedTiles.erase(tile);
@@ -284,11 +281,10 @@ void TerrainAnaysisClass::calculateConnectivity()
 
 void TerrainAnaysisClass::createRegions()
 {
-	int mapWidth = BWAPI::Broodwar->mapWidth() * 4;
-	int mapHeight = BWAPI::Broodwar->mapHeight() * 4;
+	mMapWidth = BWAPI::Broodwar->mapWidth() * 4;
+	mMapHeight = BWAPI::Broodwar->mapHeight() * 4;
 
-	// This comment is self explanatory.
-	mTileToRegion.resize(mapWidth, mapHeight);
+	mTileToRegion.resize(mMapWidth, mMapHeight);
 	std::map<WalkPosition, Chokepoint> chokeTiles;
 
 	for(;;)
@@ -296,9 +292,9 @@ void TerrainAnaysisClass::createRegions()
 		int currentRegionClearance = 0;
 		WalkPosition currentRegionTile;
 
-		for(int x = 0; x < mapWidth; ++x)
+		for(int x = 0; x < mMapWidth; ++x)
 		{
-			for(int y = 0; y < mapHeight; ++y)
+			for(int y = 0; y < mMapHeight; ++y)
 			{
 				if(mTileToRegion[x][y])
 					continue;
@@ -404,7 +400,7 @@ void TerrainAnaysisClass::createRegions()
 
 				for(;;)
 				{
-					if(x0 >= 0 && y0 >= 0 && x0 < mapWidth && y0 < mapHeight && mTileClearance[x0][y0] != 0 && !mTileToRegion[x0][y0])
+					if(x0 >= 0 && y0 >= 0 && x0 < mMapWidth && y0 < mMapHeight && mTileClearance[x0][y0] != 0 && !mTileToRegion[x0][y0])
 					{
 						const WalkPosition thisChokeTile(x0, y0);
 
@@ -455,7 +451,7 @@ void TerrainAnaysisClass::createRegions()
 					int x = (i == 0 ? currentTile.x-1 : (i == 1 ? currentTile.x+1 : currentTile.x));
 					int y = (i == 2 ? currentTile.y-1 : (i == 3 ? currentTile.y+1 : currentTile.y));
 
-					if(x < 0 || y < 0 || x >= mapWidth || y >= mapHeight)
+					if(x < 0 || y < 0 || x >= mMapWidth || y >= mMapHeight)
 						continue;
 
 					if(mTileClearance[x][y] == 0)
@@ -755,6 +751,6 @@ void TerrainAnaysisClass::removeChokepoint(Chokepoint chokeToRemove)
 	// choke is real, need to merge the regions
 	if(reg1 && reg2 && reg1 != reg2)
 	{
-		LOGMESSAGEWARNING("Tries to Merge 2 regions but is not implemented");
+		LOGMESSAGEWARNING("Tried to Merge 2 regions but is not implemented");
 	}
 }

@@ -15,21 +15,51 @@ public:
 	void analyseBasesAndTerrain();
 	void finaliseConnectivity();
 
-	const std::set<Region> &getRegions() const { return mRegions; }
-	const std::set<Chokepoint> &getChokepoints() const { return mChokepoints; }
+	inline const std::set<Region> &getRegions() const { return mRegions; }
+	inline const std::set<Chokepoint> &getChokepoints() const { return mChokepoints; }
 
-	const Region &getRegion(TilePosition tile) const { return mTileToRegion[tile.x()*4][tile.y()*4]; }
-	const Region &getRegion(Position pos) const { return mTileToRegion[pos.x()/8][pos.y()/8]; }
-	const Region &getRegion(WalkPosition tile) const { return mTileToRegion[tile.x][tile.y]; }
-	const Region &getRegion(int x, int y) const { return mTileToRegion[x][y]; }
+	inline const Region &getRegion(const TilePosition &tile) const { return getRegion(tile.x()*4 ,tile.y()*4); }
+	inline const Region &getRegion(const Position &pos) const { return getRegion(pos.x()/8, pos.y()/8); }
+	inline const Region &getRegion(const WalkPosition &tile) const { return getRegion(tile.x, tile.y); }
+	const Region &getRegion(int x, int y) const
+	{
+		if(x >= mMapWidth) x = mMapWidth - 1;
+		else if(x < 0) x = 0;
 
-	int getWalkClearance(WalkPosition currentTile) { return mTileClearance[currentTile.x][currentTile.y]; }
-	int getWalkClearance(int x, int y) { return mTileClearance[x][y]; }
+		if(y >= mMapHeight) y = mMapHeight - 1;
+		else if(y < 0) y = 0;
 
-	int getWalkConnectivity(WalkPosition currentTile) { return mTileConnectivity[currentTile.x][currentTile.y]; }
-	int getWalkConnectivity(int x, int y) { return mTileConnectivity[x][y]; }
+		return mTileToRegion[x][y];
+	}
+
+	inline int getWalkClearance(WalkPosition currentTile) { return getWalkClearance(currentTile.x, currentTile.y); }
+	int getWalkClearance(int x, int y)
+	{
+		if(x >= mMapWidth) x = mMapWidth - 1;
+		else if(x < 0) x = 0;
+
+		if(y >= mMapHeight) y = mMapHeight - 1;
+		else if(y < 0) y = 0;
+
+		return mTileClearance[x][y];
+	}
+
+	inline int getWalkConnectivity(WalkPosition currentTile) { return getWalkConnectivity(currentTile.x, currentTile.y); }
+	int getWalkConnectivity(int x, int y)
+	{
+		if(x >= mMapWidth) x = mMapWidth - 1;
+		else if(x < 0) x = 0;
+
+		if(y >= mMapHeight) y = mMapHeight - 1;
+		else if(y < 0) y = 0;
+
+		return mTileConnectivity[x][y];
+	}
 
 private:
+	int mMapWidth;
+	int mMapHeight;
+
 	std::set<Chokepoint> mChokepoints;
 	std::set<Region> mRegions;
 	RectangleArray<Region> mTileToRegion;

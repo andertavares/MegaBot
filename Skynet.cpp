@@ -49,6 +49,12 @@ void Skynet::onStart()
 
 	if(BWAPI::Broodwar->self()->getRace() != BWAPI::Races::Protoss)
 		BWAPI::Broodwar->sendText("Skynet is a Protoss only bot");
+
+	if(BWAPI::Broodwar->getRevision() != BWAPI::BWAPI_getRevision())
+	{
+		BWAPI::Broodwar->sendText("This version of Skynet was compiled for BWAPI rev. %d", BWAPI::BWAPI_getRevision());
+		BWAPI::Broodwar->sendText("But BWAPI rev. %d is currently running", BWAPI::Broodwar->getRevision());
+	}
 }
 
 void Skynet::onEnd(bool isWinner)

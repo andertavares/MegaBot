@@ -42,7 +42,7 @@ Skynet::Skynet()
 
 void Skynet::onStart()
 {
-	BWAPI::Broodwar->sendText("Skynet 2.0 Operational");
+	BWAPI::Broodwar->sendText("Skynet 2.0.1 Operational");
 
 	BWAPI::Broodwar->setLatCom(false);
 	BWAPI::Broodwar->setCommandOptimizationLevel(1);

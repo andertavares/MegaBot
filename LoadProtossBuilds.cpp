@@ -51,9 +51,7 @@ void BuildOrderManagerClass::LoadProtossBuilds()
 	ID_1 =	forgeExpand.addItem(Protoss_Gateway, CB(ID_1, CallBackType::onDispatched), 1, BuildingLocation::BaseChoke);
 
 	// Add
-	// TODO: don't forge ecpand for competition, doesn't force army / defense at all and if they go mass muta it wont always get
-	// enough anti air out in time
-	//mBuildOrders[BuildOrderID::ForgeExpand] = forgeExpand;
+	mBuildOrders[BuildOrderID::ForgeExpand] = forgeExpand;
 
 	/************************************************************************/
 	/* Stargate Arcon                                                       */

@@ -32,6 +32,7 @@
 #include "AOEThreatTracker.h"
 #include "SquadManager.h"
 #include "BlockedPathManager.h"
+#include "GameMemory.h"
 
 Skynet::Skynet()
 	: mOnBegin(false)
@@ -42,7 +43,7 @@ Skynet::Skynet()
 
 void Skynet::onStart()
 {
-	BWAPI::Broodwar->sendText("Skynet 2.0.1 Operational");
+	BWAPI::Broodwar->sendText("Skynet 2.1 Operational");
 
 	BWAPI::Broodwar->setLatCom(false);
 	BWAPI::Broodwar->setCommandOptimizationLevel(1);
@@ -55,10 +56,14 @@ void Skynet::onStart()
 		BWAPI::Broodwar->sendText("This version of Skynet was compiled for BWAPI rev. %d", BWAPI::BWAPI_getRevision());
 		BWAPI::Broodwar->sendText("But BWAPI rev. %d is currently running", BWAPI::Broodwar->getRevision());
 	}
+
+	BWAPI::Broodwar->setLocalSpeed(0);
 }
 
 void Skynet::onEnd(bool isWinner)
 {
+	BuildOrderManager::Instance().onEnd(isWinner);
+	GameMemory::Instance().onEnd();
 }
 
 void Skynet::onFrame()
@@ -84,6 +89,7 @@ void Skynet::onFrame()
 		UnitTracker::Instance().pumpUnitEvents();
 		ScoutManager::Instance().onBegin();
 		MacroManager::Instance().onBegin();
+		GameMemory::Instance().onBegin();
 
 		BuildOrderManager::Instance().onBegin();
 

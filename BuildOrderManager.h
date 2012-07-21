@@ -11,6 +11,7 @@ public:
 	BuildOrderManagerClass();
 
 	void onBegin();
+	void onEnd(bool isWinner);
 	void update();
 
 	bool BuildOrderFinished();
@@ -54,6 +55,8 @@ private:
 
 	bool mFinishedBuild;
 	int mBuildFinishTime;
+
+	BuildOrderID mStartingBuild;
 };
 
 typedef Singleton<BuildOrderManagerClass> BuildOrderManager;

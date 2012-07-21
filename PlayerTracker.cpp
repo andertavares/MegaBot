@@ -9,9 +9,6 @@
 void PlayerTrackerClass::onBegin()
 {
 	updatePlayers();
-
-	if(!isEnemyRace(BWAPI::Races::Zerg) && !isEnemyRace(BWAPI::Races::Protoss) && !isEnemyRace(BWAPI::Races::Terran))
-		BWAPI::Broodwar->sendText("Skynets behavior is currently untested against random players");
 }
 
 void PlayerTrackerClass::update()
@@ -107,6 +104,9 @@ void PlayerTrackerClass::updatePlayers()
 			continue;
 
 		if(player == BWAPI::Broodwar->self())
+			continue;
+
+		if(player == BWAPI::Broodwar->neutral())
 			continue;
 
 		if(BWAPI::Broodwar->self()->isEnemy(player))

@@ -1292,25 +1292,11 @@ int UnitClass::getEnergy()
 	return 0;
 }
 
-BWAPI::Order getTechCastOrder(BWAPI::TechType tech)
-{
-	if(tech == BWAPI::TechTypes::Psionic_Storm)
-		return BWAPI::Orders::CastPsionicStorm;
-	else if(tech == BWAPI::TechTypes::Archon_Warp)
-		return BWAPI::Orders::ArchonWarp;
-	else if(tech == BWAPI::TechTypes::Stasis_Field)
-		return BWAPI::Orders::CastStasisField;
-	else if(tech == BWAPI::TechTypes::Recall)
-		return BWAPI::Orders::CastRecall;
-
-	return BWAPI::Orders::None;
-}
-
 void UnitClass::useTech(BWAPI::TechType tech, BWAPI::Position target)
 {
 	if(exists())
 	{
-		if(mUnit->getOrder() == getTechCastOrder(tech))
+		if(mUnit->getOrder() == tech.getOrder())
 		{
 			if(mUnit->getOrderTargetPosition() == target)
 				return;
@@ -1337,7 +1323,7 @@ void UnitClass::useTech(BWAPI::TechType tech, Unit target)
 			return;
 		}
 
-		if(mUnit->getOrder() == getTechCastOrder(tech))//TODO: in latest revision, the tech knows the relating order
+		if(mUnit->getOrder() == tech.getOrder())
 		{
 			if(mUnit->getOrderTarget() == target->mUnit)
 				return;

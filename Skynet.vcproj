@@ -41,7 +41,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="../include"
+				AdditionalIncludeDirectories="&quot;$(BWAPI_DIR)\include\&quot;;&quot;$(BOOST_DIR)\&quot;"
 				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_USRDLL;SKYNET_EXPORTS;SKYNET_DRAW_DEBUG"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -120,7 +120,7 @@
 				Optimization="3"
 				EnableIntrinsicFunctions="true"
 				FavorSizeOrSpeed="1"
-				AdditionalIncludeDirectories="../include"
+				AdditionalIncludeDirectories="&quot;$(BWAPI_DIR)\include\&quot;;&quot;$(BOOST_DIR)\&quot;"
 				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_USRDLL;SKYNET_EXPORTS"
 				RuntimeLibrary="2"
 				EnableFunctionLevelLinking="true"
@@ -139,12 +139,13 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="../lib/BWAPI.lib"
+				AdditionalDependencies="BWAPI.lib"
 				LinkIncremental="1"
+				AdditionalLibraryDirectories="&quot;$(BOOST_DIR)\lib\&quot;;&quot;$(BWAPI_DIR)\lib\&quot;"
 				GenerateDebugInformation="true"
 				SubSystem="2"
-				OptimizeReferences="1"
-				EnableCOMDATFolding="1"
+				OptimizeReferences="2"
+				EnableCOMDATFolding="2"
 				LinkTimeCodeGeneration="1"
 				TargetMachine="1"
 			/>
@@ -190,6 +191,14 @@
 			</File>
 			<File
 				RelativePath=".\ExpansionManager.h"
+				>
+			</File>
+			<File
+				RelativePath=".\GameMemory.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\GameMemory.h"
 				>
 			</File>
 			<File

@@ -3,9 +3,11 @@
 #include "Logger.h"
 #include "MacroManager.h"
 #include "SquadManager.h"
+#include "GameMemory.h"
 
 #include <ctime>
 #include <boost/random.hpp>
+#include "boost/lexical_cast.hpp"
 
 BuildOrderManagerClass::BuildOrderManagerClass()
 	: mCurrentBuild(BuildOrderID::None)
@@ -20,6 +22,26 @@ void BuildOrderManagerClass::onBegin()
 	LoadProtossBuilds();
 	LoadTerranBuilds();
 	LoadZergBuilds();
+}
+
+void BuildOrderManagerClass::onEnd(bool isWinner)
+{
+	std::string buildName = "BuildID" + boost::lexical_cast<std::string>((int)mStartingBuild.underlying());
+
+	std::vector<std::string> buildData = GameMemory::Instance().getData(buildName);
+	if(buildData.empty())
+	{
+		buildData.push_back(isWinner ? "1" : "0");
+		buildData.push_back(isWinner ? "0" : "1");
+	}
+	else
+	{
+		std::string v = buildData[isWinner ? 0 : 1];
+		int count = boost::lexical_cast<int>(v);
+		++count;
+		buildData[isWinner ? 0 : 1] = boost::lexical_cast<std::string>(count);
+	}
+	GameMemory::Instance().setData(buildName, buildData);
 }
 
 BuildOrderID getRandomBuild(const std::vector<BuildOrderID> &builds)
@@ -48,7 +70,8 @@ void BuildOrderManagerClass::update()
 				viableBuilds.push_back(build.first);
 		}
 
-		changeCurrentBuild(getRandomBuild(viableBuilds));
+		mStartingBuild = getRandomBuild(viableBuilds) ;
+		changeCurrentBuild(mStartingBuild);
 	}
 
 	if(BuildOrderFinished())

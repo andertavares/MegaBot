@@ -74,7 +74,7 @@ private:
 class MacroManagerClass
 {
 public:
-	MacroManagerClass(){}
+	MacroManagerClass();
 
 	void onBegin();
 	void update();
@@ -129,9 +129,14 @@ private:
 
 	std::list<MacroItem> mTechItemsToCreate;
 	std::list<std::pair<MacroItem, TaskPointer>> mTechItems;
+
+	int mLastStateChangeTime;
+	std::list<UnitToProduce> mLastUnitsToProduce;
 	
 	void addNeeded(std::set<BWAPI::UnitType> &neededUnits);
 	void createTechItems();
+
+	bool mDebugDraw;
 };
 
 typedef Singleton<MacroManagerClass> MacroManager;

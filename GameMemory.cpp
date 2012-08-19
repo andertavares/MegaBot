@@ -1,19 +1,32 @@
 #include "GameMemory.h"
 #include "PlayerTracker.h"
+#include "Logger.h"
 
 #include <fstream>
 #include <sstream>
 
-const char * pathPrefixRead = "bwapi-data\\Skynet\\Memory\\";
-const char * pathPrefixWrite = "bwapi-data\\Skynet\\Memory\\";
+#if defined(COMPETITION_MODE)
+const char * pathPrefixRead = "bwapi-data\\Read\\";
+const char * pathPrefixWrite = "bwapi-data\\Write\\";
+#else
+const char * pathPrefixRead = "bwapi-data\\Skynet\\Memory";
+const char * pathPrefixWrite = "bwapi-data\\Skynet\\Memory";
+#endif
 
 void GameMemoryClass::onBegin()
 {
 	if(PlayerTracker::Instance().getEnemies().size() == 1 && PlayerTracker::Instance().getAllies().size() == 0)
 	{
 		Player enemy = *PlayerTracker::Instance().getEnemies().begin();
-		mFileName = enemy->getName() + " " + enemy->getRace().getName() + ".txt";
-		BWAPI::Broodwar->printf(mFileName.c_str());
+		if(enemy->getType() == BWAPI::PlayerTypes::Computer)
+		{
+			mFileName = "AI " + enemy->getRace().getName() + ".txt";
+		}
+		else
+		{
+			mFileName = enemy->getName() + " " + enemy->getRace().getName() + ".txt";
+		}
+		
 		std::ifstream file((pathPrefixRead + mFileName).c_str());
 
 		if(file)
@@ -30,7 +43,6 @@ void GameMemoryClass::onBegin()
 				if(results.size() >= 2)
 				{
 					mData[results[0]] = std::vector<std::string>(++results.begin(), results.end());
-					BWAPI::Broodwar->printf(line.c_str());
 				}
 			}
 		}
@@ -41,7 +53,8 @@ void GameMemoryClass::onEnd()
 {
 	if(!mFileName.empty())
 	{
-		std::ofstream file((pathPrefixWrite + mFileName).c_str());
+		std::string fileName = pathPrefixWrite + mFileName;
+		std::ofstream file(fileName.c_str());
 
 		if(file)
 		{
@@ -57,6 +70,10 @@ void GameMemoryClass::onEnd()
 					file << "\n";
 				}
 			}
+		}
+		else
+		{
+			LOGMESSAGEERROR(String_Builder() << "Failed to write match data to " << fileName);
 		}
 	}
 }

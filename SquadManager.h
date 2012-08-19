@@ -17,6 +17,10 @@ public:
 	void onChangeBuild();
 	BaseSquadTaskPointer createSquad(SquadType type);
 
+	void setBehaviour(ArmyBehaviour behaviour);
+
+	std::string getArmyBehaviourName(ArmyBehaviour type);
+
 private:
 	std::map<SquadType, std::set<BaseSquadTaskPointer>> mSquads;
 
@@ -24,6 +28,8 @@ private:
 
 	BaseSquadTaskPointer mDefaultSquad;
 	std::map<Base, DefenseSquadPointer> mDefenseSquads;
+
+	bool mDebugDraw;
 };
 
 typedef Singleton<SquadManagerClass> SquadManager;

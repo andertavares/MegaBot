@@ -7,10 +7,13 @@
 #include "PlayerTracker.h"
 #include "UnitHelper.h"
 #include "GameProgressDetection.h"
+#include "Logger.h"
 
 DefaultSquadTask::DefaultSquadTask(ArmyBehaviour behaviour)
 	: BaseSquadTask(behaviour)
 	, mEngageFull(false)
+	, mFailedBaseAttacks(0)
+	, mNumZealots(0)
 {
 }
 
@@ -184,34 +187,75 @@ bool DefaultSquadTask::update()
 		if(mUnits.size() >= 3)
 		{
 			if(mySupply > 380)
+			{
 				shouldAttackBase = true;
+			}
 			else if(GameProgressDetection::Instance().getState() != StateType::TechHigh)
 			{
-				// If its a terran with siege tanks don't attack a base without leg speed and also ensure we are better matched as siege tanks can hurt
-				bool isTerranWithSiege = PlayerTracker::Instance().isEnemyRace(BWAPI::Races::Terran) && PlayerTracker::Instance().enemyHasReseached(BWAPI::TechTypes::Tank_Siege_Mode);
-				if(isTerranWithSiege && BWAPI::Broodwar->self()->getUpgradeLevel(BWAPI::UpgradeTypes::Leg_Enhancements) > 0 && mUnits.size() > 45 && mySupply > (enemyGuessSupply * 4))
-					shouldAttackBase = true;
-				else if(!isTerranWithSiege && mUnits.size() > 35 && mySupply > (enemyKnownSupply * 4))
-					shouldAttackBase = true;
-				else if(mArmyBehaviour <= ArmyBehaviour::Aggresive)
-				{
-					if(maxEnemiesSize <= alliesSize)
-						shouldAttackBase = true;
-				}
+				ArmyBehaviour armyBehaviour = mArmyBehaviour;
 
-				// Agains't weak opponents it can usually attack when these pass
-				// how ever against stronger opponents, or terran with siege tanks it will just lose a few units time and again then lose to a push
-				// easier to just sit back and turtle alittle
-				/*else if(mArmyBehaviour <= ArmyBehaviour::Default)
+				if(armyBehaviour == ArmyBehaviour::Default)
 				{
-					if(mySupply > (enemyGuessSupply * 4))
-						shouldAttackBase = true;
+					// If its a terran with siege tanks don't attack a base without leg speed and also ensure we are better matched as siege tanks can hurt
+					if(PlayerTracker::Instance().isEnemyRace(BWAPI::Races::Terran) && PlayerTracker::Instance().enemyHasReseached(BWAPI::TechTypes::Tank_Siege_Mode))
+					{
+						if(BWAPI::Broodwar->self()->getUpgradeLevel(BWAPI::UpgradeTypes::Leg_Enhancements) == 0)
+						{
+							armyBehaviour = ArmyBehaviour::Defensive;
+						}
+						else if(mNumZealots < 10)
+						{
+							armyBehaviour = ArmyBehaviour::Defensive;
+						}
+					}
 				}
-				else if(mArmyBehaviour == ArmyBehaviour::Defensive)
+				
+				if(armyBehaviour <= ArmyBehaviour::Aggresive && maxEnemiesSize <= alliesSize)
 				{
-					if(mySupply > (enemyGuessSupply * 5))
-						shouldAttackBase = true;
-				}*/
+					shouldAttackBase = true;
+				}
+				else if(mFailedBaseAttacks < 2)
+				{
+					if(armyBehaviour <= ArmyBehaviour::Default)
+					{
+						if(mySupply > (enemyKnownSupply * 3))
+						{
+							shouldAttackBase = true;
+						}
+						else if(mySupply > (enemyGuessSupply * 4))
+						{
+							shouldAttackBase = true;
+						}
+					}
+					else if(armyBehaviour == ArmyBehaviour::Defensive)
+					{
+						if(mySupply > (enemyKnownSupply * 4))
+						{
+							shouldAttackBase = true;
+						}
+						else if(mySupply > (enemyGuessSupply * 5))
+						{
+							shouldAttackBase = true;
+						}
+					}
+				}
+				else
+				{
+					if(armyBehaviour <= ArmyBehaviour::Default)
+					{
+						if(mySupply > (enemyGuessSupply * 5))
+						{
+							shouldAttackBase = true;
+						}
+					}
+					else if(armyBehaviour == ArmyBehaviour::Defensive)
+					{
+						if(mySupply > (enemyGuessSupply * 6))
+						{
+							shouldAttackBase = true;
+						}
+					}
+				}
 			}
 		}
 
@@ -253,6 +297,15 @@ bool DefaultSquadTask::update()
 	if(!mEngageFull && !avoidGroup.empty() && squadsGoal.getActionType() == ActionType::Attack && squadsGoal.getGoalType() == GoalType::Base)
 		squadsGoal = Goal(ActionType::Attack, avoidGroup.getCenter(), engageGroup, avoidGroup);
 
+	if(mLastGoal.getActionType() == ActionType::Attack && mLastGoal.getGoalType() == GoalType::Base && mLastGoal.getBase()->isEnemyBase())
+	{
+		if(squadsGoal.getActionType() != ActionType::Attack || (squadsGoal.getGoalType() == GoalType::Base && !squadsGoal.getBase()->isEnemyBase()))
+		{
+			++mFailedBaseAttacks;
+			LOGMESSAGEWARNING(String_Builder() << "Failed base attacks increased to " << mFailedBaseAttacks);
+		}
+	}
+
 	mLastGoal = squadsGoal;
 	if(squadsGoal.getGoalType() != GoalType::None)
 	{
@@ -275,11 +328,17 @@ void DefaultSquadTask::giveUnit(Unit unit)
 	
 	mUnits.insert(unit);
 
+	if(unit->getType() == BWAPI::UnitTypes::Protoss_Zealot)
+		++mNumZealots;
+
 	mUnitBehaviours[unit] = Behaviour(unit);
 }
 
 void DefaultSquadTask::returnUnit(Unit unit)
 {
+	if(unit->getType() == BWAPI::UnitTypes::Protoss_Zealot)
+		--mNumZealots;
+
 	mUnits.erase(unit);
 
 	mUnitBehaviours[unit].onDeleted();

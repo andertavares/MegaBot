@@ -1,13 +1,14 @@
 #include "BuildOrder.h"
 
+#include "GameMemory.h"
+#include "Logger.h"
+#include "boost/lexical_cast.hpp"
+
 BuildOrder::BuildOrder(BuildOrderID id, std::string name)
 	: mItemCounter(0)
 	, mRace(BWAPI::Races::Unknown)
 	, mID(id)
 	, mName(name)
-	, mFallbackBuild(BuildOrderID::None)
-	, mFallbackTime(0)
-	, mArmyBehaiour(ArmyBehaviour::Default)
 {
 }
 
@@ -16,9 +17,6 @@ BuildOrder::BuildOrder(BWAPI::Race race, BuildOrderID id, std::string name)
 	, mRace(race)
 	, mID(id)
 	, mName(name)
-	, mFallbackBuild(BuildOrderID::None)
-	, mFallbackTime(0)
-	, mArmyBehaiour(ArmyBehaviour::Default)
 {
 }
 
@@ -80,9 +78,9 @@ void BuildOrder::addProduce(BWAPI::UnitType type, int weight, int priority, cons
 	mProduces.push_back(UnitToProduce(type, weight, priority, unitCond, factoryCond));
 }
 
-void BuildOrder::addNextBuild(BuildOrderID id, Condition condition)
+void BuildOrder::addNextBuild(BuildOrderID id, int timeAfterCompletion, const Condition & condition)
 {
-	mNextBuilds[id] = condition;
+	mNextBuilds.push_back(FollowUpBuild(id, timeAfterCompletion, condition));
 }
 
 void BuildOrder::addSquad(SquadType type, int count)
@@ -90,20 +88,37 @@ void BuildOrder::addSquad(SquadType type, int count)
 	mSquads[type] += count;
 }
 
-void BuildOrder::setDefaultBuild(BuildOrderID fallbackBuild, int fallbackTime)
+void BuildOrder::addArmyBehaviour(ArmyBehaviour armyBehaiour, std::list<CallBack> &callBacks)
 {
-	mFallbackBuild = fallbackBuild;
-	mFallbackTime = fallbackTime;
-}
-
-void BuildOrder::setArmyBehaviour(ArmyBehaviour armyBehaiour)
-{
-	mArmyBehaiour = armyBehaiour;
+	mArmyBehaviours.push_back(ArmyBehaviourItem(armyBehaiour, callBacks));
 }
 
 void BuildOrder::setStartingCondition(Condition condition)
 {
 	mStartingCondition = condition;
+}
+
+float BuildOrder::getWinRate(BuildOrderID currentBuild) const
+{
+	const std::string buildName = String_Builder() << "Build_" << currentBuild.underlying() << "_" << mID.underlying();
+	const std::vector<std::string> &buildData = GameMemory::Instance().getData(buildName);
+
+	float winRate = 0.92f;
+
+	if(buildData.size() < 2)
+		return winRate;
+
+	int gamesWon = boost::lexical_cast<int>(buildData[0]);
+	int gamesLost = boost::lexical_cast<int>(buildData[1]);
+
+	int numGames = gamesWon + gamesLost;
+	
+	if(numGames > 6)
+	{
+		winRate = (float)gamesWon / (float)numGames;
+	}
+
+	return winRate;
 }
 
 std::list<CallBack> CB(int buildID, CallBackType type, std::list<CallBack> &cb)

@@ -129,7 +129,10 @@ public:
 	bool canAttackGround();
 	bool canAttackAir();
 
+	int getAcidSporeCount();
+	int getInterceptorCount();
 	int getScarabCount();
+	int getSpiderMineCount();
 
 	int getID();
 

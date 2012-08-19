@@ -27,6 +27,7 @@ public:
 private:
 	void handleBuildItem(const BuildItem &item);
 	void handleOrderItem(const OrderItem &item);
+	void handleArmyBehaviourItem(const ArmyBehaviourItem &item);
 
 	void checkBuildStatus();
 
@@ -41,10 +42,14 @@ private:
 
 	void BuildCallback(int buildID, CallBackType callbackType);
 
+	void calculateNextBuilds();
+	BuildOrderID getNextBuild() const;
+
 	std::map<CallBackType, std::map<TaskPointer, int>> mWaitingItems;
 
 	std::list<BuildItem> mItemsWaiting;
 	std::list<OrderItem> mOrdersWaiting;
+	std::list<ArmyBehaviourItem> mArmyBehavioursWaiting;
 
 	std::map<BuildOrderID, BuildOrder> mBuildOrders;
 	BuildOrderID mCurrentBuild;
@@ -55,8 +60,9 @@ private:
 
 	bool mFinishedBuild;
 	int mBuildFinishTime;
+	std::vector<FollowUpBuild> mNextBuilds;
 
-	BuildOrderID mStartingBuild;
+	std::vector<std::pair<BuildOrderID, BuildOrderID>> mBuildHistory;
 };
 
 typedef Singleton<BuildOrderManagerClass> BuildOrderManager;

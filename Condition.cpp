@@ -6,6 +6,9 @@
 #include "WallTracker.h"
 #include "PlayerTracker.h"
 #include "MacroManager.h"
+#include "Logger.h"
+
+#include <boost/random.hpp>
 
 Condition::Condition(ConditionTest type, bool expectedValue)
 	: mType(type)
@@ -65,6 +68,14 @@ Condition::Condition(ConditionTest type, double extraValue)
 	, mUpgrade(BWAPI::UpgradeTypes::None)
 	, mString()
 {
+	if(type == ConditionTest::randomChance)
+	{
+		boost::mt19937 rng(static_cast<unsigned int>(std::time(0)));
+		boost::uniform_real<> dist(0.0, 1.0);
+		boost::variate_generator<boost::mt19937, boost::uniform_real<>> randValue(rng, dist);
+
+		mNeededValue = (extraValue >= randValue());
+	}
 }
 
 Condition::Condition(ConditionTest type, bool expectedValue, double extraValue)
@@ -81,6 +92,7 @@ Condition::Condition(ConditionTest type, bool expectedValue, double extraValue)
 	, mString()
 {
 }
+
 Condition::Condition(ConditionTest type, BWAPI::UnitType unitType, int count)
 	: mType(type)
 	, mOperatorType(OperatorType::None)
@@ -151,11 +163,15 @@ bool Condition::passesValue() const
 		return BWAPI::Broodwar->self()->deadUnitCount(mUnitType) + MacroManager::Instance().getPlannedTotal(mUnitType) < mExtraInt;
 	case ConditionTest::enemyUnitCountGreaterEqualThan:
 		return PlayerTracker::Instance().enemyUnitCount(mUnitType) >= mExtraInt;
-	case ConditionTest::enemyDoesntHasUnitLessThan:
+	case ConditionTest::enemyUnitCountLessThan:
 		return PlayerTracker::Instance().enemyUnitCount(mUnitType) < mExtraInt;
-	case ConditionTest::minDistanceBetweenMainsLessThan:
+	case ConditionTest::myUnitCountGreaterEqualThan:
+		return PlayerTracker::Instance().playerUnitCount(mUnitType) >= mExtraInt;
+	case ConditionTest::myUnitCountLessThan:
+		return PlayerTracker::Instance().playerUnitCount(mUnitType) < mExtraInt;
+	//case ConditionTest::minDistanceBetweenMainsLessThan:
 		//return MapInformation::Instance().minMainDistance() < mExtraFloat;
-	case ConditionTest::minDistanceBetweenMainsGreaterThan:
+	//case ConditionTest::minDistanceBetweenMainsGreaterThan:
 		//return MapInformation::Instance().minMainDistance() > mExtraFloat;
 	case ConditionTest::None:
 		return mNeededValue;
@@ -189,6 +205,8 @@ bool Condition::passesValue() const
 		return BWAPI::Broodwar->self()->isUpgrading(mUpgrade) && (mExtraInt == 1 || BWAPI::Broodwar->self()->getUpgradeLevel(mUpgrade) == mExtraInt-1);
 	case ConditionTest::isUpgraded:
 		return BWAPI::Broodwar->self()->getUpgradeLevel(mUpgrade) == mExtraInt;
+	case ConditionTest::randomChance:
+		return mNeededValue;
 	}
 	return false;
 }

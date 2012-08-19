@@ -4,9 +4,11 @@
 #include "MacroManager.h"
 #include "SquadManager.h"
 #include "GameMemory.h"
+#include "Logger.h"
 
 #include <ctime>
 #include <boost/random.hpp>
+#include <algorithm>
 #include "boost/lexical_cast.hpp"
 
 BuildOrderManagerClass::BuildOrderManagerClass()
@@ -26,74 +28,118 @@ void BuildOrderManagerClass::onBegin()
 
 void BuildOrderManagerClass::onEnd(bool isWinner)
 {
-	std::string buildName = "BuildID" + boost::lexical_cast<std::string>((int)mStartingBuild.underlying());
-
-	std::vector<std::string> buildData = GameMemory::Instance().getData(buildName);
-	if(buildData.empty())
+	for(std::vector<std::pair<BuildOrderID, BuildOrderID>>::iterator it = mBuildHistory.begin(); it != mBuildHistory.end(); ++it)
 	{
-		buildData.push_back(isWinner ? "1" : "0");
-		buildData.push_back(isWinner ? "0" : "1");
+		const std::string buildName = String_Builder() << "Build_" << it->first.underlying() << "_" << it->second.underlying();
+		std::vector<std::string> buildData = GameMemory::Instance().getData(buildName);
+
+		if(buildData.empty())
+		{
+			buildData.push_back(isWinner ? "1" : "0");
+			buildData.push_back(isWinner ? "0" : "1");
+		}
+		else
+		{
+			std::string v = buildData[isWinner ? 0 : 1];
+			int count = boost::lexical_cast<int>(v);
+			++count;
+			buildData[isWinner ? 0 : 1] = boost::lexical_cast<std::string>(count);
+		}
+
+		GameMemory::Instance().setData(buildName, buildData);
+	}
+}
+
+void BuildOrderManagerClass::calculateNextBuilds()
+{
+	mNextBuilds.clear();
+	if(mCurrentBuild == BuildOrderID::None)
+	{
+		for(std::map<BuildOrderID, BuildOrder>::const_iterator it = mBuildOrders.begin(); it != mBuildOrders.end(); ++it)
+		{
+			if(it->second.getRace() != BWAPI::Broodwar->self()->getRace())
+				continue;
+
+			if(it->second.isStartBuild())
+				mNextBuilds.push_back(FollowUpBuild(it->first));
+		}
 	}
 	else
 	{
-		std::string v = buildData[isWinner ? 0 : 1];
-		int count = boost::lexical_cast<int>(v);
-		++count;
-		buildData[isWinner ? 0 : 1] = boost::lexical_cast<std::string>(count);
+		mNextBuilds = mBuildOrders[mCurrentBuild].getNextBuilds();
 	}
-	GameMemory::Instance().setData(buildName, buildData);
+
+	std::vector<float> winRates;
+	float highestWinRate = 0.0f;
+	for(size_t i = 0; i < mNextBuilds.size(); ++i)
+	{
+		winRates.push_back(mBuildOrders[mNextBuilds[i].getBuildID()].getWinRate(mCurrentBuild));
+		highestWinRate = std::max(highestWinRate, winRates.back());
+	}
+
+	highestWinRate -= 0.1f;
+	if(highestWinRate < 0.0f)
+		highestWinRate = 0.0f;
+
+	for(size_t i = 0; i < mNextBuilds.size();)
+	{
+		if(winRates[i] < highestWinRate)
+		{
+			std::swap(mNextBuilds[i], mNextBuilds[mNextBuilds.size()-1]);
+			mNextBuilds.pop_back();
+			std::swap(winRates[i], winRates[winRates.size()-1]);
+			winRates.pop_back();
+		}
+		else
+			++i;
+	}
 }
 
-BuildOrderID getRandomBuild(const std::vector<BuildOrderID> &builds)
+BuildOrderID BuildOrderManagerClass::getNextBuild() const
 {
-	if(builds.empty())
-		return BuildOrderID::Unknown;
+	if(mNextBuilds.empty())
+		return BuildOrderID::Finished;
+
+	std::vector<BuildOrderID> viableBuilds;
+
+	int timeSinceFinished = BWAPI::Broodwar->getFrameCount() - mBuildFinishTime;
+	for(size_t i = 0; i < mNextBuilds.size(); ++i)
+	{
+		if(mNextBuilds[i].getCompletionTime() < timeSinceFinished && mNextBuilds[i].evauluate())
+			viableBuilds.push_back(mNextBuilds[i].getBuildID());
+	}
+
+	if(viableBuilds.empty())
+		return BuildOrderID::None;
 
 	static boost::mt19937 rng(static_cast<unsigned int>(std::time(0)));
-	boost::uniform_int<> dist(0, builds.size() - 1);
+	boost::uniform_int<> dist(0, viableBuilds.size() - 1);
 	boost::variate_generator<boost::mt19937, boost::uniform_int<>> randIndex(rng, dist);
 
-	return builds[randIndex()];
+	return viableBuilds[randIndex()];
 }
 
 void BuildOrderManagerClass::update()
 {
-	if(mCurrentBuild == BuildOrderID::None)
+	if(mCurrentBuild != BuildOrderID::Finished)
 	{
-		std::vector<BuildOrderID> viableBuilds;
-		for each(std::pair<BuildOrderID, BuildOrder> build in mBuildOrders)
+		if(BuildOrderFinished())
 		{
-			if(build.second.getRace() != BWAPI::Broodwar->self()->getRace())
-				continue;
+			if(!mFinishedBuild)
+			{
+				mBuildFinishTime = BWAPI::Broodwar->getFrameCount();
+				mFinishedBuild = true;
+				calculateNextBuilds();
+			}
 
-			if(build.second.isStartBuild())
-				viableBuilds.push_back(build.first);
+			BuildOrderID buildID = getNextBuild();
+			if(buildID != BuildOrderID::None)
+			{
+				changeCurrentBuild(buildID);
+			}
 		}
-
-		mStartingBuild = getRandomBuild(viableBuilds) ;
-		changeCurrentBuild(mStartingBuild);
 	}
 
-	if(BuildOrderFinished())
-	{
-		if(!mFinishedBuild)
-		{
-			mBuildFinishTime = BWAPI::Broodwar->getFrameCount();
-			mFinishedBuild = true;
-		}
-
-		std::vector<BuildOrderID> viableBuilds;
-		for(std::map<BuildOrderID, Condition>::const_iterator i = mBuildOrders[mCurrentBuild].getNextBuilds().begin(); i != mBuildOrders[mCurrentBuild].getNextBuilds().end(); ++i)
-		{
-			if(i->second.evauluate())
-				viableBuilds.push_back(i->first);
-		}
-
-		if(!viableBuilds.empty())
-			changeCurrentBuild(getRandomBuild(viableBuilds));
-		else if(mBuildOrders[mCurrentBuild].getFallbackBuild() != BuildOrderID::None && mBuildOrders[mCurrentBuild].getFallbackTime() < BWAPI::Broodwar->getFrameCount() - mBuildFinishTime)
-			changeCurrentBuild(mBuildOrders[mCurrentBuild].getFallbackBuild());
-	}
 	checkBuildStatus();
 
 	if(mShowDebugInfo)
@@ -139,11 +185,24 @@ void BuildOrderManagerClass::BuildCallback(int buildID, CallBackType callbackTyp
 		else
 			++orderItem;
 	}
+
+	for(std::list<ArmyBehaviourItem>::iterator armyBehaviourItem = mArmyBehavioursWaiting.begin(); armyBehaviourItem != mArmyBehavioursWaiting.end();)
+	{
+		armyBehaviourItem->removeCallback(buildID, callbackType);
+
+		if(armyBehaviourItem->isFulfilled())
+		{
+			handleArmyBehaviourItem(*armyBehaviourItem);
+			mArmyBehavioursWaiting.erase(armyBehaviourItem++);
+		}
+		else
+			++armyBehaviourItem;
+	}
 }
 
 bool BuildOrderManagerClass::BuildOrderFinished()
 {
-	return mItemsWaiting.empty() && mOrdersWaiting.empty();
+	return mItemsWaiting.empty() && mOrdersWaiting.empty() && mArmyBehavioursWaiting.empty();
 }
 
 void BuildOrderManagerClass::changeCurrentBuild(BuildOrderID ID)
@@ -151,7 +210,7 @@ void BuildOrderManagerClass::changeCurrentBuild(BuildOrderID ID)
 	if(mBuildOrders.find(ID) == mBuildOrders.end())
 	{
 		LOGMESSAGEWARNING(String_Builder() << "Couldn't find Build Order");
-		changeCurrentBuild(BuildOrderID::Unknown);
+		changeCurrentBuild(BuildOrderID::Finished);
 		return;
 	}
 
@@ -161,36 +220,55 @@ void BuildOrderManagerClass::changeCurrentBuild(BuildOrderID ID)
 		return;
 	}
 
-	mFinishedBuild = false;
-	mItemsWaiting.clear();
-	mOrdersWaiting.clear();
-	mControlValues.clear();
+	const BuildOrder &buildOrder = mBuildOrders[ID];
 
-	const BuildOrder &order = mBuildOrders[ID];
-
-	if(ID != BuildOrderID::Unknown)
-		LOGMESSAGEWARNING(String_Builder() << ((mCurrentBuild == BuildOrderID::None) ? "Opening with " : "Transitioning to ") << order.getName());
+	if(ID != BuildOrderID::Finished)
+	{
+		LOGMESSAGEWARNING(String_Builder() << ((mCurrentBuild == BuildOrderID::None) ? "Opening with " : "Transitioning to ") << buildOrder.getName());
+		mBuildHistory.push_back(std::pair<BuildOrderID, BuildOrderID>(mCurrentBuild, ID));
+	}
+	else
+	{
+		LOGMESSAGEWARNING(String_Builder() << "Build finished at " << mBuildOrders[mCurrentBuild].getName());
+	}
 
 	mCurrentBuild = ID;
 
-	for each(const OrderItem &item in order.getOrderItems())
+	if(ID != BuildOrderID::Finished)
 	{
-		if(item.isFulfilled())
-			handleOrderItem(item);
-		else
-			mOrdersWaiting.push_back(item);
-	}
+		mFinishedBuild = false;
+		mItemsWaiting.clear();
+		mOrdersWaiting.clear();
+		mArmyBehavioursWaiting.clear();
+		mControlValues.clear();
 
-	for each(const BuildItem &item in order.getBuildItems())
-	{
-		if(item.isFulfilled())
-			handleBuildItem(item);
-		else
-			mItemsWaiting.push_back(item);
-	}
+		for each(const OrderItem &item in buildOrder.getOrderItems())
+		{
+			if(item.isFulfilled())
+				handleOrderItem(item);
+			else
+				mOrdersWaiting.push_back(item);
+		}
 
-	MacroManager::Instance().onChangeBuild();
-	SquadManager::Instance().onChangeBuild();
+		for each(const BuildItem &item in buildOrder.getBuildItems())
+		{
+			if(item.isFulfilled())
+				handleBuildItem(item);
+			else
+				mItemsWaiting.push_back(item);
+		}
+
+		for each(const ArmyBehaviourItem &item in buildOrder.getArmyBehaviourItems())
+		{
+			if(item.isFulfilled())
+				handleArmyBehaviourItem(item);
+			else
+				mArmyBehavioursWaiting.push_back(item);
+		}
+
+		MacroManager::Instance().onChangeBuild();
+		SquadManager::Instance().onChangeBuild();
+	}
 }
 
 void BuildOrderManagerClass::handleOrderItem(const OrderItem &item)
@@ -198,7 +276,11 @@ void BuildOrderManagerClass::handleOrderItem(const OrderItem &item)
 	toggleOrder(item.getType());
 
 	LOGMESSAGE(String_Builder() << "Handled Order " << getOrderName(item.getType()) << (getOrder(item.getType()) ? ": Set to True" : ": Set to False"));
-	LOGMESSAGE(String_Builder() );
+}
+
+void BuildOrderManagerClass::handleArmyBehaviourItem(const ArmyBehaviourItem &item)
+{
+	SquadManager::Instance().setBehaviour(item.getArmyBehaviour());
 }
 
 void BuildOrderManagerClass::toggleOrder(Order type)

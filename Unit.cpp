@@ -1207,10 +1207,34 @@ bool UnitClass::isAttackFrame()
 	return false;
 }
 
+int UnitClass::getAcidSporeCount()
+{
+	if(exists())
+		return mUnit->getAcidSporeCount();
+
+	return 0;
+}
+
+int UnitClass::getInterceptorCount()
+{
+	if(exists())
+		return mUnit->getInterceptorCount();
+
+	return 0;
+}
+
 int UnitClass::getScarabCount()
 {
 	if(exists())
 		return mUnit->getScarabCount();
+
+	return 0;
+}
+
+int UnitClass::getSpiderMineCount()
+{
+	if(exists())
+		return mUnit->getSpiderMineCount();
 
 	return 0;
 }

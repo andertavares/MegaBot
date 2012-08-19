@@ -23,14 +23,14 @@ void BorderTrackerClass::update()
 		recalculateBorders();
 	}
 
-	drawDebugInfo(mBorderPositions.find(PositionType::TechDefenseChokepoint));
-
 	if(mShowDebugInfo)
 	{
 		for each(Region region in mLargeRegions)
 		{
 			region->draw(BWAPI::Colors::Red);
 		}
+
+		drawDebugInfo(mBorderPositions.find(PositionType::TechDefenseChokepoint));
 		drawDebugInfo(mBorderPositions.find(PositionType::EnemyControlRegion));
 		drawDebugInfo(mBorderPositions.find(PositionType::BotControlRegion));
 		drawDebugInfo(mBorderPositions.find(PositionType::ForwardRegion));

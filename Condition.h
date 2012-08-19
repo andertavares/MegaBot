@@ -13,7 +13,7 @@ struct ConditionTestDef
 	{
 		None,
 		enemyUnitCountGreaterEqualThan,
-		enemyDoesntHasUnitLessThan,
+		enemyUnitCountLessThan,
 		enemyHasResearched,
 		enemyHasUpgraded,
 		enemyHasExpanded,
@@ -25,6 +25,8 @@ struct ConditionTestDef
 		myPlannedUnitTotalLessThan,
 		myUnitTotalBuildCountGreaterEqualThan,
 		myUnitTotalBuildCountLessThan,
+		myUnitCountGreaterEqualThan,
+		myUnitCountLessThan,
 		isEnemyZerg,
 		isEnemyProtoss,
 		isEnemyTerran,
@@ -39,6 +41,7 @@ struct ConditionTestDef
 		mapSize,
 		numberOfEnemies,
 		enemyMainSize,
+		randomChance,
 		mapIs
 	};
 };

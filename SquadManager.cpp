@@ -5,7 +5,11 @@
 
 #include "DefaultSquad.h"
 
+#include "Logger.h"
+
 SquadManagerClass::SquadManagerClass()
+	: mCurrentBehaviour(ArmyBehaviour::Default)
+	, mDebugDraw(false)
 {
 	mDefaultSquad = createSquad(SquadType::DefaultSquad);
 }
@@ -31,6 +35,11 @@ void SquadManagerClass::update()
 			squad->setGoal(Goal(ActionType::Defend, base));
 			mDefenseSquads[base] = squad;
 		}
+	}
+
+	if(mDebugDraw)
+	{
+		BWAPI::Broodwar->drawTextScreen(5, 10, "Army Behaviour: %s", getArmyBehaviourName(mCurrentBehaviour).c_str());
 	}
 }
 
@@ -88,15 +97,20 @@ void SquadManagerClass::onChangeBuild()
 		}
 		else ++o;
 	}
+}
 
-	mCurrentBehaviour = BuildOrderManager::Instance().getCurrentBuild().getArmyBehaiour();
+void SquadManagerClass::setBehaviour(ArmyBehaviour behaviour)
+{
+	mCurrentBehaviour = behaviour;
 	for(std::map<SquadType, std::set<BaseSquadTaskPointer>>::iterator o = mSquads.begin(); o != mSquads.end(); ++o)
 	{
 		for each(BaseSquadTaskPointer squad in o->second)
 		{
-			squad->changeBehaviour(mCurrentBehaviour);
+			squad->changeBehaviour(behaviour);
 		}
 	}
+
+	LOGMESSAGE(String_Builder() << "Army Behaviour set to " << getArmyBehaviourName(behaviour));
 }
 
 BaseSquadTaskPointer SquadManagerClass::createSquad(SquadType type)
@@ -129,4 +143,22 @@ BaseSquadTaskPointer SquadManagerClass::createSquad(SquadType type)
 	}
 
 	return task;
+}
+
+std::string SquadManagerClass::getArmyBehaviourName(ArmyBehaviour type)
+{
+	switch(type.underlying())
+	{
+	case ArmyBehaviour::AllIn:
+		return "AllIn";
+	case ArmyBehaviour::Aggresive:
+		return "Aggresive";
+	case ArmyBehaviour::Contain:
+		return "Contain";
+	case ArmyBehaviour::Default:
+		return "Default";
+	case ArmyBehaviour::Defensive:
+		return "Defensive";
+	}
+	return "None";
 }

@@ -112,7 +112,7 @@ bool BasicUnitAction::update(const Goal &squadGoal, const UnitGroup &squadUnitGr
 
 		if(it == mTargetPriorities.end())//Unit not found in the priorities list
 		{
-			if(UnitHelper::isArmyUnit(type) || UnitHelper::isStaticDefense(type) || type == BWAPI::UnitTypes::Terran_Bunker)
+			if(UnitHelper::isArmyUnit(type) || UnitHelper::isStaticDefense(type))
 				unitPriority += 1;
 			else if(type.isWorker())
 				unitPriority += 2;
@@ -187,9 +187,7 @@ bool BasicUnitAction::update(const Goal &squadGoal, const UnitGroup &squadUnitGr
 			}
 		}
 
-		int rangeToStayAt = 0;
-		if(!canAttack)
-			rangeToStayAt = closestUnitRange+32;
+		int rangeToStayAt = canAttack ? 0 : closestUnitRange+32;
 
 		if(actionUnitType.maxEnergy() > 0 && closestUnit->getType() == BWAPI::UnitTypes::Terran_Science_Vessel)
 			rangeToStayAt = std::max(rangeToStayAt, BWAPI::TechTypes::EMP_Shockwave.getWeapon().maxRange()+32);
@@ -202,7 +200,7 @@ bool BasicUnitAction::update(const Goal &squadGoal, const UnitGroup &squadUnitGr
 	}
 
 	const bool canAttackCurrentTarget = currentTargetUnit && mUnit->getRemainingCooldown(currentTargetUnit) <= BWAPI::Broodwar->getRemainingLatencyFrames();
-	const bool isCurrentTargetImportant = currentTargetUnit && (UnitHelper::isArmyUnit(currentTargetUnit->getType()) || UnitHelper::isStaticDefense(currentTargetUnit->getType()));
+	const bool isCurrentTargetImportant = currentTargetUnit && (currentTargetUnit->getType().isWorker() || UnitHelper::isArmyUnit(currentTargetUnit->getType()) || UnitHelper::isStaticDefense(currentTargetUnit->getType()));
 	const bool goalBetterThanCurrent = canAttackCurrentTarget && goalTargetPriority < currentTargetPriority && !isCurrentTargetImportant;
 
 	if(goalBetterThanCurrent)

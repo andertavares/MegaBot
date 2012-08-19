@@ -37,9 +37,12 @@ public:
 private:
 	UnitGroup mUnits;
 	std::map<Unit, Behaviour> mUnitBehaviours;
+	int mNumZealots;
 
 	Unit mObserver;
 
 	Goal mLastGoal;
 	bool mEngageFull;
+
+	int mFailedBaseAttacks;
 };

@@ -15,7 +15,7 @@ void BuildOrderManagerClass::LoadProtossBuilds()
 	/* Against Zerg                                                                                   */
 	/**************************************************************************************************/
 
-	Condition corsairBuildCondition(Condition(ConditionTest::myUnitTotalBuildCountLessThan, Protoss_Corsair, 12) || (Condition(ConditionTest::myPlannedUnitTotalLessThan, Protoss_Corsair, 12) && Condition(ConditionTest::enemyUnitCountGreaterEqualThan, Zerg_Mutalisk, 12)));
+	Condition corsairBuildCondition(Condition(ConditionTest::myUnitTotalBuildCountLessThan, Protoss_Corsair, 12) || (Condition(ConditionTest::myUnitCountLessThan, Protoss_Corsair, 12) && Condition(ConditionTest::enemyUnitCountGreaterEqualThan, Zerg_Mutalisk, 12)));
 	Condition corsairStargateCondition(ConditionTest::myPlannedUnitTotalLessThan, Protoss_Stargate, 2);
 
 	/************************************************************************/
@@ -28,9 +28,9 @@ void BuildOrderManagerClass::LoadProtossBuilds()
 	forgeExpand.setStartingCondition(Condition(ConditionTest::numberOfEnemies, 1) && Condition(ConditionTest::isEnemyZerg) && Condition(ConditionTest::canForgeExpand));
 	//Condition(ConditionType::minDistanceBetweenMainsGreaterThan, double(BWAPI::UnitTypes::Protoss_Photon_Cannon.buildTime()*BWAPI::UnitTypes::Zerg_Zergling.topSpeed())); //meh, if we know how to forge expand, must be viable
 
-	forgeExpand.setArmyBehaviour(ArmyBehaviour::Defensive);
+	forgeExpand.addArmyBehaviour(ArmyBehaviour::Defensive);
 
-	forgeExpand.setDefaultBuild(BuildOrderID::StargateArcon);
+	forgeExpand.addNextBuild(BuildOrderID::StargateArcon);
 
 	//Units to Produce
 	forgeExpand.addProduce(Protoss_Zealot, 1);
@@ -59,10 +59,10 @@ void BuildOrderManagerClass::LoadProtossBuilds()
 
 	BuildOrder starArcon(Protoss, BuildOrderID::StargateArcon, "Stargate into Arcon");
 
-	starArcon.addNextBuild(BuildOrderID::ArconTiming, Condition(ConditionTest::myPlannedUnitTotalGreaterEqualThan, Protoss_Archon, 3));//go to timing attack if i have 2 arcons
-	starArcon.setDefaultBuild(BuildOrderID::ArconTiming, 24*60*4);//or 4 mins have passed
+	starArcon.addNextBuild(BuildOrderID::ArconTiming, 0, Condition(ConditionTest::myPlannedUnitTotalGreaterEqualThan, Protoss_Archon, 3));//go to timing attack if i have 2 arcons
+	starArcon.addNextBuild(BuildOrderID::ArconTiming, 24*60*4);//or 4 mins have passed
 
-	starArcon.setArmyBehaviour(ArmyBehaviour::Defensive);
+	starArcon.addArmyBehaviour(ArmyBehaviour::Defensive);
 
 	// Constants
 	starArcon.addOrder(Order::TrainWorkers);
@@ -119,7 +119,7 @@ void BuildOrderManagerClass::LoadProtossBuilds()
 	ArconTiming.addOrder(Order::ExpansionManager);
 	ArconTiming.addOrder(Order::Scout);
 
-	ArconTiming.setDefaultBuild(BuildOrderID::PvZEndGame, 24*60*1);
+	ArconTiming.addNextBuild(BuildOrderID::PvZEndGame, 24*60*1);
 
 	// Squads
 	ArconTiming.addSquad(SquadType::CorsairSquad);
@@ -130,7 +130,7 @@ void BuildOrderManagerClass::LoadProtossBuilds()
 	ArconTiming.addProduce(Protoss_Zealot, 1);
 	ArconTiming.addProduce(Protoss_Dragoon, 1);
 
-	ArconTiming.setArmyBehaviour(ArmyBehaviour::Aggresive);
+	ArconTiming.addArmyBehaviour(ArmyBehaviour::Aggresive);
 
 	// Add
 	mBuildOrders[BuildOrderID::ArconTiming] = ArconTiming;
@@ -139,31 +139,30 @@ void BuildOrderManagerClass::LoadProtossBuilds()
 	/* PvZ End Game                                                         */
 	/************************************************************************/
 
-	BuildOrder pvzEnd(Protoss, BuildOrderID::PvZEndGame, "PvZ End Game");
+	BuildOrder pvzEndGame(Protoss, BuildOrderID::PvZEndGame, "PvZ End Game");
 
 	// Constants
-	pvzEnd.addOrder(Order::TrainWorkers);
-	pvzEnd.addOrder(Order::SupplyManager);
-	pvzEnd.addOrder(Order::MacroArmyProduction);
-	pvzEnd.addOrder(Order::RefineryManager);
-	pvzEnd.addOrder(Order::MacroProductionFacilities);
-	pvzEnd.addOrder(Order::MacroCanTech);
-	pvzEnd.addOrder(Order::ExpansionManager);
-	pvzEnd.addOrder(Order::Scout);
-
-	pvzEnd.setArmyBehaviour(ArmyBehaviour::Default);
+	pvzEndGame.addOrder(Order::TrainWorkers);
+	pvzEndGame.addOrder(Order::Scout);
+	pvzEndGame.addOrder(Order::SupplyManager);
+	pvzEndGame.addOrder(Order::RefineryManager);
+	pvzEndGame.addOrder(Order::MacroArmyProduction);
+	pvzEndGame.addOrder(Order::CanRemoveSquads);
+	pvzEndGame.addOrder(Order::ExpansionManager);
+	pvzEndGame.addOrder(Order::MacroProductionFacilities);
+	pvzEndGame.addOrder(Order::MacroCanTech);
 
 	// Squads
-	pvzEnd.addSquad(SquadType::CorsairSquad);
+	pvzEndGame.addSquad(SquadType::CorsairSquad);
 
 	//Units to Produce
-	pvzEnd.addProduce(Protoss_High_Templar, 2, 100, Condition(ConditionTest::isResearching, Psionic_Storm));
-	pvzEnd.addProduce(Protoss_Corsair, 3, 100, corsairBuildCondition, corsairStargateCondition);
-	pvzEnd.addProduce(Protoss_Zealot, 1);
-	pvzEnd.addProduce(Protoss_Dragoon, 1);
+	pvzEndGame.addProduce(Protoss_High_Templar, 2, 110, Condition(ConditionTest::isResearching, Psionic_Storm));
+	pvzEndGame.addProduce(Protoss_Corsair, 3, 110, corsairBuildCondition, corsairStargateCondition);
+	pvzEndGame.addProduce(Protoss_Zealot, 1, 100);
+	pvzEndGame.addProduce(Protoss_Dragoon, 1, 110);
 
 	// Add
-	mBuildOrders[BuildOrderID::PvZEndGame] = pvzEnd;
+	mBuildOrders[BuildOrderID::PvZEndGame] = pvzEndGame;
 
 	/************************************************************************/
 	/* Two Gate                                                             */
@@ -175,14 +174,14 @@ void BuildOrderManagerClass::LoadProtossBuilds()
 	twoGate.setStartingCondition(Condition(ConditionTest::isEnemyZerg) || Condition(ConditionTest::isEnemyProtoss) || Condition(ConditionTest::isEnemyUnknown));
 
 	// Follow Ups
-	twoGate.addNextBuild(BuildOrderID::CoreIntoStargate, Condition(ConditionTest::isEnemyZerg));
-	twoGate.addNextBuild(BuildOrderID::FourGateGoon, Condition(ConditionTest::isEnemyProtoss) || Condition(ConditionTest::isEnemyTerran) || Condition(ConditionTest::isEnemyUnknown));
+	twoGate.addNextBuild(BuildOrderID::CoreIntoStargate, 0, Condition(ConditionTest::isEnemyZerg));
+	twoGate.addNextBuild(BuildOrderID::FourGateGoon, 0, Condition(ConditionTest::isEnemyProtoss) || Condition(ConditionTest::isEnemyTerran) || Condition(ConditionTest::isEnemyUnknown));
 
 	//Units to Produce
 	twoGate.addProduce(Protoss_Zealot, 1);
 
 	//Army Behaviour
-	twoGate.setArmyBehaviour(ArmyBehaviour::Aggresive);
+	twoGate.addArmyBehaviour(ArmyBehaviour::Aggresive);
 
 	// Build Order
 	ID_1 =	twoGate.addItem(Protoss_Probe, 4);
@@ -212,7 +211,7 @@ void BuildOrderManagerClass::LoadProtossBuilds()
 	BuildOrder coreStar(Protoss, BuildOrderID::CoreIntoStargate, "Cybernetics Core into Stargate");
 
 	// Follow Ups
-	coreStar.setDefaultBuild(BuildOrderID::PvZEndGame, 24*60*1);
+	coreStar.addNextBuild(BuildOrderID::PvZEndGame, 24*60*1);
 
 	// Constants
 	coreStar.addOrder(Order::TrainWorkers);
@@ -229,7 +228,7 @@ void BuildOrderManagerClass::LoadProtossBuilds()
 	coreStar.addProduce(Protoss_Corsair, 2, 100, corsairBuildCondition, corsairStargateCondition);
 
 	//Army Behaviour
-	coreStar.setArmyBehaviour(ArmyBehaviour::Aggresive);
+	coreStar.addArmyBehaviour(ArmyBehaviour::Aggresive);
 
 	// Build Order
 	ID_1 =	coreStar.addItem(Protoss_Assimilator);
@@ -257,14 +256,14 @@ void BuildOrderManagerClass::LoadProtossBuilds()
 	//Starting Conditions
 	fourteenNexus.setStartingCondition(Condition(ConditionTest::isEnemyTerran) && Condition(ConditionTest::numberOfEnemies, 1) && Condition(ConditionTest::mapSize, 4));
 
-	fourteenNexus.setDefaultBuild(BuildOrderID::CitadelFirst, 24*60*2);
+	fourteenNexus.addNextBuild(BuildOrderID::CitadelFirst, 24*60*2);
 
 	//Units to Produce
 	fourteenNexus.addProduce(Protoss_Dragoon, 6);
 	fourteenNexus.addProduce(Protoss_Zealot, 1);
 
 	//Army Behaviour
-	fourteenNexus.setArmyBehaviour(ArmyBehaviour::Defensive);
+	fourteenNexus.addArmyBehaviour(ArmyBehaviour::Defensive);
 
 	// Build Order
 	ID_1 =	fourteenNexus.addItem(Protoss_Probe, 4, TaskType::Highest);
@@ -309,11 +308,11 @@ void BuildOrderManagerClass::LoadProtossBuilds()
 	oneGateCore.setStartingCondition(Condition(ConditionTest::isEnemyTerran) || Condition(ConditionTest::isEnemyProtoss));
 
 	//oneGateCore.addNextBuild(buildRoboVsTerran, Condition(ConditionType::isEnemyTerran));
-	oneGateCore.addNextBuild(BuildOrderID::AdditionalGateWays, Condition(ConditionTest::isEnemyTerran));
-	oneGateCore.addNextBuild(BuildOrderID::RoboVsProtoss, Condition(ConditionTest::isEnemyProtoss));
+	oneGateCore.addNextBuild(BuildOrderID::AdditionalGateWays, 0, Condition(ConditionTest::isEnemyTerran));
+	oneGateCore.addNextBuild(BuildOrderID::RoboVsProtoss, 0, Condition(ConditionTest::isEnemyProtoss));
 
 	//Army Behaviour
-	oneGateCore.setArmyBehaviour(ArmyBehaviour::Aggresive);
+	oneGateCore.addArmyBehaviour(ArmyBehaviour::Aggresive);
 
 	// Build Order
 			oneGateCore.addItem(Protoss_Probe, 4, TaskType::Highest);
@@ -347,12 +346,10 @@ void BuildOrderManagerClass::LoadProtossBuilds()
 	roboPvT.addOrder(Order::RefineryManager);
 	roboPvT.addOrder(Order::Scout);
 
-	roboPvT.setArmyBehaviour(ArmyBehaviour::Defensive);
+	roboPvT.addArmyBehaviour(ArmyBehaviour::Defensive);
 
-	roboPvT.addNextBuild(BuildOrderID::CitadelFirst, Condition(ConditionTest::myPlannedUnitTotalGreaterEqualThan, Protoss_Reaver, 1) && Condition(ConditionTest::myPlannedUnitTotalGreaterEqualThan, Protoss_Shuttle, 1));
-
-	// Follow Ups
-	roboPvT.setDefaultBuild(BuildOrderID::CitadelFirst, 24*60*2);
+	roboPvT.addNextBuild(BuildOrderID::CitadelFirst, 0, Condition(ConditionTest::myPlannedUnitTotalGreaterEqualThan, Protoss_Reaver, 1) && Condition(ConditionTest::myPlannedUnitTotalGreaterEqualThan, Protoss_Shuttle, 1));
+	roboPvT.addNextBuild(BuildOrderID::CitadelFirst, 24*60*2);
 
 	// Squads
 	roboPvT.addSquad(SquadType::ReaverDropSquad);
@@ -389,12 +386,11 @@ void BuildOrderManagerClass::LoadProtossBuilds()
 	gateways.addOrder(Order::SupplyManager);
 	gateways.addOrder(Order::Scout);
 
-	gateways.setArmyBehaviour(ArmyBehaviour::Aggresive);
+	gateways.addArmyBehaviour(ArmyBehaviour::Aggresive);
 
 	// Follow Ups
-	gateways.setDefaultBuild(BuildOrderID::Nexus, 24*60*4);
-
-	gateways.addNextBuild(BuildOrderID::Nexus, Condition(ConditionTest::enemyHasResearched, BWAPI::TechTypes::Tank_Siege_Mode));
+	gateways.addNextBuild(BuildOrderID::Nexus, 24*60*4);
+	gateways.addNextBuild(BuildOrderID::Nexus, 0, Condition(ConditionTest::enemyHasResearched, BWAPI::TechTypes::Tank_Siege_Mode));
 
 	//Units to Produce
 	gateways.addProduce(Protoss_Dragoon, 1);
@@ -424,14 +420,14 @@ void BuildOrderManagerClass::LoadProtossBuilds()
 	nexus.addOrder(Order::Scout);
 
 	// Follow Ups
-	nexus.addNextBuild(BuildOrderID::PvPMidGame, Condition(ConditionTest::isEnemyProtoss));
-	nexus.addNextBuild(BuildOrderID::PvZEndGame, Condition(ConditionTest::isEnemyZerg));
-	
-	nexus.setDefaultBuild(BuildOrderID::CitadelFirst, 24*50*2);
+	nexus.addNextBuild(BuildOrderID::PvPMidGame, 0, Condition(ConditionTest::isEnemyProtoss));
+	nexus.addNextBuild(BuildOrderID::PvZEndGame, 0, Condition(ConditionTest::isEnemyZerg));
+	nexus.addNextBuild(BuildOrderID::CitadelFirst, 24*50*2);
 
 	//Units to Produce
-	nexus.addProduce(Protoss_Dragoon, 6);
-	nexus.addProduce(Protoss_Zealot, 1);
+	nexus.addProduce(Protoss_Dragoon, 6, 110);
+	nexus.addProduce(Protoss_Zealot, 1, 100);
+	nexus.addProduce(Protoss_Dark_Templar, 4, 100, Condition(ConditionTest::myUnitCountGreaterEqualThan, Protoss_Templar_Archives, 1));
 
 	// Build Order
 	ID_1 =	nexus.addItem(Protoss_Nexus, 1, TaskType::Expansion, BuildingLocation::Expansion);
@@ -456,8 +452,8 @@ void BuildOrderManagerClass::LoadProtossBuilds()
 	citadel.addOrder(Order::Scout);
 
 	// Follow Ups
-	citadel.setDefaultBuild(BuildOrderID::PvTMidGame, 24*60);
-	//citadel.addNextBuild(BuildOrderID::PvTCarrierSwitch, Condition(ConditionType::enemyDoesntHasUnit, BWAPI::UnitTypes::Terran_Goliath, 2));
+	citadel.addNextBuild(BuildOrderID::PvTMidGame, 24*60);
+	citadel.addNextBuild(BuildOrderID::PvTCarrierSwitch, 0, Condition(ConditionTest::enemyUnitCountLessThan, BWAPI::UnitTypes::Terran_Goliath, 2) && Condition(ConditionTest::myUnitCountGreaterEqualThan, BWAPI::UnitTypes::Protoss_Nexus, 2) && Condition(ConditionTest::randomChance, 0.2));
 
 	// Squads
 	citadel.addSquad(SquadType::ReaverDropSquad);
@@ -490,14 +486,14 @@ void BuildOrderManagerClass::LoadProtossBuilds()
 	midGame.addOrder(Order::Scout);
 
 	// Follow Ups
-	midGame.setDefaultBuild(BuildOrderID::PvTEndGame, 24*60);
+	midGame.addNextBuild(BuildOrderID::PvTEndGame, 24*60);
 
 	// Squads
 	midGame.addSquad(SquadType::ReaverDropSquad);
 
 	//Units to Produce
-	midGame.addProduce(Protoss_Dragoon, 14);
-	midGame.addProduce(Protoss_Zealot, 14);
+	midGame.addProduce(Protoss_Dragoon, 10);
+	midGame.addProduce(Protoss_Zealot, 10);
 	midGame.addProduce(Protoss_High_Templar, 1, 100, Condition(ConditionTest::isResearching, Psionic_Storm));
 
 	ID_1 =	midGame.addItem(Protoss_Templar_Archives);
@@ -509,33 +505,33 @@ void BuildOrderManagerClass::LoadProtossBuilds()
 	mBuildOrders[BuildOrderID::PvTMidGame] = midGame;
 
 	/************************************************************************/
-	/* End Game                                                             */
+	/* PvT End Game                                                             */
 	/************************************************************************/
 
-	BuildOrder endGame(Protoss, BuildOrderID::PvTEndGame, "End Game");
+	BuildOrder pvtEndGame(Protoss, BuildOrderID::PvTEndGame, "PvT End Game");
 
 	// Constants
-	endGame.addOrder(Order::TrainWorkers);
-	endGame.addOrder(Order::SupplyManager);
-	endGame.addOrder(Order::RefineryManager);
-	endGame.addOrder(Order::MacroArmyProduction);
-	endGame.addOrder(Order::MacroProductionFacilities);
-	endGame.addOrder(Order::ExpansionManager);
-	endGame.addOrder(Order::MacroCanTech);
-	endGame.addOrder(Order::CanRemoveSquads);
-	endGame.addOrder(Order::Scout);
+	pvtEndGame.addOrder(Order::TrainWorkers);
+	pvtEndGame.addOrder(Order::Scout);
+	pvtEndGame.addOrder(Order::SupplyManager);
+	pvtEndGame.addOrder(Order::RefineryManager);
+	pvtEndGame.addOrder(Order::MacroArmyProduction);
+	pvtEndGame.addOrder(Order::CanRemoveSquads);
+	pvtEndGame.addOrder(Order::ExpansionManager);
+	pvtEndGame.addOrder(Order::MacroProductionFacilities);
+	pvtEndGame.addOrder(Order::MacroCanTech);
 
 	// Squads
-	endGame.addSquad(SquadType::ReaverDropSquad);
+	pvtEndGame.addSquad(SquadType::ReaverDropSquad);
 
 	//Units to Produce
-	endGame.addProduce(Protoss_Dragoon, 14);
-	endGame.addProduce(Protoss_Zealot, 14);
-	endGame.addProduce(Protoss_High_Templar, 3, 100, Condition(ConditionTest::isResearching, Psionic_Storm));
-	endGame.addProduce(Protoss_Arbiter, 1);
+	pvtEndGame.addProduce(Protoss_Dragoon, 14);
+	pvtEndGame.addProduce(Protoss_Zealot, 14);
+	pvtEndGame.addProduce(Protoss_High_Templar, 3, 100, Condition(ConditionTest::isResearching, Psionic_Storm));
+	pvtEndGame.addProduce(Protoss_Arbiter, 1);
 
 	// Add
-	mBuildOrders[BuildOrderID::PvTEndGame] = endGame;
+	mBuildOrders[BuildOrderID::PvTEndGame] = pvtEndGame;
 
 	/************************************************************************/
 	/* Carrier Switch                                                       */
@@ -557,9 +553,15 @@ void BuildOrderManagerClass::LoadProtossBuilds()
 	// Squads
 	carriers.addSquad(SquadType::ReaverDropSquad);
 
+	ID_1 = carriers.addItem(Protoss_Stargate, 1);
+	ID_1 = carriers.addItem(Protoss_Fleet_Beacon, CB(ID_1, CallBackType::onDispatched));
+	       carriers.addItem(Protoss_Carrier, CB(ID_1, CallBackType::onDispatched), 1);
+	ID_1 = carriers.addItem(Protoss_Stargate, CB(ID_1, CallBackType::onDispatched), 2);
+	ID_1 = carriers.addItem(Protoss_Carrier, CB(ID_1, CallBackType::onDispatched), 7);
+
 	//Units to Produce
 	carriers.addProduce(Protoss_Dragoon, 1);
-	carriers.addProduce(Protoss_Zealot, 1);
+	carriers.addProduce(Protoss_Zealot, 8);
 	carriers.addProduce(Protoss_Carrier, 12);
 
 	// Add
@@ -578,14 +580,14 @@ void BuildOrderManagerClass::LoadProtossBuilds()
 	gatewayGoon.addOrder(Order::MacroArmyProduction);
 	gatewayGoon.addOrder(Order::RefineryManager);
 
-	gatewayGoon.setArmyBehaviour(ArmyBehaviour::Default);
+	gatewayGoon.addArmyBehaviour(ArmyBehaviour::Default);
 
 	// Follow Ups
-	gatewayGoon.setDefaultBuild(BuildOrderID::Nexus, 24*60*3);
+	gatewayGoon.addNextBuild(BuildOrderID::Nexus, 24*60*3);
 
 	//Units to Produce
-	gatewayGoon.addProduce(Protoss_Dragoon, 8);
-	gatewayGoon.addProduce(Protoss_Zealot, 1);
+	gatewayGoon.addProduce(Protoss_Dragoon, 8, 110);
+	gatewayGoon.addProduce(Protoss_Zealot, 1, 100);
 
 	// Build Order
 	ID_1 =	gatewayGoon.addItem(Protoss_Cybernetics_Core);
@@ -609,20 +611,20 @@ void BuildOrderManagerClass::LoadProtossBuilds()
 	robo.addOrder(Order::MacroArmyProduction);
 	robo.addOrder(Order::Scout);
 
-	robo.setArmyBehaviour(ArmyBehaviour::Defensive);
+	robo.addArmyBehaviour(ArmyBehaviour::Defensive);
 
-	robo.addNextBuild(BuildOrderID::PvPMidGame, Condition(ConditionTest::myPlannedUnitTotalGreaterEqualThan, Protoss_Reaver, 1) /* && Condition(ConditionType::myUnitCount, Protoss_Shuttle, 1) */);
+	robo.addNextBuild(BuildOrderID::PvPMidGame, 0, Condition(ConditionTest::myPlannedUnitTotalGreaterEqualThan, Protoss_Reaver, 1) /* && Condition(ConditionType::myUnitCount, Protoss_Shuttle, 1) */);
 
 	// Follow Ups
-	robo.setDefaultBuild(BuildOrderID::PvPMidGame, 24*60);
+	robo.addNextBuild(BuildOrderID::PvPMidGame, 24*60);
 
 	// Squads
 	robo.addSquad(SquadType::ReaverDropSquad);
 
 	//Units to Produce
-	robo.addProduce(Protoss_Zealot, 1);
-	robo.addProduce(Protoss_Dragoon, 14);
-	robo.addProduce(Protoss_Reaver, 1, 100, Condition(ConditionTest::myPlannedUnitTotalLessThan, Protoss_Reaver, 3), Condition(ConditionTest::myPlannedUnitTotalLessThan, Protoss_Robotics_Facility, 1));
+	robo.addProduce(Protoss_Zealot, 1, 100);
+	robo.addProduce(Protoss_Dragoon, 10, 110);
+	robo.addProduce(Protoss_Reaver, 1, 120, Condition(ConditionTest::myPlannedUnitTotalLessThan, Protoss_Reaver, 3), Condition(ConditionTest::myPlannedUnitTotalLessThan, Protoss_Robotics_Facility, 1));
 
 	// Build Order
 			robo.addItem(Protoss_Dragoon, 4, TaskType::Army);
@@ -658,50 +660,102 @@ void BuildOrderManagerClass::LoadProtossBuilds()
 	PvPMid.addOrder(Order::CanRemoveSquads);
 	PvPMid.addOrder(Order::Scout);
 
-	PvPMid.setArmyBehaviour(ArmyBehaviour::Default);
+	PvPMid.addArmyBehaviour(ArmyBehaviour::Default);
 
-	PvPMid.setDefaultBuild(BuildOrderID::PvPEndGame, 24*60*2);
+	PvPMid.addNextBuild(BuildOrderID::PvPEndGame, 24*60*2);
 
 	// Squads
 	PvPMid.addSquad(SquadType::ReaverDropSquad);
 
 	//Units to Produce
-	PvPMid.addProduce(Protoss_Zealot, 1);
-	PvPMid.addProduce(Protoss_Dragoon, 14);
-	PvPMid.addProduce(Protoss_High_Templar, 1, 100, Condition(ConditionTest::isResearching, Psionic_Storm));
-	PvPMid.addProduce(Protoss_Reaver, 1, 100, Condition(ConditionTest::myPlannedUnitTotalLessThan, Protoss_Reaver, 3), Condition(ConditionTest::myPlannedUnitTotalLessThan, Protoss_Robotics_Facility, 1));
+	PvPMid.addProduce(Protoss_Zealot, 1, 100);
+	PvPMid.addProduce(Protoss_Dragoon, 10, 110);
+	PvPMid.addProduce(Protoss_High_Templar, 1, 110, Condition(ConditionTest::isResearching, Psionic_Storm));
+	PvPMid.addProduce(Protoss_Reaver, 1, 110, Condition(ConditionTest::myPlannedUnitTotalLessThan, Protoss_Reaver, 3), Condition(ConditionTest::myPlannedUnitTotalLessThan, Protoss_Robotics_Facility, 1));
 
 	// Add
 	mBuildOrders[BuildOrderID::PvPMidGame] = PvPMid;
 
 	/************************************************************************/
-	/* PVP End Game                                                         */
+	/* PvP End Game                                                         */
 	/************************************************************************/
 
-	BuildOrder PVPEnd(Protoss, BuildOrderID::PvPEndGame, "End Game");
+	BuildOrder pvpEndGame(Protoss, BuildOrderID::PvPEndGame, "PvP End Game");
 
 	// Constants
-	PVPEnd.addOrder(Order::TrainWorkers);
-	PVPEnd.addOrder(Order::SupplyManager);
-	PVPEnd.addOrder(Order::ExpansionManager);
-	PVPEnd.addOrder(Order::RefineryManager);
-	PVPEnd.addOrder(Order::MacroArmyProduction);
-	PVPEnd.addOrder(Order::MacroProductionFacilities);
-	PVPEnd.addOrder(Order::MacroCanTech);
-	PVPEnd.addOrder(Order::CanRemoveSquads);
-	PVPEnd.addOrder(Order::Scout);
-
-	PVPEnd.setArmyBehaviour(ArmyBehaviour::Default);
+	pvpEndGame.addOrder(Order::TrainWorkers);
+	pvpEndGame.addOrder(Order::Scout);
+	pvpEndGame.addOrder(Order::SupplyManager);
+	pvpEndGame.addOrder(Order::RefineryManager);
+	pvpEndGame.addOrder(Order::MacroArmyProduction);
+	pvpEndGame.addOrder(Order::CanRemoveSquads);
+	pvpEndGame.addOrder(Order::ExpansionManager);
+	pvpEndGame.addOrder(Order::MacroProductionFacilities);
+	pvpEndGame.addOrder(Order::MacroCanTech);
 
 	// Squads
-	PVPEnd.addSquad(SquadType::ReaverDropSquad);
+	pvpEndGame.addSquad(SquadType::ReaverDropSquad);
 
 	//Units to Produce
-	PVPEnd.addProduce(Protoss_Zealot, 1);
-	PVPEnd.addProduce(Protoss_Dragoon, 14);
-	PVPEnd.addProduce(Protoss_High_Templar, 1, 100, Condition(ConditionTest::isResearching, Psionic_Storm));
-	PVPEnd.addProduce(Protoss_Arbiter, 1);
+	pvpEndGame.addProduce(Protoss_Zealot, 1);
+	pvpEndGame.addProduce(Protoss_Dragoon, 14);
+	pvpEndGame.addProduce(Protoss_High_Templar, 2, 100, Condition(ConditionTest::isResearching, Psionic_Storm));
+	pvpEndGame.addProduce(Protoss_Arbiter, 1);
 
 	// Add
-	mBuildOrders[BuildOrderID::PvPEndGame] = PVPEnd;
+	mBuildOrders[BuildOrderID::PvPEndGame] = pvpEndGame;
+
+	/************************************************************************/
+	/* DT Rush                                                              */
+	/************************************************************************/
+
+	BuildOrder dtRush(Protoss, BuildOrderID::DTRush, "DT Rush");
+
+	//Starting Conditions
+	dtRush.setStartingCondition(Condition(ConditionTest::isEnemyZerg) || Condition(ConditionTest::isEnemyProtoss));
+
+	dtRush.addNextBuild(BuildOrderID::Nexus, 24*60);
+
+	//Army Behaviour
+	dtRush.addArmyBehaviour(ArmyBehaviour::Defensive);
+
+	// Build Order
+			dtRush.addItem(Protoss_Probe, 4, TaskType::Highest);
+	ID_1 =	dtRush.addItem(Protoss_Pylon, 1); //Pylon on 8
+			dtRush.addItem(Protoss_Probe, CB(ID_1, CallBackType::onDispatched), 2); //probage
+
+	ID_1 =	dtRush.addItem(Protoss_Gateway, CB(ID_1, CallBackType::onDispatched)); //Gateway on 10
+			dtRush.addOrder(Order::TrainWorkers, CB(ID_1, CallBackType::onDispatched));
+			dtRush.addOrder(Order::Scout, CB(ID_1, CallBackType::onStarted));
+
+	ID_2 =	dtRush.addItem(Protoss_Assimilator, CB(ID_1, CallBackType::onDispatched)); //gas on 12
+			dtRush.addItem(Protoss_Zealot, CB(ID_1, CallBackType::onDispatched)); //zealot
+
+	ID_1 =	dtRush.addItem(Protoss_Pylon, TaskType::Supply, CB(ID_2, CallBackType::onDispatched)); //pylon on 16
+	ID_2 =	dtRush.addItem(Protoss_Cybernetics_Core, CB(ID_1, CallBackType::onDispatched)); //core on 18
+			dtRush.addItem(Protoss_Zealot, CB(ID_1, CallBackType::onDispatched)); //zealot
+	ID_1 =	dtRush.addItem(Protoss_Pylon, TaskType::Supply, CB(ID_2, CallBackType::onDispatched)); //pylon on 22
+			dtRush.addItem(Protoss_Dragoon, CB(ID_1, CallBackType::onDispatched)); //dragoon
+	ID_1 =	dtRush.addItem(Protoss_Citadel_of_Adun, CB(ID_1, CallBackType::onDispatched)); //citadel on 26
+			dtRush.addItem(Protoss_Dragoon, CB(ID_1, CallBackType::onDispatched)); //dragoon
+	ID_1 =	dtRush.addItem(Protoss_Gateway, CB(ID_1, CallBackType::onDispatched)); //gateway
+	ID_1 =	dtRush.addItem(Protoss_Pylon, TaskType::Supply, CB(ID_1, CallBackType::onDispatched)); //pylon
+	ID_1 =	dtRush.addItem(Protoss_Templar_Archives, CB(ID_1, CallBackType::onDispatched)); //archives
+			dtRush.addItem(Protoss_Zealot, CB(ID_1, CallBackType::onDispatched)); //zealot
+			dtRush.addItem(Protoss_Zealot, CB(ID_1, CallBackType::onDispatched)); //zealot
+	ID_1 =	dtRush.addItem(Protoss_Dark_Templar, CB(ID_1, CallBackType::onDispatched), 2); //templar
+			dtRush.addArmyBehaviour(ArmyBehaviour::Aggresive, CB(ID_1, CallBackType::onCompleted));
+			dtRush.addItem(Protoss_Gateway, CB(ID_1, CallBackType::onDispatched), 2); //gateway
+			dtRush.addItem(Protoss_Dark_Templar, CB(ID_1, CallBackType::onDispatched), 2); //templar
+
+			dtRush.addOrder(Order::SupplyManager, CB(ID_1, CallBackType::onDispatched));
+			dtRush.addOrder(Order::RefineryManager, CB(ID_1, CallBackType::onDispatched));
+			dtRush.addOrder(Order::MacroArmyProduction, CB(ID_1, CallBackType::onDispatched));
+
+	dtRush.addProduce(Protoss_Zealot, 2);
+	dtRush.addProduce(Protoss_Dragoon, 1);
+	dtRush.addProduce(Protoss_Dark_Templar, 10);
+
+	// Add
+	mBuildOrders[BuildOrderID::DTRush] = dtRush;
 }

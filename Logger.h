@@ -7,6 +7,10 @@
 #include <sstream>
 #include <fstream>
 
+#if !defined(NDEBUG)
+#define LOG_TO_FILE
+#endif
+
 class String_Builder
 {
 public:
@@ -37,7 +41,7 @@ class LoggerClass
 public:
 	LoggerClass()
 	{
-#if _DEBUG
+#if defined(LOG_TO_FILE)
 		std::ofstream output("bwapi-data\\Skynet\\SkynetLog.txt", std::ios::trunc);
 		output.close();
 #endif
@@ -50,7 +54,7 @@ public:
 		else if(level > 0)
 			BWAPI::Broodwar->printf(message.c_str());
 
-#if _DEBUG
+#if defined(LOG_TO_FILE)
 		std::ofstream output("bwapi-data\\Skynet\\SkynetLog.txt", std::ios::ate | std::ios::app);
 		output << BWAPI::Broodwar->getFrameCount() << " : " << message << std::endl;
 		output.close();
@@ -61,12 +65,16 @@ private:
 };
 typedef Singleton<LoggerClass> Logger;
 
-#if _DEBUG
-	#define LOGMESSAGE(message) Logger::Instance().log(message)
+#if !defined(COMPETITION_MODE)
 	#define LOGMESSAGEWARNING(message) Logger::Instance().log(message, 1)
 #else
-	#define LOGMESSAGE(ignore) ((void) 0)
 	#define LOGMESSAGEWARNING(ignore) ((void) 0)
+#endif
+
+#if defined(LOG_TO_FILE)
+	#define LOGMESSAGE(message) Logger::Instance().log(message)
+#else
+	#define LOGMESSAGE(ignore) ((void) 0)
 #endif
 
 #define LOGMESSAGEERROR(message) Logger::Instance().log(message, 2)

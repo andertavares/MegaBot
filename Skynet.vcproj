@@ -61,10 +61,11 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="../lib/BWAPId.lib"
+				AdditionalDependencies="BWAPId.lib"
 				ShowProgress="0"
 				OutputFile="$(OutDir)\$(ProjectName)d.dll"
 				LinkIncremental="2"
+				AdditionalLibraryDirectories="&quot;$(BOOST_DIR)\lib\&quot;;&quot;$(BWAPI_DIR)\lib\&quot;"
 				GenerateDebugInformation="true"
 				SubSystem="2"
 				TargetMachine="1"
@@ -122,6 +123,86 @@
 				FavorSizeOrSpeed="1"
 				AdditionalIncludeDirectories="&quot;$(BWAPI_DIR)\include\&quot;;&quot;$(BOOST_DIR)\&quot;"
 				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_USRDLL;SKYNET_EXPORTS"
+				RuntimeLibrary="2"
+				EnableFunctionLevelLinking="true"
+				UsePrecompiledHeader="0"
+				WarningLevel="3"
+				DebugInformationFormat="3"
+			/>
+			<Tool
+				Name="VCManagedResourceCompilerTool"
+			/>
+			<Tool
+				Name="VCResourceCompilerTool"
+			/>
+			<Tool
+				Name="VCPreLinkEventTool"
+			/>
+			<Tool
+				Name="VCLinkerTool"
+				AdditionalDependencies="BWAPI.lib"
+				LinkIncremental="1"
+				AdditionalLibraryDirectories="&quot;$(BOOST_DIR)\lib\&quot;;&quot;$(BWAPI_DIR)\lib\&quot;"
+				GenerateDebugInformation="true"
+				SubSystem="2"
+				OptimizeReferences="2"
+				EnableCOMDATFolding="2"
+				LinkTimeCodeGeneration="1"
+				TargetMachine="1"
+			/>
+			<Tool
+				Name="VCALinkTool"
+			/>
+			<Tool
+				Name="VCManifestTool"
+			/>
+			<Tool
+				Name="VCXDCMakeTool"
+			/>
+			<Tool
+				Name="VCBscMakeTool"
+			/>
+			<Tool
+				Name="VCFxCopTool"
+			/>
+			<Tool
+				Name="VCAppVerifierTool"
+			/>
+			<Tool
+				Name="VCPostBuildEventTool"
+				CommandLine="if not &quot;%BWAPIData%&quot; == &quot;&quot; (&#x0D;&#x0A;copy &quot;$(TargetPath)&quot; &quot;%BWAPIData%\AI\&quot;&#x0D;&#x0A;copy &quot;..\bwapi.ini&quot; &quot;%BWAPIData%&quot;&#x0D;&#x0A;)&#x0D;&#x0A;"
+			/>
+		</Configuration>
+		<Configuration
+			Name="Competition|Win32"
+			OutputDirectory="$(SolutionDir)$(ConfigurationName)"
+			IntermediateDirectory="$(ConfigurationName)"
+			ConfigurationType="2"
+			CharacterSet="2"
+			WholeProgramOptimization="1"
+			>
+			<Tool
+				Name="VCPreBuildEventTool"
+			/>
+			<Tool
+				Name="VCCustomBuildTool"
+			/>
+			<Tool
+				Name="VCXMLDataGeneratorTool"
+			/>
+			<Tool
+				Name="VCWebServiceProxyGeneratorTool"
+			/>
+			<Tool
+				Name="VCMIDLTool"
+			/>
+			<Tool
+				Name="VCCLCompilerTool"
+				Optimization="3"
+				EnableIntrinsicFunctions="true"
+				FavorSizeOrSpeed="1"
+				AdditionalIncludeDirectories="&quot;$(BWAPI_DIR)\include\&quot;;&quot;$(BOOST_DIR)\&quot;"
+				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_USRDLL;SKYNET_EXPORTS;COMPETITION_MODE"
 				RuntimeLibrary="2"
 				EnableFunctionLevelLinking="true"
 				UsePrecompiledHeader="0"
@@ -786,6 +867,14 @@
 				</File>
 				<File
 					RelativePath=".\PsiStormAction.h"
+					>
+				</File>
+				<File
+					RelativePath=".\TrainInterceptorAction.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\TrainInterceptorAction.h"
 					>
 				</File>
 				<File

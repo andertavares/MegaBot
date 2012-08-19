@@ -8,6 +8,7 @@
 #include "ArconZealotKillUnDetected.h"
 #include "ArbiterAction.h"
 #include "DetectorAction.h"
+#include "TrainInterceptorAction.h"
 
 Behaviour::Behaviour(Unit unit)
 	: mUnit(unit)
@@ -96,6 +97,8 @@ void Behaviour::createDefaultActions()
 
 	if(unitType == BWAPI::UnitTypes::Protoss_Reaver)
 		mMicroActions.push_back(MicroAction(new TrainScarabAction(mUnit)));
+	if(unitType == BWAPI::UnitTypes::Protoss_Carrier)
+		mMicroActions.push_back(MicroAction(new TrainInterceptorAction(mUnit)));
 
 	if(unitType == BWAPI::UnitTypes::Protoss_High_Templar)
 		mMicroActions.push_back(MicroAction(new PsiStormAction(mUnit)));

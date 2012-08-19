@@ -190,12 +190,41 @@ private:
 	std::list<CallBack> mCallbacks;
 };
 
+class ArmyBehaviourItem
+{
+public:
+	ArmyBehaviourItem(ArmyBehaviour armyBehaiour, const std::list<CallBack> &callBacks)
+		: mArmyBehaiour(armyBehaiour)
+		, mCallbacks(callBacks)
+	{}
+
+	ArmyBehaviour getArmyBehaviour() const { return mArmyBehaiour; }
+
+	bool isFulfilled() const { return mCallbacks.empty(); }
+
+	void removeCallback(int buildID, CallBackType callbackType)
+	{
+		for(std::list<CallBack>::iterator callback = mCallbacks.begin(); callback != mCallbacks.end();)
+		{
+			if(callback->getID() == buildID && callback->getType() == callbackType)
+				mCallbacks.erase(callback++);
+			else
+				++callback;
+		}
+	}
+
+private:
+	ArmyBehaviour mArmyBehaiour;
+
+	std::list<CallBack> mCallbacks;
+};
+
 struct BuildOrderIDDef
 {
 	enum type
 	{
 		None,
-		Unknown,
+		Finished,
 		ForgeExpand,
 		StargateArcon,
 		ArconTiming,
@@ -215,10 +244,7 @@ struct BuildOrderIDDef
 		RoboVsTerran,
 		PvPMidGame,
 		PvPEndGame,
-		FourPool,
-		Test,
-		BGHProtoss,
-		T3Protoss
+		DTRush
 	};
 };
 typedef SafeEnum<BuildOrderIDDef> BuildOrderID;
@@ -251,6 +277,18 @@ public:
 
 	int getPriority() const { return mPriority; }
 
+	bool operator==(const UnitToProduce &other) const
+	{
+		if(mUnitType != other.mUnitType)
+			return false;
+		else if(mWeight != other.mWeight)
+			return false;
+		else if(mPriority != other.mPriority)
+			return false;
+
+		return true;
+	}
+
 private:
 	BWAPI::UnitType mUnitType;
 	int mWeight;
@@ -258,6 +296,26 @@ private:
 
 	Condition mCreateUnitCondition;
 	Condition mCreateFactoryCondition;
+};
+
+class FollowUpBuild
+{
+public:
+	FollowUpBuild(BuildOrderID id, int timeAfterCompletion = 0, const Condition & condition = Condition(ConditionTest::None, true))
+		: mID(id)
+		, mTimeAfterCompletion(timeAfterCompletion)
+		, mCondition(condition)
+	{
+	}
+
+	BuildOrderID getBuildID() const { return mID; }
+	int getCompletionTime() const { return mTimeAfterCompletion; }
+	bool evauluate() const { return mCondition.evauluate(); }
+
+private:
+	BuildOrderID mID;
+	int mTimeAfterCompletion;
+	Condition mCondition;
 };
 
 class BuildOrder
@@ -281,13 +339,11 @@ public:
 
 	void addProduce(BWAPI::UnitType type, int weight, int priority = 100, const Condition &unitCond = Condition(ConditionTest::None, true), const Condition &factoryCond = Condition(ConditionTest::None, true));
 
-	void addNextBuild(BuildOrderID id, Condition condition);
+	void addNextBuild(BuildOrderID id, int timeAfterCompletion = 0, const Condition & condition = Condition(ConditionTest::None, true));
 
 	void addSquad(SquadType type, int count = 1);
 
-	void setDefaultBuild(BuildOrderID fallbackBuild, int fallbackTime = 0);
-
-	void setArmyBehaviour(ArmyBehaviour armyBehaiour);
+	void addArmyBehaviour(ArmyBehaviour armyBehaiour, std::list<CallBack> &callBacks = std::list<CallBack>());
 
 	void setStartingCondition(Condition condition);
 
@@ -297,16 +353,15 @@ public:
 
 	const std::deque<BuildItem> &getBuildItems() const { return mItems; }
 	const std::deque<OrderItem> &getOrderItems() const { return mOrders; }
+	const std::deque<ArmyBehaviourItem> &getArmyBehaviourItems() const { return mArmyBehaviours; }
 	const std::list<UnitToProduce> &getUnitsToProduce() const { return mProduces; }
 	const std::map<SquadType, int> &getSquads() const { return mSquads; }
 
 	bool isStartBuild() const { return mStartingCondition.evauluate(); }
 
-	ArmyBehaviour getArmyBehaiour() const { return mArmyBehaiour; }
+	const std::vector<FollowUpBuild> &getNextBuilds() const { return mNextBuilds; }
 
-	BuildOrderID getFallbackBuild() const { return mFallbackBuild; }
-	int getFallbackTime() const { return mFallbackTime; }
-	const std::map<BuildOrderID, Condition> &getNextBuilds() const { return mNextBuilds; }
+	float getWinRate(BuildOrderID currentBuild) const;
 
 private:
 	BWAPI::Race mRace;
@@ -315,16 +370,13 @@ private:
 
 	std::deque<BuildItem> mItems;
 	std::deque<OrderItem> mOrders;
+	std::deque<ArmyBehaviourItem> mArmyBehaviours;
 	std::list<UnitToProduce> mProduces;
 	std::map<SquadType, int> mSquads;
 
 	Condition mStartingCondition;
 
-	ArmyBehaviour mArmyBehaiour;
-
-	BuildOrderID mFallbackBuild;
-	int mFallbackTime;
-	std::map<BuildOrderID, Condition> mNextBuilds;
+	std::vector<FollowUpBuild> mNextBuilds;
 
 	int mItemCounter;
 };

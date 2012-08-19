@@ -5,6 +5,12 @@
 #include "UnitTracker.h"
 #include "ResourceTracker.h"
 
+MacroManagerClass::MacroManagerClass()
+	: mLastStateChangeTime(0)
+	, mDebugDraw(false)
+{
+}
+
 void MacroManagerClass::onBegin()
 {
 	using namespace BWAPI::TechTypes;
@@ -47,7 +53,7 @@ void MacroManagerClass::onBegin()
 	mTechPriorityMap[Maelstrom] = 0; //Dark Arcon freezes targeted units
 	mTechPriorityMap[Mind_Control] = 0;
 	mTechPriorityMap[Psionic_Storm] = 120;
-	mTechPriorityMap[Recall] = 90;
+	mTechPriorityMap[Recall] = 0;
 	mTechPriorityMap[Stasis_Field] = 80;
 
 	//Pre Researched
@@ -99,8 +105,8 @@ void MacroManagerClass::onBegin()
 	mUpgradePriorityMap[Scarab_Damage] = 100; //Increase Reaver Scarab Damage
 	mUpgradePriorityMap[Singularity_Charge] = 110; //Dragoon Range
 	mUpgradePriorityMap[Carrier_Capacity] = 110; //MOAR INTERCEPTORS!
-	mUpgradePriorityMap[Apial_Sensors] = 100; //Scout Sight
-	mUpgradePriorityMap[Argus_Jewel] = 100; //Cosair Energy
+	mUpgradePriorityMap[Apial_Sensors] = 0; //Scout Sight
+	mUpgradePriorityMap[Argus_Jewel] = 0; //Cosair Energy
 	mUpgradePriorityMap[Argus_Talisman] = 100; //Dark Archon Energy
 	mUpgradePriorityMap[Gravitic_Boosters] = 80; //Observer Speed
 	mUpgradePriorityMap[Gravitic_Drive] = 97; //Shuttle Speed
@@ -128,72 +134,83 @@ void MacroManagerClass::update()
 		createTechItems();
 	updateTech();
 
-	/*int y = 60;
-	for each(std::pair<MacroItem, TaskPointer> item in mTechItems)
+	if(mDebugDraw)
 	{
-		if(item.second->inProgress())
-			BWAPI::Broodwar->drawTextScreen(5, y, "%s : (In Progress)", item.first.getDebugInfo().c_str());
-		else
-			BWAPI::Broodwar->drawTextScreen(5, y, "%s", item.first.getDebugInfo().c_str());
+		int y = 0;
+		BWAPI::Broodwar->drawTextScreen(5, y+=10, "Units can produce:");
+		for each(UnitToProduce unit in mLastUnitsToProduce)
+		{
+			BWAPI::Broodwar->drawTextScreen(5, y+=10, "%d %d %s", unit.getPriority(), unit.getUnitWeight(), unit.getUnitType().getName().c_str());
+		}
+		y+=10;
 
-		y += 10;
-	}*/
+		BWAPI::Broodwar->drawTextScreen(5, y+=10, "Units in queue:");
+		for(std::list<std::pair<TaskPointer, BWAPI::UnitType>>::iterator it = mUnitProduce.begin(); it != mUnitProduce.end(); ++it)
+		{
+			if(it->first->inProgress())
+				BWAPI::Broodwar->drawTextScreen(5, y+=10, "In Progress : %s", it->second.getName().c_str() );
+			else
+				BWAPI::Broodwar->drawTextScreen(5, y+=10, "             : %s", it->second.getName().c_str() );
+		}
+	}
 }
 
 void MacroManagerClass::updateUnitProduction()
 {
-	TrainType trainType = TrainType::Normal;
-
-	int mineral = ResourceTracker::Instance().availableMineralAtTime(BWAPI::Broodwar->getFrameCount() + 450);
-	int gas = ResourceTracker::Instance().availableGasAtTime(BWAPI::Broodwar->getFrameCount() + 450);
-
-	double LowMineralRatio = gas == 0 ? 1 : double(mineral)/double(gas);
-	double LowGasRatio = mineral == 0 ? 1 : double(gas)/double(mineral);
-
-	if(std::max(gas, mineral) > 500)
+	if(BWAPI::Broodwar->getFrameCount() >= mLastStateChangeTime + 24*4)
 	{
-		if(LowMineralRatio < 0.4)
-			trainType = TrainType::LowMineral;
-		else if(LowGasRatio < 0.4)
-			trainType = TrainType::LowGas;
-	}
+		TrainType trainType = TrainType::Normal;
 
-	std::list<UnitToProduce> unitsToProduce;
-	if(trainType == TrainType::LowMineral)
-		unitsToProduce = mLowMineralUnits;
-	else if(trainType == TrainType::LowGas)
-		unitsToProduce = mLowGasUnits;
-	else if(trainType == TrainType::Normal)
-		unitsToProduce = mNormalUnits;
-
-	for(std::list<UnitToProduce>::iterator it = unitsToProduce.begin(); it != unitsToProduce.end();)
-	{
-		if(!hasRequirements(it->getUnitType()) || !it->canBuildUnit())
-			unitsToProduce.erase(it++);
-		else
-			++it;
-	}
-
-	if(trainType != TrainType::Normal)
-	{
-		std::set<BWAPI::UnitType> unitsWeAreProducing;
-		for each(UnitToProduce unit in unitsToProduce)
+		if(BWAPI::Broodwar->self()->supplyUsed() < 360)
 		{
-			unitsWeAreProducing.insert(unit.getUnitType());
-		}
+			int mineral = ResourceTracker::Instance().availableMineralAtTime(BWAPI::Broodwar->getFrameCount() + 24*6);
+			int gas = ResourceTracker::Instance().availableGasAtTime(BWAPI::Broodwar->getFrameCount() + 24*6);
 
-		for(std::list<std::pair<TaskPointer, BWAPI::UnitType>>::reverse_iterator  it = mUnitProduce.rbegin(); it != mUnitProduce.rend(); ++it)
-		{
-			if(!it->first->inProgress() && unitsWeAreProducing.count(it->second) == 0)
+			if(std::max(gas, mineral) > 500)
 			{
-				it->first->cancel();
-				mUnitProduce.erase( --(it.base()) );
-				break;
+				float LowMineralRatio = gas == 0 ? 1 : float(mineral) / float(gas);
+				float LowGasRatio = mineral == 0 ? 1 : float(gas) / float(mineral);
+
+				if(LowMineralRatio < 0.3f)
+					trainType = TrainType::LowMineral;
+				else if(LowGasRatio < 0.7f)
+					trainType = TrainType::LowGas;
 			}
 		}
-	}
 
-	// cancel and non dispatched unit that is normal but not this type
+		std::list<UnitToProduce> unitsToProduce;
+		if(trainType == TrainType::LowMineral)
+			unitsToProduce = mLowMineralUnits;
+		else if(trainType == TrainType::LowGas)
+			unitsToProduce = mLowGasUnits;
+		else if(trainType == TrainType::Normal)
+			unitsToProduce = mNormalUnits;
+
+		for(std::list<UnitToProduce>::iterator it = unitsToProduce.begin(); it != unitsToProduce.end();)
+		{
+			if(!hasRequirements(it->getUnitType()) || !it->canBuildUnit())
+				it = unitsToProduce.erase(it);
+			else
+				++it;
+		}
+
+		if(mLastUnitsToProduce != unitsToProduce)
+		{
+			for(std::list<std::pair<TaskPointer, BWAPI::UnitType>>::iterator  it = mUnitProduce.begin(); it != mUnitProduce.end();)
+			{
+				if(!it->first->inProgress())
+				{
+					it->first->cancel();
+					it = mUnitProduce.erase(it);
+				}
+				else
+					++it;
+			}
+
+			mLastUnitsToProduce = unitsToProduce;
+			mLastStateChangeTime = BWAPI::Broodwar->getFrameCount();
+		}
+	}
 
 	std::map<BWAPI::UnitType, int> totalPerProductionBuilding;
 	std::map<BWAPI::UnitType, int> UnitTotals;
@@ -202,7 +219,7 @@ void MacroManagerClass::updateUnitProduction()
 
 	// TODO: try to maintain some sort of balance between buildings
 
-	for each(UnitToProduce unit in unitsToProduce)
+	for each(UnitToProduce unit in mLastUnitsToProduce)
 	{
 		int plannedTotalUnit = UnitTracker::Instance().selectAllUnits(unit.getUnitType()).size();
 		totalPerProductionBuilding[unit.getUnitType().whatBuilds().first] += plannedTotalUnit;
@@ -212,23 +229,32 @@ void MacroManagerClass::updateUnitProduction()
 		UnitToBuilding[unit.getUnitType().whatBuilds().first][unit.getUnitType()] = unit.getUnitWeight();
 	}
 
+	for(std::list<std::pair<TaskPointer, BWAPI::UnitType>>::iterator it = mUnitProduce.begin(); it != mUnitProduce.end(); ++it)
+	{
+		if(!it->first->inProgress())
+		{
+			++totalPerProductionBuilding[it->second.whatBuilds().first];
+			++UnitTotals[it->second];
+		}
+	}
+
 	for each(std::pair<BWAPI::UnitType, int> totalPair in totalPerProductionBuilding)
 	{
 		int buildings = UnitTracker::Instance().selectAllUnits(totalPair.first).size() * 2;
 		int queued = mTasksPerProductionType[totalPair.first].size();
 		int freeProductionBuildings = buildings - queued;
-		if(freeProductionBuildings > 0)
+		while(freeProductionBuildings > 0)
 		{
 			BWAPI::UnitType chosenUnit = BWAPI::UnitTypes::None;
-			double biggestDifference = std::numeric_limits<double>::max();
+			float biggestDifference = std::numeric_limits<float>::max();
 			for each(std::pair<BWAPI::UnitType, int> producePair in UnitToBuilding[totalPair.first])
 			{
-				double neededRatio = double(producePair.second) / double(totalWeightPerBuilding[totalPair.first]);
-				double currentRatio = 0;
+				float neededRatio = float(producePair.second) / float(totalWeightPerBuilding[totalPair.first]);
+				float currentRatio = 0;
 				if(totalPair.second != 0)
-					currentRatio = double(UnitTotals[producePair.first]) / double(totalPair.second);
+					currentRatio = float(UnitTotals[producePair.first]) / float(totalPair.second);
 
-				double difference = currentRatio - neededRatio;
+				float difference = currentRatio - neededRatio;
 
 				if(difference < biggestDifference)
 				{
@@ -238,7 +264,11 @@ void MacroManagerClass::updateUnitProduction()
 			}
 
 			if(chosenUnit != BWAPI::UnitTypes::None)
+			{
 				mUnitProduce.push_back(std::make_pair(TaskManager::Instance().build(chosenUnit, TaskType::Army), chosenUnit));
+				++totalPerProductionBuilding[chosenUnit.whatBuilds().first];
+				++UnitTotals[chosenUnit];
+			}
 
 			freeProductionBuildings--;
 		}

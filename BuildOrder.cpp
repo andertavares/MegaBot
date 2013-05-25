@@ -100,7 +100,7 @@ void BuildOrder::setStartingCondition(Condition condition)
 
 float BuildOrder::getWinRate(BuildOrderID currentBuild) const
 {
-	const std::string buildName = String_Builder() << "Build_" << currentBuild.underlying() << "_" << mID.underlying();
+	const std::string buildName = String_Builder() << "build_" << currentBuild.underlying() << "_" << mID.underlying();
 	const std::vector<std::string> &buildData = GameMemory::Instance().getData(buildName);
 
 	float winRate = 0.92f;

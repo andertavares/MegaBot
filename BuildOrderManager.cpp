@@ -30,7 +30,7 @@ void BuildOrderManagerClass::onEnd(bool isWinner)
 {
 	for(std::vector<std::pair<BuildOrderID, BuildOrderID>>::iterator it = mBuildHistory.begin(); it != mBuildHistory.end(); ++it)
 	{
-		const std::string buildName = String_Builder() << "Build_" << it->first.underlying() << "_" << it->second.underlying();
+		const std::string buildName = String_Builder() << "build_" << it->first.underlying() << "_" << it->second.underlying();
 		std::vector<std::string> buildData = GameMemory::Instance().getData(buildName);
 
 		if(buildData.empty())

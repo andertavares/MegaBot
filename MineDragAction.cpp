@@ -27,14 +27,9 @@ bool MineDragAction::update(const Goal &squadGoal, const UnitGroup &squadUnitGro
 				}
 			}
 			
-			if(closestUnit && distance < 32*3)
+			if(closestUnit && distance < 32*5)
 			{
 				mUnit->attack(closestUnit);
-				return true;
-			}
-			else
-			{
-				mUnit->move(unit->getPosition());
 				return true;
 			}
 		}

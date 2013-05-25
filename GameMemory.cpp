@@ -4,14 +4,29 @@
 
 #include <fstream>
 #include <sstream>
+#include <boost/filesystem.hpp>
 
+const std::string filePrefix = "skynet_";
+const std::string filePostfix = ".txt";
 #if defined(COMPETITION_MODE)
-const char * pathPrefixRead = "bwapi-data\\Read\\";
-const char * pathPrefixWrite = "bwapi-data\\Write\\";
+const std::string pathRead = "bwapi-data/read/";
+const std::string pathWrite = "bwapi-data/write/";
 #else
-const char * pathPrefixRead = "bwapi-data\\Skynet\\Memory";
-const char * pathPrefixWrite = "bwapi-data\\Skynet\\Memory";
+const std::string pathRead = "bwapi-data/Skynet/Memory/";
+const std::string pathWrite = "bwapi-data/Skynet/Memory/";
 #endif
+
+std::string fixup_name(std::string str)
+{
+	for(size_t i = 0; i < str.length(); ++i)
+	{
+		str[i] = ::tolower( str[i] );
+		if( !::isalnum( str[i] ) )
+			str[i] = '_';
+	}
+
+	return str;
+}
 
 void GameMemoryClass::onBegin()
 {
@@ -20,14 +35,14 @@ void GameMemoryClass::onBegin()
 		Player enemy = *PlayerTracker::Instance().getEnemies().begin();
 		if(enemy->getType() == BWAPI::PlayerTypes::Computer)
 		{
-			mFileName = "AI " + enemy->getRace().getName() + ".txt";
+			mFileName = filePrefix + "ai_" + fixup_name( enemy->getRace().getName() ) + filePostfix;
 		}
 		else
 		{
-			mFileName = enemy->getName() + " " + enemy->getRace().getName() + ".txt";
+			mFileName = filePrefix + fixup_name( enemy->getName() + "_" + enemy->getRace().getName() ) + filePostfix;
 		}
 		
-		std::ifstream file((pathPrefixRead + mFileName).c_str());
+		std::ifstream file((pathRead + mFileName).c_str());
 
 		if(file)
 		{
@@ -53,7 +68,9 @@ void GameMemoryClass::onEnd()
 {
 	if(!mFileName.empty())
 	{
-		std::string fileName = pathPrefixWrite + mFileName;
+		boost::filesystem::create_directories(pathWrite);
+
+		std::string fileName = pathWrite + mFileName;
 		std::ofstream file(fileName.c_str());
 
 		if(file)

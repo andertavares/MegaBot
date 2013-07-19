@@ -2,9 +2,12 @@
 
 #include "TerrainAnaysis.h"
 #include "BaseTracker.h"
+#include "UnitTracker.h"
+#include "UnitHelper.h"
 
 void BorderTrackerClass::onBegin()
 {
+	mShowDebugInfo = true;
 	for each(Region region in TerrainAnaysis::Instance().getRegions())
 	{
 		if(region->getSize() > 100000)
@@ -34,6 +37,7 @@ void BorderTrackerClass::update()
 		drawDebugInfo(mBorderPositions.find(PositionType::EnemyControlRegion));
 		drawDebugInfo(mBorderPositions.find(PositionType::BotControlRegion));
 		drawDebugInfo(mBorderPositions.find(PositionType::ForwardRegion));
+		drawDebugInfo(mBorderPositions.find(PositionType::SafeTravelRegion));
 		drawDebugInfo(mBorderPositions.find(PositionType::ContainChokepoint));
 		drawDebugInfo(mBorderPositions.find(PositionType::ForwardChokepoint));
 		drawDebugInfo(mBorderPositions.find(PositionType::EnemyChokepoint));
@@ -53,6 +57,7 @@ void BorderTrackerClass::recalculateBorders()
 	mEnemyRegions.clear();
 	mEnemyBorder.clear();
 	mBorderPositions.clear();
+	mSafeRegions.clear();
 
 	std::set<Region> canReachSelf;
 	std::set<Region> canReachEnemy;
@@ -226,7 +231,7 @@ void BorderTrackerClass::recalculateBorders()
 					region = chokepoint->getRegions().second;
 
 				//make sure it isn't an enemy region
-				if(mEnemyRegions.find(region) != mEnemyRegions.end())
+				if(mEnemyRegions.count(region) != 0)
 					continue;
 
 				int oldCount = 0;
@@ -235,7 +240,7 @@ void BorderTrackerClass::recalculateBorders()
 				//count the number of chokepoints part of our border and those not
 				for each(Chokepoint chokepoint in region->getChokepoints())
 				{
-					if(mMyForwardBorder.find(chokepoint) != mMyForwardBorder.end())
+					if(mMyForwardBorder.count(chokepoint) != 0)
 						++oldCount;
 					else
 						++newCount;
@@ -273,6 +278,37 @@ void BorderTrackerClass::recalculateBorders()
 		if(mMyRegions.count(region) == 0)
 			mBorderPositions[PositionType::ForwardRegion].insert(BorderPosition(PositionType::ForwardRegion, region));
 	}
+
+	std::map<Region, int> regionMyArmySupply;
+	mRegionEnemyArmySupply.clear();
+
+	for each(Unit unit in UnitTracker::Instance().selectAllUnits())
+	{
+		if(UnitHelper::isArmyUnit(unit->getType()))
+		{
+			regionMyArmySupply[TerrainAnaysis::Instance().getRegion(unit->getPosition())] += unit->getType().supplyRequired();
+		}
+	}
+
+	for each(Unit unit in UnitTracker::Instance().selectAllEnemy())
+	{
+		if(UnitHelper::isArmyUnit(unit->getType()))
+		{
+			mRegionEnemyArmySupply[TerrainAnaysis::Instance().getRegion(unit->getPosition())] += unit->getType().supplyRequired();
+		}
+	}
+
+	for each(Region region in TerrainAnaysis::Instance().getRegions())
+	{
+		if(mMyRegions.count(region) == 0 && mEnemyRegions.count(region) == 0 && canReachSelf.count(region) != 0)
+		{
+			if(regionMyArmySupply[region] >= mRegionEnemyArmySupply[region])
+			{
+				mBorderPositions[PositionType::SafeTravelRegion].insert(BorderPosition(PositionType::SafeTravelRegion, region));
+				mSafeRegions.insert(region);
+			}
+		}
+	}
 }
 
 void BorderTrackerClass::drawDebugInfo(std::map<PositionType, std::set<BorderPosition>>::const_iterator it)
@@ -284,23 +320,14 @@ void BorderTrackerClass::drawDebugInfo(std::map<PositionType, std::set<BorderPos
 	{
 		switch(bp->mType.underlying())
 		{
-		case PositionType::ContainChokepoint:
-		case PositionType::ForwardChokepoint:
-		case PositionType::EnemyChokepoint:
-		case PositionType::DefenseChokepoint:
-			{
-				BWAPI::Color color = bp->mType == PositionType::DefenseChokepoint ? BWAPI::Colors::Green : (bp->mType == PositionType::EnemyChokepoint ? BWAPI::Colors::Red : (bp->mType == PositionType::ForwardChokepoint ? BWAPI::Colors::Blue : BWAPI::Colors::Yellow));
-				bp->mChoke->draw(color);
-				break;
-			}
-		case PositionType::EnemyControlRegion:
-		case PositionType::BotControlRegion:
-		case PositionType::ForwardRegion:
-			{
-				BWAPI::Color color = bp->mType == PositionType::BotControlRegion ? BWAPI::Colors::Grey : (bp->mType == PositionType::ForwardRegion ? BWAPI::Colors::Orange : BWAPI::Colors::Purple);
-				bp->mRegion->draw(color);
-				break;
-			}
+		case PositionType::ContainChokepoint: bp->mChoke->draw(BWAPI::Colors::Yellow); break;
+		case PositionType::ForwardChokepoint: bp->mChoke->draw(BWAPI::Colors::Blue); break;
+		case PositionType::EnemyChokepoint: bp->mChoke->draw(BWAPI::Colors::Red); break;
+		case PositionType::DefenseChokepoint: bp->mChoke->draw(BWAPI::Colors::Green); break;
+		case PositionType::EnemyControlRegion: bp->mRegion->draw(BWAPI::Colors::Purple); break;
+		case PositionType::BotControlRegion: bp->mRegion->draw(BWAPI::Colors::Grey); break;
+		case PositionType::ForwardRegion: bp->mRegion->draw(BWAPI::Colors::Orange); break;
+		case PositionType::SafeTravelRegion: bp->mRegion->draw(BWAPI::Colors::Teal); break;
 		}
 	}
 }

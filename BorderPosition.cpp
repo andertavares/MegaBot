@@ -70,6 +70,8 @@ bool BorderPosition::operator==(const BorderPosition& other) const
 			return mBase == other.mBase;
 		case PositionType::EnemyControlRegion:
 		case PositionType::BotControlRegion:
+		case PositionType::ForwardRegion:
+		case PositionType::SafeTravelRegion:
 			return mRegion == other.mRegion;
 		default:
 			return true;
@@ -99,6 +101,8 @@ bool BorderPosition::operator<(const BorderPosition& other) const
 			return mBase < other.mBase;
 		case PositionType::EnemyControlRegion:
 		case PositionType::BotControlRegion:
+		case PositionType::ForwardRegion:
+		case PositionType::SafeTravelRegion:
 			return mRegion < other.mRegion;
 		default:
 			return false;

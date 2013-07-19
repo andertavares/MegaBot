@@ -18,6 +18,10 @@ public:
 
 	void toggleDebugInfo() { mShowDebugInfo = !mShowDebugInfo; }
 
+	bool isRegionSafe(const Region &region) const { return mMyRegions.count(region) != 0 || mSafeRegions.count(region) != 0; }
+
+	int regionEnemySupply(const Region &region) { return mRegionEnemyArmySupply[region]; }
+
 private:
 	void recalculateBorders();
 
@@ -29,10 +33,13 @@ private:
 	std::set<Region> mMyRegions;
 	std::set<Region> mMyForwardRegions;
 	std::set<Region> mEnemyRegions;
+	std::set<Region> mSafeRegions;
 
 	std::set<Chokepoint> mMyBorder;
 	std::set<Chokepoint> mMyForwardBorder;
 	std::set<Chokepoint> mEnemyBorder;
+
+	std::map<Region, int> mRegionEnemyArmySupply;
 
 	bool mShowDebugInfo;
 

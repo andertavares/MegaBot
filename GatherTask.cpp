@@ -151,7 +151,7 @@ void GatherTask::updateRequirements()
 		if(!mWorkerOne)
 		{
 			RequirementGroup requirementOne;
-			requirementOne.addUnitFilterRequirement(workerPriority(1), Requirement::maxTime, UnitFilter(UnitFilterFlags::IsWorker) && UnitFilter(UnitFilterFlags::IsComplete), mResource->getPosition());
+			requirementOne.addUnitFilterRequirement(workerPriority(1), Requirement::maxTime, UnitFilter(UnitFilterFlags::IsWorker) && UnitFilter(UnitFilterFlags::IsComplete) && UnitFilter(UnitPositionFlags::CanTravelSafely, mResource->getPosition()), mResource->getPosition());
 			if(completeTime > 0)
 				requirementOne.addTimeRequirement(completeTime);
 			addRequirement(requirementOne);
@@ -160,7 +160,7 @@ void GatherTask::updateRequirements()
 		if(!mWorkerTwo)
 		{
 			RequirementGroup requirementTwo;
-			requirementTwo.addUnitFilterRequirement(workerPriority(2), Requirement::maxTime, UnitFilter(UnitFilterFlags::IsWorker) && UnitFilter(UnitFilterFlags::IsComplete), mResource->getPosition());
+			requirementTwo.addUnitFilterRequirement(workerPriority(2), Requirement::maxTime, UnitFilter(UnitFilterFlags::IsWorker) && UnitFilter(UnitFilterFlags::IsComplete) && UnitFilter(UnitPositionFlags::CanTravelSafely, mResource->getPosition()), mResource->getPosition());
 			if(completeTime > 0)
 				requirementTwo.addTimeRequirement(completeTime);
 			addRequirement(requirementTwo);
@@ -169,7 +169,7 @@ void GatherTask::updateRequirements()
 		if(!mWorkerThree)
 		{
 			RequirementGroup requirementThree;
-			requirementThree.addUnitFilterRequirement(workerPriority(3), Requirement::maxTime, UnitFilter(UnitFilterFlags::IsWorker) && UnitFilter(UnitFilterFlags::IsComplete), mResource->getPosition());
+			requirementThree.addUnitFilterRequirement(workerPriority(3), Requirement::maxTime, UnitFilter(UnitFilterFlags::IsWorker) && UnitFilter(UnitFilterFlags::IsComplete) && UnitFilter(UnitPositionFlags::CanTravelSafely, mResource->getPosition()), mResource->getPosition());
 			if(completeTime > 0)
 				requirementThree.addTimeRequirement(completeTime);
 			addRequirement(requirementThree);

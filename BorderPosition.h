@@ -22,7 +22,8 @@ struct PositionTypeDef
 		HoldBase,
 		EnemyControlRegion,
 		BotControlRegion,
-		ForwardRegion
+		ForwardRegion,
+		SafeTravelRegion
 	};
 };
 typedef SafeEnum<PositionTypeDef> PositionType;

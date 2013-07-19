@@ -1,6 +1,9 @@
 #include "UnitFilter.h"
 
 #include "UnitHelper.h"
+#include "PathFinder.h"
+#include "BorderTracker.h"
+#include "TerrainAnaysis.h"
 
 UnitFilter::UnitFilter()
 	: mType(UnitFilterType::None)
@@ -10,6 +13,8 @@ UnitFilter::UnitFilter()
 	, mExpectedValue(true)
 	, mUnitType(BWAPI::UnitTypes::None)
 	, mUnitFlags(UnitFilterFlags::None)
+	, mPositionFlags(UnitPositionFlags::None)
+	, mPosition(BWAPI::Positions::None)
 {
 }
 
@@ -21,17 +26,34 @@ UnitFilter::UnitFilter(BWAPI::UnitType type)
 	, mExpectedValue(true)
 	, mUnitType(type)
 	, mUnitFlags(UnitFilterFlags::None)
+	, mPositionFlags(UnitPositionFlags::None)
+	, mPosition(BWAPI::Positions::None)
 {
 }
 
 UnitFilter::UnitFilter(UnitFilterFlags::type flags)
-	: mType(UnitFilterType::PassesFlags)
+	: mType(UnitFilterType::PassesFilterFlags)
 	, mOperatorType(OperatorType::None)
 	, mLFilter()
 	, mRFilter()
 	, mExpectedValue(true)
 	, mUnitType(BWAPI::UnitTypes::None)
 	, mUnitFlags(flags)
+	, mPositionFlags(UnitPositionFlags::None)
+	, mPosition(BWAPI::Positions::None)
+{
+}
+
+UnitFilter::UnitFilter(UnitPositionFlags::type flags, const Position &pos)
+	: mType(UnitFilterType::PassesPositionFlags)
+	, mOperatorType(OperatorType::None)
+	, mLFilter()
+	, mRFilter()
+	, mExpectedValue(true)
+	, mUnitType(BWAPI::UnitTypes::None)
+	, mUnitFlags(UnitFilterFlags::None)
+	, mPositionFlags(flags)
+	, mPosition(pos)
 {
 }
 
@@ -61,6 +83,10 @@ bool UnitFilter::operator==(const UnitFilter& other) const
 	else if(mUnitType != other.mUnitType)
 		return false;
 	else if(mUnitFlags != other.mUnitFlags)
+		return false;
+	else if(mPositionFlags != other.mPositionFlags)
+		return false;
+	else if(mPosition != other.mPosition)
 		return false;
 	else
 		return true;
@@ -103,6 +129,16 @@ bool UnitFilter::operator<(const UnitFilter& other) const
 	else if(mUnitFlags != other.mUnitFlags)
 		return false;
 
+	if(mPositionFlags < other.mPositionFlags)
+		return true;
+	else if(mPositionFlags != other.mPositionFlags)
+		return false;
+
+	if(mPosition < other.mPosition)
+		return true;
+	else if(mPosition != other.mPosition)
+		return false;
+
 	return false;
 }
 
@@ -114,7 +150,7 @@ bool UnitFilter::filter(const Unit &unit) const
 		return mExpectedValue;
 	case UnitFilterType::UnitOfType:
 		return (unit->getType() == mUnitType) == mExpectedValue;
-	case UnitFilterType::PassesFlags:
+	case UnitFilterType::PassesFilterFlags:
 		{
 			if((mUnitFlags & UnitFilterFlags::IsComplete) != 0 && unit->isCompleted() != mExpectedValue)
 				return false;
@@ -132,6 +168,21 @@ bool UnitFilter::filter(const Unit &unit) const
 				return false;
 			if((mUnitFlags & UnitFilterFlags::IsSpellCaster) != 0 && unit->getType().isSpellcaster() != mExpectedValue)
 				return false;
+
+			return true;
+		}
+	case UnitFilterType::PassesPositionFlags:
+		{
+			RegionPath regionPath = PathFinder::Instance().CreateRegionPath(TerrainAnaysis::Instance().getRegion(unit->getPosition()), TerrainAnaysis::Instance().getRegion(mPosition));
+
+			if(!regionPath.isComplete && mExpectedValue)
+				return false;
+
+			for each(Region region in regionPath.path)
+			{
+				if((mUnitFlags & UnitPositionFlags::CanTravelSafely) != 0 && BorderTracker::Instance().isRegionSafe(region) != mExpectedValue)
+					return false;
+			}
 
 			return true;
 		}

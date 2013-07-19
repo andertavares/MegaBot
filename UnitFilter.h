@@ -25,12 +25,23 @@ namespace UnitFilterFlags
 	};
 }
 
+namespace UnitPositionFlags
+{
+	enum type
+	{
+		None = 0,
+		CanTravelSafely = 1,
+		All = -1
+	};
+}
+
 struct UnitFilter
 {
 public:
 	UnitFilter();
 	UnitFilter(BWAPI::UnitType type);
 	UnitFilter(UnitFilterFlags::type flags);
+	UnitFilter(UnitPositionFlags::type flags, const Position &pos);
 
 	UnitFilter(const UnitFilter &other)
 		: mType(other.mType)
@@ -40,6 +51,8 @@ public:
 		, mExpectedValue(other.mExpectedValue)
 		, mUnitType(other.mUnitType)
 		, mUnitFlags(other.mUnitFlags)
+		, mPositionFlags(other.mPositionFlags)
+		, mPosition(other.mPosition)
 	{}
 
 	UnitFilter &UnitFilter::operator=(const UnitFilter &other)
@@ -51,6 +64,8 @@ public:
 
 		mUnitType = other.mUnitType;
 		mUnitFlags = other.mUnitFlags;
+		mPositionFlags = other.mPositionFlags;
+		mPosition = other.mPosition;
 
 		mLFilter.reset(other.mLFilter ? new UnitFilter(*other.mLFilter) : NULL);
 		mRFilter.reset(other.mRFilter ? new UnitFilter(*other.mRFilter) : NULL);
@@ -91,7 +106,8 @@ private:
 		{
 			None,
 			UnitOfType,
-			PassesFlags
+			PassesFilterFlags,
+			PassesPositionFlags
 		};
 	};
 	typedef SafeEnum<UnitFilterTypeDef> UnitFilterType;
@@ -107,6 +123,9 @@ private:
 	BWAPI::UnitType mUnitType;
 	UnitFilterFlags::type mUnitFlags;
 
+	UnitPositionFlags::type mPositionFlags;
+	Position mPosition;
+
 	bool filter(const Unit &unit) const;
 
 	UnitFilter(const UnitFilter &left, OperatorType::type opType, const UnitFilter &right)
@@ -117,5 +136,7 @@ private:
 		, mExpectedValue(true)
 		, mUnitType(BWAPI::UnitTypes::None)
 		, mUnitFlags(UnitFilterFlags::None)
+		, mPositionFlags(UnitPositionFlags::None)
+		, mPosition(BWAPI::Positions::None)
 	{}
 };

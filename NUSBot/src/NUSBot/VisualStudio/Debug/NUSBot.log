@@ -1,0 +1,110 @@
+﻿Build started 2/22/2014 11:18:29 AM.
+Project "E:\projects\fyp\bots_codes\NUSBot\src\NUSBot\VisualStudio\NUSBot.vcxproj" on node 2 (Build target(s)).
+ClCompile:
+  C:\Program Files\Microsoft Visual Studio 9.0\VC\bin\CL.exe /c /I../SparCraft/source /I../Source /IE:\projects\fyp\bots_codes\libs\bwapi_3_74/include /IE:\projects\fyp\bots_codes\libs\boost_1_53 /I/include/freetype2 /I/include /I/include /I/include /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _WINDOWS /D _USRDLL /D EXAMPLEAIMODULE_EXPORTS /D NOMINMAX /D _WINDLL /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc90.pdb" /Gd /TP /analyze- /errorReport:prompt ..\Source\base\BuildLearner.cpp ..\Source\CombatSimulation.cpp ..\Source\MicroSearchManager.cpp ..\Source\base\BuildingData.cpp ..\Source\base\BuildingManager.cpp ..\Source\base\BuildingPlacer.cpp ..\Source\base\BuildOrderGoalManager.cpp ..\Source\base\BuildOrderQueue.cpp ..\Source\base\ProductionManager.cpp ..\Source\base\StarcraftBuildOrderSearchManager.cpp ..\Source\base\WorkerData.cpp ..\Source\base\WorkerManager.cpp ..\Source\CombatCommander.cpp ..\Source\Common.cpp ..\Source\Dll.cpp ..\Source\GameCommander.cpp ..\Source\HardCodedInfo.cpp ..\Source\InformationManager.cpp ..\Source\Logger.cpp ..\Source\MapGrid.cpp ..\Source\MapTools.cpp ..\Source\micromanagement\DetectorManager.cpp ..\Source\micromanagement\MeleeManager.cpp ..\Source\micromanagement\MicroManager.cpp ..\Source\micromanagement\MicroUtil.cpp ..\Source\micromanagement\ObserverManager.cpp ..\Source\micromanagement\RangedManager.cpp ..\Source\micromanagement\TransportManager.cpp ..\Source\Options.cpp ..\Source\ReplayVisualizer.cpp ..\Source\ScoutManager.cpp ..\Source\Squad.cpp ..\Source\SquadData.cpp ..\Source\StrategyManager.cpp ..\Source\NUSBotModule.cpp ..\Source\UnitCommandData.cpp ..\Source\UnitCommandManager.cpp ..\Source\UnitData.cpp ..\Source\Visualizer.cpp
+  Visualizer.cpp
+  UnitData.cpp
+  UnitCommandManager.cpp
+  UnitCommandData.cpp
+  NUSBotModule.cpp
+e:\projects\fyp\bots_codes\nusbot\src\nusbot\source\nusbotmodule.cpp(174): warning C4018: '<' : signed/unsigned mismatch
+e:\projects\fyp\bots_codes\nusbot\src\nusbot\source\nusbotmodule.cpp(185): warning C4018: '<' : signed/unsigned mismatch
+  StrategyManager.cpp
+  SquadData.cpp
+  Squad.cpp
+  ScoutManager.cpp
+  ReplayVisualizer.cpp
+  Options.cpp
+  TransportManager.cpp
+  RangedManager.cpp
+  ObserverManager.cpp
+  MicroUtil.cpp
+  MicroManager.cpp
+  MeleeManager.cpp
+  DetectorManager.cpp
+  MapTools.cpp
+  MapGrid.cpp
+  Generating Code...
+  Compiling...
+  Logger.cpp
+  InformationManager.cpp
+  HardCodedInfo.cpp
+  GameCommander.cpp
+  Dll.cpp
+  Common.cpp
+  CombatCommander.cpp
+  WorkerManager.cpp
+  WorkerData.cpp
+  StarcraftBuildOrderSearchManager.cpp
+  ProductionManager.cpp
+  BuildOrderQueue.cpp
+  BuildOrderGoalManager.cpp
+  BuildingPlacer.cpp
+  BuildingManager.cpp
+  BuildingData.cpp
+  MicroSearchManager.cpp
+  CombatSimulation.cpp
+e:\projects\fyp\bots_codes\nusbot\src\nusbot\source\combatsimulation.cpp(31): warning C4101: 'e' : unreferenced local variable
+e:\projects\fyp\bots_codes\nusbot\src\nusbot\source\combatsimulation.cpp(46): warning C4101: 'e' : unreferenced local variable
+e:\projects\fyp\bots_codes\nusbot\src\nusbot\source\combatsimulation.cpp(112): warning C4101: 'e' : unreferenced local variable
+  BuildLearner.cpp
+  Generating Code...
+ManifestResourceCompile:
+  C:\Program Files\Microsoft SDKs\Windows\v6.0A\bin\rc.exe /fo"Debug\NUSBot.dll.embed.manifest.res" Debug\NUSBot_manifest.rc 
+  Microsoft (R) Windows (R) Resource Compiler Version 6.0.5724.0
+  
+  Copyright (C) Microsoft Corporation.  All rights reserved.
+  
+  
+Link:
+  C:\Program Files\Microsoft Visual Studio 9.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"E:\projects\fyp\bots_codes\NUSBot\src\NUSBot\VisualStudio\Debug\NUSBot.dll" /INCREMENTAL /NOLOGO E:\projects\fyp\bots_codes\libs\bwapi_3_74/lib/BWAPId.lib E:\projects\fyp\bots_codes\libs\bwapi_3_74/lib/BWTAd.lib E:\projects\fyp\bots_codes\libs\bwapi_3_74/lib/tinyxmld.lib "E:\projects\fyp\bots_codes\libs\bwapi_3_74/lib/CGAL-vc90-mt-gd.lib" "E:\projects\fyp\bots_codes\libs\bwapi_3_74/lib/libboost_thread-vc90-mt-gd-1_40.lib" "E:\projects\fyp\bots_codes\libs\bwapi_3_74/lib/gmp-vc90-mt-gd.lib" "E:\projects\fyp\bots_codes\libs\bwapi_3_74/lib/mpfr-vc90-mt-gd.lib" ../../StarcraftBuildOrderSearch/VisualStudio/Debug/StarCraftData.obj Debug/SparCraft.lib /SDL.lib /SDLmain.lib /opengl32.lib /SDL_image.lib /SDL_gfx.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /ManifestFile:"Debug\NUSBot.dll.intermediate.manifest" /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /DEBUG /PDB:"E:\projects\fyp\bots_codes\NUSBot\src\NUSBot\VisualStudio\Debug\NUSBot.pdb" /SUBSYSTEM:WINDOWS /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"E:\projects\fyp\bots_codes\NUSBot\src\NUSBot\VisualStudio\Debug\NUSBot.lib" /MACHINE:X86 /DLL Debug\NUSBot.dll.embed.manifest.res
+  Debug\BuildLearner.obj
+  Debug\CombatSimulation.obj
+  Debug\MicroSearchManager.obj
+  Debug\BuildingData.obj
+  Debug\BuildingManager.obj
+  Debug\BuildingPlacer.obj
+  Debug\BuildOrderGoalManager.obj
+  Debug\BuildOrderQueue.obj
+  Debug\ProductionManager.obj
+  Debug\StarcraftBuildOrderSearchManager.obj
+  Debug\WorkerData.obj
+  Debug\WorkerManager.obj
+  Debug\CombatCommander.obj
+  Debug\Common.obj
+  Debug\Dll.obj
+  Debug\GameCommander.obj
+  Debug\HardCodedInfo.obj
+  Debug\InformationManager.obj
+  Debug\Logger.obj
+  Debug\MapGrid.obj
+  Debug\MapTools.obj
+  Debug\DetectorManager.obj
+  Debug\MeleeManager.obj
+  Debug\MicroManager.obj
+  Debug\MicroUtil.obj
+  Debug\ObserverManager.obj
+  Debug\RangedManager.obj
+  Debug\TransportManager.obj
+  Debug\Options.obj
+  Debug\ReplayVisualizer.obj
+  Debug\ScoutManager.obj
+  Debug\Squad.obj
+  Debug\SquadData.obj
+  Debug\StrategyManager.obj
+  Debug\NUSBotModule.obj
+  Debug\UnitCommandData.obj
+  Debug\UnitCommandManager.obj
+  Debug\UnitData.obj
+  Debug\Visualizer.obj
+LINK : warning LNK4044: unrecognized option '/SDL.lib'; ignored
+LINK : warning LNK4044: unrecognized option '/SDLmain.lib'; ignored
+LINK : warning LNK4044: unrecognized option '/opengl32.lib'; ignored
+LINK : warning LNK4044: unrecognized option '/SDL_image.lib'; ignored
+LINK : warning LNK4044: unrecognized option '/SDL_gfx.lib'; ignored
+LINK : fatal error LNK1104: cannot open file '../../StarcraftBuildOrderSearch/VisualStudio/Debug/StarCraftData.obj'
+Done Building Project "E:\projects\fyp\bots_codes\NUSBot\src\NUSBot\VisualStudio\NUSBot.vcxproj" (Build target(s)) -- FAILED.
+
+Build FAILED.
+
+Time Elapsed 00:02:10.11

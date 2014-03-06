@@ -1,84 +1,84 @@
-﻿Build started 2/22/2014 11:27:20 AM.
-Project "E:\projects\fyp\bots_codes\NUSBot\src\SparCraft\VisualStudio\SparCraft.vcxproj" on node 2 (Build target(s)).
-ClCompile:
-  C:\Program Files\Microsoft Visual Studio 9.0\VC\bin\CL.exe /c /IE:\projects\fyp\bots_codes\libs\boost_1_53 /IE:\projects\fyp\bots_codes\libs\bwapi_3_74 /IE:\projects\fyp\bots_codes\libs\bwapi_3_74\include /I\include /Zi /nologo /W3 /WX- /Ox /Oi /Ot /Oy /GT /GL /D WIN32 /D NDEBUG /D _CONSOLE /D NOMINMAX /D _CRT_SECURE_NO_WARNINGS /D _UNICODE /D UNICODE /Gm- /EHsc /MD /GS /Gy /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Release\\" /Fd"Release\vc90.pdb" /FR"Release\\" /Gd /TP /analyze- /errorReport:prompt ..\source\AllPlayers.cpp ..\source\AlphaBetaSearch.cpp ..\source\AnimationFrameData.cpp ..\source\Common.cpp ..\source\Display.cpp ..\source\EnumData.cpp ..\source\Game.cpp ..\source\GameState.cpp ..\source\glfont\glfont.cc ..\source\Hash.cpp ..\source\Logger.cpp ..\source\MoveArray.cpp ..\source\Player.cpp ..\source\PlayerProperties.cpp ..\source\Player_AlphaBeta.cpp ..\source\Player_AttackClosest.cpp ..\source\Player_AttackDPS.cpp ..\source\Player_AttackWeakest.cpp ..\source\Player_Cluster.cpp ..\source\Player_Kiter.cpp ..\source\Player_KiterDPS.cpp ..\source\Player_Kiter_NOKDPS.cpp ..\source\Player_NOKDPS.cpp ..\source\Player_PortfolioGreedySearch.cpp ..\source\Player_Random.cpp ..\source\Player_UCT.cpp ..\source\PortfolioGreedySearch.cpp ..\source\SparCraft.cpp ..\source\Timer.cpp ..\source\TranspositionTable.cpp ..\source\UCTSearch.cpp ..\source\Unit.cpp ..\source\UnitProperties.cpp ..\source\UnitScriptData.cpp ..\source\WeaponProperties.cpp
-  AllPlayers.cpp
-  AlphaBetaSearch.cpp
-  AnimationFrameData.cpp
-  Common.cpp
-  Display.cpp
-  EnumData.cpp
-  Game.cpp
-  GameState.cpp
-  glfont.cc
-  Hash.cpp
-  Logger.cpp
-  MoveArray.cpp
-  Player.cpp
-  PlayerProperties.cpp
-  Player_AlphaBeta.cpp
-  Player_AttackClosest.cpp
-  Player_AttackDPS.cpp
-  Player_AttackWeakest.cpp
-  Player_Cluster.cpp
-  Player_Kiter.cpp
-  Compiling...
-  Player_KiterDPS.cpp
-  Player_Kiter_NOKDPS.cpp
-  Player_NOKDPS.cpp
-  Player_PortfolioGreedySearch.cpp
-  Player_Random.cpp
-  Player_UCT.cpp
-  PortfolioGreedySearch.cpp
-  SparCraft.cpp
-  Timer.cpp
-  TranspositionTable.cpp
-  UCTSearch.cpp
-  Unit.cpp
-  UnitProperties.cpp
-  UnitScriptData.cpp
-  WeaponProperties.cpp
-Lib:
-  C:\Program Files\Microsoft Visual Studio 9.0\VC\bin\Lib.exe /OUT:"E:\projects\fyp\bots_codes\NUSBot\src\NUSBot\VisualStudio\Release\SparCraft.lib" /NOLOGO /LTCG Release\AllPlayers.obj
-  Release\AlphaBetaSearch.obj
-  Release\AnimationFrameData.obj
-  Release\Common.obj
-  Release\Display.obj
-  Release\EnumData.obj
-  Release\Game.obj
-  Release\GameState.obj
-  Release\glfont.obj
-  Release\Hash.obj
-  Release\Logger.obj
-  Release\MoveArray.obj
-  Release\Player.obj
-  Release\PlayerProperties.obj
-  Release\Player_AlphaBeta.obj
-  Release\Player_AttackClosest.obj
-  Release\Player_AttackDPS.obj
-  Release\Player_AttackWeakest.obj
-  Release\Player_Cluster.obj
-  Release\Player_Kiter.obj
-  Release\Player_KiterDPS.obj
-  Release\Player_Kiter_NOKDPS.obj
-  Release\Player_NOKDPS.obj
-  Release\Player_PortfolioGreedySearch.obj
-  Release\Player_Random.obj
-  Release\Player_UCT.obj
-  Release\PortfolioGreedySearch.obj
-  Release\SparCraft.obj
-  Release\Timer.obj
-  Release\TranspositionTable.obj
-  Release\UCTSearch.obj
-  Release\Unit.obj
-  Release\UnitProperties.obj
-  Release\UnitScriptData.obj
-  Release\WeaponProperties.obj
-  SparCraft.vcxproj -> E:\projects\fyp\bots_codes\NUSBot\src\NUSBot\VisualStudio\Release\SparCraft.lib
-BscMake:
-  C:\Program Files\Microsoft Visual Studio 9.0\VC\bin\bscmake.exe /nologo /o"E:\projects\fyp\bots_codes\NUSBot\src\NUSBot\VisualStudio\Release\SparCraft.bsc" /n Release\AllPlayers.sbr Release\AlphaBetaSearch.sbr Release\AnimationFrameData.sbr Release\Common.sbr Release\Display.sbr Release\EnumData.sbr Release\Game.sbr Release\GameState.sbr Release\glfont.sbr Release\Hash.sbr Release\Logger.sbr Release\MoveArray.sbr Release\Player.sbr Release\PlayerProperties.sbr Release\Player_AlphaBeta.sbr Release\Player_AttackClosest.sbr Release\Player_AttackDPS.sbr Release\Player_AttackWeakest.sbr Release\Player_Cluster.sbr Release\Player_Kiter.sbr Release\Player_KiterDPS.sbr Release\Player_Kiter_NOKDPS.sbr Release\Player_NOKDPS.sbr Release\Player_PortfolioGreedySearch.sbr Release\Player_Random.sbr Release\Player_UCT.sbr Release\PortfolioGreedySearch.sbr Release\SparCraft.sbr Release\Timer.sbr Release\TranspositionTable.sbr Release\UCTSearch.sbr Release\Unit.sbr Release\UnitProperties.sbr Release\UnitScriptData.sbr Release\WeaponProperties.sbr
-Done Building Project "E:\projects\fyp\bots_codes\NUSBot\src\SparCraft\VisualStudio\SparCraft.vcxproj" (Build target(s)).
+﻿Build started 3/6/2014 20:39:58.
+     1>Project "H:\0000GZ\RnD 5000 Project nus-bot\Bot_SRC\NUS-Bot\NUS-Bot RND\nus-bot\trunk\NUSBot\src\SparCraft\VisualStudio\SparCraft.vcxproj" on node 2 (Rebuild target(s)).
+     1>ClCompile:
+         c:\Program Files (x86)\Microsoft Visual Studio 9.0\VC\bin\CL.exe /c /IH:\0000GZ\1000GZ\Workspace\libs\boost_1_53 /IH:\0000GZ\1000GZ\Workspace\libs\bwapi_3_7_4 /IH:\0000GZ\1000GZ\Workspace\libs\bwapi_3_7_4\include /I\include /Zi /nologo /W3 /WX- /Ox /Oi /Ot /Oy /GT /GL /D WIN32 /D NDEBUG /D _CONSOLE /D NOMINMAX /D _CRT_SECURE_NO_WARNINGS /D _UNICODE /D UNICODE /Gm- /EHsc /MD /GS /Gy /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Release\\" /Fd"Release\vc90.pdb" /FR"Release\\" /Gd /TP /analyze- /errorReport:prompt ..\source\AllPlayers.cpp ..\source\AlphaBetaSearch.cpp ..\source\AnimationFrameData.cpp ..\source\Common.cpp ..\source\Display.cpp ..\source\EnumData.cpp ..\source\Game.cpp ..\source\GameState.cpp ..\source\glfont\glfont.cc ..\source\Hash.cpp ..\source\Logger.cpp ..\source\MoveArray.cpp ..\source\Player.cpp ..\source\PlayerProperties.cpp ..\source\Player_AlphaBeta.cpp ..\source\Player_AttackClosest.cpp ..\source\Player_AttackDPS.cpp ..\source\Player_AttackWeakest.cpp ..\source\Player_Cluster.cpp ..\source\Player_Kiter.cpp ..\source\Player_KiterDPS.cpp ..\source\Player_Kiter_NOKDPS.cpp ..\source\Player_NOKDPS.cpp ..\source\Player_PortfolioGreedySearch.cpp ..\source\Player_Random.cpp ..\source\Player_UCT.cpp ..\source\PortfolioGreedySearch.cpp ..\source\SparCraft.cpp ..\source\Timer.cpp ..\source\TranspositionTable.cpp ..\source\UCTSearch.cpp ..\source\Unit.cpp ..\source\UnitProperties.cpp ..\source\UnitScriptData.cpp ..\source\WeaponProperties.cpp
+         AllPlayers.cpp
+         AlphaBetaSearch.cpp
+         AnimationFrameData.cpp
+         Common.cpp
+         Display.cpp
+         EnumData.cpp
+         Game.cpp
+         GameState.cpp
+         glfont.cc
+         Hash.cpp
+         Logger.cpp
+         MoveArray.cpp
+         Player.cpp
+         PlayerProperties.cpp
+         Player_AlphaBeta.cpp
+         Player_AttackClosest.cpp
+         Player_AttackDPS.cpp
+         Player_AttackWeakest.cpp
+         Player_Cluster.cpp
+         Player_Kiter.cpp
+         Compiling...
+         Player_KiterDPS.cpp
+         Player_Kiter_NOKDPS.cpp
+         Player_NOKDPS.cpp
+         Player_PortfolioGreedySearch.cpp
+         Player_Random.cpp
+         Player_UCT.cpp
+         PortfolioGreedySearch.cpp
+         SparCraft.cpp
+         Timer.cpp
+         TranspositionTable.cpp
+         UCTSearch.cpp
+         Unit.cpp
+         UnitProperties.cpp
+         UnitScriptData.cpp
+         WeaponProperties.cpp
+       Lib:
+         c:\Program Files (x86)\Microsoft Visual Studio 9.0\VC\bin\Lib.exe /OUT:"H:\0000GZ\RnD 5000 Project nus-bot\Bot_SRC\NUS-Bot\NUS-Bot RND\nus-bot\trunk\NUSBot\src\NUSBot\VisualStudio\Release\SparCraft.lib" /NOLOGO /LTCG Release\AllPlayers.obj
+         Release\AlphaBetaSearch.obj
+         Release\AnimationFrameData.obj
+         Release\Common.obj
+         Release\Display.obj
+         Release\EnumData.obj
+         Release\Game.obj
+         Release\GameState.obj
+         Release\glfont.obj
+         Release\Hash.obj
+         Release\Logger.obj
+         Release\MoveArray.obj
+         Release\Player.obj
+         Release\PlayerProperties.obj
+         Release\Player_AlphaBeta.obj
+         Release\Player_AttackClosest.obj
+         Release\Player_AttackDPS.obj
+         Release\Player_AttackWeakest.obj
+         Release\Player_Cluster.obj
+         Release\Player_Kiter.obj
+         Release\Player_KiterDPS.obj
+         Release\Player_Kiter_NOKDPS.obj
+         Release\Player_NOKDPS.obj
+         Release\Player_PortfolioGreedySearch.obj
+         Release\Player_Random.obj
+         Release\Player_UCT.obj
+         Release\PortfolioGreedySearch.obj
+         Release\SparCraft.obj
+         Release\Timer.obj
+         Release\TranspositionTable.obj
+         Release\UCTSearch.obj
+         Release\Unit.obj
+         Release\UnitProperties.obj
+         Release\UnitScriptData.obj
+         Release\WeaponProperties.obj
+         SparCraft.vcxproj -> H:\0000GZ\RnD 5000 Project nus-bot\Bot_SRC\NUS-Bot\NUS-Bot RND\nus-bot\trunk\NUSBot\src\NUSBot\VisualStudio\Release\SparCraft.lib
+       BscMake:
+         c:\Program Files (x86)\Microsoft Visual Studio 9.0\VC\bin\bscmake.exe /nologo /o"H:\0000GZ\RnD 5000 Project nus-bot\Bot_SRC\NUS-Bot\NUS-Bot RND\nus-bot\trunk\NUSBot\src\NUSBot\VisualStudio\Release\SparCraft.bsc" /n Release\AllPlayers.sbr Release\AlphaBetaSearch.sbr Release\AnimationFrameData.sbr Release\Common.sbr Release\Display.sbr Release\EnumData.sbr Release\Game.sbr Release\GameState.sbr Release\glfont.sbr Release\Hash.sbr Release\Logger.sbr Release\MoveArray.sbr Release\Player.sbr Release\PlayerProperties.sbr Release\Player_AlphaBeta.sbr Release\Player_AttackClosest.sbr Release\Player_AttackDPS.sbr Release\Player_AttackWeakest.sbr Release\Player_Cluster.sbr Release\Player_Kiter.sbr Release\Player_KiterDPS.sbr Release\Player_Kiter_NOKDPS.sbr Release\Player_NOKDPS.sbr Release\Player_PortfolioGreedySearch.sbr Release\Player_Random.sbr Release\Player_UCT.sbr Release\PortfolioGreedySearch.sbr Release\SparCraft.sbr Release\Timer.sbr Release\TranspositionTable.sbr Release\UCTSearch.sbr Release\Unit.sbr Release\UnitProperties.sbr Release\UnitScriptData.sbr Release\WeaponProperties.sbr
+     1>Done Building Project "H:\0000GZ\RnD 5000 Project nus-bot\Bot_SRC\NUS-Bot\NUS-Bot RND\nus-bot\trunk\NUSBot\src\SparCraft\VisualStudio\SparCraft.vcxproj" (Rebuild target(s)).
 
 Build succeeded.
 
-Time Elapsed 00:00:56.35
+Time Elapsed 00:01:13.37

@@ -1,6 +1,6 @@
  StarcraftBuildOrderSearch
 
- Timestamp is 53081915 (Sat Feb 22 11:27:17 2014)
+ Timestamp is 53186d83 (Thu Mar 06 20:43:47 2014)
 
  Preferred load address is 00400000
 
@@ -20,19 +20,19 @@
  0002:00000dd4 00000004H .CRT$XIY                DATA
  0002:00000dd8 00000004H .CRT$XIZ                DATA
  0002:00000de0 00003738H .rdata                  DATA
- 0002:00004518 0000008bH .rdata$debug            DATA
- 0002:000045a4 00000250H .rdata$r                DATA
- 0002:00004800 00000198H .rdata$sxdata           DATA
- 0002:00004998 00000004H .rtc$IAA                DATA
- 0002:0000499c 00000004H .rtc$IZZ                DATA
- 0002:000049a0 00000004H .rtc$TAA                DATA
- 0002:000049a4 00000004H .rtc$TZZ                DATA
- 0002:000049a8 00001e34H .xdata$x                DATA
- 0002:000067dc 0000003cH .idata$2                DATA
- 0002:00006818 00000014H .idata$3                DATA
- 0002:0000682c 00000144H .idata$4                DATA
- 0002:00006970 00000b76H .idata$6                DATA
- 0002:000074e6 00000000H .edata                  DATA
+ 0002:00004518 000000bdH .rdata$debug            DATA
+ 0002:000045d8 00000250H .rdata$r                DATA
+ 0002:00004830 00000198H .rdata$sxdata           DATA
+ 0002:000049c8 00000004H .rtc$IAA                DATA
+ 0002:000049cc 00000004H .rtc$IZZ                DATA
+ 0002:000049d0 00000004H .rtc$TAA                DATA
+ 0002:000049d4 00000004H .rtc$TZZ                DATA
+ 0002:000049d8 00001e34H .xdata$x                DATA
+ 0002:0000680c 0000003cH .idata$2                DATA
+ 0002:00006848 00000014H .idata$3                DATA
+ 0002:0000685c 00000144H .idata$4                DATA
+ 0002:000069a0 00000b76H .idata$6                DATA
+ 0002:00007516 00000000H .edata                  DATA
  0003:00000000 000005e0H .data                   DATA
  0003:000005e0 00069090H .bss                    DATA
 
@@ -1846,60 +1846,60 @@
  0002:000044c0       __real@3fb1eb851eb851ec    0043f4c0      CIL library: CIL module
  0002:000044c8       __real@3fa70a3d70a3d70a    0043f4c8      CIL library: CIL module
  0002:000044d0       __load_config_used         0043f4d0     MSVCRT:loadcfg.obj
- 0002:000045a4       ??_R4type_info@@6B@        0043f5a4     MSVCRT:ti_inst.obj
- 0002:000045b8       ??_R3type_info@@8          0043f5b8     MSVCRT:ti_inst.obj
- 0002:000045c8       ??_R2type_info@@8          0043f5c8     MSVCRT:ti_inst.obj
- 0002:000045d0       ??_R1A@?0A@EA@type_info@@8 0043f5d0     MSVCRT:ti_inst.obj
- 0002:000045ec       ??_R4length_error@std@@6B@ 0043f5ec     StarcraftData.obj
- 0002:00004600       ??_R3length_error@std@@8   0043f600     StarcraftData.obj
- 0002:00004610       ??_R2length_error@std@@8   0043f610     StarcraftData.obj
- 0002:00004620       ??_R1A@?0A@EA@length_error@std@@8 0043f620     StarcraftData.obj
- 0002:0000463c       ??_R4logic_error@std@@6B@  0043f63c     StarcraftData.obj
- 0002:00004650       ??_R3logic_error@std@@8    0043f650     StarcraftData.obj
- 0002:00004660       ??_R2logic_error@std@@8    0043f660     StarcraftData.obj
- 0002:0000466c       ??_R1A@?0A@EA@logic_error@std@@8 0043f66c     StarcraftData.obj
- 0002:00004688       ??_R4bad_alloc@std@@6B@    0043f688     StarcraftData.obj
- 0002:0000469c       ??_R3bad_alloc@std@@8      0043f69c     StarcraftData.obj
- 0002:000046ac       ??_R2bad_alloc@std@@8      0043f6ac     StarcraftData.obj
- 0002:000046b8       ??_R1A@?0A@EA@exception@std@@8 0043f6b8     StarcraftData.obj
- 0002:000046d4       ??_R3exception@std@@8      0043f6d4     StarcraftData.obj
- 0002:000046e4       ??_R2exception@std@@8      0043f6e4     StarcraftData.obj
- 0002:000046ec       ??_R1A@?0A@EA@bad_alloc@std@@8 0043f6ec     StarcraftData.obj
- 0002:00004708       ??_R4DFBBStarcraftSearch@BuildOrderSearch@@6B@ 0043f708     test.obj
- 0002:0000471c       ??_R3DFBBStarcraftSearch@BuildOrderSearch@@8 0043f71c     test.obj
- 0002:0000472c       ??_R2DFBBStarcraftSearch@BuildOrderSearch@@8 0043f72c     test.obj
- 0002:00004738       ??_R17?0A@EA@StarcraftSearch@BuildOrderSearch@@8 0043f738     test.obj
- 0002:00004754       ??_R3StarcraftSearch@BuildOrderSearch@@8 0043f754     test.obj
- 0002:00004764       ??_R2StarcraftSearch@BuildOrderSearch@@8 0043f764     test.obj
- 0002:0000476c       ??_R1A@?0A@EA@StarcraftSearch@BuildOrderSearch@@8 0043f76c     test.obj
- 0002:00004788       ??_R1A@?0A@EA@DFBBStarcraftSearch@BuildOrderSearch@@8 0043f788     test.obj
- 0002:000047a4       ??_R4out_of_range@std@@6B@ 0043f7a4     test.obj
- 0002:000047b8       ??_R3out_of_range@std@@8   0043f7b8     test.obj
- 0002:000047c8       ??_R2out_of_range@std@@8   0043f7c8     test.obj
- 0002:000047d8       ??_R1A@?0A@EA@out_of_range@std@@8 0043f7d8     test.obj
- 0002:00004800       ___safe_se_handler_table   0043f800     <linker-defined>
- 0002:00004998       ___rtc_iaa                 0043f998     MSVCRT:_initsect_.obj
- 0002:0000499c       ___rtc_izz                 0043f99c     MSVCRT:_initsect_.obj
- 0002:000049a0       ___rtc_taa                 0043f9a0     MSVCRT:_initsect_.obj
- 0002:000049a4       ___rtc_tzz                 0043f9a4     MSVCRT:_initsect_.obj
- 0002:00004d94       __CT??_R0?AVexception@std@@@8??0exception@std@@QAE@ABV01@@Z12 0043fd94     StarcraftData.obj
- 0002:00004db0       __CT??_R0?AVlogic_error@std@@@8??0logic_error@std@@QAE@ABV01@@Z40 0043fdb0     StarcraftData.obj
- 0002:00004dcc       __CT??_R0?AVlength_error@std@@@8??0length_error@std@@QAE@ABV01@@Z40 0043fdcc     StarcraftData.obj
- 0002:00004de8       __CTA3?AVlength_error@std@@ 0043fde8     StarcraftData.obj
- 0002:00004df8       __TI3?AVlength_error@std@@ 0043fdf8     StarcraftData.obj
- 0002:00004e08       __CT??_R0?AVbad_alloc@std@@@8??0bad_alloc@std@@QAE@ABV01@@Z12 0043fe08     StarcraftData.obj
- 0002:00004e24       __CTA2?AVbad_alloc@std@@   0043fe24     StarcraftData.obj
- 0002:00004e30       __TI2?AVbad_alloc@std@@    0043fe30     StarcraftData.obj
- 0002:00004e40       __CT??_R0?AVout_of_range@std@@@8??0out_of_range@std@@QAE@ABV01@@Z40 0043fe40     test.obj
- 0002:00004e5c       __CTA3?AVout_of_range@std@@ 0043fe5c     test.obj
- 0002:00004e6c       __TI3?AVout_of_range@std@@ 0043fe6c     test.obj
- 0002:00004e7c       __CT??_R0H@84              0043fe7c     test.obj
- 0002:00004e98       __CTA1H                    0043fe98     test.obj
- 0002:00004ea0       __TI1H                     0043fea0     test.obj
- 0002:000067dc       __IMPORT_DESCRIPTOR_KERNEL32 004417dc     kernel32:KERNEL32.dll
- 0002:000067f0       __IMPORT_DESCRIPTOR_MSVCP90 004417f0     msvcprt:MSVCP90.dll
- 0002:00006804       __IMPORT_DESCRIPTOR_MSVCR90 00441804     MSVCRT:MSVCR90.dll
- 0002:00006818       __NULL_IMPORT_DESCRIPTOR   00441818     kernel32:KERNEL32.dll
+ 0002:000045d8       ??_R4type_info@@6B@        0043f5d8     MSVCRT:ti_inst.obj
+ 0002:000045ec       ??_R3type_info@@8          0043f5ec     MSVCRT:ti_inst.obj
+ 0002:000045fc       ??_R2type_info@@8          0043f5fc     MSVCRT:ti_inst.obj
+ 0002:00004604       ??_R1A@?0A@EA@type_info@@8 0043f604     MSVCRT:ti_inst.obj
+ 0002:00004620       ??_R4length_error@std@@6B@ 0043f620     StarcraftData.obj
+ 0002:00004634       ??_R3length_error@std@@8   0043f634     StarcraftData.obj
+ 0002:00004644       ??_R2length_error@std@@8   0043f644     StarcraftData.obj
+ 0002:00004654       ??_R1A@?0A@EA@length_error@std@@8 0043f654     StarcraftData.obj
+ 0002:00004670       ??_R4logic_error@std@@6B@  0043f670     StarcraftData.obj
+ 0002:00004684       ??_R3logic_error@std@@8    0043f684     StarcraftData.obj
+ 0002:00004694       ??_R2logic_error@std@@8    0043f694     StarcraftData.obj
+ 0002:000046a0       ??_R1A@?0A@EA@logic_error@std@@8 0043f6a0     StarcraftData.obj
+ 0002:000046bc       ??_R4bad_alloc@std@@6B@    0043f6bc     StarcraftData.obj
+ 0002:000046d0       ??_R3bad_alloc@std@@8      0043f6d0     StarcraftData.obj
+ 0002:000046e0       ??_R2bad_alloc@std@@8      0043f6e0     StarcraftData.obj
+ 0002:000046ec       ??_R1A@?0A@EA@exception@std@@8 0043f6ec     StarcraftData.obj
+ 0002:00004708       ??_R3exception@std@@8      0043f708     StarcraftData.obj
+ 0002:00004718       ??_R2exception@std@@8      0043f718     StarcraftData.obj
+ 0002:00004720       ??_R1A@?0A@EA@bad_alloc@std@@8 0043f720     StarcraftData.obj
+ 0002:0000473c       ??_R4DFBBStarcraftSearch@BuildOrderSearch@@6B@ 0043f73c     test.obj
+ 0002:00004750       ??_R3DFBBStarcraftSearch@BuildOrderSearch@@8 0043f750     test.obj
+ 0002:00004760       ??_R2DFBBStarcraftSearch@BuildOrderSearch@@8 0043f760     test.obj
+ 0002:0000476c       ??_R17?0A@EA@StarcraftSearch@BuildOrderSearch@@8 0043f76c     test.obj
+ 0002:00004788       ??_R3StarcraftSearch@BuildOrderSearch@@8 0043f788     test.obj
+ 0002:00004798       ??_R2StarcraftSearch@BuildOrderSearch@@8 0043f798     test.obj
+ 0002:000047a0       ??_R1A@?0A@EA@StarcraftSearch@BuildOrderSearch@@8 0043f7a0     test.obj
+ 0002:000047bc       ??_R1A@?0A@EA@DFBBStarcraftSearch@BuildOrderSearch@@8 0043f7bc     test.obj
+ 0002:000047d8       ??_R4out_of_range@std@@6B@ 0043f7d8     test.obj
+ 0002:000047ec       ??_R3out_of_range@std@@8   0043f7ec     test.obj
+ 0002:000047fc       ??_R2out_of_range@std@@8   0043f7fc     test.obj
+ 0002:0000480c       ??_R1A@?0A@EA@out_of_range@std@@8 0043f80c     test.obj
+ 0002:00004830       ___safe_se_handler_table   0043f830     <linker-defined>
+ 0002:000049c8       ___rtc_iaa                 0043f9c8     MSVCRT:_initsect_.obj
+ 0002:000049cc       ___rtc_izz                 0043f9cc     MSVCRT:_initsect_.obj
+ 0002:000049d0       ___rtc_taa                 0043f9d0     MSVCRT:_initsect_.obj
+ 0002:000049d4       ___rtc_tzz                 0043f9d4     MSVCRT:_initsect_.obj
+ 0002:00004dc4       __CT??_R0?AVexception@std@@@8??0exception@std@@QAE@ABV01@@Z12 0043fdc4     StarcraftData.obj
+ 0002:00004de0       __CT??_R0?AVlogic_error@std@@@8??0logic_error@std@@QAE@ABV01@@Z40 0043fde0     StarcraftData.obj
+ 0002:00004dfc       __CT??_R0?AVlength_error@std@@@8??0length_error@std@@QAE@ABV01@@Z40 0043fdfc     StarcraftData.obj
+ 0002:00004e18       __CTA3?AVlength_error@std@@ 0043fe18     StarcraftData.obj
+ 0002:00004e28       __TI3?AVlength_error@std@@ 0043fe28     StarcraftData.obj
+ 0002:00004e38       __CT??_R0?AVbad_alloc@std@@@8??0bad_alloc@std@@QAE@ABV01@@Z12 0043fe38     StarcraftData.obj
+ 0002:00004e54       __CTA2?AVbad_alloc@std@@   0043fe54     StarcraftData.obj
+ 0002:00004e60       __TI2?AVbad_alloc@std@@    0043fe60     StarcraftData.obj
+ 0002:00004e70       __CT??_R0?AVout_of_range@std@@@8??0out_of_range@std@@QAE@ABV01@@Z40 0043fe70     test.obj
+ 0002:00004e8c       __CTA3?AVout_of_range@std@@ 0043fe8c     test.obj
+ 0002:00004e9c       __TI3?AVout_of_range@std@@ 0043fe9c     test.obj
+ 0002:00004eac       __CT??_R0H@84              0043feac     test.obj
+ 0002:00004ec8       __CTA1H                    0043fec8     test.obj
+ 0002:00004ed0       __TI1H                     0043fed0     test.obj
+ 0002:0000680c       __IMPORT_DESCRIPTOR_KERNEL32 0044180c     kernel32:KERNEL32.dll
+ 0002:00006820       __IMPORT_DESCRIPTOR_MSVCP90 00441820     msvcprt:MSVCP90.dll
+ 0002:00006834       __IMPORT_DESCRIPTOR_MSVCR90 00441834     MSVCRT:MSVCR90.dll
+ 0002:00006848       __NULL_IMPORT_DESCRIPTOR   00441848     kernel32:KERNEL32.dll
  0003:00000004       ?initializingRace@BWAPI@@3_NA 00443004     BWAPI:Race.obj
  0003:0000000c       ?initializingUnitType@BWAPI@@3_NA 0044300c     BWAPI:UnitType.obj
  0003:00000014       ?initializingUpgradeType@BWAPI@@3_NA 00443014     BWAPI:UpgradeType.obj

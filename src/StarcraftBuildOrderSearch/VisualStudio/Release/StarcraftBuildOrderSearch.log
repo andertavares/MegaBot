@@ -1,21 +1,21 @@
-﻿Build started 2/22/2014 11:27:12 AM.
-Project "E:\projects\fyp\bots_codes\NUSBot\src\StarcraftBuildOrderSearch\VisualStudio\StarcraftBuildOrderSearch.vcxproj" on node 2 (Build target(s)).
-ClCompile:
-  C:\Program Files\Microsoft Visual Studio 9.0\VC\bin\CL.exe /c /IE:\projects\fyp\bots_codes\libs\boost_1_53 /IE:\projects\fyp\bots_codes\libs\bwapi_3_74/include /Zi /nologo /W3 /WX- /O2 /Oi /Oy- /GL /D WIN32 /D NDEBUG /D _CONSOLE /D NOMINMAX /D _UNICODE /D UNICODE /Gm- /EHsc /MD /GS /Gy /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Release\\" /Fd"Release\vc90.pdb" /FR"Release\\" /Gd /TP /analyze- /errorReport:prompt ..\Source\starcraftsearch\StarcraftData.cpp ..\Source\starcraftsearch\test.cpp
-  StarcraftData.cpp
-  test.cpp
-Link:
-  C:\Program Files\Microsoft Visual Studio 9.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"E:\projects\fyp\bots_codes\NUSBot\src\StarcraftBuildOrderSearch\VisualStudio\Release\StarcraftBuildOrderSearch.exe" /INCREMENTAL:NO /NOLOGO E:\projects\fyp\bots_codes\libs\bwapi_3_74/lib/BWAPI.lib E:\projects\fyp\bots_codes\libs\bwapi_3_74/lib/BWTA.lib E:\projects\fyp\bots_codes\libs\bwapi_3_74/lib/tinyxml.lib "E:\projects\fyp\bots_codes\libs\bwapi_3_74/lib/CGAL-vc90-mt.lib" "E:\projects\fyp\bots_codes\libs\bwapi_3_74/lib/libboost_thread-vc90-mt-1_40.lib" "E:\projects\fyp\bots_codes\libs\bwapi_3_74/lib/gmp-vc90-mt.lib" "E:\projects\fyp\bots_codes\libs\bwapi_3_74/lib/mpfr-vc90-mt.lib" kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /ManifestFile:"Release\StarcraftBuildOrderSearch.exe.intermediate.manifest" /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /DEBUG /PDB:"E:\projects\fyp\bots_codes\NUSBot\src\StarcraftBuildOrderSearch\VisualStudio\Release\StarcraftBuildOrderSearch.pdb" /MAP /SUBSYSTEM:CONSOLE /OPT:REF /OPT:ICF /LTCG /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"E:\projects\fyp\bots_codes\NUSBot\src\StarcraftBuildOrderSearch\VisualStudio\Release\StarcraftBuildOrderSearch.lib" /MACHINE:X86 Release\StarcraftData.obj
-  Release\test.obj
-  Generating code
-  Finished generating code
-  StarcraftBuildOrderSearch.vcxproj -> E:\projects\fyp\bots_codes\NUSBot\src\StarcraftBuildOrderSearch\VisualStudio\Release\StarcraftBuildOrderSearch.exe
-Manifest:
-  C:\Program Files\Microsoft SDKs\Windows\v6.0A\bin\mt.exe /nologo /verbose /outputresource:"E:\projects\fyp\bots_codes\NUSBot\src\StarcraftBuildOrderSearch\VisualStudio\Release\StarcraftBuildOrderSearch.exe;#1" /manifest Release\StarcraftBuildOrderSearch.exe.intermediate.manifest
-BscMake:
-  C:\Program Files\Microsoft Visual Studio 9.0\VC\bin\bscmake.exe /nologo /o"E:\projects\fyp\bots_codes\NUSBot\src\StarcraftBuildOrderSearch\VisualStudio\Release\StarcraftBuildOrderSearch.bsc" /n Release\StarcraftData.sbr Release\test.sbr
-Done Building Project "E:\projects\fyp\bots_codes\NUSBot\src\StarcraftBuildOrderSearch\VisualStudio\StarcraftBuildOrderSearch.vcxproj" (Build target(s)).
+﻿Build started 3/6/2014 20:43:37.
+     1>Project "H:\0000GZ\RnD 5000 Project nus-bot\Bot_SRC\NUS-Bot\NUS-Bot RND\nus-bot\trunk\NUSBot\src\StarcraftBuildOrderSearch\VisualStudio\StarcraftBuildOrderSearch.vcxproj" on node 2 (Rebuild target(s)).
+     1>ClCompile:
+         c:\Program Files (x86)\Microsoft Visual Studio 9.0\VC\bin\CL.exe /c /IH:\0000GZ\1000GZ\Workspace\libs\boost_1_53 /IH:\0000GZ\1000GZ\Workspace\libs\bwapi_3_7_4/include /Zi /nologo /W3 /WX- /O2 /Oi /Oy- /GL /D WIN32 /D NDEBUG /D _CONSOLE /D NOMINMAX /D _UNICODE /D UNICODE /Gm- /EHsc /MD /GS /Gy /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Release\\" /Fd"Release\vc90.pdb" /FR"Release\\" /Gd /TP /analyze- /errorReport:prompt ..\Source\starcraftsearch\StarcraftData.cpp ..\Source\starcraftsearch\test.cpp
+         StarcraftData.cpp
+         test.cpp
+       Link:
+         c:\Program Files (x86)\Microsoft Visual Studio 9.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"H:\0000GZ\RnD 5000 Project nus-bot\Bot_SRC\NUS-Bot\NUS-Bot RND\nus-bot\trunk\NUSBot\src\StarcraftBuildOrderSearch\VisualStudio\Release\StarcraftBuildOrderSearch.exe" /INCREMENTAL:NO /NOLOGO H:\0000GZ\1000GZ\Workspace\libs\bwapi_3_7_4/lib/BWAPI.lib H:\0000GZ\1000GZ\Workspace\libs\bwapi_3_7_4/lib/BWTA.lib H:\0000GZ\1000GZ\Workspace\libs\bwapi_3_7_4/lib/tinyxml.lib "H:\0000GZ\1000GZ\Workspace\libs\bwapi_3_7_4/lib/CGAL-vc90-mt.lib" "H:\0000GZ\1000GZ\Workspace\libs\bwapi_3_7_4/lib/libboost_thread-vc90-mt-1_40.lib" "H:\0000GZ\1000GZ\Workspace\libs\bwapi_3_7_4/lib/gmp-vc90-mt.lib" "H:\0000GZ\1000GZ\Workspace\libs\bwapi_3_7_4/lib/mpfr-vc90-mt.lib" kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /ManifestFile:"Release\StarcraftBuildOrderSearch.exe.intermediate.manifest" /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /DEBUG /PDB:"H:\0000GZ\RnD 5000 Project nus-bot\Bot_SRC\NUS-Bot\NUS-Bot RND\nus-bot\trunk\NUSBot\src\StarcraftBuildOrderSearch\VisualStudio\Release\StarcraftBuildOrderSearch.pdb" /MAP /SUBSYSTEM:CONSOLE /OPT:REF /OPT:ICF /LTCG /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"H:\0000GZ\RnD 5000 Project nus-bot\Bot_SRC\NUS-Bot\NUS-Bot RND\nus-bot\trunk\NUSBot\src\StarcraftBuildOrderSearch\VisualStudio\Release\StarcraftBuildOrderSearch.lib" /MACHINE:X86 Release\StarcraftData.obj
+         Release\test.obj
+         Generating code
+         Finished generating code
+         StarcraftBuildOrderSearch.vcxproj -> H:\0000GZ\RnD 5000 Project nus-bot\Bot_SRC\NUS-Bot\NUS-Bot RND\nus-bot\trunk\NUSBot\src\StarcraftBuildOrderSearch\VisualStudio\Release\StarcraftBuildOrderSearch.exe
+       Manifest:
+         C:\Program Files\Microsoft SDKs\Windows\v6.0A\bin\mt.exe /nologo /verbose /outputresource:"H:\0000GZ\RnD 5000 Project nus-bot\Bot_SRC\NUS-Bot\NUS-Bot RND\nus-bot\trunk\NUSBot\src\StarcraftBuildOrderSearch\VisualStudio\Release\StarcraftBuildOrderSearch.exe;#1" /manifest Release\StarcraftBuildOrderSearch.exe.intermediate.manifest
+       BscMake:
+         c:\Program Files (x86)\Microsoft Visual Studio 9.0\VC\bin\bscmake.exe /nologo /o"H:\0000GZ\RnD 5000 Project nus-bot\Bot_SRC\NUS-Bot\NUS-Bot RND\nus-bot\trunk\NUSBot\src\StarcraftBuildOrderSearch\VisualStudio\Release\StarcraftBuildOrderSearch.bsc" /n Release\StarcraftData.sbr Release\test.sbr
+     1>Done Building Project "H:\0000GZ\RnD 5000 Project nus-bot\Bot_SRC\NUS-Bot\NUS-Bot RND\nus-bot\trunk\NUSBot\src\StarcraftBuildOrderSearch\VisualStudio\StarcraftBuildOrderSearch.vcxproj" (Rebuild target(s)).
 
 Build succeeded.
 
-Time Elapsed 00:00:08.16
+Time Elapsed 00:00:14.40

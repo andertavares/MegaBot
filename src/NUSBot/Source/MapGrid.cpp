@@ -122,6 +122,20 @@ void MapGrid::clearGrid() {
 	{
 		cells[i].ourUnits.clear();
 		cells[i].oppUnits.clear();
+
+	//$Sam-S 2014 May 11
+
+	//GridCell::
+	// Control flag to differenciate the times of update of a certain Grid cell within a frame.
+	cells[i].BIM_Unit_Grid_1st_Time_Flag_E = true;
+	cells[i].BIM_Unit_Grid_1st_Time_Flag_O = true;
+	cells[i].BIM_Building_Grid_1st_Time_Flag_E = true;
+	cells[i].BIM_Building_Grid_1st_Time_Flag_O = true;
+	cells[i].BIM_Choke_Grid_1st_Time_Flag_E = true;
+	cells[i].BIM_Choke_Grid_1st_Time_Flag_O = true;
+	//$Sam-E 2014 May 11
+	
+
 	}
 }
 
@@ -144,8 +158,74 @@ void MapGrid::update()
 		{
 			GridCell & cell = getCellByIndex(r,c);
 			
-			if (Options::Debug::DRAW_UALBERTABOT_DEBUG) BWAPI::Broodwar->drawTextMap(cell.center.x(), cell.center.y(), "Last Seen %d", cell.timeLastVisited);
+			if (Options::Debug::DRAW_UALBERTABOT_DEBUG) BWAPI::Broodwar->drawTextMap(cell.center.x(), cell.center.y(),    "Last Seen : %d", cell.timeLastVisited);
 			if (Options::Debug::DRAW_UALBERTABOT_DEBUG) BWAPI::Broodwar->drawTextMap(cell.center.x(), cell.center.y()+10, "Row/Col (%d, %d)", r, c);
+			
+			//$Sam-S 2014 Apr 28
+			//Display some Influence Map variables on screen
+			if (Options::Debug::DRAW_UALBERTABOT_DEBUG) BWAPI::Broodwar->drawTextMap(cell.center.x(), cell.center.y()+20, "Choke ProCtr: %d", cell.BIM_Mineral_Amount);
+			if (Options::Debug::DRAW_UALBERTABOT_DEBUG) BWAPI::Broodwar->drawTextMap(cell.center.x(), cell.center.y()+30, "Choke Cells#: %d", cell.BIM_Gas_Amount);
+
+			// Own Unit & Building LIM on screen
+			if (Options::Debug::DRAW_UALBERTABOT_DEBUG) BWAPI::Broodwar->drawTextMap(cell.center.x(), cell.center.y()+40,  "UA_HP_O____: %d", cell.BIM_UA_HP_O);
+			if (Options::Debug::DRAW_UALBERTABOT_DEBUG) BWAPI::Broodwar->drawTextMap(cell.center.x(), cell.center.y()+50,  "UA_DHPC_O__: %d", cell.BIM_UA_DHPC_O);
+			if (Options::Debug::DRAW_UALBERTABOT_DEBUG) BWAPI::Broodwar->drawTextMap(cell.center.x(), cell.center.y()+60,  "UA_DHPC_G_O: %d", cell.BIM_UA_DHPC_G_O);
+			if (Options::Debug::DRAW_UALBERTABOT_DEBUG) BWAPI::Broodwar->drawTextMap(cell.center.x(), cell.center.y()+70,  "UA_DHPC_A_O: %d", cell.BIM_UA_DHPC_A_O);
+			if (Options::Debug::DRAW_UALBERTABOT_DEBUG) BWAPI::Broodwar->drawTextMap(cell.center.x(), cell.center.y()+80,  "UN_HP_O____: %d", cell.BIM_UN_HP_O);
+
+			if (Options::Debug::DRAW_UALBERTABOT_DEBUG) BWAPI::Broodwar->drawTextMap(cell.center.x(), cell.center.y()+100, "BA_HP_O____: %d", cell.BIM_BA_HP_O);
+			if (Options::Debug::DRAW_UALBERTABOT_DEBUG) BWAPI::Broodwar->drawTextMap(cell.center.x(), cell.center.y()+110, "BA_DHPC_O__: %d", cell.BIM_BA_DHPC_O);
+			if (Options::Debug::DRAW_UALBERTABOT_DEBUG) BWAPI::Broodwar->drawTextMap(cell.center.x(), cell.center.y()+120, "BA_DHPC_G_O: %d", cell.BIM_BA_DHPC_G_O);
+			if (Options::Debug::DRAW_UALBERTABOT_DEBUG) BWAPI::Broodwar->drawTextMap(cell.center.x(), cell.center.y()+130, "BA_DHPC_A_O: %d", cell.BIM_BA_DHPC_A_O);
+			if (Options::Debug::DRAW_UALBERTABOT_DEBUG) BWAPI::Broodwar->drawTextMap(cell.center.x(), cell.center.y()+140, "BN_HP_O____: %d", cell.BIM_BN_HP_O);
+
+			// Enemy Unit & Building LIM on screen
+			if (Options::Debug::DRAW_UALBERTABOT_DEBUG) BWAPI::Broodwar->drawTextMap(cell.center.x(), cell.center.y()-120, "UA_HP_E____: %d", cell.BIM_UA_HP_E);
+			if (Options::Debug::DRAW_UALBERTABOT_DEBUG) BWAPI::Broodwar->drawTextMap(cell.center.x(), cell.center.y()-110, "UA_DHPC_E__: %d", cell.BIM_UA_DHPC_E);
+			if (Options::Debug::DRAW_UALBERTABOT_DEBUG) BWAPI::Broodwar->drawTextMap(cell.center.x(), cell.center.y()-100, "UA_DHPC_G_E: %d", cell.BIM_UA_DHPC_G_E);
+			if (Options::Debug::DRAW_UALBERTABOT_DEBUG) BWAPI::Broodwar->drawTextMap(cell.center.x(), cell.center.y()-90,  "UA_DHPC_A_E: %d", cell.BIM_UA_DHPC_A_E);
+			if (Options::Debug::DRAW_UALBERTABOT_DEBUG) BWAPI::Broodwar->drawTextMap(cell.center.x(), cell.center.y()-80,  "UN_HP_E____: %d", cell.BIM_UN_HP_E);
+
+			if (Options::Debug::DRAW_UALBERTABOT_DEBUG) BWAPI::Broodwar->drawTextMap(cell.center.x(), cell.center.y()-60,  "BA_HP_E____: %d", cell.BIM_BA_HP_E);
+			if (Options::Debug::DRAW_UALBERTABOT_DEBUG) BWAPI::Broodwar->drawTextMap(cell.center.x(), cell.center.y()-50,  "BA_DHPC_E__: %d", cell.BIM_BA_DHPC_E);
+			if (Options::Debug::DRAW_UALBERTABOT_DEBUG) BWAPI::Broodwar->drawTextMap(cell.center.x(), cell.center.y()-40,  "BA_DHPC_G_E: %d", cell.BIM_BA_DHPC_G_E);
+			if (Options::Debug::DRAW_UALBERTABOT_DEBUG) BWAPI::Broodwar->drawTextMap(cell.center.x(), cell.center.y()-30,  "BA_DHPC_A_E: %d", cell.BIM_BA_DHPC_A_E);
+			if (Options::Debug::DRAW_UALBERTABOT_DEBUG) BWAPI::Broodwar->drawTextMap(cell.center.x(), cell.center.y()-20,  "BN_HP_E____: %d", cell.BIM_BN_HP_E);
+
+
+			// Choke BIM on screen
+			if (Options::Debug::DRAW_UALBERTABOT_DEBUG) BWAPI::Broodwar->drawTextMap(cell.center.x()-160, cell.center.y(),    "Choke_Pos: (%d, %d)", cell.BIM_Choke_Position.x(), cell.BIM_Choke_Position.y());
+			if (Options::Debug::DRAW_UALBERTABOT_DEBUG) BWAPI::Broodwar->drawTextMap(cell.center.x()-160, cell.center.y()+10, "Choke_Width: %d", cell.BIM_Choke_Width);
+			if (Options::Debug::DRAW_UALBERTABOT_DEBUG) BWAPI::Broodwar->drawTextMap(cell.center.x()-160, cell.center.y()+20, "Choke_Range: %d", cell.BIM_Choke_Range);
+
+			// Own Choke&Unit LIM on screen
+			if (Options::Debug::DRAW_UALBERTABOT_DEBUG) BWAPI::Broodwar->drawTextMap(cell.center.x()-160, cell.center.y()+40,  "C_UA_HP_O____: %d", cell.LIM_Choke_UA_HP_O);
+			if (Options::Debug::DRAW_UALBERTABOT_DEBUG) BWAPI::Broodwar->drawTextMap(cell.center.x()-160, cell.center.y()+50,  "C_UA_DHPC_O__: %d", cell.LIM_Choke_UA_DHPC_O);
+			if (Options::Debug::DRAW_UALBERTABOT_DEBUG) BWAPI::Broodwar->drawTextMap(cell.center.x()-160, cell.center.y()+60,  "C_UA_DHPC_G_O: %d", cell.LIM_Choke_UA_DHPC_G_O);
+			if (Options::Debug::DRAW_UALBERTABOT_DEBUG) BWAPI::Broodwar->drawTextMap(cell.center.x()-160, cell.center.y()+70,  "C_UA_DHPC_A_O: %d", cell.LIM_Choke_UA_DHPC_A_O);
+			if (Options::Debug::DRAW_UALBERTABOT_DEBUG) BWAPI::Broodwar->drawTextMap(cell.center.x()-160, cell.center.y()+80,  "C_UN_HP_O____: %d", cell.LIM_Choke_UN_HP_O);
+
+			if (Options::Debug::DRAW_UALBERTABOT_DEBUG) BWAPI::Broodwar->drawTextMap(cell.center.x()-160, cell.center.y()+100, "C_BA_HP_O____: %d", cell.LIM_Choke_BA_HP_O);
+			if (Options::Debug::DRAW_UALBERTABOT_DEBUG) BWAPI::Broodwar->drawTextMap(cell.center.x()-160, cell.center.y()+110, "C_BA_DHPC_O__: %d", cell.LIM_Choke_BA_DHPC_O);
+			if (Options::Debug::DRAW_UALBERTABOT_DEBUG) BWAPI::Broodwar->drawTextMap(cell.center.x()-160, cell.center.y()+120, "C_BA_DHPC_G_O: %d", cell.LIM_Choke_BA_DHPC_G_O);
+			if (Options::Debug::DRAW_UALBERTABOT_DEBUG) BWAPI::Broodwar->drawTextMap(cell.center.x()-160, cell.center.y()+130, "C_BA_DHPC_A_O: %d", cell.LIM_Choke_BA_DHPC_A_O);
+			if (Options::Debug::DRAW_UALBERTABOT_DEBUG) BWAPI::Broodwar->drawTextMap(cell.center.x()-160, cell.center.y()+140, "C_BN_HP_O____: %d", cell.LIM_Choke_BN_HP_O);
+
+			// Enemy Choke&Unit LIM on screen
+			if (Options::Debug::DRAW_UALBERTABOT_DEBUG) BWAPI::Broodwar->drawTextMap(cell.center.x()-160, cell.center.y()-120, "C_UA_HP_E____: %d", cell.LIM_Choke_UA_HP_E);
+			if (Options::Debug::DRAW_UALBERTABOT_DEBUG) BWAPI::Broodwar->drawTextMap(cell.center.x()-160, cell.center.y()-110, "C_UA_DHPC_E__: %d", cell.LIM_Choke_UA_DHPC_E);
+			if (Options::Debug::DRAW_UALBERTABOT_DEBUG) BWAPI::Broodwar->drawTextMap(cell.center.x()-160, cell.center.y()-100, "C_UA_DHPC_G_E: %d", cell.LIM_Choke_UA_DHPC_G_E);
+			if (Options::Debug::DRAW_UALBERTABOT_DEBUG) BWAPI::Broodwar->drawTextMap(cell.center.x()-160, cell.center.y()-90,  "C_UA_DHPC_A_E: %d", cell.LIM_Choke_UA_DHPC_A_E);
+			if (Options::Debug::DRAW_UALBERTABOT_DEBUG) BWAPI::Broodwar->drawTextMap(cell.center.x()-160, cell.center.y()-80,  "C_UN_HP_E____: %d", cell.LIM_Choke_UN_HP_E);
+
+			if (Options::Debug::DRAW_UALBERTABOT_DEBUG) BWAPI::Broodwar->drawTextMap(cell.center.x()-160, cell.center.y()-60,  "C_BA_HP_E____: %d", cell.LIM_Choke_BA_HP_E);
+			if (Options::Debug::DRAW_UALBERTABOT_DEBUG) BWAPI::Broodwar->drawTextMap(cell.center.x()-160, cell.center.y()-50,  "C_BA_DHPC_E__: %d", cell.LIM_Choke_BA_DHPC_E);
+			if (Options::Debug::DRAW_UALBERTABOT_DEBUG) BWAPI::Broodwar->drawTextMap(cell.center.x()-160, cell.center.y()-40,  "C_BA_DHPC_G_E: %d", cell.LIM_Choke_BA_DHPC_G_E);
+			if (Options::Debug::DRAW_UALBERTABOT_DEBUG) BWAPI::Broodwar->drawTextMap(cell.center.x()-160, cell.center.y()-30,  "C_BA_DHPC_A_E: %d", cell.LIM_Choke_BA_DHPC_A_E);
+			if (Options::Debug::DRAW_UALBERTABOT_DEBUG) BWAPI::Broodwar->drawTextMap(cell.center.x()-160, cell.center.y()-20,  "C_BN_HP_E____: %d", cell.LIM_Choke_BN_HP_E);
+
+			//$Sam-E 2014 Apr 28
+
 		}
 	}
 
@@ -159,6 +239,161 @@ void MapGrid::update()
 	{
 		getCell(unit).ourUnits.push_back(unit);
 		getCell(unit).timeLastVisited = BWAPI::Broodwar->getFrameCount();
+			//$Sam-S 2014 May 11
+			//Here to populate all IM variable values for Own units
+			//getCell(unit).BIM_Mineral_Amount	= [TBD]; 
+			//getCell(unit).BIM_Gas_Amount		= [TBD]; 
+		
+
+		//[TBD] Add a frequency control for updating LIMs?? Not on each frame?
+		//if (BWAPI::Broodwar->getFrameCount() % 20 == 0)
+		
+		// below is for Own Unit (non-Building) LIM
+		if (!unit->getType().isBuilding()) 
+		{
+
+			if (getCell(unit).BIM_Unit_Grid_1st_Time_Flag_O) 
+			 {
+
+			 
+				getCell(unit).BIM_Unit_Grid_1st_Time_Flag_O = false;
+
+				if (unit->getType().canAttack()) // Beta version: false for units that can only inflict damage via special abilities (such as Protoss High Templar).
+				{ 
+					getCell(unit).BIM_UA_HP_O = unit->getHitPoints() + unit->getShields();
+
+					//Error handling for Units with 'None' ground/air Weapon
+					if (unit->getType().groundWeapon().targetsGround())
+					{
+						//ddd
+						//getCell(unit).BIM_Mineral_Amount += 1; 
+						getCell(unit).BIM_UA_DHPC_G_O = unit->getType().groundWeapon().damageAmount() * (unit->getHitPoints() + unit->getShields()) / unit->getType().groundWeapon().damageCooldown();
+					}
+					if (unit->getType().airWeapon().targetsAir())
+					{
+						//ddd
+						//getCell(unit).BIM_Gas_Amount += 1; 
+				 		getCell(unit).BIM_UA_DHPC_A_O = unit->getType().airWeapon().damageAmount() * (unit->getHitPoints() + unit->getShields()) / unit->getType().airWeapon().damageCooldown();
+					}
+
+					getCell(unit).BIM_UA_DHPC_O = getCell(unit).BIM_UA_DHPC_G_O + getCell(unit).BIM_UA_DHPC_A_O;
+					
+				}
+				else
+				{
+					getCell(unit).BIM_UN_HP_O = unit->getHitPoints() + unit->getShields();
+
+				}
+								
+			 }
+			 else // not 1st timer for Unit (non-Building) variables
+			 {
+				//getCell(unit).BIM_Unit_Grid_1st_Time_Flag_O = false;
+
+				if (unit->getType().canAttack()) // Beta version: false for units that can only inflict damage via special abilities (such as Protoss High Templar).
+				{ 
+					getCell(unit).BIM_UA_HP_O += (unit->getHitPoints() + unit->getShields());
+
+					//Error handling for Units with 'None' ground/air Weapon
+					if (unit->getType().groundWeapon().targetsGround())
+					{
+						//ddd
+						//getCell(unit).BIM_Mineral_Amount += 1; 
+						getCell(unit).BIM_UA_DHPC_G_O += (unit->getType().groundWeapon().damageAmount() * (unit->getHitPoints() + unit->getShields()) / unit->getType().groundWeapon().damageCooldown());
+					}
+					if (unit->getType().airWeapon().targetsAir())
+					{
+						//ddd
+						//getCell(unit).BIM_Gas_Amount += 1; 
+				 		getCell(unit).BIM_UA_DHPC_A_O += (unit->getType().airWeapon().damageAmount() * (unit->getHitPoints() + unit->getShields()) / unit->getType().airWeapon().damageCooldown());
+					}
+					// Note: Use = instead of +=
+					getCell(unit).BIM_UA_DHPC_O = (getCell(unit).BIM_UA_DHPC_G_O + getCell(unit).BIM_UA_DHPC_A_O);
+
+				}
+				else
+				{
+					getCell(unit).BIM_UN_HP_O += (unit->getHitPoints() + unit->getShields());
+				}
+
+			 }
+			
+		}
+
+		else 		// below is for Own Building LIM
+		{
+
+			if (getCell(unit).BIM_Building_Grid_1st_Time_Flag_O) 
+			 {
+
+			 
+				getCell(unit).BIM_Building_Grid_1st_Time_Flag_O = false;
+
+				if (unit->getType().canAttack()) // Beta version: false for Building/units that can only inflict damage via special abilities (such as Protoss High Templar).
+				{ 
+					getCell(unit).BIM_BA_HP_O = unit->getHitPoints() + unit->getShields();
+
+					//Error handling for Building with 'None' ground/air Weapon
+					if (unit->getType().groundWeapon().targetsGround())
+					{
+						//ddd
+						//getCell(unit).BIM_Mineral_Amount += 1; 
+						getCell(unit).BIM_BA_DHPC_G_O = unit->getType().groundWeapon().damageAmount() * (unit->getHitPoints() + unit->getShields()) / unit->getType().groundWeapon().damageCooldown();
+					}
+					if (unit->getType().airWeapon().targetsAir())
+					{
+						//ddd
+						//getCell(unit).BIM_Gas_Amount += 1; 
+				 		getCell(unit).BIM_BA_DHPC_A_O = unit->getType().airWeapon().damageAmount() * (unit->getHitPoints() + unit->getShields()) / unit->getType().airWeapon().damageCooldown();
+					}
+
+					getCell(unit).BIM_BA_DHPC_O = getCell(unit).BIM_BA_DHPC_G_O + getCell(unit).BIM_BA_DHPC_A_O;
+					
+				}
+				else
+				{
+					getCell(unit).BIM_BN_HP_O = unit->getHitPoints() + unit->getShields();
+
+				}
+								
+			 }
+			 else // not 1st timer for Building variables
+			 {
+				//getCell(unit).BIM_Building_Grid_1st_Time_Flag_O = false;
+
+				if (unit->getType().canAttack()) // Beta version: false for units that can only inflict damage via special abilities (such as Protoss High Templar).
+				{ 
+					getCell(unit).BIM_BA_HP_O += (unit->getHitPoints() + unit->getShields());
+
+					//Error handling for Building with 'None' ground/air Weapon
+					if (unit->getType().groundWeapon().targetsGround())
+					{
+						//ddd
+						//getCell(unit).BIM_Mineral_Amount += 1; 
+						getCell(unit).BIM_BA_DHPC_G_O += (unit->getType().groundWeapon().damageAmount() * (unit->getHitPoints() + unit->getShields()) / unit->getType().groundWeapon().damageCooldown());
+					}
+					if (unit->getType().airWeapon().targetsAir())
+					{
+						//ddd
+						//getCell(unit).BIM_Gas_Amount += 1; 
+				 		getCell(unit).BIM_BA_DHPC_A_O += (unit->getType().airWeapon().damageAmount() * (unit->getHitPoints() + unit->getShields()) / unit->getType().airWeapon().damageCooldown());
+					}
+
+					// Note: Use = instead of +=
+					getCell(unit).BIM_BA_DHPC_O = (getCell(unit).BIM_BA_DHPC_G_O + getCell(unit).BIM_BA_DHPC_A_O);
+
+				}
+				else
+				{
+					getCell(unit).BIM_BN_HP_O += (unit->getHitPoints() + unit->getShields());
+				}
+
+			 }
+			
+		}
+		// End of Own Unit/Building LIM
+
+			//$Sam-E 2014 Apr 28
 	}
 
 	// add enemy units to the appropriate cell
@@ -168,8 +403,292 @@ void MapGrid::update()
 		{
 			getCell(unit).oppUnits.push_back(unit);
 			getCell(unit).timeLastOpponentSeen = BWAPI::Broodwar->getFrameCount();
+			//$Sam-S 2014 May 11
+			//Here to populate all IM variable values for Enemy units
+			//getCell(unit).BIM_Mineral_Amount	= [TBD]; 
+			//getCell(unit).BIM_Gas_Amount		= [TBD]; 
+		
+
+		//[TBD] Add a frequency control for updating LIMs?? Not on each frame?
+		//if (BWAPI::Broodwar->getFrameCount() % 20 == 0)
+		
+		// below is for Enemy Unit (non-Building) LIM
+		if (!unit->getType().isBuilding()) 
+		{
+
+			if (getCell(unit).BIM_Unit_Grid_1st_Time_Flag_E) 
+			 {
+
+			 
+				getCell(unit).BIM_Unit_Grid_1st_Time_Flag_E = false;
+
+				if (unit->getType().canAttack()) // Beta version: false for units that can only inflict damage via special abilities (such as Protoss High Templar).
+				{ 
+					getCell(unit).BIM_UA_HP_E = unit->getHitPoints() + unit->getShields();
+
+					//Error handling for Units with 'None' ground/air Weapon
+					if (unit->getType().groundWeapon().targetsGround())
+					{
+						//ddd
+						//getCell(unit).BIM_Mineral_Amount += 1; 
+						getCell(unit).BIM_UA_DHPC_G_E = unit->getType().groundWeapon().damageAmount() * (unit->getHitPoints() + unit->getShields()) / unit->getType().groundWeapon().damageCooldown();
+					}
+					if (unit->getType().airWeapon().targetsAir())
+					{
+						//ddd
+						//getCell(unit).BIM_Gas_Amount += 1; 
+				 		getCell(unit).BIM_UA_DHPC_A_E = unit->getType().airWeapon().damageAmount() * (unit->getHitPoints() + unit->getShields()) / unit->getType().airWeapon().damageCooldown();
+					}
+
+					getCell(unit).BIM_UA_DHPC_E = getCell(unit).BIM_UA_DHPC_G_E + getCell(unit).BIM_UA_DHPC_A_E;
+					
+				}
+				else
+				{
+					getCell(unit).BIM_UN_HP_E = unit->getHitPoints() + unit->getShields();
+
+				}
+								
+			 }
+			 else // not 1st timer for Unit (non-Building) variables
+			 {
+				//getCell(unit).BIM_Unit_Grid_1st_Time_Flag_E = false;
+
+				if (unit->getType().canAttack()) // Beta version: false for units that can only inflict damage via special abilities (such as Protoss High Templar).
+				{ 
+					getCell(unit).BIM_UA_HP_E += (unit->getHitPoints() + unit->getShields());
+
+					//Error handling for Units with 'None' ground/air Weapon
+					if (unit->getType().groundWeapon().targetsGround())
+					{
+						//ddd
+						//getCell(unit).BIM_Mineral_Amount += 1; 
+						getCell(unit).BIM_UA_DHPC_G_E += (unit->getType().groundWeapon().damageAmount() * (unit->getHitPoints() + unit->getShields()) / unit->getType().groundWeapon().damageCooldown());
+					}
+					if (unit->getType().airWeapon().targetsAir())
+					{
+						//ddd
+						//getCell(unit).BIM_Gas_Amount += 1; 
+				 		getCell(unit).BIM_UA_DHPC_A_E += (unit->getType().airWeapon().damageAmount() * (unit->getHitPoints() + unit->getShields()) / unit->getType().airWeapon().damageCooldown());
+					}
+					// Note: Use = instead of +=
+					getCell(unit).BIM_UA_DHPC_E = (getCell(unit).BIM_UA_DHPC_G_E + getCell(unit).BIM_UA_DHPC_A_E);
+
+				}
+				else
+				{
+					getCell(unit).BIM_UN_HP_E += (unit->getHitPoints() + unit->getShields());
+				}
+
+			 }
+			
+		}
+
+		else 		// below is for Enemy Building LIM
+		{
+
+			if (getCell(unit).BIM_Building_Grid_1st_Time_Flag_E) 
+			 {
+
+			 
+				getCell(unit).BIM_Building_Grid_1st_Time_Flag_E = false;
+
+				if (unit->getType().canAttack()) // Beta version: false for Building/units that can only inflict damage via special abilities (such as Protoss High Templar).
+				{ 
+					getCell(unit).BIM_BA_HP_E = unit->getHitPoints() + unit->getShields();
+
+					//Error handling for Building with 'None' ground/air Weapon
+					if (unit->getType().groundWeapon().targetsGround())
+					{
+						//ddd
+						//getCell(unit).BIM_Mineral_Amount += 1; 
+						getCell(unit).BIM_BA_DHPC_G_E = unit->getType().groundWeapon().damageAmount() * (unit->getHitPoints() + unit->getShields()) / unit->getType().groundWeapon().damageCooldown();
+					}
+					if (unit->getType().airWeapon().targetsAir())
+					{
+						//ddd
+						//getCell(unit).BIM_Gas_Amount += 1; 
+				 		getCell(unit).BIM_BA_DHPC_A_E = unit->getType().airWeapon().damageAmount() * (unit->getHitPoints() + unit->getShields()) / unit->getType().airWeapon().damageCooldown();
+					}
+
+					getCell(unit).BIM_BA_DHPC_E = getCell(unit).BIM_BA_DHPC_G_E + getCell(unit).BIM_BA_DHPC_A_E;
+					
+				}
+				else
+				{
+					getCell(unit).BIM_BN_HP_E = unit->getHitPoints() + unit->getShields();
+
+				}
+								
+			 }
+			 else // not 1st timer for Building variables
+			 {
+				//getCell(unit).BIM_Building_Grid_1st_Time_Flag_E = false;
+
+				if (unit->getType().canAttack()) // Beta version: false for units that can only inflict damage via special abilities (such as Protoss High Templar).
+				{ 
+					getCell(unit).BIM_BA_HP_E += (unit->getHitPoints() + unit->getShields());
+
+					//Error handling for Building with 'None' ground/air Weapon
+					if (unit->getType().groundWeapon().targetsGround())
+					{
+						//ddd
+						//getCell(unit).BIM_Mineral_Amount += 1; 
+						getCell(unit).BIM_BA_DHPC_G_E += (unit->getType().groundWeapon().damageAmount() * (unit->getHitPoints() + unit->getShields()) / unit->getType().groundWeapon().damageCooldown());
+					}
+					if (unit->getType().airWeapon().targetsAir())
+					{
+						//ddd
+						//getCell(unit).BIM_Gas_Amount += 1; 
+				 		getCell(unit).BIM_BA_DHPC_A_E += (unit->getType().airWeapon().damageAmount() * (unit->getHitPoints() + unit->getShields()) / unit->getType().airWeapon().damageCooldown());
+					}
+
+					// Note: Use = instead of +=
+					getCell(unit).BIM_BA_DHPC_E = (getCell(unit).BIM_BA_DHPC_G_E + getCell(unit).BIM_BA_DHPC_A_E);
+
+				}
+				else
+				{
+					getCell(unit).BIM_BN_HP_E += (unit->getHitPoints() + unit->getShields());
+				}
+
+			 }
+			
+		}
+		// End of Enemy Unit/Building LIM
+		//$Sam-E 2014 May 11
+
+
 		}
 	}
+
+
+	
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+//$Sam-S 2014 May 14 - Choke LIM
+// refer to BWTA APIs https://code.google.com/p/bwta/wiki/BWTAManual
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+
+	BOOST_FOREACH (BWTA::Chokepoint * choke, BWTA::getChokepoints())
+	{
+		// BWAPI::Position choke->getCenter()
+		// BWAPI::Position GridCell & getCell(choke->getCenter())
+		getCell(choke->getCenter()).BIM_Choke_Position = choke->getCenter();
+		getCell(choke->getCenter()).BIM_Choke_Width = choke->getWidth();
+		// Phase1: hard-code radius for BIM_Choke_Range; not used in Phase1
+		getCell(choke->getCenter()).BIM_Choke_Range = choke->getWidth();
+
+		// The LIM_Choke value below is the sum-up of (1 self-centered Gird + values of neighbouring 8 Grids); In total, 9 Grids' BIM values.
+		
+		// Step1: Clear Choke LIM variables
+		getCell(choke->getCenter()).LIM_Choke_UA_HP_E = 	0;
+		getCell(choke->getCenter()).LIM_Choke_UA_DHPC_G_E = 	0;
+		getCell(choke->getCenter()).LIM_Choke_UA_DHPC_A_E = 	0;
+		getCell(choke->getCenter()).LIM_Choke_UA_DHPC_E = 	0;
+		getCell(choke->getCenter()).LIM_Choke_UN_HP_E = 	0;
+		getCell(choke->getCenter()).LIM_Choke_BA_HP_E = 	0;
+		getCell(choke->getCenter()).LIM_Choke_BA_DHPC_G_E = 	0;
+		getCell(choke->getCenter()).LIM_Choke_BA_DHPC_A_E = 	0;
+		getCell(choke->getCenter()).LIM_Choke_BA_DHPC_E = 	0;
+		getCell(choke->getCenter()).LIM_Choke_BN_HP_E = 	0;
+
+		getCell(choke->getCenter()).LIM_Choke_UA_HP_O = 	0;
+		getCell(choke->getCenter()).LIM_Choke_UA_DHPC_G_O = 	0;
+		getCell(choke->getCenter()).LIM_Choke_UA_DHPC_A_O = 	0;
+		getCell(choke->getCenter()).LIM_Choke_UA_DHPC_O = 	0;
+		getCell(choke->getCenter()).LIM_Choke_UN_HP_O = 	0;
+		getCell(choke->getCenter()).LIM_Choke_BA_HP_O = 	0;
+		getCell(choke->getCenter()).LIM_Choke_BA_DHPC_G_O = 	0;
+		getCell(choke->getCenter()).LIM_Choke_BA_DHPC_A_O = 	0;
+		getCell(choke->getCenter()).LIM_Choke_BA_DHPC_O = 	0;
+		getCell(choke->getCenter()).LIM_Choke_BN_HP_O = 	0;
+
+		
+		// Step2: Loop to sumup(9 Grids); Take note of valid Grid check for map boundary.
+
+		// Row of Choke-center Cell
+		int ChokeR =		choke->getCenter().y() / cellSize; 
+		// Col of Choke-center Cell
+		int ChokeC =		choke->getCenter().x() / cellSize; 
+
+		//ddd
+		//getCellByIndex(ChokeR , ChokeC).BIM_Mineral_Amount = 0; 
+		getCellByIndex(ChokeR , ChokeC).BIM_Gas_Amount = 0; 
+		for (int i=-1; i < 2; ++i) // Row -1, +0, +1
+		{
+			for (int j=-1; j < 2; ++j) // Col -1, +0, +1
+			{  
+//				if (getCellByIndex(ChokeR + i , ChokeC + j).center.isValid()) // Take note of valid Grid check for map boundary.
+				if (BWAPI::Position(choke->getCenter().y() + i*320, choke->getCenter().x() + j*320).isValid()) // Take note of valid Grid check for map boundary.
+				{
+				//ddd
+				getCellByIndex(ChokeR , ChokeC).BIM_Mineral_Amount += 1; 
+				getCellByIndex(ChokeR , ChokeC).BIM_Gas_Amount += 1; 
+
+				// for Enemy LIM
+				getCellByIndex(ChokeR , ChokeC).LIM_Choke_UA_HP_E += 		getCellByIndex(ChokeR + i , ChokeC + j).BIM_UA_HP_E;
+				getCellByIndex(ChokeR , ChokeC).LIM_Choke_UA_DHPC_G_E += 	getCellByIndex(ChokeR + i , ChokeC + j).BIM_UA_DHPC_G_E;
+				getCellByIndex(ChokeR , ChokeC).LIM_Choke_UA_DHPC_A_E += 	getCellByIndex(ChokeR + i , ChokeC + j).BIM_UA_DHPC_A_E;
+				getCellByIndex(ChokeR , ChokeC).LIM_Choke_UA_DHPC_E += 		getCellByIndex(ChokeR + i , ChokeC + j).BIM_UA_DHPC_E;
+				getCellByIndex(ChokeR , ChokeC).LIM_Choke_UN_HP_E += 		getCellByIndex(ChokeR + i , ChokeC + j).BIM_UN_HP_E;
+
+				getCellByIndex(ChokeR , ChokeC).LIM_Choke_BA_HP_E += 		getCellByIndex(ChokeR + i , ChokeC + j).BIM_BA_HP_E;
+				getCellByIndex(ChokeR , ChokeC).LIM_Choke_BA_DHPC_G_E += 	getCellByIndex(ChokeR + i , ChokeC + j).BIM_BA_DHPC_G_E;
+				getCellByIndex(ChokeR , ChokeC).LIM_Choke_BA_DHPC_A_E += 	getCellByIndex(ChokeR + i , ChokeC + j).BIM_BA_DHPC_A_E;
+				getCellByIndex(ChokeR , ChokeC).LIM_Choke_BA_DHPC_E += 		getCellByIndex(ChokeR + i , ChokeC + j).BIM_BA_DHPC_E;
+				getCellByIndex(ChokeR , ChokeC).LIM_Choke_BN_HP_E += 		getCellByIndex(ChokeR + i , ChokeC + j).BIM_BN_HP_E;
+
+				// for Own LIM
+				getCellByIndex(ChokeR , ChokeC).LIM_Choke_UA_HP_O += 		getCellByIndex(ChokeR + i , ChokeC + j).BIM_UA_HP_O;
+				getCellByIndex(ChokeR , ChokeC).LIM_Choke_UA_DHPC_G_O += 	getCellByIndex(ChokeR + i , ChokeC + j).BIM_UA_DHPC_G_O;
+				getCellByIndex(ChokeR , ChokeC).LIM_Choke_UA_DHPC_A_O += 	getCellByIndex(ChokeR + i , ChokeC + j).BIM_UA_DHPC_A_O;
+				getCellByIndex(ChokeR , ChokeC).LIM_Choke_UA_DHPC_O += 		getCellByIndex(ChokeR + i , ChokeC + j).BIM_UA_DHPC_O;
+				getCellByIndex(ChokeR , ChokeC).LIM_Choke_UN_HP_O += 		getCellByIndex(ChokeR + i , ChokeC + j).BIM_UN_HP_O;
+
+				getCellByIndex(ChokeR , ChokeC).LIM_Choke_BA_HP_O += 		getCellByIndex(ChokeR + i , ChokeC + j).BIM_BA_HP_O;
+				getCellByIndex(ChokeR , ChokeC).LIM_Choke_BA_DHPC_G_O += 	getCellByIndex(ChokeR + i , ChokeC + j).BIM_BA_DHPC_G_O;
+				getCellByIndex(ChokeR , ChokeC).LIM_Choke_BA_DHPC_A_O += 	getCellByIndex(ChokeR + i , ChokeC + j).BIM_BA_DHPC_A_O;
+				getCellByIndex(ChokeR , ChokeC).LIM_Choke_BA_DHPC_O += 		getCellByIndex(ChokeR + i , ChokeC + j).BIM_BA_DHPC_O;
+				getCellByIndex(ChokeR , ChokeC).LIM_Choke_BN_HP_O += 		getCellByIndex(ChokeR + i , ChokeC + j).BIM_BN_HP_O;
+				
+				}  
+			}
+		}
+
+		/* Below is for testing, using only one grid.
+		// for Enemy LIM
+		getCell(choke->getCenter()).LIM_Choke_UA_HP_E = 		getCell(choke->getCenter()).BIM_UA_HP_E;
+		getCell(choke->getCenter()).LIM_Choke_UA_DHPC_G_E = 	getCell(choke->getCenter()).BIM_UA_DHPC_G_E;
+		getCell(choke->getCenter()).LIM_Choke_UA_DHPC_A_E = 	getCell(choke->getCenter()).BIM_UA_DHPC_A_E;
+		getCell(choke->getCenter()).LIM_Choke_UA_DHPC_E = 		getCell(choke->getCenter()).BIM_UA_DHPC_E;
+		getCell(choke->getCenter()).LIM_Choke_UN_HP_E = 		getCell(choke->getCenter()).BIM_UN_HP_E;
+
+		getCell(choke->getCenter()).LIM_Choke_BA_HP_E = 		getCell(choke->getCenter()).BIM_BA_HP_E;
+		getCell(choke->getCenter()).LIM_Choke_BA_DHPC_G_E = 	getCell(choke->getCenter()).BIM_BA_DHPC_G_E;
+		getCell(choke->getCenter()).LIM_Choke_BA_DHPC_A_E = 	getCell(choke->getCenter()).BIM_BA_DHPC_A_E;
+		getCell(choke->getCenter()).LIM_Choke_BA_DHPC_E = 		getCell(choke->getCenter()).BIM_BA_DHPC_E;
+		getCell(choke->getCenter()).LIM_Choke_BN_HP_E = 		getCell(choke->getCenter()).BIM_BN_HP_E;
+
+		// for Own LIM
+		getCell(choke->getCenter()).LIM_Choke_UA_HP_O = 		getCell(choke->getCenter()).BIM_UA_HP_O;
+		getCell(choke->getCenter()).LIM_Choke_UA_DHPC_G_O = 	getCell(choke->getCenter()).BIM_UA_DHPC_G_O;
+		getCell(choke->getCenter()).LIM_Choke_UA_DHPC_A_O = 	getCell(choke->getCenter()).BIM_UA_DHPC_A_O;
+		getCell(choke->getCenter()).LIM_Choke_UA_DHPC_O = 		getCell(choke->getCenter()).BIM_UA_DHPC_O;
+		getCell(choke->getCenter()).LIM_Choke_UN_HP_O = 		getCell(choke->getCenter()).BIM_UN_HP_O;
+
+		getCell(choke->getCenter()).LIM_Choke_BA_HP_O = 		getCell(choke->getCenter()).BIM_BA_HP_O;
+		getCell(choke->getCenter()).LIM_Choke_BA_DHPC_G_O = 	getCell(choke->getCenter()).BIM_BA_DHPC_G_O;
+		getCell(choke->getCenter()).LIM_Choke_BA_DHPC_A_O = 	getCell(choke->getCenter()).BIM_BA_DHPC_A_O;
+		getCell(choke->getCenter()).LIM_Choke_BA_DHPC_O = 		getCell(choke->getCenter()).BIM_BA_DHPC_O;
+		getCell(choke->getCenter()).LIM_Choke_BN_HP_O = 		getCell(choke->getCenter()).BIM_BN_HP_O;
+		*/
+
+	}
+		
+			//$Sam-E 2014 May 14
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
 }
 
 void MapGrid::GetUnits(UnitVector & units, BWAPI::Position center, int radius, bool ourUnits, bool oppUnits)
@@ -231,3 +750,81 @@ bool MapGrid::contains(UnitVector & units, BWAPI::Unit * unit)
 
 	return false;
 }
+
+
+//$Sam-S 2014 May 11 - re-design constructor
+GridCell::GridCell()
+{
+	timeLastVisited = 0;
+	timeLastOpponentSeen = 0;
+
+	//LIM:
+	BIM_Mineral_Amount = 0;
+	BIM_Gas_Amount = 0;
+
+	BIM_Unit_Grid_1st_Time_Flag_E = true;
+	BIM_UA_HP_E = 0;
+	BIM_UA_DHPC_E = 0;
+
+	BIM_UA_DHPC_G_E = 0;
+	BIM_UA_DHPC_A_E = 0;
+
+	BIM_UN_HP_E = 0;
+
+	BIM_Unit_Grid_1st_Time_Flag_O = true;
+	BIM_UA_HP_O = 0;
+	BIM_UA_DHPC_O = 0;
+
+	BIM_UA_DHPC_G_O = 0;
+	BIM_UA_DHPC_A_O = 0;
+
+	BIM_UN_HP_O = 0;
+
+	BIM_Building_Grid_1st_Time_Flag_E = true;
+	BIM_BA_HP_E = 0;
+	BIM_BA_DHPC_E = 0;
+
+	BIM_BA_DHPC_G_E = 0;
+	BIM_BA_DHPC_A_E = 0;
+
+	BIM_BN_HP_E = 0;
+
+	BIM_Building_Grid_1st_Time_Flag_O = true;
+	BIM_BA_HP_O = 0;
+	BIM_BA_DHPC_O = 0;
+
+	BIM_BA_DHPC_G_O = 0;
+	BIM_BA_DHPC_A_O = 0;
+
+	BIM_BN_HP_O = 0;
+
+//	BIM_Choke_Position
+	BIM_Choke_Width = 0;
+	BIM_Choke_Range = 0;
+
+	BIM_Choke_Grid_1st_Time_Flag_E = true;
+	LIM_Choke_UA_HP_E = 0;
+	LIM_Choke_UA_DHPC_G_E = 0;
+	LIM_Choke_UA_DHPC_A_E = 0;
+	LIM_Choke_UA_DHPC_E = 0;
+	LIM_Choke_UN_HP_E = 0;
+	LIM_Choke_BA_HP_E = 0;
+	LIM_Choke_BA_DHPC_G_E = 0;
+	LIM_Choke_BA_DHPC_A_E = 0;
+	LIM_Choke_BA_DHPC_E = 0;
+	LIM_Choke_BN_HP_E = 0;
+
+	BIM_Choke_Grid_1st_Time_Flag_O = true;
+	LIM_Choke_UA_HP_O = 0;
+	LIM_Choke_UA_DHPC_G_O = 0;
+	LIM_Choke_UA_DHPC_A_O = 0;
+	LIM_Choke_UA_DHPC_O = 0;
+	LIM_Choke_UN_HP_O = 0;
+	LIM_Choke_BA_HP_O = 0;
+	LIM_Choke_BA_DHPC_G_O = 0;
+	LIM_Choke_BA_DHPC_A_O = 0;
+	LIM_Choke_BA_DHPC_O = 0;
+	LIM_Choke_BN_HP_O = 0;
+
+	}
+//$Sam-E 2014 May 11 - re-design constructor

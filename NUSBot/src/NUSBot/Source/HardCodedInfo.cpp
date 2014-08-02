@@ -176,11 +176,11 @@ void HardCodedInfo::drawChokePoints()
 {
 	BOOST_FOREACH(BWAPI::Position p, mainChokes[BWAPI::Broodwar->mapHash()])
 	{
-		if (Options::Debug::DRAW_UALBERTABOT_DEBUG) BWAPI::Broodwar->drawCircleMap(p.x(), p.y(), 10, BWAPI::Colors::Purple, true);
+		if (Options::Debug::DRAW_NUSBOT_DEBUG) BWAPI::Broodwar->drawCircleMap(p.x(), p.y(), 10, BWAPI::Colors::Purple, true);
 	}
 
 	BOOST_FOREACH(BWAPI::Position p, naturalChokes[BWAPI::Broodwar->mapHash()])
 	{
-		if (Options::Debug::DRAW_UALBERTABOT_DEBUG) BWAPI::Broodwar->drawCircleMap(p.x(), p.y(), 10, BWAPI::Colors::Purple, true);
+		if (Options::Debug::DRAW_NUSBOT_DEBUG) BWAPI::Broodwar->drawCircleMap(p.x(), p.y(), 10, BWAPI::Colors::Purple, true);
 	}
 }*/

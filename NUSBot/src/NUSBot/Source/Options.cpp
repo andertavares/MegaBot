@@ -6,7 +6,7 @@ namespace Options
 	namespace Modules							    // toggle various modules of UAlbertaBot, must be const
 	{
         // the default tournament bot modules
-		bool USING_GAMECOMMANDER		= true;	    // toggle GameCommander, effectively UAlbertaBot
+		bool USING_IPBManager		= true;	    // toggle IPBManager, effectively UAlbertaBot
 		bool USING_SCOUTMANAGER			= true;
 		bool USING_COMBATCOMMANDER		= true;
 		bool USING_MACRO_SEARCH			= true;	    // toggle use of Build Order Search, currently no backup
@@ -14,7 +14,7 @@ namespace Options
         bool USING_UNIT_COMMAND_MGR		= true;     // handles all unit commands
 		
         // extra things, don't enable unless you know what they are
-        bool USING_REPLAY_VISUALIZER	= false;	// cannot be on while gamecommander is on
+        bool USING_REPLAY_VISUALIZER	= false;	// cannot be on while IPBManager is on
         bool USING_MICRO_SEARCH			= false;	// toggle use of Micro Search, if false script used
         bool USING_BUILD_LEARNER		= false;	// toggle the use of build learning, must not be using macro search
         bool USING_ENHANCED_INTERFACE	= false;	// toggle EnhancedUI, not needed for UAlbertaBot
@@ -22,7 +22,7 @@ namespace Options
 
 		void checkOptions()									// checks to see if options are set in a sane manner
 		{
-			if (USING_GAMECOMMANDER)
+			if (USING_IPBManager)
 			{
 				assert(!USING_ENHANCED_INTERFACE);
 				assert(!USING_MICRO_SEARCH);
@@ -50,7 +50,7 @@ namespace Options
 
             if (mode == BotModes::AIIDE_TOURNAMENT)
             {
-                Modules::USING_GAMECOMMANDER		= true;	
+                Modules::USING_IPBManager		= true;	
 				Modules::USING_SCOUTMANAGER			= true;	
 				Modules::USING_COMBATCOMMANDER		= true;
 		        Modules::USING_MACRO_SEARCH			= true;	
@@ -64,7 +64,7 @@ namespace Options
             }
             else if (mode == BotModes::CIG_TOURNAMENT)
             {
-                Modules::USING_GAMECOMMANDER		= true;	
+                Modules::USING_IPBManager		= true;	
 				Modules::USING_SCOUTMANAGER			= true;	
 				Modules::USING_COMBATCOMMANDER		= true;
 		        Modules::USING_MACRO_SEARCH			= true;	
@@ -78,7 +78,7 @@ namespace Options
             }
             else if (mode == BotModes::MICRO_SEARCH_TEST)
             {
-                Modules::USING_GAMECOMMANDER		= false;	
+                Modules::USING_IPBManager		= false;	
 				Modules::USING_SCOUTMANAGER			= false;	
 				Modules::USING_COMBATCOMMANDER		= false;
 		        Modules::USING_MACRO_SEARCH			= false;	
@@ -92,7 +92,7 @@ namespace Options
             }
             else if (mode == BotModes::REPLAY_VIS_TEST)
             {
-                Modules::USING_GAMECOMMANDER		= false;	
+                Modules::USING_IPBManager		= false;	
 				Modules::USING_SCOUTMANAGER			= false;	
 				Modules::USING_COMBATCOMMANDER		= false;
 		        Modules::USING_MACRO_SEARCH			= false;	
@@ -106,7 +106,7 @@ namespace Options
             }
 			else if (mode == BotModes::BUILD_ORDER_DEMO)
             {
-                Modules::USING_GAMECOMMANDER		= true;	
+                Modules::USING_IPBManager		= true;	
 				Modules::USING_SCOUTMANAGER			= false;	
 				Modules::USING_COMBATCOMMANDER		= false;
 		        Modules::USING_MACRO_SEARCH			= true;	
@@ -134,7 +134,7 @@ namespace Options
 
 	namespace Debug								// debugging options
 	{
-		bool DRAW_UALBERTABOT_DEBUG				= true;		// draws debug information for UAlbertaBot
+		bool DRAW_NUSBOT_DEBUG				= true;		// draws debug information for UAlbertaBot
 		bool DRAW_DEBUG_INTERFACE				= false;		// draws debug information for EnhancedUI
 
 		BWAPI::Color COLOR_LINE_TARGET			= BWAPI::Colors::White;

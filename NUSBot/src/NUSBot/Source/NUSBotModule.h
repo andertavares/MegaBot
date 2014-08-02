@@ -1,7 +1,7 @@
 #pragma once
 
 #include <BWAPI.h>
-#include "GameCommander.h"
+#include "IPBManager.h"
 #include <iostream>
 #include <fstream>
 #include "Logger.h"
@@ -19,7 +19,7 @@
 
 class NUSBotModule : public BWAPI::AIModule
 {
-	GameCommander			gameCommander;
+	IPBManager			IPBManager;
 	EnhancedInterface		eui;
 	//SparCraftManager		micro;
 

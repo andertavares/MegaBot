@@ -33,7 +33,7 @@ void SparCraftManager::update()
             // if it is a combat unit
             if (isCombatUnit(unit))
             {
-                if (Options::Debug::DRAW_UALBERTABOT_DEBUG && unit->getTarget())
+                if (Options::Debug::DRAW_NUSBOT_DEBUG && unit->getTarget())
                 {
                     BWAPI::Broodwar->drawLineMap(unit->getPosition().x()-2, unit->getPosition().y()-2, 	unit->getTarget()->getPosition().x(), unit->getTarget()->getPosition().y(), BWAPI::Colors::White);
                 }

@@ -144,12 +144,12 @@ void MapGrid::update()
 {
 	for (int i=0; i<cols; i++) 
 	{
-		if (Options::Debug::DRAW_UALBERTABOT_DEBUG) BWAPI::Broodwar->drawLineMap(i*cellSize, 0, i*cellSize, mapHeight, BWAPI::Colors::Blue);
+		if (Options::Debug::DRAW_NUSBOT_DEBUG) BWAPI::Broodwar->drawLineMap(i*cellSize, 0, i*cellSize, mapHeight, BWAPI::Colors::Blue);
 	}
 
 	for (int j=0; j<rows; j++) 
 	{
-		if (Options::Debug::DRAW_UALBERTABOT_DEBUG) BWAPI::Broodwar->drawLineMap(0, j*cellSize, mapWidth, j*cellSize, BWAPI::Colors::Blue);
+		if (Options::Debug::DRAW_NUSBOT_DEBUG) BWAPI::Broodwar->drawLineMap(0, j*cellSize, mapWidth, j*cellSize, BWAPI::Colors::Blue);
 	}
 
 	for (int r=0; r < rows; ++r)
@@ -158,71 +158,71 @@ void MapGrid::update()
 		{
 			GridCell & cell = getCellByIndex(r,c);
 			
-			if (Options::Debug::DRAW_UALBERTABOT_DEBUG) BWAPI::Broodwar->drawTextMap(cell.center.x(), cell.center.y(),    "Last Seen : %d", cell.timeLastVisited);
-			if (Options::Debug::DRAW_UALBERTABOT_DEBUG) BWAPI::Broodwar->drawTextMap(cell.center.x(), cell.center.y()+10, "Row/Col (%d, %d)", r, c);
+			if (Options::Debug::DRAW_NUSBOT_DEBUG) BWAPI::Broodwar->drawTextMap(cell.center.x(), cell.center.y(),    "Last Seen : %d", cell.timeLastVisited);
+			if (Options::Debug::DRAW_NUSBOT_DEBUG) BWAPI::Broodwar->drawTextMap(cell.center.x(), cell.center.y()+10, "Row/Col (%d, %d)", r, c);
 			
 			//$Sam-S 2014 Apr 28
 			//Display some Influence Map variables on screen
-			if (Options::Debug::DRAW_UALBERTABOT_DEBUG) BWAPI::Broodwar->drawTextMap(cell.center.x(), cell.center.y()+20, "Choke ProCtr: %d", cell.BIM_Mineral_Amount);
-			if (Options::Debug::DRAW_UALBERTABOT_DEBUG) BWAPI::Broodwar->drawTextMap(cell.center.x(), cell.center.y()+30, "Choke Cells#: %d", cell.BIM_Gas_Amount);
+			if (Options::Debug::DRAW_NUSBOT_DEBUG) BWAPI::Broodwar->drawTextMap(cell.center.x(), cell.center.y()+20, "Choke ProCtr: %d", cell.BIM_Mineral_Amount);
+			if (Options::Debug::DRAW_NUSBOT_DEBUG) BWAPI::Broodwar->drawTextMap(cell.center.x(), cell.center.y()+30, "Choke Cells#: %d", cell.BIM_Gas_Amount);
 
 			// Own Unit & Building LIM on screen
-			if (Options::Debug::DRAW_UALBERTABOT_DEBUG) BWAPI::Broodwar->drawTextMap(cell.center.x(), cell.center.y()+40,  "UA_HP_O____: %d", cell.BIM_UA_HP_O);
-			if (Options::Debug::DRAW_UALBERTABOT_DEBUG) BWAPI::Broodwar->drawTextMap(cell.center.x(), cell.center.y()+50,  "UA_DHPC_O__: %d", cell.BIM_UA_DHPC_O);
-			if (Options::Debug::DRAW_UALBERTABOT_DEBUG) BWAPI::Broodwar->drawTextMap(cell.center.x(), cell.center.y()+60,  "UA_DHPC_G_O: %d", cell.BIM_UA_DHPC_G_O);
-			if (Options::Debug::DRAW_UALBERTABOT_DEBUG) BWAPI::Broodwar->drawTextMap(cell.center.x(), cell.center.y()+70,  "UA_DHPC_A_O: %d", cell.BIM_UA_DHPC_A_O);
-			if (Options::Debug::DRAW_UALBERTABOT_DEBUG) BWAPI::Broodwar->drawTextMap(cell.center.x(), cell.center.y()+80,  "UN_HP_O____: %d", cell.BIM_UN_HP_O);
+			if (Options::Debug::DRAW_NUSBOT_DEBUG) BWAPI::Broodwar->drawTextMap(cell.center.x(), cell.center.y()+40,  "UA_HP_O____: %d", cell.BIM_UA_HP_O);
+			if (Options::Debug::DRAW_NUSBOT_DEBUG) BWAPI::Broodwar->drawTextMap(cell.center.x(), cell.center.y()+50,  "UA_DHPC_O__: %d", cell.BIM_UA_DHPC_O);
+			if (Options::Debug::DRAW_NUSBOT_DEBUG) BWAPI::Broodwar->drawTextMap(cell.center.x(), cell.center.y()+60,  "UA_DHPC_G_O: %d", cell.BIM_UA_DHPC_G_O);
+			if (Options::Debug::DRAW_NUSBOT_DEBUG) BWAPI::Broodwar->drawTextMap(cell.center.x(), cell.center.y()+70,  "UA_DHPC_A_O: %d", cell.BIM_UA_DHPC_A_O);
+			if (Options::Debug::DRAW_NUSBOT_DEBUG) BWAPI::Broodwar->drawTextMap(cell.center.x(), cell.center.y()+80,  "UN_HP_O____: %d", cell.BIM_UN_HP_O);
 
-			if (Options::Debug::DRAW_UALBERTABOT_DEBUG) BWAPI::Broodwar->drawTextMap(cell.center.x(), cell.center.y()+100, "BA_HP_O____: %d", cell.BIM_BA_HP_O);
-			if (Options::Debug::DRAW_UALBERTABOT_DEBUG) BWAPI::Broodwar->drawTextMap(cell.center.x(), cell.center.y()+110, "BA_DHPC_O__: %d", cell.BIM_BA_DHPC_O);
-			if (Options::Debug::DRAW_UALBERTABOT_DEBUG) BWAPI::Broodwar->drawTextMap(cell.center.x(), cell.center.y()+120, "BA_DHPC_G_O: %d", cell.BIM_BA_DHPC_G_O);
-			if (Options::Debug::DRAW_UALBERTABOT_DEBUG) BWAPI::Broodwar->drawTextMap(cell.center.x(), cell.center.y()+130, "BA_DHPC_A_O: %d", cell.BIM_BA_DHPC_A_O);
-			if (Options::Debug::DRAW_UALBERTABOT_DEBUG) BWAPI::Broodwar->drawTextMap(cell.center.x(), cell.center.y()+140, "BN_HP_O____: %d", cell.BIM_BN_HP_O);
+			if (Options::Debug::DRAW_NUSBOT_DEBUG) BWAPI::Broodwar->drawTextMap(cell.center.x(), cell.center.y()+100, "BA_HP_O____: %d", cell.BIM_BA_HP_O);
+			if (Options::Debug::DRAW_NUSBOT_DEBUG) BWAPI::Broodwar->drawTextMap(cell.center.x(), cell.center.y()+110, "BA_DHPC_O__: %d", cell.BIM_BA_DHPC_O);
+			if (Options::Debug::DRAW_NUSBOT_DEBUG) BWAPI::Broodwar->drawTextMap(cell.center.x(), cell.center.y()+120, "BA_DHPC_G_O: %d", cell.BIM_BA_DHPC_G_O);
+			if (Options::Debug::DRAW_NUSBOT_DEBUG) BWAPI::Broodwar->drawTextMap(cell.center.x(), cell.center.y()+130, "BA_DHPC_A_O: %d", cell.BIM_BA_DHPC_A_O);
+			if (Options::Debug::DRAW_NUSBOT_DEBUG) BWAPI::Broodwar->drawTextMap(cell.center.x(), cell.center.y()+140, "BN_HP_O____: %d", cell.BIM_BN_HP_O);
 
 			// Enemy Unit & Building LIM on screen
-			if (Options::Debug::DRAW_UALBERTABOT_DEBUG) BWAPI::Broodwar->drawTextMap(cell.center.x(), cell.center.y()-120, "UA_HP_E____: %d", cell.BIM_UA_HP_E);
-			if (Options::Debug::DRAW_UALBERTABOT_DEBUG) BWAPI::Broodwar->drawTextMap(cell.center.x(), cell.center.y()-110, "UA_DHPC_E__: %d", cell.BIM_UA_DHPC_E);
-			if (Options::Debug::DRAW_UALBERTABOT_DEBUG) BWAPI::Broodwar->drawTextMap(cell.center.x(), cell.center.y()-100, "UA_DHPC_G_E: %d", cell.BIM_UA_DHPC_G_E);
-			if (Options::Debug::DRAW_UALBERTABOT_DEBUG) BWAPI::Broodwar->drawTextMap(cell.center.x(), cell.center.y()-90,  "UA_DHPC_A_E: %d", cell.BIM_UA_DHPC_A_E);
-			if (Options::Debug::DRAW_UALBERTABOT_DEBUG) BWAPI::Broodwar->drawTextMap(cell.center.x(), cell.center.y()-80,  "UN_HP_E____: %d", cell.BIM_UN_HP_E);
+			if (Options::Debug::DRAW_NUSBOT_DEBUG) BWAPI::Broodwar->drawTextMap(cell.center.x(), cell.center.y()-120, "UA_HP_E____: %d", cell.BIM_UA_HP_E);
+			if (Options::Debug::DRAW_NUSBOT_DEBUG) BWAPI::Broodwar->drawTextMap(cell.center.x(), cell.center.y()-110, "UA_DHPC_E__: %d", cell.BIM_UA_DHPC_E);
+			if (Options::Debug::DRAW_NUSBOT_DEBUG) BWAPI::Broodwar->drawTextMap(cell.center.x(), cell.center.y()-100, "UA_DHPC_G_E: %d", cell.BIM_UA_DHPC_G_E);
+			if (Options::Debug::DRAW_NUSBOT_DEBUG) BWAPI::Broodwar->drawTextMap(cell.center.x(), cell.center.y()-90,  "UA_DHPC_A_E: %d", cell.BIM_UA_DHPC_A_E);
+			if (Options::Debug::DRAW_NUSBOT_DEBUG) BWAPI::Broodwar->drawTextMap(cell.center.x(), cell.center.y()-80,  "UN_HP_E____: %d", cell.BIM_UN_HP_E);
 
-			if (Options::Debug::DRAW_UALBERTABOT_DEBUG) BWAPI::Broodwar->drawTextMap(cell.center.x(), cell.center.y()-60,  "BA_HP_E____: %d", cell.BIM_BA_HP_E);
-			if (Options::Debug::DRAW_UALBERTABOT_DEBUG) BWAPI::Broodwar->drawTextMap(cell.center.x(), cell.center.y()-50,  "BA_DHPC_E__: %d", cell.BIM_BA_DHPC_E);
-			if (Options::Debug::DRAW_UALBERTABOT_DEBUG) BWAPI::Broodwar->drawTextMap(cell.center.x(), cell.center.y()-40,  "BA_DHPC_G_E: %d", cell.BIM_BA_DHPC_G_E);
-			if (Options::Debug::DRAW_UALBERTABOT_DEBUG) BWAPI::Broodwar->drawTextMap(cell.center.x(), cell.center.y()-30,  "BA_DHPC_A_E: %d", cell.BIM_BA_DHPC_A_E);
-			if (Options::Debug::DRAW_UALBERTABOT_DEBUG) BWAPI::Broodwar->drawTextMap(cell.center.x(), cell.center.y()-20,  "BN_HP_E____: %d", cell.BIM_BN_HP_E);
+			if (Options::Debug::DRAW_NUSBOT_DEBUG) BWAPI::Broodwar->drawTextMap(cell.center.x(), cell.center.y()-60,  "BA_HP_E____: %d", cell.BIM_BA_HP_E);
+			if (Options::Debug::DRAW_NUSBOT_DEBUG) BWAPI::Broodwar->drawTextMap(cell.center.x(), cell.center.y()-50,  "BA_DHPC_E__: %d", cell.BIM_BA_DHPC_E);
+			if (Options::Debug::DRAW_NUSBOT_DEBUG) BWAPI::Broodwar->drawTextMap(cell.center.x(), cell.center.y()-40,  "BA_DHPC_G_E: %d", cell.BIM_BA_DHPC_G_E);
+			if (Options::Debug::DRAW_NUSBOT_DEBUG) BWAPI::Broodwar->drawTextMap(cell.center.x(), cell.center.y()-30,  "BA_DHPC_A_E: %d", cell.BIM_BA_DHPC_A_E);
+			if (Options::Debug::DRAW_NUSBOT_DEBUG) BWAPI::Broodwar->drawTextMap(cell.center.x(), cell.center.y()-20,  "BN_HP_E____: %d", cell.BIM_BN_HP_E);
 
 
 			// Choke BIM on screen
-			if (Options::Debug::DRAW_UALBERTABOT_DEBUG) BWAPI::Broodwar->drawTextMap(cell.center.x()-160, cell.center.y(),    "Choke_Pos: (%d, %d)", cell.BIM_Choke_Position.x(), cell.BIM_Choke_Position.y());
-			if (Options::Debug::DRAW_UALBERTABOT_DEBUG) BWAPI::Broodwar->drawTextMap(cell.center.x()-160, cell.center.y()+10, "Choke_Width: %d", cell.BIM_Choke_Width);
-			if (Options::Debug::DRAW_UALBERTABOT_DEBUG) BWAPI::Broodwar->drawTextMap(cell.center.x()-160, cell.center.y()+20, "Choke_Range: %d", cell.BIM_Choke_Range);
+			if (Options::Debug::DRAW_NUSBOT_DEBUG) BWAPI::Broodwar->drawTextMap(cell.center.x()-160, cell.center.y(),    "Choke_Pos: (%d, %d)", cell.BIM_Choke_Position.x(), cell.BIM_Choke_Position.y());
+			if (Options::Debug::DRAW_NUSBOT_DEBUG) BWAPI::Broodwar->drawTextMap(cell.center.x()-160, cell.center.y()+10, "Choke_Width: %d", cell.BIM_Choke_Width);
+			if (Options::Debug::DRAW_NUSBOT_DEBUG) BWAPI::Broodwar->drawTextMap(cell.center.x()-160, cell.center.y()+20, "Choke_Range: %d", cell.BIM_Choke_Range);
 
 			// Own Choke&Unit LIM on screen
-			if (Options::Debug::DRAW_UALBERTABOT_DEBUG) BWAPI::Broodwar->drawTextMap(cell.center.x()-160, cell.center.y()+40,  "C_UA_HP_O____: %d", cell.LIM_Choke_UA_HP_O);
-			if (Options::Debug::DRAW_UALBERTABOT_DEBUG) BWAPI::Broodwar->drawTextMap(cell.center.x()-160, cell.center.y()+50,  "C_UA_DHPC_O__: %d", cell.LIM_Choke_UA_DHPC_O);
-			if (Options::Debug::DRAW_UALBERTABOT_DEBUG) BWAPI::Broodwar->drawTextMap(cell.center.x()-160, cell.center.y()+60,  "C_UA_DHPC_G_O: %d", cell.LIM_Choke_UA_DHPC_G_O);
-			if (Options::Debug::DRAW_UALBERTABOT_DEBUG) BWAPI::Broodwar->drawTextMap(cell.center.x()-160, cell.center.y()+70,  "C_UA_DHPC_A_O: %d", cell.LIM_Choke_UA_DHPC_A_O);
-			if (Options::Debug::DRAW_UALBERTABOT_DEBUG) BWAPI::Broodwar->drawTextMap(cell.center.x()-160, cell.center.y()+80,  "C_UN_HP_O____: %d", cell.LIM_Choke_UN_HP_O);
+			if (Options::Debug::DRAW_NUSBOT_DEBUG) BWAPI::Broodwar->drawTextMap(cell.center.x()-160, cell.center.y()+40,  "C_UA_HP_O____: %d", cell.LIM_Choke_UA_HP_O);
+			if (Options::Debug::DRAW_NUSBOT_DEBUG) BWAPI::Broodwar->drawTextMap(cell.center.x()-160, cell.center.y()+50,  "C_UA_DHPC_O__: %d", cell.LIM_Choke_UA_DHPC_O);
+			if (Options::Debug::DRAW_NUSBOT_DEBUG) BWAPI::Broodwar->drawTextMap(cell.center.x()-160, cell.center.y()+60,  "C_UA_DHPC_G_O: %d", cell.LIM_Choke_UA_DHPC_G_O);
+			if (Options::Debug::DRAW_NUSBOT_DEBUG) BWAPI::Broodwar->drawTextMap(cell.center.x()-160, cell.center.y()+70,  "C_UA_DHPC_A_O: %d", cell.LIM_Choke_UA_DHPC_A_O);
+			if (Options::Debug::DRAW_NUSBOT_DEBUG) BWAPI::Broodwar->drawTextMap(cell.center.x()-160, cell.center.y()+80,  "C_UN_HP_O____: %d", cell.LIM_Choke_UN_HP_O);
 
-			if (Options::Debug::DRAW_UALBERTABOT_DEBUG) BWAPI::Broodwar->drawTextMap(cell.center.x()-160, cell.center.y()+100, "C_BA_HP_O____: %d", cell.LIM_Choke_BA_HP_O);
-			if (Options::Debug::DRAW_UALBERTABOT_DEBUG) BWAPI::Broodwar->drawTextMap(cell.center.x()-160, cell.center.y()+110, "C_BA_DHPC_O__: %d", cell.LIM_Choke_BA_DHPC_O);
-			if (Options::Debug::DRAW_UALBERTABOT_DEBUG) BWAPI::Broodwar->drawTextMap(cell.center.x()-160, cell.center.y()+120, "C_BA_DHPC_G_O: %d", cell.LIM_Choke_BA_DHPC_G_O);
-			if (Options::Debug::DRAW_UALBERTABOT_DEBUG) BWAPI::Broodwar->drawTextMap(cell.center.x()-160, cell.center.y()+130, "C_BA_DHPC_A_O: %d", cell.LIM_Choke_BA_DHPC_A_O);
-			if (Options::Debug::DRAW_UALBERTABOT_DEBUG) BWAPI::Broodwar->drawTextMap(cell.center.x()-160, cell.center.y()+140, "C_BN_HP_O____: %d", cell.LIM_Choke_BN_HP_O);
+			if (Options::Debug::DRAW_NUSBOT_DEBUG) BWAPI::Broodwar->drawTextMap(cell.center.x()-160, cell.center.y()+100, "C_BA_HP_O____: %d", cell.LIM_Choke_BA_HP_O);
+			if (Options::Debug::DRAW_NUSBOT_DEBUG) BWAPI::Broodwar->drawTextMap(cell.center.x()-160, cell.center.y()+110, "C_BA_DHPC_O__: %d", cell.LIM_Choke_BA_DHPC_O);
+			if (Options::Debug::DRAW_NUSBOT_DEBUG) BWAPI::Broodwar->drawTextMap(cell.center.x()-160, cell.center.y()+120, "C_BA_DHPC_G_O: %d", cell.LIM_Choke_BA_DHPC_G_O);
+			if (Options::Debug::DRAW_NUSBOT_DEBUG) BWAPI::Broodwar->drawTextMap(cell.center.x()-160, cell.center.y()+130, "C_BA_DHPC_A_O: %d", cell.LIM_Choke_BA_DHPC_A_O);
+			if (Options::Debug::DRAW_NUSBOT_DEBUG) BWAPI::Broodwar->drawTextMap(cell.center.x()-160, cell.center.y()+140, "C_BN_HP_O____: %d", cell.LIM_Choke_BN_HP_O);
 
 			// Enemy Choke&Unit LIM on screen
-			if (Options::Debug::DRAW_UALBERTABOT_DEBUG) BWAPI::Broodwar->drawTextMap(cell.center.x()-160, cell.center.y()-120, "C_UA_HP_E____: %d", cell.LIM_Choke_UA_HP_E);
-			if (Options::Debug::DRAW_UALBERTABOT_DEBUG) BWAPI::Broodwar->drawTextMap(cell.center.x()-160, cell.center.y()-110, "C_UA_DHPC_E__: %d", cell.LIM_Choke_UA_DHPC_E);
-			if (Options::Debug::DRAW_UALBERTABOT_DEBUG) BWAPI::Broodwar->drawTextMap(cell.center.x()-160, cell.center.y()-100, "C_UA_DHPC_G_E: %d", cell.LIM_Choke_UA_DHPC_G_E);
-			if (Options::Debug::DRAW_UALBERTABOT_DEBUG) BWAPI::Broodwar->drawTextMap(cell.center.x()-160, cell.center.y()-90,  "C_UA_DHPC_A_E: %d", cell.LIM_Choke_UA_DHPC_A_E);
-			if (Options::Debug::DRAW_UALBERTABOT_DEBUG) BWAPI::Broodwar->drawTextMap(cell.center.x()-160, cell.center.y()-80,  "C_UN_HP_E____: %d", cell.LIM_Choke_UN_HP_E);
+			if (Options::Debug::DRAW_NUSBOT_DEBUG) BWAPI::Broodwar->drawTextMap(cell.center.x()-160, cell.center.y()-120, "C_UA_HP_E____: %d", cell.LIM_Choke_UA_HP_E);
+			if (Options::Debug::DRAW_NUSBOT_DEBUG) BWAPI::Broodwar->drawTextMap(cell.center.x()-160, cell.center.y()-110, "C_UA_DHPC_E__: %d", cell.LIM_Choke_UA_DHPC_E);
+			if (Options::Debug::DRAW_NUSBOT_DEBUG) BWAPI::Broodwar->drawTextMap(cell.center.x()-160, cell.center.y()-100, "C_UA_DHPC_G_E: %d", cell.LIM_Choke_UA_DHPC_G_E);
+			if (Options::Debug::DRAW_NUSBOT_DEBUG) BWAPI::Broodwar->drawTextMap(cell.center.x()-160, cell.center.y()-90,  "C_UA_DHPC_A_E: %d", cell.LIM_Choke_UA_DHPC_A_E);
+			if (Options::Debug::DRAW_NUSBOT_DEBUG) BWAPI::Broodwar->drawTextMap(cell.center.x()-160, cell.center.y()-80,  "C_UN_HP_E____: %d", cell.LIM_Choke_UN_HP_E);
 
-			if (Options::Debug::DRAW_UALBERTABOT_DEBUG) BWAPI::Broodwar->drawTextMap(cell.center.x()-160, cell.center.y()-60,  "C_BA_HP_E____: %d", cell.LIM_Choke_BA_HP_E);
-			if (Options::Debug::DRAW_UALBERTABOT_DEBUG) BWAPI::Broodwar->drawTextMap(cell.center.x()-160, cell.center.y()-50,  "C_BA_DHPC_E__: %d", cell.LIM_Choke_BA_DHPC_E);
-			if (Options::Debug::DRAW_UALBERTABOT_DEBUG) BWAPI::Broodwar->drawTextMap(cell.center.x()-160, cell.center.y()-40,  "C_BA_DHPC_G_E: %d", cell.LIM_Choke_BA_DHPC_G_E);
-			if (Options::Debug::DRAW_UALBERTABOT_DEBUG) BWAPI::Broodwar->drawTextMap(cell.center.x()-160, cell.center.y()-30,  "C_BA_DHPC_A_E: %d", cell.LIM_Choke_BA_DHPC_A_E);
-			if (Options::Debug::DRAW_UALBERTABOT_DEBUG) BWAPI::Broodwar->drawTextMap(cell.center.x()-160, cell.center.y()-20,  "C_BN_HP_E____: %d", cell.LIM_Choke_BN_HP_E);
+			if (Options::Debug::DRAW_NUSBOT_DEBUG) BWAPI::Broodwar->drawTextMap(cell.center.x()-160, cell.center.y()-60,  "C_BA_HP_E____: %d", cell.LIM_Choke_BA_HP_E);
+			if (Options::Debug::DRAW_NUSBOT_DEBUG) BWAPI::Broodwar->drawTextMap(cell.center.x()-160, cell.center.y()-50,  "C_BA_DHPC_E__: %d", cell.LIM_Choke_BA_DHPC_E);
+			if (Options::Debug::DRAW_NUSBOT_DEBUG) BWAPI::Broodwar->drawTextMap(cell.center.x()-160, cell.center.y()-40,  "C_BA_DHPC_G_E: %d", cell.LIM_Choke_BA_DHPC_G_E);
+			if (Options::Debug::DRAW_NUSBOT_DEBUG) BWAPI::Broodwar->drawTextMap(cell.center.x()-160, cell.center.y()-30,  "C_BA_DHPC_A_E: %d", cell.LIM_Choke_BA_DHPC_A_E);
+			if (Options::Debug::DRAW_NUSBOT_DEBUG) BWAPI::Broodwar->drawTextMap(cell.center.x()-160, cell.center.y()-20,  "C_BN_HP_E____: %d", cell.LIM_Choke_BN_HP_E);
 
 			//$Sam-E 2014 Apr 28
 

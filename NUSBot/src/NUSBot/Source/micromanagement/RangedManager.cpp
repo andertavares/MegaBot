@@ -48,7 +48,7 @@ void RangedManager::executeMicro(const UnitVector & targets)
 			}
 		}
 
-		if (Options::Debug::DRAW_UALBERTABOT_DEBUG) 
+		if (Options::Debug::DRAW_NUSBOT_DEBUG) 
 		{
 			BWAPI::Broodwar->drawLineMap(rangedUnit->getPosition().x(), rangedUnit->getPosition().y(), 
 				rangedUnit->getTargetPosition().x(), rangedUnit->getTargetPosition().y(), Options::Debug::COLOR_LINE_TARGET);

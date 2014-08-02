@@ -174,7 +174,7 @@ void MicroManager::smartAttackUnit(BWAPI::Unit * attacker, BWAPI::Unit * target)
 	// if nothing prevents it, attack the target
 	attacker->attack(target);
 
-	if (Options::Debug::DRAW_UALBERTABOT_DEBUG) BWAPI::Broodwar->drawLineMap(	attacker->getPosition().x(), attacker->getPosition().y(),
+	if (Options::Debug::DRAW_NUSBOT_DEBUG) BWAPI::Broodwar->drawLineMap(	attacker->getPosition().x(), attacker->getPosition().y(),
 									target->getPosition().x(), target->getPosition().y(),
 									BWAPI::Colors::Red );
 
@@ -202,7 +202,7 @@ void MicroManager::smartAttackMove(BWAPI::Unit * attacker, BWAPI::Position targe
 	// if nothing prevents it, attack the target
 	attacker->attack(targetPosition);
 
-	if (Options::Debug::DRAW_UALBERTABOT_DEBUG) BWAPI::Broodwar->drawLineMap(	attacker->getPosition().x(), attacker->getPosition().y(),
+	if (Options::Debug::DRAW_NUSBOT_DEBUG) BWAPI::Broodwar->drawLineMap(	attacker->getPosition().x(), attacker->getPosition().y(),
 									targetPosition.x(), targetPosition.y(),
 									BWAPI::Colors::Orange );
 }
@@ -240,7 +240,7 @@ void MicroManager::smartMove(BWAPI::Unit * attacker, BWAPI::Position targetPosit
 	// if nothing prevents it, attack the target
 	attacker->move(targetPosition);
 
-	if (Options::Debug::DRAW_UALBERTABOT_DEBUG) 
+	if (Options::Debug::DRAW_NUSBOT_DEBUG) 
 	{
 		BWAPI::Broodwar->drawLineMap(attacker->getPosition().x(), attacker->getPosition().y(),
 									 targetPosition.x(), targetPosition.y(), BWAPI::Colors::Orange);
@@ -275,6 +275,6 @@ bool MicroManager::unitNearChokepoint(BWAPI::Unit * unit) const
 void MicroManager::drawOrderText() {
 
 	BOOST_FOREACH (BWAPI::Unit * unit, units) {
-		if (Options::Debug::DRAW_UALBERTABOT_DEBUG) BWAPI::Broodwar->drawTextMap(unit->getPosition().x(), unit->getPosition().y(), "%s", order.getStatus().c_str());
+		if (Options::Debug::DRAW_NUSBOT_DEBUG) BWAPI::Broodwar->drawTextMap(unit->getPosition().x(), unit->getPosition().y(), "%s", order.getStatus().c_str());
 	}
 }

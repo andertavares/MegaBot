@@ -384,7 +384,7 @@ void BuildingPlacer::drawReservedTiles()
 				int x2 = (x+1)*32 - 8;
 				int y2 = (y+1)*32 - 8;
 
-				if (Options::Debug::DRAW_UALBERTABOT_DEBUG) BWAPI::Broodwar->drawBoxMap(x1, y1, x2, y2, BWAPI::Colors::Yellow, false);
+				if (Options::Debug::DRAW_NUSBOT_DEBUG) BWAPI::Broodwar->drawBoxMap(x1, y1, x2, y2, BWAPI::Colors::Yellow, false);
 			}
 		}
 	}

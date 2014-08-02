@@ -12,7 +12,7 @@ BuildingManager::BuildingManager()
 
 }
 
-// gets called every frame from GameCommander
+// gets called every frame from IPBManager
 void BuildingManager::update() 
 {
 	// Step through building logic, issue orders, manage data as necessary
@@ -411,12 +411,12 @@ void BuildingManager::drawBuildingInformation(int x, int y) {
 
 	BOOST_FOREACH (BWAPI::Unit * unit, BWAPI::Broodwar->self()->getUnits())
 	{
-		if (Options::Debug::DRAW_UALBERTABOT_DEBUG) BWAPI::Broodwar->drawTextMap(unit->getPosition().x(), unit->getPosition().y()+5, "\x07%d", unit->getID()); 
+		if (Options::Debug::DRAW_NUSBOT_DEBUG) BWAPI::Broodwar->drawTextMap(unit->getPosition().x(), unit->getPosition().y()+5, "\x07%d", unit->getID()); 
 	}
 
-	if (Options::Debug::DRAW_UALBERTABOT_DEBUG) BWAPI::Broodwar->drawTextScreen(x, y, "\x04 Building Information:");
-	if (Options::Debug::DRAW_UALBERTABOT_DEBUG) BWAPI::Broodwar->drawTextScreen(x, y+20, "\x04 Name");
-	if (Options::Debug::DRAW_UALBERTABOT_DEBUG) BWAPI::Broodwar->drawTextScreen(x+150, y+20, "\x04 State");
+	if (Options::Debug::DRAW_NUSBOT_DEBUG) BWAPI::Broodwar->drawTextScreen(x, y, "\x04 Building Information:");
+	if (Options::Debug::DRAW_NUSBOT_DEBUG) BWAPI::Broodwar->drawTextScreen(x, y+20, "\x04 Name");
+	if (Options::Debug::DRAW_NUSBOT_DEBUG) BWAPI::Broodwar->drawTextScreen(x+150, y+20, "\x04 State");
 
 	int yspace = 0;
 
@@ -425,8 +425,8 @@ void BuildingManager::drawBuildingInformation(int x, int y) {
 
 		Building & b = buildingData.getNextBuilding(ConstructionData::Unassigned);
 
-		if (Options::Debug::DRAW_UALBERTABOT_DEBUG) BWAPI::Broodwar->drawTextScreen(x, y+40+((yspace)*10), "\x03 %s", b.type.getName().c_str());
-		if (Options::Debug::DRAW_UALBERTABOT_DEBUG) BWAPI::Broodwar->drawTextScreen(x+150, y+40+((yspace++)*10), "\x03 Need %c", getBuildingWorkerCode(b));
+		if (Options::Debug::DRAW_NUSBOT_DEBUG) BWAPI::Broodwar->drawTextScreen(x, y+40+((yspace)*10), "\x03 %s", b.type.getName().c_str());
+		if (Options::Debug::DRAW_NUSBOT_DEBUG) BWAPI::Broodwar->drawTextScreen(x+150, y+40+((yspace++)*10), "\x03 Need %c", getBuildingWorkerCode(b));
 	}
 
 	buildingData.begin(ConstructionData::Assigned);
@@ -434,16 +434,16 @@ void BuildingManager::drawBuildingInformation(int x, int y) {
 
 		Building & b = buildingData.getNextBuilding(ConstructionData::Assigned);
 
-		if (Options::Debug::DRAW_UALBERTABOT_DEBUG) BWAPI::Broodwar->drawTextScreen(x, y+40+((yspace)*10), "\x03 %s %d", b.type.getName().c_str(), b.builderUnit->getID());
-		if (Options::Debug::DRAW_UALBERTABOT_DEBUG) BWAPI::Broodwar->drawTextScreen(x+150, y+40+((yspace++)*10), "\x03 A %c (%d,%d)", getBuildingWorkerCode(b), b.finalPosition.x(), b.finalPosition.y());
+		if (Options::Debug::DRAW_NUSBOT_DEBUG) BWAPI::Broodwar->drawTextScreen(x, y+40+((yspace)*10), "\x03 %s %d", b.type.getName().c_str(), b.builderUnit->getID());
+		if (Options::Debug::DRAW_NUSBOT_DEBUG) BWAPI::Broodwar->drawTextScreen(x+150, y+40+((yspace++)*10), "\x03 A %c (%d,%d)", getBuildingWorkerCode(b), b.finalPosition.x(), b.finalPosition.y());
 
 		int x1 = b.finalPosition.x()*32;
 		int y1 = b.finalPosition.y()*32;
 		int x2 = (b.finalPosition.x() + b.type.tileWidth())*32;
 		int y2 = (b.finalPosition.y() + b.type.tileHeight())*32;
 
-		if (Options::Debug::DRAW_UALBERTABOT_DEBUG) BWAPI::Broodwar->drawLineMap(b.builderUnit->getPosition().x(), b.builderUnit->getPosition().y(), (x1+x2)/2, (y1+y2)/2, BWAPI::Colors::Orange);
-		if (Options::Debug::DRAW_UALBERTABOT_DEBUG) BWAPI::Broodwar->drawBoxMap(x1, y1, x2, y2, BWAPI::Colors::Red, false);
+		if (Options::Debug::DRAW_NUSBOT_DEBUG) BWAPI::Broodwar->drawLineMap(b.builderUnit->getPosition().x(), b.builderUnit->getPosition().y(), (x1+x2)/2, (y1+y2)/2, BWAPI::Colors::Orange);
+		if (Options::Debug::DRAW_NUSBOT_DEBUG) BWAPI::Broodwar->drawBoxMap(x1, y1, x2, y2, BWAPI::Colors::Red, false);
 	}
 
 	buildingData.begin(ConstructionData::UnderConstruction);
@@ -451,8 +451,8 @@ void BuildingManager::drawBuildingInformation(int x, int y) {
 
 		Building & b = buildingData.getNextBuilding(ConstructionData::UnderConstruction);
 
-		if (Options::Debug::DRAW_UALBERTABOT_DEBUG) BWAPI::Broodwar->drawTextScreen(x, y+40+((yspace)*10), "\x03 %s %d", b.type.getName().c_str(), b.buildingUnit->getID());
-		if (Options::Debug::DRAW_UALBERTABOT_DEBUG) BWAPI::Broodwar->drawTextScreen(x+150, y+40+((yspace++)*10), "\x03 Const %c", getBuildingWorkerCode(b));
+		if (Options::Debug::DRAW_NUSBOT_DEBUG) BWAPI::Broodwar->drawTextScreen(x, y+40+((yspace)*10), "\x03 %s %d", b.type.getName().c_str(), b.buildingUnit->getID());
+		if (Options::Debug::DRAW_NUSBOT_DEBUG) BWAPI::Broodwar->drawTextScreen(x+150, y+40+((yspace++)*10), "\x03 Const %c", getBuildingWorkerCode(b));
 	}
 }
 

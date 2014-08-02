@@ -7,7 +7,7 @@ namespace Options
 {
 	namespace Modules
 	{
-		extern bool USING_GAMECOMMANDER;			// toggle GameCommander, effectively UAlbertaBot
+		extern bool USING_IPBManager;			// toggle IPBManager, effectively UAlbertaBot
 		extern bool USING_SCOUTMANAGER;
 		extern bool USING_COMBATCOMMANDER;
 		extern bool USING_ENHANCED_INTERFACE;		// toggle EnhancedUI, not needed for UAlbertaBot
@@ -51,7 +51,7 @@ namespace Options
 
 	namespace Debug
 	{
-		extern bool DRAW_UALBERTABOT_DEBUG;				// draws debug information for UAlbertaBot
+		extern bool DRAW_NUSBOT_DEBUG;				// draws debug information for UAlbertaBot
 		extern bool DRAW_DEBUG_INTERFACE;				// draws debug information for EnhancedUI
 
 		extern BWAPI::Color COLOR_LINE_TARGET;

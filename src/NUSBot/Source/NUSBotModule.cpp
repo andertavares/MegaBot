@@ -1,14 +1,3 @@
-/* 
- +----------------------------------------------------------------------+
- | UAlbertaBot                                                          |
- +----------------------------------------------------------------------+
- | University of Alberta - AIIDE StarCraft Competition                  |
- +----------------------------------------------------------------------+
- |                                                                      |
- +----------------------------------------------------------------------+
- | Author: David Churchill <dave.churchill@gmail.com>                   |
- +----------------------------------------------------------------------+
-*/
 
 #include "Common.h"
 #include "NUSBotModule.h"
@@ -35,10 +24,9 @@ void NUSBotModule::onStart()
     Options::BotModes::SetBotMode(Options::BotModes::AIIDE_TOURNAMENT);
 	Options::Modules::checkOptions();
 	
-    if (Options::Modules::USING_GAMECOMMANDER)
+    if (Options::Modules::USING_IPBManager)
 	{
-		BWTA::readMap();
-		BWTA::analyze();
+		IPBManager.setGamePhase(OPENING); 
 	}
 	
 	if (Options::Modules::USING_MICRO_SEARCH)
@@ -57,7 +45,7 @@ void NUSBotModule::onStart()
 
 void NUSBotModule::onEnd(bool isWinner) 
 {
-	if (Options::Modules::USING_GAMECOMMANDER)
+	if (Options::Modules::USING_IPBManager)
 	{
 		StrategyManager::Instance().onEnd(isWinner);
 
@@ -97,9 +85,9 @@ void NUSBotModule::onFrame()
 		UnitCommandManager::Instance().update();
 	}
 
-	if (Options::Modules::USING_GAMECOMMANDER) 
+	if (Options::Modules::USING_IPBManager) 
 	{ 
-		gameCommander.update(); 
+		IPBManager.update(); 
 	}
 	
 	if (Options::Modules::USING_ENHANCED_INTERFACE)
@@ -129,13 +117,13 @@ void NUSBotModule::onFrame()
 
 void NUSBotModule::onUnitDestroy(BWAPI::Unit * unit)
 {
-	if (Options::Modules::USING_GAMECOMMANDER) { gameCommander.onUnitDestroy(unit); }
+	if (Options::Modules::USING_IPBManager) { IPBManager.onUnitDestroy(unit); }
 	if (Options::Modules::USING_ENHANCED_INTERFACE) { eui.onUnitDestroy(unit); }
 }
 
 void NUSBotModule::onUnitMorph(BWAPI::Unit * unit)
 {
-	if (Options::Modules::USING_GAMECOMMANDER) { gameCommander.onUnitMorph(unit); }
+	if (Options::Modules::USING_IPBManager) { IPBManager.onUnitMorph(unit); }
 }
 
 void NUSBotModule::onSendText(std::string text) 
@@ -205,20 +193,20 @@ void NUSBotModule::onSendText(std::string text)
 
 void NUSBotModule::onUnitCreate(BWAPI::Unit * unit)
 { 
-	if (Options::Modules::USING_GAMECOMMANDER) { gameCommander.onUnitCreate(unit); }
+	if (Options::Modules::USING_IPBManager) { IPBManager.onUnitCreate(unit); }
 }
 
 void NUSBotModule::onUnitShow(BWAPI::Unit * unit)
 { 
-	if (Options::Modules::USING_GAMECOMMANDER) { gameCommander.onUnitShow(unit); }
+	if (Options::Modules::USING_IPBManager) { IPBManager.onUnitShow(unit); }
 }
 
 void NUSBotModule::onUnitHide(BWAPI::Unit * unit)
 { 
-	if (Options::Modules::USING_GAMECOMMANDER) { gameCommander.onUnitHide(unit); }
+	if (Options::Modules::USING_IPBManager) { IPBManager.onUnitHide(unit); }
 }
 
 void NUSBotModule::onUnitRenegade(BWAPI::Unit * unit)
 { 
-	if (Options::Modules::USING_GAMECOMMANDER) { gameCommander.onUnitRenegade(unit); }
+	if (Options::Modules::USING_IPBManager) { IPBManager.onUnitRenegade(unit); }
 }

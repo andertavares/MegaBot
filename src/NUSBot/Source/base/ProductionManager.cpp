@@ -106,7 +106,7 @@ void ProductionManager::update()
 	}
 
 
-//	if (Options::Debug::DRAW_UALBERTABOT_DEBUG) BWAPI::Broodwar->drawTextScreen(447, 17, "\x07 %d", BuildingManager::Instance().getReservedMinerals());
+//	if (Options::Debug::DRAW_NUSBOT_DEBUG) BWAPI::Broodwar->drawTextScreen(447, 17, "\x07 %d", BuildingManager::Instance().getReservedMinerals());
 }
 
 // on unit destroy
@@ -279,7 +279,7 @@ void ProductionManager::predictWorkerMovement(const Building & b)
 	int x2 = x1 + (b.type.tileWidth()) * 32;
 	int y1 = predictedTilePosition.y() * 32;
 	int y2 = y1 + (b.type.tileHeight()) * 32;
-	if (Options::Debug::DRAW_UALBERTABOT_DEBUG) BWAPI::Broodwar->drawBoxMap(x1, y1, x2, y2, BWAPI::Colors::Blue, false);
+	if (Options::Debug::DRAW_NUSBOT_DEBUG) BWAPI::Broodwar->drawBoxMap(x1, y1, x2, y2, BWAPI::Colors::Blue, false);
 
 	// where we want the worker to walk to
 	BWAPI::Position walkToPosition		= BWAPI::Position(x1 + (b.type.tileWidth()/2)*32, y1 + (b.type.tileHeight()/2)*32);
@@ -486,8 +486,8 @@ void ProductionManager::drawProductionInformation(int x, int y)
 	// sort it based on the time it was started
 	std::sort(prod.begin(), prod.end(), CompareWhenStarted());
 
-	if (Options::Debug::DRAW_UALBERTABOT_DEBUG) BWAPI::Broodwar->drawTextScreen(x, y, "\x04 Build Order Info:");
-	if (Options::Debug::DRAW_UALBERTABOT_DEBUG) BWAPI::Broodwar->drawTextScreen(x, y+20, "\x04UNIT NAME");
+	if (Options::Debug::DRAW_NUSBOT_DEBUG) BWAPI::Broodwar->drawTextScreen(x, y, "\x04 Build Order Info:");
+	if (Options::Debug::DRAW_NUSBOT_DEBUG) BWAPI::Broodwar->drawTextScreen(x, y+20, "\x04UNIT NAME");
 
 	size_t reps = prod.size() < 10 ? prod.size() : 10;
 
@@ -503,8 +503,8 @@ void ProductionManager::drawProductionInformation(int x, int y)
 
 		BWAPI::UnitType t = prod[i]->getType();
 
-		if (Options::Debug::DRAW_UALBERTABOT_DEBUG) BWAPI::Broodwar->drawTextScreen(x, yy, "%s%s", prefix.c_str(), t.getName().c_str());
-		if (Options::Debug::DRAW_UALBERTABOT_DEBUG) BWAPI::Broodwar->drawTextScreen(x+150, yy, "%s%6d", prefix.c_str(), prod[i]->getRemainingBuildTime());
+		if (Options::Debug::DRAW_NUSBOT_DEBUG) BWAPI::Broodwar->drawTextScreen(x, yy, "%s%s", prefix.c_str(), t.getName().c_str());
+		if (Options::Debug::DRAW_NUSBOT_DEBUG) BWAPI::Broodwar->drawTextScreen(x+150, yy, "%s%6d", prefix.c_str(), prod[i]->getRemainingBuildTime());
 	}
 
 	queue.drawQueueInformation(x, yy+10);

@@ -48,7 +48,7 @@ void MeleeManager::executeMicro(const UnitVector & targets)
 			}
 		}
 
-		if (Options::Debug::DRAW_UALBERTABOT_DEBUG)
+		if (Options::Debug::DRAW_NUSBOT_DEBUG)
 		{
 			BWAPI::Broodwar->drawLineMap(meleeUnit->getPosition().x(), meleeUnit->getPosition().y(), 
 			meleeUnit->getTargetPosition().x(), meleeUnit->getTargetPosition().y(), Options::Debug::COLOR_LINE_TARGET);
@@ -72,7 +72,7 @@ BWAPI::Unit * MeleeManager::getTarget(BWAPI::Unit * meleeUnit, UnitVector & targ
 			priority = 11;
 		}
 
-		if (Options::Debug::DRAW_UALBERTABOT_DEBUG) BWAPI::Broodwar->drawTextMap(unit->getPosition().x(), unit->getPosition().y(), "%d", priority);
+		if (Options::Debug::DRAW_NUSBOT_DEBUG) BWAPI::Broodwar->drawTextMap(unit->getPosition().x(), unit->getPosition().y(), "%d", priority);
 
 		int distance = meleeUnit->getDistance(unit);
 

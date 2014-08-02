@@ -155,8 +155,8 @@ void BuildOrderQueue::drawQueueInformation(int x, int y) {
 	
 	std::string prefix = "\x04";
 
-	//if (Options::Debug::DRAW_UALBERTABOT_DEBUG) BWAPI::Broodwar->drawTextScreen(x, y, "\x04Priority Queue Information:");
-	//if (Options::Debug::DRAW_UALBERTABOT_DEBUG) BWAPI::Broodwar->drawTextScreen(x, y+20, "\x04UNIT NAME");
+	//if (Options::Debug::DRAW_NUSBOT_DEBUG) BWAPI::Broodwar->drawTextScreen(x, y, "\x04Priority Queue Information:");
+	//if (Options::Debug::DRAW_NUSBOT_DEBUG) BWAPI::Broodwar->drawTextScreen(x, y+20, "\x04UNIT NAME");
 
 	size_t reps = queue.size() < 10 ? queue.size() : 10;
 
@@ -165,6 +165,6 @@ void BuildOrderQueue::drawQueueInformation(int x, int y) {
 
 		prefix = "\x04";
 
-		if (Options::Debug::DRAW_UALBERTABOT_DEBUG) BWAPI::Broodwar->drawTextScreen(x, y+(i*10), "%s%s", prefix.c_str(), queue[queue.size() - 1 - i].metaType.getName().c_str());
+		if (Options::Debug::DRAW_NUSBOT_DEBUG) BWAPI::Broodwar->drawTextScreen(x, y+(i*10), "%s%s", prefix.c_str(), queue[queue.size() - 1 - i].metaType.getName().c_str());
 	}
 }

@@ -94,7 +94,7 @@ public:
 
 	void drawSearchResults(int x, int y)
 	{
-		if (Options::Debug::DRAW_UALBERTABOT_DEBUG)
+		if (Options::Debug::DRAW_NUSBOT_DEBUG)
 		{
 			BWAPI::Broodwar->drawBoxScreen(x-5, y-15, x+125, y+55, BWAPI::Colors::Black, true);
 

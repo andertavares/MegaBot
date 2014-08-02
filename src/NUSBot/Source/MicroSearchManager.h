@@ -2,7 +2,7 @@
 /*
 #include "Common.h"
 #include "BWAPI.h"
-#include "GameCommander.h"
+#include "IPBManager.h"
 #include "UnitCommandManager.h"
 
 #include <boost/shared_ptr.hpp>

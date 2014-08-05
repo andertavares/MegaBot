@@ -1,70 +1,32 @@
 #include "Common.h"
-#include "GameCommander.h"
+#include "IPBManager.h"
 
 
-GameCommander::GameCommander() : numWorkerScouts(0), currentScout(NULL)
+IPBManager::IPBManager() : numWorkerScouts(0), currentScout(NULL)
 {
+	
 
 }
 
-void GameCommander::update()
+void IPBManager::update()
 {
 	timerManager.startTimer(TimerManager::All);
 	
+	//IPB 1st Stage - Describe Battlefiled
+	describeBattleField(timerManager);
+	
+	//Build Threat Model here based on Own units/buildings against Enemy Units and buildings
+	enableThreatModel(timerManager);
 
-	// economy and base managers
-	timerManager.startTimer(TimerManager::Worker);
-	// populate the unit vectors we will pass into various managers
-	populateUnitVectors();
-	WorkerManager::Instance().update();
-	timerManager.stopTimer(TimerManager::Worker);
-
-	timerManager.startTimer(TimerManager::Production);
-	ProductionManager::Instance().update();
-	timerManager.stopTimer(TimerManager::Production);
-
-	timerManager.startTimer(TimerManager::Building);
-	BuildingManager::Instance().update();
-	timerManager.stopTimer(TimerManager::Building);
-
-	// combat and scouting managers
-	timerManager.startTimer(TimerManager::Combat);
-	if (Options::Modules::USING_COMBATCOMMANDER)
-	{
-		combatCommander.update(combatUnits);
-	}
-	timerManager.stopTimer(TimerManager::Combat);
-
-	timerManager.startTimer(TimerManager::Scout);
-	if (Options::Modules::USING_SCOUTMANAGER)
-	{
-		scoutManager.update(scoutUnits);
-	}
-	timerManager.stopTimer(TimerManager::Scout);
-
-	// utility managers
-	timerManager.startTimer(TimerManager::InformationManager);
-	InformationManager::Instance().update();
-	timerManager.stopTimer(TimerManager::InformationManager);
-
-	timerManager.startTimer(TimerManager::MapGrid);
-	MapGrid::Instance().update();
-	timerManager.stopTimer(TimerManager::MapGrid);
-
-	timerManager.startTimer(TimerManager::MapTools);
-	MapTools::Instance().update();
-	timerManager.stopTimer(TimerManager::MapTools);
-
-	timerManager.startTimer(TimerManager::Search);
-	StarcraftBuildOrderSearchManager::Instance().update(35 - timerManager.getTotalElapsed());
-	timerManager.stopTimer(TimerManager::Search);
+	developCourseOfAction(timerManager);
+	
 		
 	timerManager.stopTimer(TimerManager::All);
 
 	drawDebugInterface();
 }
 
-void GameCommander::drawDebugInterface()
+void IPBManager::drawDebugInterface()
 {
 	timerManager.displayTimers(490, 225);
 	
@@ -76,7 +38,7 @@ void GameCommander::drawDebugInterface()
 	combatCommander.drawSquadInformation(200, 30);
 
 	// draw position of mouse cursor
-	if (Options::Debug::DRAW_UALBERTABOT_DEBUG)
+	if (Options::Debug::DRAW_NUSBOT_DEBUG)
 	{
 		BWAPI::Broodwar->drawTextScreen(20, 20, "Frame: %7d\nTime: %4dm %3ds", BWAPI::Broodwar->getFrameCount(), BWAPI::Broodwar->getFrameCount()/(24*60), (BWAPI::Broodwar->getFrameCount()/24)%60);
 		int mouseX = BWAPI::Broodwar->getMousePosition().x() + BWAPI::Broodwar->getScreenPosition().x();
@@ -86,7 +48,7 @@ void GameCommander::drawDebugInterface()
 }
 
 // assigns units to various managers
-void GameCommander::populateUnitVectors()
+void IPBManager::populateUnitVectors()
 {
 	// filter our units for those which are valid and usable
 	setValidUnits();
@@ -97,13 +59,13 @@ void GameCommander::populateUnitVectors()
 	setWorkerUnits();
 }
 
-const bool GameCommander::isAssigned(BWAPI::Unit * unit) const
+const bool IPBManager::isAssigned(BWAPI::Unit * unit) const
 {
 	return assignedUnits.find(unit) != assignedUnits.end();
 }
 
 // validates units as usable for distribution to various managers
-void GameCommander::setValidUnits()
+void IPBManager::setValidUnits()
 {
 	validUnits.clear();
 	assignedUnits.clear();
@@ -122,7 +84,7 @@ void GameCommander::setValidUnits()
 // currently only selects the worker scout after first pylon built
 // this does NOT take that worker away from worker manager, but it still works
 // TODO: take this worker away from worker manager in a clever way
-void GameCommander::setScoutUnits()
+void IPBManager::setScoutUnits()
 {
 	// if we have just built our first suply provider, set the worker to a scout
 	if (numWorkerScouts == 0)
@@ -149,7 +111,7 @@ void GameCommander::setScoutUnits()
 }
 
 // sets combat units to be passed to CombatCommander
-void GameCommander::setCombatUnits()
+void IPBManager::setCombatUnits()
 {
 	combatUnits.clear();
 
@@ -189,7 +151,7 @@ void GameCommander::setCombatUnits()
 	}
 }
 
-bool GameCommander::isCombatUnit(BWAPI::Unit * unit) const
+bool IPBManager::isCombatUnit(BWAPI::Unit * unit) const
 {
 	assert(unit != NULL);
 
@@ -211,7 +173,7 @@ bool GameCommander::isCombatUnit(BWAPI::Unit * unit) const
 	return false;
 }
 
-BWAPI::Unit * GameCommander::getFirstSupplyProvider()
+BWAPI::Unit * IPBManager::getFirstSupplyProvider()
 {
 	BWAPI::Unit * supplyProvider = NULL;
 
@@ -240,7 +202,7 @@ BWAPI::Unit * GameCommander::getFirstSupplyProvider()
 	return supplyProvider;
 }
 
-void GameCommander::setWorkerUnits()
+void IPBManager::setWorkerUnits()
 {
 	workerUnits.clear();
 
@@ -255,7 +217,7 @@ void GameCommander::setWorkerUnits()
 
 }
 
-bool GameCommander::isValidUnit(BWAPI::Unit * unit)
+bool IPBManager::isValidUnit(BWAPI::Unit * unit)
 {
 	if (!unit)
 	{
@@ -277,41 +239,41 @@ bool GameCommander::isValidUnit(BWAPI::Unit * unit)
 	}
 }
 
-void GameCommander::onUnitShow(BWAPI::Unit * unit)			
+void IPBManager::onUnitShow(BWAPI::Unit * unit)			
 { 
 	InformationManager::Instance().onUnitShow(unit); 
 	WorkerManager::Instance().onUnitShow(unit);
 }
 
-void GameCommander::onUnitHide(BWAPI::Unit * unit)			
+void IPBManager::onUnitHide(BWAPI::Unit * unit)			
 { 
 	InformationManager::Instance().onUnitHide(unit); 
 }
 
-void GameCommander::onUnitCreate(BWAPI::Unit * unit)		
+void IPBManager::onUnitCreate(BWAPI::Unit * unit)		
 { 
 	InformationManager::Instance().onUnitCreate(unit); 
 }
 
-void GameCommander::onUnitRenegade(BWAPI::Unit * unit)		
+void IPBManager::onUnitRenegade(BWAPI::Unit * unit)		
 { 
 	InformationManager::Instance().onUnitRenegade(unit); 
 }
 
-void GameCommander::onUnitDestroy(BWAPI::Unit * unit)		
+void IPBManager::onUnitDestroy(BWAPI::Unit * unit)		
 { 	
 	ProductionManager::Instance().onUnitDestroy(unit);
 	WorkerManager::Instance().onUnitDestroy(unit);
 	InformationManager::Instance().onUnitDestroy(unit); 
 }
 
-void GameCommander::onUnitMorph(BWAPI::Unit * unit)		
+void IPBManager::onUnitMorph(BWAPI::Unit * unit)		
 { 
 	InformationManager::Instance().onUnitMorph(unit);
 	WorkerManager::Instance().onUnitMorph(unit);
 }
 
-BWAPI::Unit * GameCommander::getClosestUnitToTarget(BWAPI::UnitType type, BWAPI::Position target)
+BWAPI::Unit * IPBManager::getClosestUnitToTarget(BWAPI::UnitType type, BWAPI::Position target)
 {
 	BWAPI::Unit * closestUnit = NULL;
 	double closestDist = 100000;
@@ -332,7 +294,7 @@ BWAPI::Unit * GameCommander::getClosestUnitToTarget(BWAPI::UnitType type, BWAPI:
 	return closestUnit;
 }
 
-BWAPI::Unit * GameCommander::getClosestWorkerToTarget(BWAPI::Position target)
+BWAPI::Unit * IPBManager::getClosestWorkerToTarget(BWAPI::Position target)
 {
 	BWAPI::Unit * closestUnit = NULL;
 	double closestDist = 100000;
@@ -351,4 +313,94 @@ BWAPI::Unit * GameCommander::getClosestWorkerToTarget(BWAPI::Position target)
 	}
 
 	return closestUnit;
+}
+
+void IPBManager::setGamePhase(GAME_PHASE phase )			
+{ 
+	curr_phase = phase;
+	next_phase == curr_phase + 1;
+
+	
+}
+
+void IPBManager::getMapDetails()			
+{ 
+	BWTA::readMap();
+	BWTA::analyze();
+
+	//We need to know how big the map is and then 
+	//compute from the size when will we be the time
+	//that we will consider the middle game phase
+	//We can then create strategy base on this data
+}
+
+//TODO: BattlefieldManager
+void IPBManager::describeBattleField(TimerManager& timerManager)			
+{ 
+	timerManager.startTimer(TimerManager::MapGrid);
+
+	//TODO: We should be using the Layere Influence Map here
+	MapGrid::Instance().update();
+
+	timerManager.stopTimer(TimerManager::MapGrid);
+
+	timerManager.startTimer(TimerManager::MapTools);
+	MapTools::Instance().update();
+	timerManager.stopTimer(TimerManager::MapTools);	
+}
+
+//TODO: ThreatManager
+void IPBManager::enableThreatModel(TimerManager& timerManager)			
+{ 
+	// economy and base managers
+	timerManager.startTimer(TimerManager::Worker);
+	// populate the unit vectors we will pass into various managers
+	populateUnitVectors();
+	WorkerManager::Instance().update();
+	timerManager.stopTimer(TimerManager::Worker);
+
+	timerManager.startTimer(TimerManager::Production);
+	ProductionManager::Instance().update();
+	timerManager.stopTimer(TimerManager::Production);
+
+	timerManager.startTimer(TimerManager::Building);
+	BuildingManager::Instance().update();
+	timerManager.stopTimer(TimerManager::Building);
+	
+}
+//TODO: COAManager
+void IPBManager::developCourseOfAction(TimerManager& timerManager)			
+{ 
+	// combat and scouting managers
+	timerManager.startTimer(TimerManager::Combat);
+	if (Options::Modules::USING_COMBATCOMMANDER)
+	{
+		combatCommander.update(combatUnits);
+	}
+	timerManager.stopTimer(TimerManager::Combat);
+
+	timerManager.startTimer(TimerManager::Scout);
+	if (Options::Modules::USING_SCOUTMANAGER)
+	{
+		scoutManager.update(scoutUnits);
+	}
+	timerManager.stopTimer(TimerManager::Scout);
+
+	// utility managers
+	timerManager.startTimer(TimerManager::InformationManager);
+	InformationManager::Instance().update();
+	timerManager.stopTimer(TimerManager::InformationManager);
+
+	timerManager.startTimer(TimerManager::MapGrid);
+	MapGrid::Instance().update();
+	timerManager.stopTimer(TimerManager::MapGrid);
+
+	timerManager.startTimer(TimerManager::MapTools);
+	MapTools::Instance().update();
+	timerManager.stopTimer(TimerManager::MapTools);
+
+	timerManager.startTimer(TimerManager::Search);
+	StarcraftBuildOrderSearchManager::Instance().update(35 - timerManager.getTotalElapsed());
+	timerManager.stopTimer(TimerManager::Search);
+	
 }

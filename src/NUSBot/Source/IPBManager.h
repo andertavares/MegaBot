@@ -58,7 +58,7 @@ public:
 
 	void displayTimers(int x, int y)
 	{
-		if (Options::Debug::DRAW_UALBERTABOT_DEBUG) BWAPI::Broodwar->drawBoxScreen(x-5, y-5, x+110+barWidth, y+5+(10*timers.size()), BWAPI::Colors::Black, true);
+		if (Options::Debug::DRAW_NUSBOT_DEBUG) BWAPI::Broodwar->drawBoxScreen(x-5, y-5, x+110+barWidth, y+5+(10*timers.size()), BWAPI::Colors::Black, true);
 
 		int yskip = 0;
 		double total = timers[0].getElapsedTimeInMilliSec();
@@ -68,9 +68,9 @@ public:
 
 			int width = (int)((elapsed == 0) ? 0 : (barWidth * (elapsed / total)));
 
-			if (Options::Debug::DRAW_UALBERTABOT_DEBUG) BWAPI::Broodwar->drawTextScreen(x, y+yskip-3, "\x04 %s", timerNames[i].c_str());
-			if (Options::Debug::DRAW_UALBERTABOT_DEBUG) BWAPI::Broodwar->drawBoxScreen(x+60, y+yskip, x+60+width+1, y+yskip+8, BWAPI::Colors::White);
-			if (Options::Debug::DRAW_UALBERTABOT_DEBUG) BWAPI::Broodwar->drawTextScreen(x+70+barWidth, y+yskip-3, "%.4lf", elapsed);
+			if (Options::Debug::DRAW_NUSBOT_DEBUG) BWAPI::Broodwar->drawTextScreen(x, y+yskip-3, "\x04 %s", timerNames[i].c_str());
+			if (Options::Debug::DRAW_NUSBOT_DEBUG) BWAPI::Broodwar->drawBoxScreen(x+60, y+yskip, x+60+width+1, y+yskip+8, BWAPI::Colors::White);
+			if (Options::Debug::DRAW_NUSBOT_DEBUG) BWAPI::Broodwar->drawTextScreen(x+70+barWidth, y+yskip-3, "%.4lf", elapsed);
 			yskip += 10;
 		}
 	}
@@ -90,7 +90,21 @@ public:
 	}
 };
 
-class GameCommander 
+
+/* This is the Game Phase we want to monitor inside IPBManager
+ * IPBManager will try to create strategy base on these game phases
+ * We will focus more on utilizing the Layered Influence Map information as well
+ * as using a TransportManager
+ * FLIWA - Modified GameCommander into IPBManager
+ */
+
+enum GAME_PHASE  { INITIAL=0,
+				   OPENING,
+				   MIDDLE,
+				   END
+				 } ;
+
+class IPBManager 
 {
 	CombatCommander		combatCommander;
 	ScoutManager		scoutManager;
@@ -106,12 +120,20 @@ class GameCommander
 	BWAPI::Unit * currentScout;
 	int numWorkerScouts;
 
+	//FLIWA - Added 
+	int force_level;
+	int unit_level;
+	int squad_level;
+	GAME_PHASE curr_phase ;
+	GAME_PHASE next_phase ;
+
+
 	const bool isAssigned(BWAPI::Unit * unit) const;
 
 public:
 
-	GameCommander();
-	~GameCommander() {};
+	IPBManager();
+	~IPBManager() {};
 
 	void update();
 
@@ -136,4 +158,13 @@ public:
 	void onUnitRenegade(BWAPI::Unit * unit);
 	void onUnitDestroy(BWAPI::Unit * unit);
 	void onUnitMorph(BWAPI::Unit * unit);
+
+
+	//FLIWA - Added
+
+	void setGamePhase(GAME_PHASE);
+	void getMapDetails();
+	void describeBattleField(TimerManager& timerManager);
+	void enableThreatModel(TimerManager& timerManager);
+	void developCourseOfAction(TimerManager& timerManager);			
 };

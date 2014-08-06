@@ -99,9 +99,6 @@
     <ClCompile Include="..\Source\base\WorkerManager.cpp">
       <Filter>game\macro\managers</Filter>
     </ClCompile>
-    <ClCompile Include="..\Source\GameCommander.cpp">
-      <Filter>game</Filter>
-    </ClCompile>
     <ClCompile Include="..\Source\micromanagement\DetectorManager.cpp">
       <Filter>game\combat\micro\generic</Filter>
     </ClCompile>
@@ -165,6 +162,11 @@
     <ClCompile Include="..\Source\NUSBotModule.cpp">
       <Filter>module</Filter>
     </ClCompile>
+    <ClCompile Include="ThreatManager.cpp" />
+    <ClCompile Include="COAManager.cpp" />
+    <ClCompile Include="..\Source\IPBManager.cpp">
+      <Filter>game</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Source\CombatCommander.h">
@@ -223,9 +225,6 @@
     </ClInclude>
     <ClInclude Include="..\Source\base\BuildOrderGoalManager.h">
       <Filter>game\macro\managers</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\GameCommander.h">
-      <Filter>game</Filter>
     </ClInclude>
     <ClInclude Include="..\Source\micromanagement\MeleeManager.h">
       <Filter>game\combat\micro\generic</Filter>
@@ -295,6 +294,11 @@
     </ClInclude>
     <ClInclude Include="..\Source\NUSBotModule.h">
       <Filter>module</Filter>
+    </ClInclude>
+    <ClInclude Include="ThreatManager.h" />
+    <ClInclude Include="COAManager.h" />
+    <ClInclude Include="..\Source\IPBManager.h">
+      <Filter>game</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

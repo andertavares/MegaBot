@@ -26,7 +26,8 @@ void NUSBotModule::onStart()
 	
     if (Options::Modules::USING_IPBManager)
 	{
-		IPBManager.setGamePhase(OPENING); 
+		if (Options::Debug::DRAW_NUSBOT_DEBUG) BWAPI::Broodwar->drawTextMap(100,100, "IPB_MANAGER_OPENING &d",1 );
+		IPBManager.setGamePhase(GAME_PHASE::OPENING); 
 	}
 	
 	if (Options::Modules::USING_MICRO_SEARCH)

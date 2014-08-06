@@ -4,21 +4,21 @@
     <Position X="19" Y="4.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>IAQAAAAAAAAAAAAACAgAAAAAAAgACAACBAAAAAAAAAA=</HashCode>
-      <FileName>E:\projects\fyp\bots_codes\UAlbertaBot\src\UAlbertaBot\Source\GameCommander.h</FileName>
+      <FileName>E:\projects\fyp\bots_codes\UAlbertaBot\src\UAlbertaBot\Source\IPBManager.h</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="UnitToAssign" Collapsed="true">
     <Position X="15.5" Y="5.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAgAAAgAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>E:\projects\fyp\bots_codes\UAlbertaBot\src\UAlbertaBot\Source\GameCommander.h</FileName>
+      <FileName>E:\projects\fyp\bots_codes\UAlbertaBot\src\UAlbertaBot\Source\IPBManager.h</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="GameCommander" Collapsed="true">
+  <Class Name="IPBManager" Collapsed="true">
     <Position X="15.5" Y="2.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AUAEgAAgIGAESCEAAAAAAAAkQAAgAEwQAEARAKAEBEQ=</HashCode>
-      <FileName>E:\projects\fyp\bots_codes\UAlbertaBot\src\UAlbertaBot\Source\GameCommander.h</FileName>
+      <FileName>E:\projects\fyp\bots_codes\UAlbertaBot\src\UAlbertaBot\Source\IPBManager.h</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="StarcraftBuildOrderSearchManager" Collapsed="true">

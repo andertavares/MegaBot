@@ -12,19 +12,76 @@ void IPBManager::update()
 {
 	timerManager.startTimer(TimerManager::All);
 	
+	if (Options::Debug::DRAW_NUSBOT_DEBUG) BWAPI::Broodwar->drawTextMap(100,100, "IPB_MANAGER_UPDATE" );
+
 	//IPB 1st Stage - Describe Battlefiled
-	describeBattleField(timerManager);
+	describeBattleField();
 	
 	//Build Threat Model here based on Own units/buildings against Enemy Units and buildings
-	enableThreatModel(timerManager);
+	enableThreatModel();
 
-	developCourseOfAction(timerManager);
+	developCourseOfAction();
 	
 		
 	timerManager.stopTimer(TimerManager::All);
 
 	drawDebugInterface();
+
+	//timerManager.startTimer(TimerManager::All);
+	//
+
+	//// economy and base managers
+	//timerManager.startTimer(TimerManager::Worker);
+	//// populate the unit vectors we will pass into various managers
+	//populateUnitVectors();
+	//WorkerManager::Instance().update();
+	//timerManager.stopTimer(TimerManager::Worker);
+
+	//timerManager.startTimer(TimerManager::Production);
+	//ProductionManager::Instance().update();
+	//timerManager.stopTimer(TimerManager::Production);
+
+	//timerManager.startTimer(TimerManager::Building);
+	//BuildingManager::Instance().update();
+	//timerManager.stopTimer(TimerManager::Building);
+
+	//// combat and scouting managers
+	//timerManager.startTimer(TimerManager::Combat);
+	//if (Options::Modules::USING_COMBATCOMMANDER)
+	//{
+	//	combatCommander.update(combatUnits);
+	//}
+	//timerManager.stopTimer(TimerManager::Combat);
+
+	//timerManager.startTimer(TimerManager::Scout);
+	//if (Options::Modules::USING_SCOUTMANAGER)
+	//{
+	//	scoutManager.update(scoutUnits);
+	//}
+	//timerManager.stopTimer(TimerManager::Scout);
+
+	//// utility managers
+	//timerManager.startTimer(TimerManager::InformationManager);
+	//InformationManager::Instance().update();
+	//timerManager.stopTimer(TimerManager::InformationManager);
+
+	//timerManager.startTimer(TimerManager::MapGrid);
+	//MapGrid::Instance().update();
+	//timerManager.stopTimer(TimerManager::MapGrid);
+
+	//timerManager.startTimer(TimerManager::MapTools);
+	//MapTools::Instance().update();
+	//timerManager.stopTimer(TimerManager::MapTools);
+
+	//timerManager.startTimer(TimerManager::Search);
+	//StarcraftBuildOrderSearchManager::Instance().update(35 - timerManager.getTotalElapsed());
+	//timerManager.stopTimer(TimerManager::Search);
+	//	
+	//timerManager.stopTimer(TimerManager::All);
+
+	//drawDebugInterface();
 }
+
 
 void IPBManager::drawDebugInterface()
 {
@@ -335,7 +392,7 @@ void IPBManager::getMapDetails()
 }
 
 //TODO: BattlefieldManager
-void IPBManager::describeBattleField(TimerManager& timerManager)			
+void IPBManager::describeBattleField()			
 { 
 	timerManager.startTimer(TimerManager::MapGrid);
 
@@ -350,7 +407,7 @@ void IPBManager::describeBattleField(TimerManager& timerManager)
 }
 
 //TODO: ThreatManager
-void IPBManager::enableThreatModel(TimerManager& timerManager)			
+void IPBManager::enableThreatModel()			
 { 
 	// economy and base managers
 	timerManager.startTimer(TimerManager::Worker);
@@ -369,7 +426,7 @@ void IPBManager::enableThreatModel(TimerManager& timerManager)
 	
 }
 //TODO: COAManager
-void IPBManager::developCourseOfAction(TimerManager& timerManager)			
+void IPBManager::developCourseOfAction()			
 { 
 	// combat and scouting managers
 	timerManager.startTimer(TimerManager::Combat);

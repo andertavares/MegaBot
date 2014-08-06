@@ -10,7 +10,8 @@ class TransportManager : public MicroManager
 
 protected:
 	void TransportManager::loadTransportState();
-	BWAPI::Unit * TransportManager::getClosestTransport(BWAPI::Position loadPosition);
+	//BWAPI::Unit * TransportManager::getClosestTransport(BWAPI::Position loadPosition);
+	void TransportManager::getClosestTransport(BWAPI::Position loadPosition);
 	BOOL transportExists;
 	BOOL techExists;
 

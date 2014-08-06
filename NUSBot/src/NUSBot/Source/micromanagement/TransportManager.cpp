@@ -42,9 +42,9 @@ void TransportManager::loadTransportState() {
 
 }
 
-
-BWAPI::Unit * TransportManager::getClosestTransport(BWAPI::Position loadPosition) {
-
+//BWAPI::Unit * TransportManager::getClosestTransport(BWAPI::Position loadPosition) {
+void TransportManager::getClosestTransport(BWAPI::Position loadPosition) {
+   
 }
 
 

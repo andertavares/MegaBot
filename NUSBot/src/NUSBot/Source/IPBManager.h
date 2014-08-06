@@ -98,11 +98,7 @@ public:
  * FLIWA - Modified GameCommander into IPBManager
  */
 
-enum GAME_PHASE  { INITIAL=0,
-				   OPENING,
-				   MIDDLE,
-				   END
-				 } ;
+
 
 class IPBManager 
 {
@@ -120,6 +116,13 @@ class IPBManager
 	BWAPI::Unit * currentScout;
 	int numWorkerScouts;
 
+public:
+	enum GAME_PHASE  { INITIAL=0,
+				   OPENING,
+				   MIDDLE,
+				   END
+				 } ;
+
 	//FLIWA - Added 
 	int force_level;
 	int unit_level;
@@ -129,6 +132,7 @@ class IPBManager
 
 
 	const bool isAssigned(BWAPI::Unit * unit) const;
+
 
 public:
 
@@ -164,7 +168,7 @@ public:
 
 	void setGamePhase(GAME_PHASE);
 	void getMapDetails();
-	void describeBattleField(TimerManager& timerManager);
-	void enableThreatModel(TimerManager& timerManager);
-	void developCourseOfAction(TimerManager& timerManager);			
+	void describeBattleField();
+	void enableThreatModel();
+	void developCourseOfAction();			
 };

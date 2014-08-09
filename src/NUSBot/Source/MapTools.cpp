@@ -100,7 +100,7 @@ void MapTools::update()
 
 	BOOST_FOREACH (BWAPI::Unit * unit, BWAPI::Broodwar->getAllUnits())
 	{
-		BWAPI::Color c(BWAPI::Colors::Yellow);
+		BWAPI::Color c(BWAPI::Colors::Orange);
 
 		if (unit->getPlayer() != BWAPI::Broodwar->self())
 		{

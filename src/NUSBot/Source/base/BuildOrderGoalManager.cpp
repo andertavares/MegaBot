@@ -82,6 +82,14 @@ void BuildOrderGoalManager::setBuildOrderGoals()
 	addGoal(MetaType(BWAPI::UnitTypes::Protoss_Gateway),	3,		94);	// 3	Gateway
 	addGoal(MetaType(BWAPI::UnitTypes::Protoss_Zealot),		18,		92);	// 18	Zealot
 	addGoal(MetaType(BWAPI::UnitTypes::Protoss_Gateway),	5,		90);
+	//FLIWA Add Assimilator and Cybernetic Core for Shuttle
+	addGoal(MetaType(BWAPI::UnitTypes::Protoss_Assimilator),	1,		1000);    //Assimilator 
+	addGoal(MetaType(BWAPI::UnitTypes::Protoss_Cybernetics_Core),	1,		90);    //Cybernetic Core
+	addGoal(MetaType(BWAPI::UnitTypes::Protoss_Robotics_Facility),	1,		90);    //Robotics Facility
+	addGoal(MetaType(BWAPI::UnitTypes::Protoss_Observer),	2,		106);    //Observer
+	addGoal(MetaType(BWAPI::UnitTypes::Protoss_Shuttle),	1,		108);    //Shuttle
+
+	
 
 	// sort the goals to make things quicker for us
 	std::sort(goals.begin(), goals.end());

@@ -13,8 +13,11 @@ NUSBotModule::~NUSBotModule() {}
 
 void NUSBotModule::onStart()
 {
+	BWAPI::Broodwar->sendText("NUSBot v1.0.0.0 Online");
 	BWAPI::Broodwar->setLocalSpeed(0);
 	//BWAPI::Broodwar->setFrameSkip(240);
+
+	BWAPI::Broodwar->setCommandOptimizationLevel(1); //For Optimization
 
     SparCraft::init();
 
@@ -24,9 +27,13 @@ void NUSBotModule::onStart()
     Options::BotModes::SetBotMode(Options::BotModes::AIIDE_TOURNAMENT);
 	Options::Modules::checkOptions();
 	
-    if (Options::Modules::USING_IPBManager)
+    if (Options::Modules::USING_IPBMANAGER)
 	{
-		if (Options::Debug::DRAW_NUSBOT_DEBUG) BWAPI::Broodwar->drawTextMap(100,100, "IPB_MANAGER_OPENING &d",1 );
+		//IPBManager::GAME_PHASE gp;
+		BWAPI::Broodwar->drawTextScreen(200, 330, "%s",  "IPB_MANAGER_OPENING\n");
+		//IPBManager.getMapDetails();
+		BWTA::readMap();
+		BWTA::analyze();
 		IPBManager.setGamePhase(GAME_PHASE::OPENING); 
 	}
 	
@@ -46,7 +53,7 @@ void NUSBotModule::onStart()
 
 void NUSBotModule::onEnd(bool isWinner) 
 {
-	if (Options::Modules::USING_IPBManager)
+	if (Options::Modules::USING_IPBMANAGER)
 	{
 		StrategyManager::Instance().onEnd(isWinner);
 
@@ -86,7 +93,7 @@ void NUSBotModule::onFrame()
 		UnitCommandManager::Instance().update();
 	}
 
-	if (Options::Modules::USING_IPBManager) 
+	if (Options::Modules::USING_IPBMANAGER) 
 	{ 
 		IPBManager.update(); 
 	}
@@ -118,13 +125,13 @@ void NUSBotModule::onFrame()
 
 void NUSBotModule::onUnitDestroy(BWAPI::Unit * unit)
 {
-	if (Options::Modules::USING_IPBManager) { IPBManager.onUnitDestroy(unit); }
+	if (Options::Modules::USING_IPBMANAGER) { IPBManager.onUnitDestroy(unit); }
 	if (Options::Modules::USING_ENHANCED_INTERFACE) { eui.onUnitDestroy(unit); }
 }
 
 void NUSBotModule::onUnitMorph(BWAPI::Unit * unit)
 {
-	if (Options::Modules::USING_IPBManager) { IPBManager.onUnitMorph(unit); }
+	if (Options::Modules::USING_IPBMANAGER) { IPBManager.onUnitMorph(unit); }
 }
 
 void NUSBotModule::onSendText(std::string text) 
@@ -194,20 +201,20 @@ void NUSBotModule::onSendText(std::string text)
 
 void NUSBotModule::onUnitCreate(BWAPI::Unit * unit)
 { 
-	if (Options::Modules::USING_IPBManager) { IPBManager.onUnitCreate(unit); }
+	if (Options::Modules::USING_IPBMANAGER) { IPBManager.onUnitCreate(unit); }
 }
 
 void NUSBotModule::onUnitShow(BWAPI::Unit * unit)
 { 
-	if (Options::Modules::USING_IPBManager) { IPBManager.onUnitShow(unit); }
+	if (Options::Modules::USING_IPBMANAGER) { IPBManager.onUnitShow(unit); }
 }
 
 void NUSBotModule::onUnitHide(BWAPI::Unit * unit)
 { 
-	if (Options::Modules::USING_IPBManager) { IPBManager.onUnitHide(unit); }
+	if (Options::Modules::USING_IPBMANAGER) { IPBManager.onUnitHide(unit); }
 }
 
 void NUSBotModule::onUnitRenegade(BWAPI::Unit * unit)
 { 
-	if (Options::Modules::USING_IPBManager) { IPBManager.onUnitRenegade(unit); }
+	if (Options::Modules::USING_IPBMANAGER) { IPBManager.onUnitRenegade(unit); }
 }

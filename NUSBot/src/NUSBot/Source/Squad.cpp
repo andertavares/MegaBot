@@ -47,9 +47,10 @@ void Squad::update()
 	{
 		InformationManager::Instance().lastFrameRegroup = 1;
 
+	    transportManager.execute(order);
 		meleeManager.execute(order);
 		rangedManager.execute(order);
-		transportManager.execute(order);
+		
 
 		detectorManager.setUnitClosestToEnemy(unitClosestToEnemy());
 		detectorManager.execute(order);
@@ -144,7 +145,7 @@ void Squad::setManagerUnits()
 	meleeManager.setUnits(meleeUnits);
 	rangedManager.setUnits(rangedUnits);
 	detectorManager.setUnits(detectorUnits);
-	transportManager.setUnits(detectorUnits);
+	transportManager.setUnits(transportUnits);
 }
 
 // calculates whether or not to regroup
@@ -161,7 +162,7 @@ bool Squad::needsToRegroup()
 	if (StrategyManager::Instance().getCurrentStrategy() == StrategyManager::ProtossDarkTemplar &&
 		(BWAPI::Broodwar->self()->deadUnitCount(BWAPI::UnitTypes::Protoss_Dark_Templar) == 0))
 	{
-		regroupStatus = std::string("\x04 DARK TEMPLAR HOOOOO!");
+		regroupStatus = std::string("\x04 STEALTH MODE!");
 		return false;
 	}
 
@@ -200,6 +201,7 @@ bool Squad::needsToRegroup()
 	if (retreat)
 	{
 		regroupStatus = std::string("\x04 Retreat - simulation predicts defeat");
+
 	}
 	else
 	{

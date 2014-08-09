@@ -23,5 +23,6 @@ public:
 	static TransportManager &	Instance();
 	void TransportManager::sendUnits(std::set<BWAPI::Unit *> & unitsToLoad, BWAPI::Position loadPosition, BWAPI::Position unloadPosition);
 	void executeMicro(const UnitVector & targets);
+	void update();
 
 };

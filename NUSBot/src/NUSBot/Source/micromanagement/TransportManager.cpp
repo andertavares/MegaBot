@@ -42,6 +42,19 @@ void TransportManager::loadTransportState() {
 
 }
 
+void TransportManager::update() {
+
+ if (  BWAPI::Broodwar->self()->completedUnitCount(BWAPI::UnitTypes::Protoss_Shuttle ) == 1 )
+ {
+	 //train shuttle
+	 BWAPI::Broodwar->drawTextScreen(250, 350, "NUSBot: Training Shuttle now.");
+	
+ 
+ }
+
+}
+
+
 //BWAPI::Unit * TransportManager::getClosestTransport(BWAPI::Position loadPosition) {
 void TransportManager::getClosestTransport(BWAPI::Position loadPosition) {
    
@@ -58,6 +71,7 @@ void TransportManager::executeMicro(const UnitVector & targets)
 {
 	const UnitVector & transportUnits = getUnits();
 
+	BWAPI::Broodwar->drawTextScreen(250,350, "NUSBot Transport on the move!");
 	if (transportUnits.empty())
 	{
 		return;

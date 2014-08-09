@@ -7,7 +7,7 @@ namespace Options
 {
 	namespace Modules
 	{
-		extern bool USING_IPBManager;			// toggle IPBManager, effectively UAlbertaBot
+		extern bool USING_IPBMANAGER;			// toggle IPBManager, effectively UAlbertaBot
 		extern bool USING_SCOUTMANAGER;
 		extern bool USING_COMBATCOMMANDER;
 		extern bool USING_ENHANCED_INTERFACE;		// toggle EnhancedUI, not needed for UAlbertaBot

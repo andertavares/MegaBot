@@ -98,7 +98,11 @@ public:
  * FLIWA - Modified GameCommander into IPBManager
  */
 
-
+enum GAME_PHASE  { INITIAL=0,
+				   OPENING,
+				   MIDDLE,
+				   END
+				 } ;
 
 class IPBManager 
 {
@@ -109,6 +113,8 @@ class IPBManager
 	std::set<BWAPI::Unit *> combatUnits;
 	std::set<BWAPI::Unit *> scoutUnits;
 	std::set<BWAPI::Unit *> workerUnits;
+	//FLIWA
+	std::set<BWAPI::Unit *> transportUnits;
 
 	std::set<BWAPI::Unit *>	validUnits;
 	std::set<BWAPI::Unit *> assignedUnits;
@@ -117,11 +123,7 @@ class IPBManager
 	int numWorkerScouts;
 
 public:
-	enum GAME_PHASE  { INITIAL=0,
-				   OPENING,
-				   MIDDLE,
-				   END
-				 } ;
+	
 
 	//FLIWA - Added 
 	int force_level;
@@ -146,11 +148,15 @@ public:
 	void setScoutUnits();
 	void setWorkerUnits();
 	void setCombatUnits();
+	//FLIWA
+	void setTransporUnits();
 
 	void drawDebugInterface();
 
 	bool isValidUnit(BWAPI::Unit * unit);
 	bool isCombatUnit(BWAPI::Unit * unit) const;
+	//FLIWA
+	bool isTransportUnit(BWAPI::Unit * unit) const;
 
 	BWAPI::Unit * getFirstSupplyProvider();
 	BWAPI::Unit * getClosestUnitToTarget(BWAPI::UnitType type, BWAPI::Position target);

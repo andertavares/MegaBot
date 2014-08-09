@@ -26,6 +26,7 @@ void MicroManager::execute(const SquadOrder & inputOrder)
 		//BWAPI::Broodwar->printf("Gots no units, fix shit up (%d)", order.type);
 		return;
 	}
+	
 	order = inputOrder;
 	drawOrderText();
 

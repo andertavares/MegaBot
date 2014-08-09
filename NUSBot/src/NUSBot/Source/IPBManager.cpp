@@ -12,7 +12,7 @@ void IPBManager::update()
 {
 	timerManager.startTimer(TimerManager::All);
 	
-	if (Options::Debug::DRAW_NUSBOT_DEBUG) BWAPI::Broodwar->drawTextMap(100,100, "IPB_MANAGER_UPDATE" );
+	BWAPI::Broodwar->drawTextMap(200,330, "IPB_MANAGER_UPDATE" );
 
 	//IPB 1st Stage - Describe Battlefiled
 	describeBattleField();
@@ -27,59 +27,7 @@ void IPBManager::update()
 
 	drawDebugInterface();
 
-	//timerManager.startTimer(TimerManager::All);
-	//
-
-	//// economy and base managers
-	//timerManager.startTimer(TimerManager::Worker);
-	//// populate the unit vectors we will pass into various managers
-	//populateUnitVectors();
-	//WorkerManager::Instance().update();
-	//timerManager.stopTimer(TimerManager::Worker);
-
-	//timerManager.startTimer(TimerManager::Production);
-	//ProductionManager::Instance().update();
-	//timerManager.stopTimer(TimerManager::Production);
-
-	//timerManager.startTimer(TimerManager::Building);
-	//BuildingManager::Instance().update();
-	//timerManager.stopTimer(TimerManager::Building);
-
-	//// combat and scouting managers
-	//timerManager.startTimer(TimerManager::Combat);
-	//if (Options::Modules::USING_COMBATCOMMANDER)
-	//{
-	//	combatCommander.update(combatUnits);
-	//}
-	//timerManager.stopTimer(TimerManager::Combat);
-
-	//timerManager.startTimer(TimerManager::Scout);
-	//if (Options::Modules::USING_SCOUTMANAGER)
-	//{
-	//	scoutManager.update(scoutUnits);
-	//}
-	//timerManager.stopTimer(TimerManager::Scout);
-
-	//// utility managers
-	//timerManager.startTimer(TimerManager::InformationManager);
-	//InformationManager::Instance().update();
-	//timerManager.stopTimer(TimerManager::InformationManager);
-
-	//timerManager.startTimer(TimerManager::MapGrid);
-	//MapGrid::Instance().update();
-	//timerManager.stopTimer(TimerManager::MapGrid);
-
-	//timerManager.startTimer(TimerManager::MapTools);
-	//MapTools::Instance().update();
-	//timerManager.stopTimer(TimerManager::MapTools);
-
-	//timerManager.startTimer(TimerManager::Search);
-	//StarcraftBuildOrderSearchManager::Instance().update(35 - timerManager.getTotalElapsed());
-	//timerManager.stopTimer(TimerManager::Search);
-	//	
-	//timerManager.stopTimer(TimerManager::All);
-
-	//drawDebugInterface();
+	
 }
 
 
@@ -89,8 +37,8 @@ void IPBManager::drawDebugInterface()
 	
 	StarcraftBuildOrderSearchManager::Instance().drawSearchInformation(10, 240);
 	//BuildingManager::Instance().drawBuildingInformation(200,50);
-	ProductionManager::Instance().drawProductionInformation(10, 30);
-	InformationManager::Instance().drawUnitInformation(425,30);
+	ProductionManager::Instance().drawProductionInformation(30, 50);
+	InformationManager::Instance().drawUnitInformation(450,25);
 
 	combatCommander.drawSquadInformation(200, 30);
 
@@ -113,6 +61,8 @@ void IPBManager::populateUnitVectors()
 	// set each type of unit
 	setScoutUnits();
 	setCombatUnits();
+	//FLIWA
+	setTransporUnits();
 	setWorkerUnits();
 }
 
@@ -228,6 +178,46 @@ bool IPBManager::isCombatUnit(BWAPI::Unit * unit) const
 	}
 		
 	return false;
+}
+
+
+bool IPBManager::isTransportUnit(BWAPI::Unit * unit) const
+{
+	assert(unit != NULL);
+
+	// no workers or buildings allowed
+	if (unit && unit->getType().isWorker() || unit->getType().isBuilding())
+	{
+		return false;
+	}
+
+
+	// check for various types of transport units
+	if (unit->getType().canAttack() || unit->getType().canMove() ||
+		unit->getType() == BWAPI::UnitTypes::Protoss_Shuttle ||
+		unit->getType() == BWAPI::UnitTypes::Terran_Dropship ||
+		unit->getType() == BWAPI::UnitTypes::Protoss_Observer)
+	{
+		return true;
+	}
+		
+	return false;
+}
+
+// sets Transport Unit
+void IPBManager::setTransporUnits()
+{
+	transportUnits.clear();
+
+	BOOST_FOREACH (BWAPI::Unit * unit, validUnits)
+	{
+		if (!isAssigned(unit) && isTransportUnit(unit))		
+		{	
+			transportUnits.insert(unit);
+			assignedUnits.insert(unit);
+		}
+	}
+
 }
 
 BWAPI::Unit * IPBManager::getFirstSupplyProvider()
@@ -394,21 +384,23 @@ void IPBManager::getMapDetails()
 //TODO: BattlefieldManager
 void IPBManager::describeBattleField()			
 { 
+	BWAPI::Broodwar->drawTextMap(250,350, "IPB_MANAGER: Scanning Battlefield..." );
 	timerManager.startTimer(TimerManager::MapGrid);
 
-	//TODO: We should be using the Layere Influence Map here
+	//TODO: We should be using the Layered Influence Map here
 	MapGrid::Instance().update();
 
 	timerManager.stopTimer(TimerManager::MapGrid);
 
 	timerManager.startTimer(TimerManager::MapTools);
-	MapTools::Instance().update();
+	MapTools::Instance().update();					//expansion searching
 	timerManager.stopTimer(TimerManager::MapTools);	
 }
 
 //TODO: ThreatManager
 void IPBManager::enableThreatModel()			
 { 
+	BWAPI::Broodwar->drawTextMap(250,350, "IPB_MANAGER: Threat Detection..." );
 	// economy and base managers
 	timerManager.startTimer(TimerManager::Worker);
 	// populate the unit vectors we will pass into various managers
@@ -420,14 +412,18 @@ void IPBManager::enableThreatModel()
 	ProductionManager::Instance().update();
 	timerManager.stopTimer(TimerManager::Production);
 
-	timerManager.startTimer(TimerManager::Building);
-	BuildingManager::Instance().update();
-	timerManager.stopTimer(TimerManager::Building);
+	
 	
 }
 //TODO: COAManager
 void IPBManager::developCourseOfAction()			
 { 
+	
+    BWAPI::Broodwar->drawTextMap(250,350, "IPB_MANAGER: Resolving COA...\n" );
+	timerManager.startTimer(TimerManager::Building);
+	BuildingManager::Instance().update();
+	timerManager.stopTimer(TimerManager::Building);
+
 	// combat and scouting managers
 	timerManager.startTimer(TimerManager::Combat);
 	if (Options::Modules::USING_COMBATCOMMANDER)

@@ -72,7 +72,7 @@ void DefenseManager::update()
 	//chc
 					int enemy_assimilator = 0;
 					int	enemy_gateway = 0;
-					for (std::set<BWAPI::Unit *>::const_iterator en = Broodwar->enemy()->getUnits().begin(); en != BWAPI::Broodwar->enemy()->getUnits().end(); ++en)
+					for (std::set<BWAPI::Unit >::const_iterator en = Broodwar->enemy()->getUnits().begin(); en != BWAPI::Broodwar->enemy()->getUnits().end(); ++en)
 					{
 						if((*en)->getType() == BWAPI::UnitTypes::Protoss_Assimilator)
 							enemy_assimilator++;
@@ -280,8 +280,8 @@ void DefenseManager::update()
 				}
 				if (u->first->isUnderAttack())
 				{
-					std::set<BWAPI::Unit *> backup = this->getIdleDefenders();
-					for each (BWAPI::Unit *bck in backup)
+					std::set<BWAPI::Unit > backup = this->getIdleDefenders();
+					for each (BWAPI::Unit bck in backup)
 					{
 						bck->attack(u->first->getPosition());
 						defenders[bck].mode = DefenseData::Defending;
@@ -318,8 +318,8 @@ void DefenseManager::update()
 				}
 				if (u->first->isUnderAttack())
 				{
-					std::set<BWAPI::Unit *> backup = this->getIdleDefenders();
-					for each (BWAPI::Unit *bck in backup)
+					std::set<BWAPI::Unit > backup = this->getIdleDefenders();
+					for each (BWAPI::Unit bck in backup)
 					{
 						bck->attack(u->first->getPosition());
 						defenders[bck].mode = DefenseData::Defending;

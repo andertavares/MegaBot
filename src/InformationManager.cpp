@@ -88,7 +88,7 @@ void InformationManager::onUnitDestroy(Unit unit)
 	}
 }
 
-Player* InformationManager::getPlayer(Unit unit) const
+Player InformationManager::getPlayer(Unit unit) const
 {
 	if (unit->exists())
 		return unit->getPlayer();

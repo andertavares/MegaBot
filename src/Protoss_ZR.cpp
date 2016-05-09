@@ -317,11 +317,11 @@ void Protoss_ZR::onFrame()
 			
 	//캐논러쉬방어 aiide2014
 
-		for (std::set<BWAPI::Unit *>::const_iterator allMyUnit = BWAPI::Broodwar->self()->getUnits().begin(); allMyUnit !=BWAPI::Broodwar->self()->getUnits().end(); ++allMyUnit)
+		for (std::set<BWAPI::Unit >::const_iterator allMyUnit = BWAPI::Broodwar->self()->getUnits().begin(); allMyUnit !=BWAPI::Broodwar->self()->getUnits().end(); ++allMyUnit)
 				{
 					if((*allMyUnit)->getType() == BWAPI::UnitTypes::Protoss_Zealot && (*allMyUnit)->isCompleted())
 					{
-						for (std::set<BWAPI::Unit *>::const_iterator allEnemyUnit = BWAPI::Broodwar->enemy()->getUnits().begin(); allEnemyUnit !=BWAPI::Broodwar->enemy()->getUnits().end(); ++allEnemyUnit) 
+						for (std::set<BWAPI::Unit >::const_iterator allEnemyUnit = BWAPI::Broodwar->enemy()->getUnits().begin(); allEnemyUnit !=BWAPI::Broodwar->enemy()->getUnits().end(); ++allEnemyUnit) 
 						{
 
 							if((*allEnemyUnit)->getType() == BWAPI::UnitTypes::Protoss_Pylon)
@@ -336,11 +336,11 @@ void Protoss_ZR::onFrame()
 					}
 		}
 
-		for (std::set<BWAPI::Unit *>::const_iterator allMyUnit = BWAPI::Broodwar->self()->getUnits().begin(); allMyUnit !=BWAPI::Broodwar->self()->getUnits().end(); ++allMyUnit) 
+		for (std::set<BWAPI::Unit >::const_iterator allMyUnit = BWAPI::Broodwar->self()->getUnits().begin(); allMyUnit !=BWAPI::Broodwar->self()->getUnits().end(); ++allMyUnit) 
 				{
 					if((*allMyUnit)->getType() == BWAPI::UnitTypes::Protoss_Zealot && (*allMyUnit)->isCompleted())
 					{
-						for (std::set<BWAPI::Unit *>::const_iterator allEnemyUnit = BWAPI::Broodwar->enemy()->getUnits().begin(); allEnemyUnit !=BWAPI::Broodwar->enemy()->getUnits().end(); ++allEnemyUnit) 
+						for (std::set<BWAPI::Unit >::const_iterator allEnemyUnit = BWAPI::Broodwar->enemy()->getUnits().begin(); allEnemyUnit !=BWAPI::Broodwar->enemy()->getUnits().end(); ++allEnemyUnit) 
 						{
 
 							if((*allEnemyUnit)->getType() == BWAPI::UnitTypes::Protoss_Photon_Cannon)
@@ -389,11 +389,11 @@ void Protoss_ZR::onFrame()
 				
 
 				//--1.각 유닛이 적과 일정거리(132) 안에 있으면 전투시스템 발동
-				for (std::set<BWAPI::Unit *>::const_iterator allMyUnit = BWAPI::Broodwar->self()->getUnits().begin(); allMyUnit !=BWAPI::Broodwar->self()->getUnits().end(); ++allMyUnit) 
+				for (std::set<BWAPI::Unit >::const_iterator allMyUnit = BWAPI::Broodwar->self()->getUnits().begin(); allMyUnit !=BWAPI::Broodwar->self()->getUnits().end(); ++allMyUnit) 
 				{
 					if((*allMyUnit)->getType() == BWAPI::UnitTypes::Protoss_Zealot && (*allMyUnit)->isCompleted())
 					{
-						for (std::set<BWAPI::Unit *>::const_iterator allEnemyUnit = BWAPI::Broodwar->enemy()->getUnits().begin(); allEnemyUnit !=BWAPI::Broodwar->enemy()->getUnits().end(); ++allEnemyUnit) 
+						for (std::set<BWAPI::Unit >::const_iterator allEnemyUnit = BWAPI::Broodwar->enemy()->getUnits().begin(); allEnemyUnit !=BWAPI::Broodwar->enemy()->getUnits().end(); ++allEnemyUnit) 
 						{
 							if((*allEnemyUnit)->getType() == BWAPI::UnitTypes::Protoss_Zealot)
 							{
@@ -422,7 +422,7 @@ void Protoss_ZR::onFrame()
 
 				//질럿 도망가는 액션
 				if(total_attack_zealot_cig2013 == false)
-					for (std::set<BWAPI::Unit *>::const_iterator allMyUnit = BWAPI::Broodwar->self()->getUnits().begin(); allMyUnit !=BWAPI::Broodwar->self()->getUnits().end(); ++allMyUnit) 
+					for (std::set<BWAPI::Unit >::const_iterator allMyUnit = BWAPI::Broodwar->self()->getUnits().begin(); allMyUnit !=BWAPI::Broodwar->self()->getUnits().end(); ++allMyUnit) 
 					{
 						if((*allMyUnit)->getType() == BWAPI::UnitTypes::Protoss_Zealot && (*allMyUnit)->isCompleted())
 						{
@@ -451,7 +451,7 @@ void Protoss_ZR::onFrame()
 						cig2013_2 = cig2013_2 + 16;
 						if(total_attack_zealot_cig2013==true)
 						{
-							for (std::set<BWAPI::Unit *>::const_iterator allMyUnit = BWAPI::Broodwar->self()->getUnits().begin(); allMyUnit !=BWAPI::Broodwar->self()->getUnits().end(); ++allMyUnit) 
+							for (std::set<BWAPI::Unit >::const_iterator allMyUnit = BWAPI::Broodwar->self()->getUnits().begin(); allMyUnit !=BWAPI::Broodwar->self()->getUnits().end(); ++allMyUnit) 
 							{
 								if((*allMyUnit)->getType() == BWAPI::UnitTypes::Protoss_Zealot && (*allMyUnit)->isCompleted())
 								{
@@ -474,9 +474,9 @@ void Protoss_ZR::onFrame()
 										int min_good_attack_unit_score=999999;
 										int enemy_under_attack_score=0;
 
-										std::set<BWAPI::Unit *>::const_iterator attack_good = BWAPI::Broodwar->enemy()->getUnits().begin();
+										std::set<BWAPI::Unit >::const_iterator attack_good = BWAPI::Broodwar->enemy()->getUnits().begin();
 
-										for (std::set<BWAPI::Unit *>::const_iterator allEnemyUnit = BWAPI::Broodwar->enemy()->getUnits().begin(); allEnemyUnit != BWAPI::Broodwar->enemy()->getUnits().end(); ++allEnemyUnit) 
+										for (std::set<BWAPI::Unit >::const_iterator allEnemyUnit = BWAPI::Broodwar->enemy()->getUnits().begin(); allEnemyUnit != BWAPI::Broodwar->enemy()->getUnits().end(); ++allEnemyUnit) 
 										{
 											if((*allEnemyUnit)->isUnderAttack())
 												enemy_under_attack_score = -5;
@@ -582,7 +582,7 @@ void Protoss_ZR::onFrame()
 
 
 				// 1. 빠른러쉬 판단
-				for (std::set<BWAPI::Unit *>::const_iterator allEnemyUnit = BWAPI::Broodwar->enemy()->getUnits().begin(); allEnemyUnit != BWAPI::Broodwar->enemy()->getUnits().end(); ++allEnemyUnit) 
+				for (std::set<BWAPI::Unit >::const_iterator allEnemyUnit = BWAPI::Broodwar->enemy()->getUnits().begin(); allEnemyUnit != BWAPI::Broodwar->enemy()->getUnits().end(); ++allEnemyUnit) 
 				{	
 					if((*allEnemyUnit)->getType() == BWAPI::UnitTypes::Protoss_Gateway)
 					{
@@ -645,7 +645,7 @@ void Protoss_ZR::onFrame()
 						{
 
 						//발업부터 시작
-						for (std::set<BWAPI::Unit *>::const_iterator its = BWAPI::Broodwar->self()->getUnits().begin(); its != BWAPI::Broodwar->self()->getUnits().end(); ++its)
+						for (std::set<BWAPI::Unit >::const_iterator its = BWAPI::Broodwar->self()->getUnits().begin(); its != BWAPI::Broodwar->self()->getUnits().end(); ++its)
 						{					
 
 							if((*its)->getType() == BWAPI::UnitTypes::Protoss_Citadel_of_Adun)
@@ -994,7 +994,7 @@ void Protoss_ZR::onFrame()
 
 
 
-								for (std::set<BWAPI::Unit *>::const_iterator its = BWAPI::Broodwar->self()->getUnits().begin(); its != BWAPI::Broodwar->self()->getUnits().end(); ++its)
+								for (std::set<BWAPI::Unit >::const_iterator its = BWAPI::Broodwar->self()->getUnits().begin(); its != BWAPI::Broodwar->self()->getUnits().end(); ++its)
 								{
 									if(BWAPI::Broodwar->self()->allUnitCount(BWAPI::UnitTypes::Protoss_Dragoon) > 3) //드라군4마리 이상 있으면 사업해줌
 									{
@@ -1299,7 +1299,7 @@ void Protoss_ZR::onFrame()
 
 
 
-								for (std::set<BWAPI::Unit *>::const_iterator its = BWAPI::Broodwar->self()->getUnits().begin(); its != BWAPI::Broodwar->self()->getUnits().end(); ++its)
+								for (std::set<BWAPI::Unit >::const_iterator its = BWAPI::Broodwar->self()->getUnits().begin(); its != BWAPI::Broodwar->self()->getUnits().end(); ++its)
 								{
 									if(BWAPI::Broodwar->self()->allUnitCount(BWAPI::UnitTypes::Protoss_Dragoon) >= 2) //드라군 2마리 이상 있으면 사업해줌
 									{
@@ -1431,7 +1431,7 @@ void Protoss_ZR::onFrame()
 
 
 
-					for (std::set<BWAPI::Unit *>::const_iterator its = BWAPI::Broodwar->self()->getUnits().begin(); its != BWAPI::Broodwar->self()->getUnits().end(); ++its)
+					for (std::set<BWAPI::Unit >::const_iterator its = BWAPI::Broodwar->self()->getUnits().begin(); its != BWAPI::Broodwar->self()->getUnits().end(); ++its)
 					{
 						if(BWAPI::Broodwar->self()->allUnitCount(BWAPI::UnitTypes::Protoss_Dragoon) > 3) //드라군 4마리 이상 있으면 사업해줌
 						{
@@ -1594,7 +1594,7 @@ void Protoss_ZR::onFrame()
 
 
 
-							for (std::set<BWAPI::Unit *>::const_iterator its = BWAPI::Broodwar->self()->getUnits().begin(); its != BWAPI::Broodwar->self()->getUnits().end(); ++its)
+							for (std::set<BWAPI::Unit >::const_iterator its = BWAPI::Broodwar->self()->getUnits().begin(); its != BWAPI::Broodwar->self()->getUnits().end(); ++its)
 							{
 								if(BWAPI::Broodwar->self()->allUnitCount(BWAPI::UnitTypes::Protoss_Dragoon) >= 2) //드라군 2마리 이상 있으면 사업해줌
 								{
@@ -1653,13 +1653,13 @@ void Protoss_ZR::onFrame()
 		//int unit_s=0;
 		int unit_e=0;
 		int low_confidence_unit=0; //자신감 낮아서 도망가는 애들 숫자 세주기
-		std::set<BWAPI::Unit *>::const_iterator confidence_nice_unit = BWAPI::Broodwar->self()->getUnits().begin(); //자신감 높은 유닛 찾기위함
-		for (std::set<BWAPI::Unit *>::const_iterator its = BWAPI::Broodwar->self()->getUnits().begin(); its != BWAPI::Broodwar->self()->getUnits().end(); ++its)
+		std::set<BWAPI::Unit >::const_iterator confidence_nice_unit = BWAPI::Broodwar->self()->getUnits().begin(); //자신감 높은 유닛 찾기위함
+		for (std::set<BWAPI::Unit >::const_iterator its = BWAPI::Broodwar->self()->getUnits().begin(); its != BWAPI::Broodwar->self()->getUnits().end(); ++its)
 		{
 			if((*its)->getType().canAttack() && (*its)->getType().groundWeapon().damageAmount() >= 8) // 데미지가 8보다 크다면 . 공격유닛 선택하기 위함  질럿은 8씩 두번공격하는것임.
 			{
 				////////////적 유닛 주변에 있으면 자신감 하락
-				for (std::set<BWAPI::Unit *>::const_iterator enemys = BWAPI::Broodwar->enemy()->getUnits().begin(); enemys != BWAPI::Broodwar->enemy()->getUnits().end(); ++enemys)
+				for (std::set<BWAPI::Unit >::const_iterator enemys = BWAPI::Broodwar->enemy()->getUnits().begin(); enemys != BWAPI::Broodwar->enemy()->getUnits().end(); ++enemys)
 				{	
 
 					//우리편 자신감 낮추기.
@@ -1676,7 +1676,7 @@ void Protoss_ZR::onFrame()
 				////////////적 유닛 주변에 있으면 자신감 하락 끝
 
 				//우리 편 유닛 주변에 있으면 자신감 상승
-				for (std::set<BWAPI::Unit *>::const_iterator its2 = BWAPI::Broodwar->self()->getUnits().begin(); its2 != BWAPI::Broodwar->self()->getUnits().end(); ++its2)
+				for (std::set<BWAPI::Unit >::const_iterator its2 = BWAPI::Broodwar->self()->getUnits().begin(); its2 != BWAPI::Broodwar->self()->getUnits().end(); ++its2)
 				{
 					if((*its2)->getType().canAttack() && (*its2)->getType().groundWeapon().damageAmount() >= 8) // 데미지가 8보다 크다면 . 공격유닛 선택하기 위함  질럿은 8씩 두번공격하는것임.
 					{
@@ -1705,7 +1705,7 @@ void Protoss_ZR::onFrame()
 				////누가 자신감이 큰지 찾기 끝///
 
 				int search_confidence_nice_unit_num=0;
-				for (std::set<BWAPI::Unit *>::const_iterator its3 = BWAPI::Broodwar->self()->getUnits().begin(); its3 != BWAPI::Broodwar->self()->getUnits().end(); ++its3)
+				for (std::set<BWAPI::Unit >::const_iterator its3 = BWAPI::Broodwar->self()->getUnits().begin(); its3 != BWAPI::Broodwar->self()->getUnits().end(); ++its3)
 				{			
 					if((*its3)->getType().groundWeapon().damageAmount() >= 8 && (*its3)->getType().canAttack()) // 데미지가 8보다 크다면 . 공격유닛 선택하기 위함  질럿은 8씩 두번공격하는것임.
 					{
@@ -1754,7 +1754,7 @@ void Protoss_ZR::onFrame()
 
 		///애들 도망가게 하기..  단 5마리 이상 도망가게 설정되면 도망가지 않는다.
 		unit_e = 0;  //0으로 초기화시켜줘야한다.
-		for (std::set<BWAPI::Unit *>::const_iterator its = BWAPI::Broodwar->self()->getUnits().begin(); its != BWAPI::Broodwar->self()->getUnits().end(); ++its)
+		for (std::set<BWAPI::Unit >::const_iterator its = BWAPI::Broodwar->self()->getUnits().begin(); its != BWAPI::Broodwar->self()->getUnits().end(); ++its)
 		{
 			if((*its)->getType().groundWeapon().damageAmount() >= 8) // 데미지가 8보다 크다면 . 공격유닛 선택하기 위함  질럿은 8씩 두번공격하는것임.
 			{
@@ -1827,22 +1827,22 @@ void Protoss_ZR::onFrame()
 		//하이템플러 셔틀 컨트롤에 필요한 변수들
 		bool its_right_click_enemys = false;   
 		bool its_unload_its2 = false;
-		std::set<BWAPI::Unit *>::const_iterator its_right_click_enemys_unit = BWAPI::Broodwar->enemy()->getUnits().begin();
+		std::set<BWAPI::Unit >::const_iterator its_right_click_enemys_unit = BWAPI::Broodwar->enemy()->getUnits().begin();
 		////
 
 		unit_e=0; //0으로 초기화해줘야함.
-		std::set<BWAPI::Unit *>::const_iterator confidence_nice_enemy_unit = BWAPI::Broodwar->enemy()->getUnits().begin(); //적편 자신감 높은 유닛 찾기위함
+		std::set<BWAPI::Unit >::const_iterator confidence_nice_enemy_unit = BWAPI::Broodwar->enemy()->getUnits().begin(); //적편 자신감 높은 유닛 찾기위함
 		int confidence_nice_enemy_unit_confidence_num=0;
 		//4프레임에 한번씩 돌아가도록
 		static int fram3__2 = Broodwar->getFrameCount();
 		if(fram3__2 == Broodwar->getFrameCount())
 		{
 			fram3__2=fram3__2 + 4;
-			for (std::set<BWAPI::Unit *>::const_iterator enemys = BWAPI::Broodwar->enemy()->getUnits().begin(); enemys != BWAPI::Broodwar->enemy()->getUnits().end(); ++enemys)
+			for (std::set<BWAPI::Unit >::const_iterator enemys = BWAPI::Broodwar->enemy()->getUnits().begin(); enemys != BWAPI::Broodwar->enemy()->getUnits().end(); ++enemys)
 			{
 				if((*enemys)->getType().groundWeapon().damageAmount() >= 5 && (*enemys)->getType().canAttack() && (*enemys)->getType().canMove() &&  (*enemys)->getType() != BWAPI::UnitTypes::Protoss_Probe && (*enemys)->getType() != BWAPI::UnitTypes::Zerg_Drone && (*enemys)->getType() != BWAPI::UnitTypes::Terran_SCV) // 데미지가 5보다 크다면...... 유닛만 선택됨. 일꾼 제외
 				{
-					for (std::set<BWAPI::Unit *>::const_iterator its = BWAPI::Broodwar->self()->getUnits().begin(); its != BWAPI::Broodwar->self()->getUnits().end(); ++its)
+					for (std::set<BWAPI::Unit >::const_iterator its = BWAPI::Broodwar->self()->getUnits().begin(); its != BWAPI::Broodwar->self()->getUnits().end(); ++its)
 					{
 
 						//적편 자신감 낮추기.
@@ -1861,7 +1861,7 @@ void Protoss_ZR::onFrame()
 
 
 					//적편 유닛 주변에 적이 있으면 자신감 상승 시작   - 건물 빼고 유닛만 계산해줬음.
-					for (std::set<BWAPI::Unit *>::const_iterator enemys2 = BWAPI::Broodwar->enemy()->getUnits().begin(); enemys2 != BWAPI::Broodwar->enemy()->getUnits().end(); ++enemys2)
+					for (std::set<BWAPI::Unit >::const_iterator enemys2 = BWAPI::Broodwar->enemy()->getUnits().begin(); enemys2 != BWAPI::Broodwar->enemy()->getUnits().end(); ++enemys2)
 					{
 						if((*enemys2)->getType().canAttack() && (*enemys2)->getType().groundWeapon().damageAmount() >= 5 && (*enemys2)->getType().canMove() && (*enemys2)->getType() != BWAPI::UnitTypes::Protoss_Probe && (*enemys2)->getType() != BWAPI::UnitTypes::Zerg_Drone && (*enemys2)->getType() != BWAPI::UnitTypes::Terran_SCV) // 데미지가 5보다 크다면
 						{
@@ -1888,7 +1888,7 @@ void Protoss_ZR::onFrame()
 					////적편 누가 자신감이 큰지 찾기 끝///
 
 					int search_confidence_nice_unit_num=0;
-					for (std::set<BWAPI::Unit *>::const_iterator enemys2 = BWAPI::Broodwar->enemy()->getUnits().begin(); enemys2 != BWAPI::Broodwar->enemy()->getUnits().end(); ++enemys2)
+					for (std::set<BWAPI::Unit >::const_iterator enemys2 = BWAPI::Broodwar->enemy()->getUnits().begin(); enemys2 != BWAPI::Broodwar->enemy()->getUnits().end(); ++enemys2)
 					{			
 						if((*enemys2)->getType().groundWeapon().damageAmount() >= 5 && (*enemys2)->getType().canAttack() && (*enemys2)->getType().canMove() &&  (*enemys2)->getType() != BWAPI::UnitTypes::Protoss_Probe && (*enemys2)->getType() != BWAPI::UnitTypes::Zerg_Drone && (*enemys2)->getType() != BWAPI::UnitTypes::Terran_SCV) // 데미지가 5보다 크다면...... 유닛만 선택됨. 일꾼 제외
 						{
@@ -1911,13 +1911,13 @@ void Protoss_ZR::onFrame()
 		/////****적 자신감 가장 높은애한테 쏘기
 
 		int enemy_num121=0;
-		for (std::set<BWAPI::Unit *>::const_iterator enemys2 = BWAPI::Broodwar->enemy()->getUnits().begin(); enemys2 != BWAPI::Broodwar->enemy()->getUnits().end(); ++enemys2)
+		for (std::set<BWAPI::Unit >::const_iterator enemys2 = BWAPI::Broodwar->enemy()->getUnits().begin(); enemys2 != BWAPI::Broodwar->enemy()->getUnits().end(); ++enemys2)
 		{
 			enemy_num121++; //적 몇명인지.
 		}
 
 
-		std::set<BWAPI::Unit *>::const_iterator min_my_attack_unit_en_expand_unit = BWAPI::Broodwar->self()->getUnits().end(); // 적 앞마당과 가장 가까운 우리 공격유닛 
+		std::set<BWAPI::Unit >::const_iterator min_my_attack_unit_en_expand_unit = BWAPI::Broodwar->self()->getUnits().end(); // 적 앞마당과 가장 가까운 우리 공격유닛 
 		int min_my_attack_unit_en_expand = 100000;  
 
 		///////////////적 앞마당과 가장 가까운 공격유닛 선택////////////
@@ -1925,7 +1925,7 @@ void Protoss_ZR::onFrame()
 		if(frame__2 == Broodwar->getFrameCount())
 		{
 			frame__2 = frame__2 + 4;  //4프레임마다 실행되게.
-			for (std::set<BWAPI::Unit *>::const_iterator its = BWAPI::Broodwar->self()->getUnits().begin(); its != BWAPI::Broodwar->self()->getUnits().end(); ++its)
+			for (std::set<BWAPI::Unit >::const_iterator its = BWAPI::Broodwar->self()->getUnits().begin(); its != BWAPI::Broodwar->self()->getUnits().end(); ++its)
 			{	
 				if((*its)->isCompleted() && (*its)->getType().groundWeapon().damageAmount() >= 5 && (*its)->getType().canAttack() && (*its)->getType().canMove() &&  (*its)->getType() != BWAPI::UnitTypes::Protoss_Probe && (*its)->getType() != BWAPI::UnitTypes::Zerg_Drone && (*its)->getType() != BWAPI::UnitTypes::Terran_SCV) // 데미지가 5보다 크다면...... 유닛만 선택됨. 일꾼 제외
 				{
@@ -1955,19 +1955,19 @@ void Protoss_ZR::onFrame()
 			//if(total_attack) //총공격이면 
 			if(high_templer_loaded_complete) //하이템플러 4마리 모두 탔으면 셔틀 컨트롤 시작.
 			{
-				for (std::set<BWAPI::Unit *>::const_iterator its = BWAPI::Broodwar->self()->getUnits().begin(); its != BWAPI::Broodwar->self()->getUnits().end(); ++its)
+				for (std::set<BWAPI::Unit >::const_iterator its = BWAPI::Broodwar->self()->getUnits().begin(); its != BWAPI::Broodwar->self()->getUnits().end(); ++its)
 				{
 					if((*its)->getType() == BWAPI::UnitTypes::Protoss_Shuttle) //셔틀선택
 					{
 
 						//변수들 설정
-						for (std::set<BWAPI::Unit *>::const_iterator its2 = BWAPI::Broodwar->self()->getUnits().begin(); its2 != BWAPI::Broodwar->self()->getUnits().end(); ++its2)
+						for (std::set<BWAPI::Unit >::const_iterator its2 = BWAPI::Broodwar->self()->getUnits().begin(); its2 != BWAPI::Broodwar->self()->getUnits().end(); ++its2)
 							{
 								if((*its2)->isLoaded())
 									shuttle_loaded_num++;
 							}
 
-						for (std::set<BWAPI::Unit *>::const_iterator enemy2 = BWAPI::Broodwar->enemy()->getUnits().begin(); enemy2 != BWAPI::Broodwar->enemy()->getUnits().end(); ++enemy2)
+						for (std::set<BWAPI::Unit >::const_iterator enemy2 = BWAPI::Broodwar->enemy()->getUnits().begin(); enemy2 != BWAPI::Broodwar->enemy()->getUnits().end(); ++enemy2)
 							{
 								//7.31추가코드, 옵저버면 내리면 안됨..
 								if((*its)->getType() == BWAPI::UnitTypes::Protoss_Observer)
@@ -1983,14 +1983,14 @@ void Protoss_ZR::onFrame()
 						if(shuttle_loaded_num == 0)
 						{	
 							//리버 위로 이동
-							for (std::set<BWAPI::Unit *>::const_iterator its2 = BWAPI::Broodwar->self()->getUnits().begin(); its2 != BWAPI::Broodwar->self()->getUnits().end(); ++its2)
+							for (std::set<BWAPI::Unit >::const_iterator its2 = BWAPI::Broodwar->self()->getUnits().begin(); its2 != BWAPI::Broodwar->self()->getUnits().end(); ++its2)
 							{
 								if((*its2)->getType() == BWAPI::UnitTypes::Protoss_Reaver) 
 									(*its)->move((*its2)->getPosition());						
 							}
 
 							//적군이 가까이 있지 않으면 태움.
-								for (std::set<BWAPI::Unit *>::const_iterator its2 = BWAPI::Broodwar->self()->getUnits().begin(); its2 != BWAPI::Broodwar->self()->getUnits().end(); ++its2)
+								for (std::set<BWAPI::Unit >::const_iterator its2 = BWAPI::Broodwar->self()->getUnits().begin(); its2 != BWAPI::Broodwar->self()->getUnits().end(); ++its2)
 							{
 								if((*its2)->getType() == BWAPI::UnitTypes::Protoss_Reaver && enemy_shuttle_too_close ==false) 
 									(*its)->load(*its2);				
@@ -2008,7 +2008,7 @@ void Protoss_ZR::onFrame()
 							if(enemy_shuttle_too_close == true)
 							{
 							
-							for (std::set<BWAPI::Unit *>::const_iterator its2 = BWAPI::Broodwar->self()->getUnits().begin(); its2 != BWAPI::Broodwar->self()->getUnits().end(); ++its2)
+							for (std::set<BWAPI::Unit >::const_iterator its2 = BWAPI::Broodwar->self()->getUnits().begin(); its2 != BWAPI::Broodwar->self()->getUnits().end(); ++its2)
 							{
 								if((*its2)->getType() == BWAPI::UnitTypes::Protoss_Reaver) 
 							{
@@ -2021,7 +2021,7 @@ void Protoss_ZR::onFrame()
 						if((*its)->getShields()  == 0)
 						{
 								
-							for (std::set<BWAPI::Unit *>::const_iterator its2 = BWAPI::Broodwar->self()->getUnits().begin(); its2 != BWAPI::Broodwar->self()->getUnits().end(); ++its2)
+							for (std::set<BWAPI::Unit >::const_iterator its2 = BWAPI::Broodwar->self()->getUnits().begin(); its2 != BWAPI::Broodwar->self()->getUnits().end(); ++its2)
 							{
 								if((*its2)->getType() == BWAPI::UnitTypes::Protoss_Reaver) 
 							{
@@ -2053,7 +2053,7 @@ void Protoss_ZR::onFrame()
 			int count_i=0;
 
 
-			for (std::set<BWAPI::Unit *>::const_iterator its = BWAPI::Broodwar->self()->getUnits().begin(); its != BWAPI::Broodwar->self()->getUnits().end(); ++its)
+			for (std::set<BWAPI::Unit >::const_iterator its = BWAPI::Broodwar->self()->getUnits().begin(); its != BWAPI::Broodwar->self()->getUnits().end(); ++its)
 			{ //자신감높은 유닛 따라다니는 옵저버 used_ob[0] 과 적 확장기지 정찰가는 옵저버 used_ob[1]의 아이디 저장.
 				if((*its)->getType() == BWAPI::UnitTypes::Protoss_Observer)
 				{
@@ -2080,7 +2080,7 @@ void Protoss_ZR::onFrame()
 			}
 
 			count_i=0;
-			for (std::set<BWAPI::Unit *>::const_iterator its = BWAPI::Broodwar->self()->getUnits().begin(); its != BWAPI::Broodwar->self()->getUnits().end(); ++its)
+			for (std::set<BWAPI::Unit >::const_iterator its = BWAPI::Broodwar->self()->getUnits().begin(); its != BWAPI::Broodwar->self()->getUnits().end(); ++its)
 			{ //기 선택된 옵저버가 죽었는지 살았는지 아이디로 검색, 아이디 없으면 죽은것으로 판단함. 자신감 따라다니는 옵저버
 				if((*its)->getType() == BWAPI::UnitTypes::Protoss_Observer)
 				{	
@@ -2099,7 +2099,7 @@ void Protoss_ZR::onFrame()
 			count_i=0;
 			if(ob_3_expand < 3)
 			{
-				for (std::set<BWAPI::Unit *>::const_iterator its = BWAPI::Broodwar->self()->getUnits().begin(); its != BWAPI::Broodwar->self()->getUnits().end(); ++its)
+				for (std::set<BWAPI::Unit >::const_iterator its = BWAPI::Broodwar->self()->getUnits().begin(); its != BWAPI::Broodwar->self()->getUnits().end(); ++its)
 				{
 					if((*its)->getType() == BWAPI::UnitTypes::Protoss_Observer)
 					{	
@@ -2116,7 +2116,7 @@ void Protoss_ZR::onFrame()
 					}
 				}
 			}
-			for (std::set<BWAPI::Unit *>::const_iterator its = BWAPI::Broodwar->self()->getUnits().begin(); its != BWAPI::Broodwar->self()->getUnits().end(); ++its)
+			for (std::set<BWAPI::Unit >::const_iterator its = BWAPI::Broodwar->self()->getUnits().begin(); its != BWAPI::Broodwar->self()->getUnits().end(); ++its)
 			{ // 자신감 높은 유닛에게 옵저버 따라 다니기
 				if((*its)->getType() == BWAPI::UnitTypes::Protoss_Observer && (*its)->getID() == used_ob[0])
 				{
@@ -2133,7 +2133,7 @@ void Protoss_ZR::onFrame()
 
 			if(ob_3_expand < 3)// 옵저버 3마리까지만 적 확장기지 정찰하러 보냄. 무한정 가는것을 방지 하기 위하여
 			{
-				for (std::set<BWAPI::Unit *>::const_iterator its = BWAPI::Broodwar->self()->getUnits().begin(); its != BWAPI::Broodwar->self()->getUnits().end(); ++its)
+				for (std::set<BWAPI::Unit >::const_iterator its = BWAPI::Broodwar->self()->getUnits().begin(); its != BWAPI::Broodwar->self()->getUnits().end(); ++its)
 				{  
 					if((*its)->getType() == BWAPI::UnitTypes::Protoss_Observer && (*its)->getID() == used_ob[1]) 
 					{
@@ -2144,12 +2144,12 @@ void Protoss_ZR::onFrame()
 				}
 			}
 
-			std::set<BWAPI::Unit *>::const_iterator search_save = BWAPI::Broodwar->self()->getUnits().begin(); //공격받고 있는 유닛을 begin부터 검색하는데 가장 최근까지 검색한 유닛 저장
-			for (std::set<BWAPI::Unit *>::const_iterator its = BWAPI::Broodwar->self()->getUnits().begin(); its != BWAPI::Broodwar->self()->getUnits().end(); ++its) // 옵저버검색
+			std::set<BWAPI::Unit >::const_iterator search_save = BWAPI::Broodwar->self()->getUnits().begin(); //공격받고 있는 유닛을 begin부터 검색하는데 가장 최근까지 검색한 유닛 저장
+			for (std::set<BWAPI::Unit >::const_iterator its = BWAPI::Broodwar->self()->getUnits().begin(); its != BWAPI::Broodwar->self()->getUnits().end(); ++its) // 옵저버검색
 			{
 				if((*its)->getType() == BWAPI::UnitTypes::Protoss_Observer && (*its)->getID() != used_ob[0] && (*its)->getID() != used_ob[1]) // 옵저버인지 판단하고, 자신감 높은 유닛을 이미 쫓고있는 옵저버는 아니어야한다.
 				{
-					for (std::set<BWAPI::Unit *>::const_iterator itss = search_save; itss != BWAPI::Broodwar->self()->getUnits().end(); ++itss) // 모든 유닛 검색
+					for (std::set<BWAPI::Unit >::const_iterator itss = search_save; itss != BWAPI::Broodwar->self()->getUnits().end(); ++itss) // 모든 유닛 검색
 					{
 						search_save++;
 						if((*itss)->isUnderAttack() && !((*itss)->getType() == BWAPI::UnitTypes::Protoss_Observer)) // 검색된 유닛이 공격받고 있고 옵저버가 아니면
@@ -2164,7 +2164,7 @@ void Protoss_ZR::onFrame()
 				}		
 			}	
 
-			for (std::set<BWAPI::Unit *>::const_iterator en = Broodwar->enemy()->getUnits().begin(); en != BWAPI::Broodwar->enemy()->getUnits().end(); ++en)
+			for (std::set<BWAPI::Unit >::const_iterator en = Broodwar->enemy()->getUnits().begin(); en != BWAPI::Broodwar->enemy()->getUnits().end(); ++en)
 			{
 				if((*en)->getType() == BWAPI::UnitTypes::Protoss_Nexus || (*en)->getType() == BWAPI::UnitTypes::Terran_Command_Center || (*en)->getType() == BWAPI::UnitTypes::Zerg_Hatchery)
 				{
@@ -2184,7 +2184,7 @@ void Protoss_ZR::onFrame()
 			//정찰가는 프로브 아이디 받아오기  --프로토스전만--
 			if(BWAPI::Broodwar->self()->allUnitCount(BWAPI::UnitTypes::Protoss_Probe) == 9 && cig1 == false)
 			{
-				for (std::set<BWAPI::Unit *>::const_iterator its = BWAPI::Broodwar->self()->getUnits().begin(); its != BWAPI::Broodwar->self()->getUnits().end(); ++its)
+				for (std::set<BWAPI::Unit >::const_iterator its = BWAPI::Broodwar->self()->getUnits().begin(); its != BWAPI::Broodwar->self()->getUnits().end(); ++its)
 				{ 
 					if((*its)->getDistance(my_start) > 300 && (*its)->getType() == BWAPI::UnitTypes::Protoss_Probe)
 					{
@@ -2197,7 +2197,7 @@ void Protoss_ZR::onFrame()
 				}
 			}
 
-			for (std::set<BWAPI::Unit *>::const_iterator its = BWAPI::Broodwar->self()->getUnits().begin(); its != BWAPI::Broodwar->self()->getUnits().end(); ++its)
+			for (std::set<BWAPI::Unit >::const_iterator its = BWAPI::Broodwar->self()->getUnits().begin(); its != BWAPI::Broodwar->self()->getUnits().end(); ++its)
 			{ 
 				if((*its)->getID() == getCIG2013_scout_probe_ID)
 				{
@@ -2209,7 +2209,7 @@ void Protoss_ZR::onFrame()
 
 			if(cig2 == false)
 			{
-				for (std::set<BWAPI::Unit *>::const_iterator its = BWAPI::Broodwar->self()->getUnits().begin(); its != BWAPI::Broodwar->self()->getUnits().end(); ++its)
+				for (std::set<BWAPI::Unit >::const_iterator its = BWAPI::Broodwar->self()->getUnits().begin(); its != BWAPI::Broodwar->self()->getUnits().end(); ++its)
 				{ 
 					if(cig1=true && (*its)->getType() == BWAPI::UnitTypes::Protoss_Probe && (*its)->getID() == getCIG2013_scout_probe_ID && Broodwar->getFrameCount() < 24*300) //5분 이내일때만
 					{
@@ -2232,7 +2232,7 @@ void Protoss_ZR::onFrame()
 
 				if(BWAPI::Broodwar->self()->allUnitCount(BWAPI::UnitTypes::Protoss_Probe) == 9 && cig2013_11 == false) {
 
-					for (std::set<BWAPI::Unit *>::const_iterator its = BWAPI::Broodwar->self()->getUnits().begin(); its != BWAPI::Broodwar->self()->getUnits().end(); ++its)
+					for (std::set<BWAPI::Unit >::const_iterator its = BWAPI::Broodwar->self()->getUnits().begin(); its != BWAPI::Broodwar->self()->getUnits().end(); ++its)
 					{ 
 						if((*its)->getType() == BWAPI::UnitTypes::Protoss_Probe && (*its)->isCompleted())
 						{
@@ -2245,7 +2245,7 @@ void Protoss_ZR::onFrame()
 					}
 				}
 
-				for (std::set<BWAPI::Unit *>::const_iterator its = BWAPI::Broodwar->self()->getUnits().begin(); its != BWAPI::Broodwar->self()->getUnits().end(); ++its)
+				for (std::set<BWAPI::Unit >::const_iterator its = BWAPI::Broodwar->self()->getUnits().begin(); its != BWAPI::Broodwar->self()->getUnits().end(); ++its)
 				{ 
 
 					if(getFirst_scout_probe_ID == (*its)->getID())
@@ -2269,21 +2269,21 @@ void Protoss_ZR::onFrame()
 		if(first_probe_onrevoke)
 		{
 
-			for (std::set<BWAPI::Unit *>::const_iterator en = Broodwar->enemy()->getUnits().begin(); en != BWAPI::Broodwar->enemy()->getUnits().end(); ++en)
+			for (std::set<BWAPI::Unit >::const_iterator en = Broodwar->enemy()->getUnits().begin(); en != BWAPI::Broodwar->enemy()->getUnits().end(); ++en)
 			{ 
 				if ((*en)->getType() == BWAPI::UnitTypes::Protoss_Nexus || (*en)->getType() == BWAPI::UnitTypes::Terran_Command_Center || (*en)->getType() == BWAPI::UnitTypes::Zerg_Hatchery)
 				{
-					for (std::set<BWAPI::Unit *>::const_iterator its = BWAPI::Broodwar->self()->getUnits().begin(); its != BWAPI::Broodwar->self()->getUnits().end(); ++its)
+					for (std::set<BWAPI::Unit >::const_iterator its = BWAPI::Broodwar->self()->getUnits().begin(); its != BWAPI::Broodwar->self()->getUnits().end(); ++its)
 					{ 
 						if((*en)->getDistance(*its)<30)
 						{
-							std::set<BWAPI::Unit *>::const_iterator probe = its;
+							std::set<BWAPI::Unit >::const_iterator probe = its;
 							//this->workerManager->onRevoke(*probe,2);
 
 							//BWAPI::Broodwar->self()->getUnits().
 							if ((*its)->getType() == BWAPI::UnitTypes::Protoss_Probe)
 							{
-								std::set<BWAPI::Unit *>::const_iterator probe = its;
+								std::set<BWAPI::Unit >::const_iterator probe = its;
 								//Position *d = new Position(3310,3530);
 								//BWAPI::Position pos = this->informationManager->get
 
@@ -2308,11 +2308,11 @@ void Protoss_ZR::onFrame()
 		int countx = 0;
 		static double enemy_base_loc_x = 0;
 		static double enemy_base_loc_y = 0;
-		std::set<BWAPI::Unit *>::const_iterator a = BWAPI::Broodwar->self()->getUnits().begin();
-		for (std::set<BWAPI::Unit *>::const_iterator en = Broodwar->enemy()->getUnits().begin(); en != BWAPI::Broodwar->enemy()->getUnits().end(); ++en)
+		std::set<BWAPI::Unit >::const_iterator a = BWAPI::Broodwar->self()->getUnits().begin();
+		for (std::set<BWAPI::Unit >::const_iterator en = Broodwar->enemy()->getUnits().begin(); en != BWAPI::Broodwar->enemy()->getUnits().end(); ++en)
 		{
 			//전체 우리 유닛 선택
-			for (std::set<BWAPI::Unit *>::const_iterator itss = BWAPI::Broodwar->self()->getUnits().begin(); itss != BWAPI::Broodwar->self()->getUnits().end(); ++itss)
+			for (std::set<BWAPI::Unit >::const_iterator itss = BWAPI::Broodwar->self()->getUnits().begin(); itss != BWAPI::Broodwar->self()->getUnits().end(); ++itss)
 			{
 
 				//Broodwar->drawTextScreen(420,150,"first  %d,  after %d", getFirst_scout_probe_ID, (*itss)->getID());
@@ -2352,7 +2352,7 @@ void Protoss_ZR::onFrame()
 			}
 		}
 
-		for (std::set<BWAPI::Unit *>::const_iterator a = BWAPI::Broodwar->self()->getUnits().begin(); a != BWAPI::Broodwar->self()->getUnits().end(); ++a)
+		for (std::set<BWAPI::Unit >::const_iterator a = BWAPI::Broodwar->self()->getUnits().begin(); a != BWAPI::Broodwar->self()->getUnits().end(); ++a)
 		{
 
 
@@ -2450,7 +2450,7 @@ void Protoss_ZR::onFrame()
 
 		/////방어시작
 
-		for (std::set<BWAPI::Unit *>::const_iterator allMyUnit = BWAPI::Broodwar->self()->getUnits().begin(); allMyUnit != BWAPI::Broodwar->self()->getUnits().end(); ++allMyUnit) 
+		for (std::set<BWAPI::Unit >::const_iterator allMyUnit = BWAPI::Broodwar->self()->getUnits().begin(); allMyUnit != BWAPI::Broodwar->self()->getUnits().end(); ++allMyUnit) 
 		{
 			if((*allMyUnit)->getType() == BWAPI::UnitTypes::Protoss_Nexus) 
 			{
@@ -2467,7 +2467,7 @@ void Protoss_ZR::onFrame()
 
 			if(!total_attack)  // 총공격이 아닐 때만 방어 시스템 작동 
 			{
-				for (std::set<BWAPI::Unit *>::const_iterator allEnemyUnit = BWAPI::Broodwar->enemy()->getUnits().begin(); allEnemyUnit != BWAPI::Broodwar->enemy()->getUnits().end(); ++allEnemyUnit) 
+				for (std::set<BWAPI::Unit >::const_iterator allEnemyUnit = BWAPI::Broodwar->enemy()->getUnits().begin(); allEnemyUnit != BWAPI::Broodwar->enemy()->getUnits().end(); ++allEnemyUnit) 
 				{
 					//if((*allEnemyUnit)->BWAPI::UnitTypes::Zerg_Overlord)
 					//	continue;  //적이 오버로드이면 그냥 넘어감.
@@ -2484,7 +2484,7 @@ void Protoss_ZR::onFrame()
 
 
 					//앞마당
-					for (std::set<BWAPI::Unit *>::const_iterator allMyUnit = BWAPI::Broodwar->self()->getUnits().begin(); allMyUnit != BWAPI::Broodwar->self()->getUnits().end(); ++allMyUnit) 
+					for (std::set<BWAPI::Unit >::const_iterator allMyUnit = BWAPI::Broodwar->self()->getUnits().begin(); allMyUnit != BWAPI::Broodwar->self()->getUnits().end(); ++allMyUnit) 
 					{
 						if((*allMyUnit)->getType() == BWAPI::UnitTypes::Protoss_Nexus) 
 						{
@@ -2499,7 +2499,7 @@ void Protoss_ZR::onFrame()
 
 					if((*allEnemyUnit)->getDistance(pos1241) < 550 || distEnemyNexus < 340 || (*allEnemyUnit)->getDistance(*new_Choke) < 180)
 					{
-						for (std::set<BWAPI::Unit *>::const_iterator allMyUnit = BWAPI::Broodwar->self()->getUnits().begin(); allMyUnit != BWAPI::Broodwar->self()->getUnits().end(); ++allMyUnit) 
+						for (std::set<BWAPI::Unit >::const_iterator allMyUnit = BWAPI::Broodwar->self()->getUnits().begin(); allMyUnit != BWAPI::Broodwar->self()->getUnits().end(); ++allMyUnit) 
 						{
 							//cig2013  -- 초반에 질럿vs 질럿 전투이면서 적과 120거리 미만인에들은 방어시스템 적용 x 어짜피, 질럿vs 질럿에서 공격해줌.  -- 시작 --
 
@@ -2568,7 +2568,7 @@ void Protoss_ZR::onFrame()
 
 
 		int zeal_nn=0;
-		for (std::set<BWAPI::Unit *>::const_iterator allMyUnit = BWAPI::Broodwar->self()->getUnits().begin(); allMyUnit !=BWAPI::Broodwar->self()->getUnits().end(); ++allMyUnit) 
+		for (std::set<BWAPI::Unit >::const_iterator allMyUnit = BWAPI::Broodwar->self()->getUnits().begin(); allMyUnit !=BWAPI::Broodwar->self()->getUnits().end(); ++allMyUnit) 
 		{
 			if((*allMyUnit)->getType() == BWAPI::UnitTypes::Protoss_Zealot && (*allMyUnit)->isCompleted())
 			{
@@ -2580,7 +2580,7 @@ void Protoss_ZR::onFrame()
 		if(!firsss21)
 		{
 			firsss21 = true;
-			for (std::set<BWAPI::Unit *>::const_iterator allMyUnit = BWAPI::Broodwar->self()->getUnits().begin(); allMyUnit !=BWAPI::Broodwar->self()->getUnits().end(); ++allMyUnit) 
+			for (std::set<BWAPI::Unit >::const_iterator allMyUnit = BWAPI::Broodwar->self()->getUnits().begin(); allMyUnit !=BWAPI::Broodwar->self()->getUnits().end(); ++allMyUnit) 
 			{
 				if((*allMyUnit)->getType() == BWAPI::UnitTypes::Protoss_Probe)
 				{
@@ -2602,7 +2602,7 @@ void Protoss_ZR::onFrame()
 
 				enemy_search_unit = 0;
 				////정찰온 적 일꾼 수 세기.enemy_search_unit;
-				for (std::set<BWAPI::Unit *>::const_iterator allEnemyUnit = BWAPI::Broodwar->enemy()->getUnits().begin(); allEnemyUnit !=BWAPI::Broodwar->enemy()->getUnits().end(); ++allEnemyUnit) 
+				for (std::set<BWAPI::Unit >::const_iterator allEnemyUnit = BWAPI::Broodwar->enemy()->getUnits().begin(); allEnemyUnit !=BWAPI::Broodwar->enemy()->getUnits().end(); ++allEnemyUnit) 
 				{
 					if((*allEnemyUnit)->getType() == BWAPI::UnitTypes::Protoss_Probe || (*allEnemyUnit)->getType() == BWAPI::UnitTypes::Terran_SCV || (*allEnemyUnit)->getType() == BWAPI::UnitTypes::Zerg_Drone)
 					{
@@ -2615,7 +2615,7 @@ void Protoss_ZR::onFrame()
 
 
 				///정찰이 완료되었느냐?
-				for (std::set<BWAPI::Unit *>::const_iterator allEnemyUnit = BWAPI::Broodwar->enemy()->getUnits().begin(); allEnemyUnit !=BWAPI::Broodwar->enemy()->getUnits().end(); ++allEnemyUnit) 
+				for (std::set<BWAPI::Unit >::const_iterator allEnemyUnit = BWAPI::Broodwar->enemy()->getUnits().begin(); allEnemyUnit !=BWAPI::Broodwar->enemy()->getUnits().end(); ++allEnemyUnit) 
 				{
 					if((*allEnemyUnit)->getType() == BWAPI::UnitTypes::Protoss_Nexus || (*allEnemyUnit)->getType() == BWAPI::UnitTypes::Zerg_Hatchery || (*allEnemyUnit)->getType() == BWAPI::UnitTypes::Terran_Command_Center)
 						scout_complete2 = true;
@@ -2628,7 +2628,7 @@ void Protoss_ZR::onFrame()
 				{
 					frametest_13 = frametest_13 + 60; // 2.7초정도 마다 공격. 
 
-					for (std::set<BWAPI::Unit *>::const_iterator allMyUnit = BWAPI::Broodwar->self()->getUnits().begin(); allMyUnit !=BWAPI::Broodwar->self()->getUnits().end(); ++allMyUnit) 
+					for (std::set<BWAPI::Unit >::const_iterator allMyUnit = BWAPI::Broodwar->self()->getUnits().begin(); allMyUnit !=BWAPI::Broodwar->self()->getUnits().end(); ++allMyUnit) 
 					{
 						if((*allMyUnit)->getType() == BWAPI::UnitTypes::Protoss_Probe && getFirst_scout_probe_ID != (*allMyUnit)->getID() && search_prob_id != (*allMyUnit)->getID() && getCIG2013_scout_probe_ID != (*allMyUnit)->getID()) //정찰유닛과 아이디가 같지 않다면
 						{
@@ -2639,7 +2639,7 @@ void Protoss_ZR::onFrame()
 								if((*allMyUnit)->getDistance(my_start)<350) 
 								{
 
-									for (std::set<BWAPI::Unit *>::const_iterator allEnemyUnit = BWAPI::Broodwar->enemy()->getUnits().begin(); allEnemyUnit != BWAPI::Broodwar->enemy()->getUnits().end(); ++allEnemyUnit)
+									for (std::set<BWAPI::Unit >::const_iterator allEnemyUnit = BWAPI::Broodwar->enemy()->getUnits().begin(); allEnemyUnit != BWAPI::Broodwar->enemy()->getUnits().end(); ++allEnemyUnit)
 										if((*allEnemyUnit)->getType() == BWAPI::UnitTypes::Protoss_Probe || (*allEnemyUnit)->getType() == BWAPI::UnitTypes::Terran_SCV || (*allEnemyUnit)->getType() == BWAPI::UnitTypes::Zerg_Drone)
 										{
 											if((*allEnemyUnit)->getDistance(my_start)<350)
@@ -2669,7 +2669,7 @@ void Protoss_ZR::onFrame()
 					if(enemy_search_unit>=2 || Broodwar->self()->deadUnitCount(BWAPI::UnitTypes::Protoss_Probe) >= 1) //적 일꾼 정찰이 2마리 이상이면
 
 					{
-						for (std::set<BWAPI::Unit *>::const_iterator allMyUnit = BWAPI::Broodwar->self()->getUnits().begin(); allMyUnit !=BWAPI::Broodwar->self()->getUnits().end(); ++allMyUnit) 
+						for (std::set<BWAPI::Unit >::const_iterator allMyUnit = BWAPI::Broodwar->self()->getUnits().begin(); allMyUnit !=BWAPI::Broodwar->self()->getUnits().end(); ++allMyUnit) 
 						{
 							if((*allMyUnit)->getType() == BWAPI::UnitTypes::Protoss_Probe)
 							{
@@ -2703,11 +2703,11 @@ void Protoss_ZR::onFrame()
 
 		if(!high_templer_loaded_complete)
 		{
-			for (std::set<BWAPI::Unit *>::const_iterator its = BWAPI::Broodwar->self()->getUnits().begin(); its != BWAPI::Broodwar->self()->getUnits().end(); ++its)
+			for (std::set<BWAPI::Unit >::const_iterator its = BWAPI::Broodwar->self()->getUnits().begin(); its != BWAPI::Broodwar->self()->getUnits().end(); ++its)
 			{
 				if((*its)->getType() == BWAPI::UnitTypes::Protoss_Shuttle) //셔틀선택
 				{
-					for (std::set<BWAPI::Unit *>::const_iterator its2 = BWAPI::Broodwar->self()->getUnits().begin(); its2 != BWAPI::Broodwar->self()->getUnits().end(); ++its2)
+					for (std::set<BWAPI::Unit >::const_iterator its2 = BWAPI::Broodwar->self()->getUnits().begin(); its2 != BWAPI::Broodwar->self()->getUnits().end(); ++its2)
 					{
 						if((*its2)->getType() == BWAPI::UnitTypes::Protoss_High_Templar)
 							(*its)->load(*its2);
@@ -2723,14 +2723,14 @@ void Protoss_ZR::onFrame()
 		double enemyDPS2 = 0;
 
 
-		for each (BWAPI::Unit *u in SelectAllEnemy()(canMove)(isCompleted)(maxGroundHits,">",0).not(isWorker))
+		for each (BWAPI::Unit u in SelectAllEnemy()(canMove)(isCompleted)(maxGroundHits,">",0).not(isWorker))
 		{
 			enemyDPS2 += ((double)u->getType().groundWeapon().damageAmount())/u->getType().groundWeapon().damageCooldown();
 		}
 
 		double myDPS2 = 0;
 
-		for each (BWAPI::Unit *u in SelectAll()(canMove)(isCompleted)(maxGroundHits,">",0).not(isWorker))
+		for each (BWAPI::Unit u in SelectAll()(canMove)(isCompleted)(maxGroundHits,">",0).not(isWorker))
 		{
 			myDPS2 += ((double)u->getType().groundWeapon().damageAmount())/u->getType().groundWeapon().damageCooldown();
 		}
@@ -2758,7 +2758,7 @@ void Protoss_ZR::onFrame()
 					static int total_attack_start_time = Broodwar->getFrameCount();   //토탈 어택한 처음 시간.
 
 					//일단 센터로 가기  total_attack_start_time
-					for (std::set<BWAPI::Unit *>::const_iterator its = BWAPI::Broodwar->self()->getUnits().begin(); its != BWAPI::Broodwar->self()->getUnits().end(); ++its)
+					for (std::set<BWAPI::Unit >::const_iterator its = BWAPI::Broodwar->self()->getUnits().begin(); its != BWAPI::Broodwar->self()->getUnits().end(); ++its)
 					{
 						Position *tmp = new Position(BWAPI::Broodwar->mapWidth()*32/2, BWAPI::Broodwar->mapHeight()*32/2);
 						if((*its)->getType().groundWeapon().damageAmount() >= 8) // 데미지가 8보다 크다면 . 공격유닛 선택하기 위함  질럿은 8씩 두번공격하는것임.
@@ -2777,7 +2777,7 @@ void Protoss_ZR::onFrame()
 					//공격가기
 
 					if(total_attack_start_time+24*13 < Broodwar->getFrameCount())  //센터 간 후 13초 후에 공격함. 이 프레임이 8초마다 실행되므로 16초 후에 공격갈듯.   센터 갔다가 공격가는것은 맨 처음 공격에만 먹힘.
-						for (std::set<BWAPI::Unit *>::const_iterator its = BWAPI::Broodwar->self()->getUnits().begin(); its != BWAPI::Broodwar->self()->getUnits().end(); ++its)
+						for (std::set<BWAPI::Unit >::const_iterator its = BWAPI::Broodwar->self()->getUnits().begin(); its != BWAPI::Broodwar->self()->getUnits().end(); ++its)
 						{
 							if(confidence_nice_enemy_unit_confidence_num < 300)
 							{
@@ -2834,7 +2834,7 @@ void Protoss_ZR::onFrame()
 					static int total_attack_start_time = Broodwar->getFrameCount();   //토탈 어택한 처음 시간.
 
 					//일단 센터로 가기  total_attack_start_time
-					for (std::set<BWAPI::Unit *>::const_iterator its = BWAPI::Broodwar->self()->getUnits().begin(); its != BWAPI::Broodwar->self()->getUnits().end(); ++its)
+					for (std::set<BWAPI::Unit >::const_iterator its = BWAPI::Broodwar->self()->getUnits().begin(); its != BWAPI::Broodwar->self()->getUnits().end(); ++its)
 					{
 						/*int center_X = en_choke.x() + (my_choke.x() - en_choke.x()) * 0.4;
 						int center_Y = en_choke.y() + (my_choke.y() - en_choke.y()) * 0.4;
@@ -2860,7 +2860,7 @@ void Protoss_ZR::onFrame()
 					
 					if(total_attack_start_time+24*16 < Broodwar->getFrameCount())  //센터 간 후 13초 후에 공격함. 이 프레임이 8초마다 실행되므로 16초 후에 공격갈듯.   센터 갔다가 공격가는것은 맨 처음 공격에만 먹힘.
 					{
-						for (std::set<BWAPI::Unit *>::const_iterator its = BWAPI::Broodwar->self()->getUnits().begin(); its != BWAPI::Broodwar->self()->getUnits().end(); ++its)
+						for (std::set<BWAPI::Unit >::const_iterator its = BWAPI::Broodwar->self()->getUnits().begin(); its != BWAPI::Broodwar->self()->getUnits().end(); ++its)
 						{
 							if(confidence_nice_enemy_unit_confidence_num < 300)
 							{
@@ -2900,7 +2900,7 @@ void Protoss_ZR::onFrame()
 
 
 		/*bool shuttle_arrived = false;
-		for (std::set<BWAPI::Unit *>::const_iterator its = BWAPI::Broodwar->self()->getUnits().begin(); its != BWAPI::Broodwar->self()->getUnits().end(); ++its)
+		for (std::set<BWAPI::Unit >::const_iterator its = BWAPI::Broodwar->self()->getUnits().begin(); its != BWAPI::Broodwar->self()->getUnits().end(); ++its)
 		{
 			if((*its)->getType() == BWAPI::UnitTypes::Protoss_Shuttle)
 			{
@@ -2913,7 +2913,7 @@ void Protoss_ZR::onFrame()
 		}*/
 
 		
-	/*for (std::set<BWAPI::Unit *>::const_iterator its = BWAPI::Broodwar->self()->getUnits().begin(); its != BWAPI::Broodwar->self()->getUnits().end(); ++its)
+	/*for (std::set<BWAPI::Unit >::const_iterator its = BWAPI::Broodwar->self()->getUnits().begin(); its != BWAPI::Broodwar->self()->getUnits().end(); ++its)
 		{
 			if((*its)->getType() == BWAPI::UnitTypes::Protoss_Zealot && (*its)->getType() == BWAPI::UnitTypes::Protoss_Dragoon && (*its)->getType() == BWAPI::UnitTypes::Protoss_Dark_Templar && (*its)->isCompleted())
 			{
@@ -2945,7 +2945,7 @@ void Protoss_ZR::onFrame()
 				if(BWAPI::Broodwar->self()->allUnitCount(BWAPI::UnitTypes::Protoss_Assimilator) == 0)
 				{
 					//질럿이 11마리 태어나면 
-					for (std::set<BWAPI::Unit *>::const_iterator it = BWAPI::Broodwar->self()->getUnits().begin(); it != BWAPI::Broodwar->self()->getUnits().end(); ++it)
+					for (std::set<BWAPI::Unit >::const_iterator it = BWAPI::Broodwar->self()->getUnits().begin(); it != BWAPI::Broodwar->self()->getUnits().end(); ++it)
 					{	
 						if ((*it)->getType() == BWAPI::UnitTypes::Protoss_Zealot && (*it)->isCompleted())
 						{
@@ -2957,7 +2957,7 @@ void Protoss_ZR::onFrame()
 					if(my_zealot_num>=11) //질럿 11마리 이상이면 공격 고고
 					{
 						///하기
-						for (std::set<BWAPI::Unit *>::const_iterator it = BWAPI::Broodwar->self()->getUnits().begin(); it != BWAPI::Broodwar->self()->getUnits().end(); ++it)
+						for (std::set<BWAPI::Unit >::const_iterator it = BWAPI::Broodwar->self()->getUnits().begin(); it != BWAPI::Broodwar->self()->getUnits().end(); ++it)
 						{			
 							if ((*it)->getType() == BWAPI::UnitTypes::Protoss_Zealot)
 							{
@@ -2980,7 +2980,7 @@ void Protoss_ZR::onFrame()
 					static int total_attack_start_time = Broodwar->getFrameCount();   //토탈 어택한 처음 시간.
 
 					//일단 센터로 가기  total_attack_start_time
-					for (std::set<BWAPI::Unit *>::const_iterator its = BWAPI::Broodwar->self()->getUnits().begin(); its != BWAPI::Broodwar->self()->getUnits().end(); ++its)
+					for (std::set<BWAPI::Unit >::const_iterator its = BWAPI::Broodwar->self()->getUnits().begin(); its != BWAPI::Broodwar->self()->getUnits().end(); ++its)
 					{
 						Position *tmp = new Position(BWAPI::Broodwar->mapWidth()*32/2, BWAPI::Broodwar->mapHeight()*32/2);
 						if((*its)->getType().groundWeapon().damageAmount() >= 8) // 데미지가 8보다 크다면 . 공격유닛 선택하기 위함  질럿은 8씩 두번공격하는것임.
@@ -2999,7 +2999,7 @@ void Protoss_ZR::onFrame()
 					//공격가기  
 
 					if(total_attack_start_time+24*16 < Broodwar->getFrameCount())  //센터 간 후 16초 후에 공격함. 이 프레임이 8초마다 실행되므로 16초 후에 공격갈듯.   센터 갔다가 공격가는것은 맨 처음 공격에만 먹힘.
-						for (std::set<BWAPI::Unit *>::const_iterator its = BWAPI::Broodwar->self()->getUnits().begin(); its != BWAPI::Broodwar->self()->getUnits().end(); ++its)
+						for (std::set<BWAPI::Unit >::const_iterator its = BWAPI::Broodwar->self()->getUnits().begin(); its != BWAPI::Broodwar->self()->getUnits().end(); ++its)
 						{
 							if(confidence_nice_enemy_unit_confidence_num < 300)
 							{
@@ -3077,7 +3077,7 @@ void Protoss_ZR::onFrame()
 		{
 			tttaa_1 = tttaa_1 + 72; //3초에 한번씩 실행
 
-			for (std::set<BWAPI::Unit *>::const_iterator its = BWAPI::Broodwar->self()->getUnits().begin(); its != BWAPI::Broodwar->self()->getUnits().end(); ++its)
+			for (std::set<BWAPI::Unit >::const_iterator its = BWAPI::Broodwar->self()->getUnits().begin(); its != BWAPI::Broodwar->self()->getUnits().end(); ++its)
 			{
 
 				if((*its)->getDistance(en_start) < 80)
@@ -3121,7 +3121,7 @@ void Protoss_ZR::onFrame()
 
 				if(base_lo != BWTA::getBaseLocations().end())
 				{
-					for (std::set<BWAPI::Unit *>::const_iterator its = BWAPI::Broodwar->self()->getUnits().begin(); its != BWAPI::Broodwar->self()->getUnits().end(); ++its)
+					for (std::set<BWAPI::Unit >::const_iterator its = BWAPI::Broodwar->self()->getUnits().begin(); its != BWAPI::Broodwar->self()->getUnits().end(); ++its)
 					{
 						if(!(*its)->hasPath((*base_lo)->getPosition())) //도달할 수 있는 지점이라면(섬이 아니라면) 베이스 다음으로 넘기고 브레이크.
 						{
@@ -3141,7 +3141,7 @@ void Protoss_ZR::onFrame()
 								break;
 							}
 
-							for (std::set<BWAPI::Unit *>::const_iterator enemys = BWAPI::Broodwar->enemy()->getUnits().begin(); enemys != BWAPI::Broodwar->enemy()->getUnits().end(); ++enemys)
+							for (std::set<BWAPI::Unit >::const_iterator enemys = BWAPI::Broodwar->enemy()->getUnits().begin(); enemys != BWAPI::Broodwar->enemy()->getUnits().end(); ++enemys)
 							{
 								(*its)->attack((*enemys)->getPosition()); // 적을 하나라도 발견하면 적 공격
 
@@ -3170,11 +3170,11 @@ void Protoss_ZR::onFrame()
 			// 드랍 방어(?) 디펜스매니저를 꺼서 필요할듯..
 			if(isRushMyNexus == false)
 			{
-				for (std::set<BWAPI::Unit *>::const_iterator allEnemyUnit = BWAPI::Broodwar->enemy()->getUnits().begin(); allEnemyUnit != BWAPI::Broodwar->enemy()->getUnits().end(); ++allEnemyUnit)
+				for (std::set<BWAPI::Unit >::const_iterator allEnemyUnit = BWAPI::Broodwar->enemy()->getUnits().begin(); allEnemyUnit != BWAPI::Broodwar->enemy()->getUnits().end(); ++allEnemyUnit)
 				{
 					if((*allEnemyUnit)->getDistance(my_start) <= 600 && ((*allEnemyUnit)->getType().groundWeapon().damageAmount() >= 7 || (*allEnemyUnit)->getType() == BWAPI::UnitTypes::Protoss_Pylon || (*allEnemyUnit)->getType() == BWAPI::UnitTypes::Protoss_Probe || (*allEnemyUnit)->getType() == BWAPI::UnitTypes::Protoss_Photon_Cannon) )
 					{
-						for (std::set<BWAPI::Unit *>::const_iterator allMyUnit = BWAPI::Broodwar->self()->getUnits().begin(); allMyUnit != BWAPI::Broodwar->self()->getUnits().end(); ++allMyUnit) 
+						for (std::set<BWAPI::Unit >::const_iterator allMyUnit = BWAPI::Broodwar->self()->getUnits().begin(); allMyUnit != BWAPI::Broodwar->self()->getUnits().end(); ++allMyUnit) 
 						{
 							if((*allMyUnit)->getType().groundWeapon().damageAmount() >= 7)
 								(*allMyUnit)->attack((*allEnemyUnit)->getPosition());
@@ -3190,7 +3190,7 @@ void Protoss_ZR::onFrame()
 			//(*en)->getType() == BWAPI::UnitTypes::Protoss_Nexus
 			/*if(isPhotoRush == false)
 			{
-				for (std::set<BWAPI::Unit *>::const_iterator allEnemyUnit = BWAPI::Broodwar->enemy()->getUnits().begin(); allEnemyUnit != BWAPI::Broodwar->enemy()->getUnits().end(); ++allEnemyUnit)
+				for (std::set<BWAPI::Unit >::const_iterator allEnemyUnit = BWAPI::Broodwar->enemy()->getUnits().begin(); allEnemyUnit != BWAPI::Broodwar->enemy()->getUnits().end(); ++allEnemyUnit)
 				{
 					//포토러시 대비
 					if((*allEnemyUnit)->getType() == BWAPI::UnitTypes::Protoss_Pylon)
@@ -3211,7 +3211,7 @@ void Protoss_ZR::onFrame()
 
 			if(isPhotoRush == true)
 			{
-				for (std::set<BWAPI::Unit *>::const_iterator allMyUnit = BWAPI::Broodwar->self()->getUnits().begin(); allMyUnit != BWAPI::Broodwar->self()->getUnits().end(); ++allMyUnit) 
+				for (std::set<BWAPI::Unit >::const_iterator allMyUnit = BWAPI::Broodwar->self()->getUnits().begin(); allMyUnit != BWAPI::Broodwar->self()->getUnits().end(); ++allMyUnit) 
 				{
 					if(((*allMyUnit)->getType() == BWAPI::UnitTypes::Protoss_Probe))
 					{
@@ -3224,7 +3224,7 @@ void Protoss_ZR::onFrame()
 			}*/
 
 
-			for (std::set<BWAPI::Unit *>::const_iterator allMyUnit = BWAPI::Broodwar->self()->getUnits().begin(); allMyUnit != BWAPI::Broodwar->self()->getUnits().end(); ++allMyUnit) 
+			for (std::set<BWAPI::Unit >::const_iterator allMyUnit = BWAPI::Broodwar->self()->getUnits().begin(); allMyUnit != BWAPI::Broodwar->self()->getUnits().end(); ++allMyUnit) 
 			{
 
 				if(!((*allMyUnit)->getType() == BWAPI::UnitTypes::Protoss_Probe))
@@ -3253,7 +3253,7 @@ void Protoss_ZR::onFrame()
 						else if((*allMyUnit)->getType() == BWAPI::UnitTypes::Protoss_Dragoon)
 						{
 							// 들어온 프로브 드라군으로 사살
-							for (std::set<BWAPI::Unit *>::const_iterator allEnemyUnit = BWAPI::Broodwar->enemy()->getUnits().begin(); allEnemyUnit != BWAPI::Broodwar->enemy()->getUnits().end(); ++allEnemyUnit)
+							for (std::set<BWAPI::Unit >::const_iterator allEnemyUnit = BWAPI::Broodwar->enemy()->getUnits().begin(); allEnemyUnit != BWAPI::Broodwar->enemy()->getUnits().end(); ++allEnemyUnit)
 							{
 								(*allMyUnit)->attack(*new_DChoke);
 
@@ -3290,7 +3290,7 @@ void Protoss_ZR::onFrame()
 						}
 
 						//주변유닛들도 초크포인트로 같이
-						for (std::set<BWAPI::Unit *>::const_iterator allMyUnit2 = BWAPI::Broodwar->self()->getUnits().begin(); allMyUnit2 != BWAPI::Broodwar->self()->getUnits().end(); ++allMyUnit2) 
+						for (std::set<BWAPI::Unit >::const_iterator allMyUnit2 = BWAPI::Broodwar->self()->getUnits().begin(); allMyUnit2 != BWAPI::Broodwar->self()->getUnits().end(); ++allMyUnit2) 
 						{
 							if((*allMyUnit2)->getType() == BWAPI::UnitTypes::Protoss_Zealot || (*allMyUnit2)->getType() == BWAPI::UnitTypes::Protoss_Dragoon || (*allMyUnit2)->getType() == BWAPI::UnitTypes::Protoss_Reaver)
 								if((*allMyUnit)->getDistance(*allMyUnit2)<150) //cig2013
@@ -3332,12 +3332,12 @@ void Protoss_ZR::onFrame()
 					if(BWAPI::Broodwar->self()->allUnitCount(BWAPI::UnitTypes::Protoss_Shuttle) >= 3)
 					{
 
-						for (std::set<BWAPI::Unit *>::const_iterator it = BWAPI::Broodwar->self()->getUnits().begin(); it != BWAPI::Broodwar->self()->getUnits().end(); ++it)
+						for (std::set<BWAPI::Unit >::const_iterator it = BWAPI::Broodwar->self()->getUnits().begin(); it != BWAPI::Broodwar->self()->getUnits().end(); ++it)
 						{		
 							if((*it)->getType() == BWAPI::UnitTypes::Protoss_Zealot)
 							{
 
-								for (std::set<BWAPI::Unit *>::const_iterator it2 = BWAPI::Broodwar->self()->getUnits().begin(); it2 != BWAPI::Broodwar->self()->getUnits().end(); ++it2)
+								for (std::set<BWAPI::Unit >::const_iterator it2 = BWAPI::Broodwar->self()->getUnits().begin(); it2 != BWAPI::Broodwar->self()->getUnits().end(); ++it2)
 								{		
 
 
@@ -3356,12 +3356,12 @@ void Protoss_ZR::onFrame()
 					if(BWAPI::Broodwar->self()->allUnitCount(BWAPI::UnitTypes::Protoss_Shuttle) >= 3)
 					{
 
-						for (std::set<BWAPI::Unit *>::const_iterator it = BWAPI::Broodwar->self()->getUnits().begin(); it != BWAPI::Broodwar->self()->getUnits().end(); ++it)
+						for (std::set<BWAPI::Unit >::const_iterator it = BWAPI::Broodwar->self()->getUnits().begin(); it != BWAPI::Broodwar->self()->getUnits().end(); ++it)
 						{		
 							if((*it)->getType() == BWAPI::UnitTypes::Protoss_Reaver)
 							{
 
-								for (std::set<BWAPI::Unit *>::const_iterator it2 = BWAPI::Broodwar->self()->getUnits().begin(); it2 != BWAPI::Broodwar->self()->getUnits().end(); ++it2)
+								for (std::set<BWAPI::Unit >::const_iterator it2 = BWAPI::Broodwar->self()->getUnits().begin(); it2 != BWAPI::Broodwar->self()->getUnits().end(); ++it2)
 								{		
 
 
@@ -3386,7 +3386,7 @@ void Protoss_ZR::onFrame()
 					//BWAPI::Position pos[99999];
 					int al = 0;
 
-					for (std::set<BWAPI::Unit *>::const_iterator it3 = BWAPI::Broodwar->self()->getUnits().begin(); it3 != BWAPI::Broodwar->self()->getUnits().end(); ++it3)
+					for (std::set<BWAPI::Unit >::const_iterator it3 = BWAPI::Broodwar->self()->getUnits().begin(); it3 != BWAPI::Broodwar->self()->getUnits().end(); ++it3)
 					{	
 
 						if ((*it3)->getType() == BWAPI::UnitTypes::Protoss_Shuttle)
@@ -3417,13 +3417,13 @@ void Protoss_ZR::onFrame()
 					//	ddddd = false;
 
 
-					for (std::set<BWAPI::Unit *>::const_iterator it3 = BWAPI::Broodwar->self()->getUnits().begin(); it3 != BWAPI::Broodwar->self()->getUnits().end(); ++it3)
+					for (std::set<BWAPI::Unit >::const_iterator it3 = BWAPI::Broodwar->self()->getUnits().begin(); it3 != BWAPI::Broodwar->self()->getUnits().end(); ++it3)
 
 					{	
 						if ((*it3)->getType() == BWAPI::UnitTypes::Protoss_Shuttle)
 						{
 
-							for (std::set<BWAPI::Unit *>::const_iterator n = Broodwar->enemy()->getUnits().begin(); n != BWAPI::Broodwar->enemy()->getUnits().end(); ++n)
+							for (std::set<BWAPI::Unit >::const_iterator n = Broodwar->enemy()->getUnits().begin(); n != BWAPI::Broodwar->enemy()->getUnits().end(); ++n)
 							{
 
 								if((*n)->getType() == BWAPI::UnitTypes::Terran_Bunker || (*n)->getType() == BWAPI::UnitTypes::Terran_Siege_Tank_Tank_Mode || (*n)->getType() == BWAPI::UnitTypes::Terran_Siege_Tank_Siege_Mode || (*n)->getType() == BWAPI::UnitTypes::Terran_Missile_Turret)
@@ -3444,7 +3444,7 @@ void Protoss_ZR::onFrame()
 										{
 
 
-											for (std::set<BWAPI::Unit *>::const_iterator it4 = BWAPI::Broodwar->self()->getUnits().begin(); it4 != BWAPI::Broodwar->self()->getUnits().end(); ++it4)
+											for (std::set<BWAPI::Unit >::const_iterator it4 = BWAPI::Broodwar->self()->getUnits().begin(); it4 != BWAPI::Broodwar->self()->getUnits().end(); ++it4)
 
 											{	
 												if ((*it4)->getType() == BWAPI::UnitTypes::Protoss_Zealot)
@@ -3470,7 +3470,7 @@ void Protoss_ZR::onFrame()
 									}
 
 
-									//				std::set<BWAPI::Unit *>::const_iterator dark = its;
+									//				std::set<BWAPI::Unit >::const_iterator dark = its;
 
 								}
 
@@ -3579,7 +3579,7 @@ void Protoss_ZR::onFrame()
 			{
 				p = new Position(1760,208);
 			}
-			for each (BWAPI::Unit *u in Broodwar->getAllUnits())
+			for each (BWAPI::Unit u in Broodwar->getAllUnits())
 			{
 				if ((u->getType() == BWAPI::UnitTypes::Resource_Mineral_Field) && (u->getPosition().x() == p->x()) && (u->getPosition().y() == p->y()))
 				{

@@ -35,7 +35,7 @@ double ArmyManager::enemyDPS()
   double total = 0;
 
 
-	for each (BWAPI::Unit *u in SelectAllEnemy()(canMove)(isCompleted)(maxGroundHits,">",0).not(isWorker))
+	for each (BWAPI::Unit u in SelectAllEnemy()(canMove)(isCompleted)(maxGroundHits,">",0).not(isWorker))
 	{
 		total += ((double)u->getType().groundWeapon().damageAmount())/u->getType().groundWeapon().damageCooldown();
 	}
@@ -47,7 +47,7 @@ double ArmyManager::myDPS()
 {
   double total = 0;
 
-	for each (BWAPI::Unit *u in SelectAll()(canMove)(isCompleted)(maxGroundHits,">",0).not(isWorker))
+	for each (BWAPI::Unit u in SelectAll()(canMove)(isCompleted)(maxGroundHits,">",0).not(isWorker))
 	{
 		total += ((double)u->getType().groundWeapon().damageAmount())/u->getType().groundWeapon().damageCooldown();
 	}
@@ -69,12 +69,12 @@ void ArmyManager::update()
 	/*
 
 	//프로브테스트
-		for (std::set<BWAPI::Unit *>::const_iterator its = BWAPI::Broodwar->self()->getUnits().begin(); its != BWAPI::Broodwar->self()->getUnits().end(); ++its)
+		for (std::set<BWAPI::Unit >::const_iterator its = BWAPI::Broodwar->self()->getUnits().begin(); its != BWAPI::Broodwar->self()->getUnits().end(); ++its)
     {		
 		if ((*its)->getType() == BWAPI::UnitTypes::Protoss_Probe)
         {
 			
-			std::set<BWAPI::Unit *>::const_iterator Probe = its;
+			std::set<BWAPI::Unit >::const_iterator Probe = its;
 			
 			Position *e = new Position(2300,120);
 			Position *em = new Position(2100,2100);
@@ -103,16 +103,16 @@ void ArmyManager::update()
 			/*
 			if(ddd && dddd)
 			{
-					 for (std::set<BWAPI::Unit *>::const_iterator its2 = BWAPI::Broodwar->self()->getUnits().begin(); its2 != BWAPI::Broodwar->self()->getUnits().end(); ++its2)
+					 for (std::set<BWAPI::Unit >::const_iterator its2 = BWAPI::Broodwar->self()->getUnits().begin(); its2 != BWAPI::Broodwar->self()->getUnits().end(); ++its2)
     {		
 	
 		if ((*its2)->getType() == BWAPI::UnitTypes::Protoss_Dark_Templar)
         {
 
-			std::set<BWAPI::Unit *>::const_iterator dark = its2;
+			std::set<BWAPI::Unit >::const_iterator dark = its2;
 
 				
-				for (std::set<BWAPI::Unit *>::const_iterator n = Broodwar->enemy()->getUnits().begin(); n != BWAPI::Broodwar->enemy()->getUnits().end(); ++n)
+				for (std::set<BWAPI::Unit >::const_iterator n = Broodwar->enemy()->getUnits().begin(); n != BWAPI::Broodwar->enemy()->getUnits().end(); ++n)
 			{
 				//if((*n)->getType().isBuilding() ==  BWAPI::UnitTypes::Protoss_Photon_Cannon)
 				if((*n)->getType() ==  BWAPI::UnitTypes::Protoss_Photon_Cannon)
@@ -124,12 +124,12 @@ void ArmyManager::update()
 				if((*n)->getType() == BWAPI::UnitTypes::Protoss_Nexus)
 				{
 
-		 for (std::set<BWAPI::Unit *>::const_iterator its = BWAPI::Broodwar->self()->getUnits().begin(); its != BWAPI::Broodwar->self()->getUnits().end(); ++its)
+		 for (std::set<BWAPI::Unit >::const_iterator its = BWAPI::Broodwar->self()->getUnits().begin(); its != BWAPI::Broodwar->self()->getUnits().end(); ++its)
 		 {		
 	
 		if ((*its)->getType() == BWAPI::UnitTypes::Protoss_Dark_Templar)
         {
-			std::set<BWAPI::Unit *>::const_iterator dark = its;
+			std::set<BWAPI::Unit >::const_iterator dark = its;
 
 					(*dark)->attack(*n);
 				
@@ -239,7 +239,7 @@ void ArmyManager::update()
 		{
 				total_attack = true;
 			
-				for (std::set<BWAPI::Unit *>::const_iterator its = BWAPI::Broodwar->self()->getUnits().begin(); its != BWAPI::Broodwar->self()->getUnits().end(); ++its)
+				for (std::set<BWAPI::Unit >::const_iterator its = BWAPI::Broodwar->self()->getUnits().begin(); its != BWAPI::Broodwar->self()->getUnits().end(); ++its)
 	{
 		if((*its)->getType().groundWeapon().damageAmount() >= 8) // 데미지가 8보다 크다면 . 공격유닛 선택하기 위함  질럿은 8씩 두번공격하는것임.
 		{
@@ -313,7 +313,7 @@ void ArmyManager::update()
 		}
 		round = (int)enemyBuildings.size() - 1;
 
-		//for each (BWAPI::Unit *u in company)
+		//for each (BWAPI::Unit u in company)
 		for(std::map<BWAPI::Unit,ArmyManager::ArmyData>::iterator it = company.begin(); it != company.end(); it++)
 		{
 			if (it->first->isIdle())
@@ -351,7 +351,7 @@ void ArmyManager::update()
 			}
 
 			//std::set<BWAPI::Unit> aroundMe = it->first->getUnitsInRadius(it->first->getType().sightRange()); //u->getUnitsInWeaponRange(u->getType().groundWeapon());
-			//for each (BWAPI::Unit *am in aroundMe)
+			//for each (BWAPI::Unit am in aroundMe)
 			//{
 				/* attack workers IF there is no danger!!! */
 				//if (am->getType().isWorker() && am->getPlayer() == BWAPI::Broodwar->enemy())
@@ -373,7 +373,7 @@ std::string ArmyManager::getShortName() const
 
 void ArmyManager::onOffer(std::set<BWAPI::Unit> units)
 {
-	for each (BWAPI::Unit *u in units)
+	for each (BWAPI::Unit u in units)
 	{
 		if (company.find(u) == company.end())
 		{
@@ -385,7 +385,7 @@ void ArmyManager::onOffer(std::set<BWAPI::Unit> units)
 	}
 }
 
-void ArmyManager::onRevoke(BWAPI::Unit *u, double bid)
+void ArmyManager::onRevoke(BWAPI::Unit u, double bid)
 {
 	onRemoveUnit(u);
 }

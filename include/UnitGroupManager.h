@@ -20,4 +20,4 @@ UnitGroup SelectAll();
 UnitGroup SelectAll(BWAPI::UnitType type);
 UnitGroup SelectAllEnemy();
 UnitGroup SelectAllEnemy(BWAPI::UnitType type);
-UnitGroup SelectAll(BWAPI::Player* player, BWAPI::UnitType type);
+UnitGroup SelectAll(BWAPI::Player player, BWAPI::UnitType type);

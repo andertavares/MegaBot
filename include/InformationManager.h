@@ -24,7 +24,7 @@ public:
 	void												onUnitDiscover				(BWAPI::Unit);
 	void												onUnitEvade						(BWAPI::Unit);
 	void												onUnitDestroy					(BWAPI::Unit);
-	BWAPI::Player*							getPlayer							(BWAPI::Unit) const;
+	BWAPI::Player							getPlayer							(BWAPI::Unit) const;
 	BWAPI::UnitType							getType								(BWAPI::Unit) const;
 	BWAPI::Position							getLastPosition				(BWAPI::Unit) const;
 	int													getLastSeenTime				(BWAPI::Unit) const;

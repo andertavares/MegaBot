@@ -35,7 +35,7 @@ SpyManager::~SpyManager()
 
 void SpyManager::onOffer(std::set<BWAPI::Unit> units)
 {
-	for each (BWAPI::Unit *unit in units)
+	for each (BWAPI::Unit unit in units)
 	{
 		if (spies.find(unit) == spies.end())
 		{
@@ -48,7 +48,7 @@ void SpyManager::onOffer(std::set<BWAPI::Unit> units)
 	}
 }
 
-void SpyManager::onRevoke(BWAPI::Unit *unit, double bid)
+void SpyManager::onRevoke(BWAPI::Unit unit, double bid)
 {
 	onRemoveUnit(unit);
 }
@@ -73,7 +73,7 @@ void SpyManager::update()
 		lastFrameCheck = BWAPI::Broodwar->getFrameCount();
 
 		std::set<BWAPI::Unit> w = SelectAll()(isCompleted)(Protoss_Observer);
-		for each(BWAPI::Unit *u in w)
+		for each(BWAPI::Unit u in w)
 			arbitrator->setBid(this, u, 40);
 
 
@@ -106,7 +106,7 @@ void SpyManager::update()
 					{
 						int x = it->first->getPosition().x();
 						int	y = it->first->getPosition().y();
-						for each (BWAPI::Unit *u in surroundingUnitGroup)
+						for each (BWAPI::Unit u in surroundingUnitGroup)
 						{
 							x -= (u->getPosition().x() - it->first->getPosition().x())/2;
 							y -= (u->getPosition().y() - it->first->getPosition().y())/2;						

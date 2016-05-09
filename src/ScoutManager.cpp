@@ -8,7 +8,7 @@ using namespace BWAPI;
 void ScoutManager::firstsearch()
 {
 	
-	for (std::set<BWAPI::Unit *>::const_iterator it = BWAPI::Broodwar->self()->getUnits().begin(); it != BWAPI::Broodwar->self()->getUnits().end(); ++it)
+	for (std::set<BWAPI::Unit >::const_iterator it = BWAPI::Broodwar->self()->getUnits().begin(); it != BWAPI::Broodwar->self()->getUnits().end(); ++it)
     {	
 		if ((*it)->getType().isWorker() || (*it)->getType() == BWAPI::UnitTypes::Protoss_Observer)
         {
@@ -156,7 +156,7 @@ void ScoutManager::onOffer(std::set<BWAPI::Unit> units)
 	}
 }
 
-void ScoutManager::onRevoke(BWAPI::Unit *unit, double bid)
+void ScoutManager::onRevoke(BWAPI::Unit unit, double bid)
 {
 	onRemoveUnit(unit);
 }
@@ -321,7 +321,7 @@ void ScoutManager::updateScoutAssignments()
 
 				//1. 적 모든 건물의 position 받기
 /*
-for (std::set<BWAPI::Unit *>::const_iterator en = Broodwar->enemy()->getUnits().begin(); en != BWAPI::Broodwar->enemy()->getUnits().end(); ++en)
+for (std::set<BWAPI::Unit >::const_iterator en = Broodwar->enemy()->getUnits().begin(); en != BWAPI::Broodwar->enemy()->getUnits().end(); ++en)
 			{
 			
 				//if(*en)->getType() == BWAPI::UnitTypes::Protoss_Nexus)
@@ -357,7 +357,7 @@ for (std::set<BWAPI::Unit *>::const_iterator en = Broodwar->enemy()->getUnits().
 
 				/*
 				
-				 for (std::set<BWAPI::Unit *>::const_iterator itss = BWAPI::Broodwar->self()->getUnits().begin(); itss != BWAPI::Broodwar->self()->getUnits().end(); ++itss)
+				 for (std::set<BWAPI::Unit >::const_iterator itss = BWAPI::Broodwar->self()->getUnits().begin(); itss != BWAPI::Broodwar->self()->getUnits().end(); ++itss)
     {		
 	
 		if ((*itss)->getType() == BWAPI::UnitTypes::Protoss_Dark_Templar)

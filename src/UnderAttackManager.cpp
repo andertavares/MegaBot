@@ -29,7 +29,7 @@ void UnderAttackManager::update()
 		}
 
 		UnitGroup myPrecious = SelectAll()(isBuilding) + SelectAll()(isWorker);
-		for each (BWAPI::Unit *u in myPrecious)
+		for each (BWAPI::Unit u in myPrecious)
 		{
 			if (u->isUnderAttack())
 			{
@@ -38,7 +38,7 @@ void UnderAttackManager::update()
 				UnitGroup myCoWorkers;
 
 				std::set<BWAPI::Unit> idleDef = defenseManager->getIdleDefenders();
-				for each (BWAPI::Unit *def in idleDef)
+				for each (BWAPI::Unit def in idleDef)
 				{
 					arbitrator->setBid(this, def, 50);
 				}
@@ -48,7 +48,7 @@ void UnderAttackManager::update()
 					std::set<BWAPI::Unit> aroundMe = u->getUnitsInRadius(u->getType().sightRange());
 					myCoWorkers = UnitGroup::getUnitGroup(aroundMe);
 					myCoWorkers = myCoWorkers(BWAPI::Broodwar->self())(isWorker)(isCompleted);
-					for each (BWAPI::Unit *def in myCoWorkers)
+					for each (BWAPI::Unit def in myCoWorkers)
 					{
 						arbitrator->setBid(this, def, 60);
 					}
@@ -78,13 +78,13 @@ void UnderAttackManager::update()
 		// Anti gas steal (and anti in-base enemy building)
 		UnitGroup intruders = SelectAllEnemy()(isBuilding);
 
-		for each (BWAPI::Unit *u in intruders)
+		for each (BWAPI::Unit u in intruders)
 		{
 			// if build u is placed inside one of our region, blast it!
 			if (baseManager->getMyRegions().find(BWTA::getRegion(u->getTilePosition())) != baseManager->getMyRegions().end())
 			{
 				std::set<BWAPI::Unit> idleDef = defenseManager->getIdleDefenders();
-				for each (BWAPI::Unit *def in idleDef)
+				for each (BWAPI::Unit def in idleDef)
 				{
 					arbitrator->setBid(this, def, 50);
 				}
@@ -124,7 +124,7 @@ std::string UnderAttackManager::getShortName() const
 
 void UnderAttackManager::onOffer(std::set<BWAPI::Unit> units)
 {
-	for each (BWAPI::Unit *u in units)
+	for each (BWAPI::Unit u in units)
 	{
 		if (backUp.find(u) == backUp.end())
 		{
@@ -145,7 +145,7 @@ void UnderAttackManager::onOffer(std::set<BWAPI::Unit> units)
 	}
 }
 
-void UnderAttackManager::onRevoke(BWAPI::Unit *u, double bid)
+void UnderAttackManager::onRevoke(BWAPI::Unit u, double bid)
 {
 	onRemoveUnit(u);
 }

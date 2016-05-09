@@ -386,7 +386,7 @@ public:
 	UnitGroup operator()(int f1, int f2, int f3, int f4, int f5) const;
 	UnitGroup operator()(FliterAttributeScalar a, const char* compare, double value) const;
 	UnitGroup operator()(FliterAttributeScalar a, const char* compare, int value) const;
-	UnitGroup operator()(BWAPI::Player* player) const;
+	UnitGroup operator()(BWAPI::Player player) const;
 	UnitGroup operator()(FilterAttributeUnit a, BWAPI::Unit unit) const;
 	UnitGroup operator()(FilterAttributeType a, BWAPI::UnitType type) const;
 	UnitGroup operator()(FilterAttributeType a, BWAPI::TechType type) const;
@@ -402,7 +402,7 @@ public:
 	UnitGroup not(int f1, int f2, int f3, int f4, int f5) const;
 	UnitGroup not(FliterAttributeScalar a, const char* compare, double value) const;
 	UnitGroup not(FliterAttributeScalar a, const char* compare, int value) const;
-	UnitGroup not(BWAPI::Player* player) const;
+	UnitGroup not(BWAPI::Player player) const;
 	UnitGroup not(FilterAttributeUnit a, BWAPI::Unit unit) const;
 	UnitGroup not(FilterAttributeType a, BWAPI::UnitType type) const;
 	UnitGroup not(FilterAttributeType a, BWAPI::TechType type) const;

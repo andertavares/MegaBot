@@ -1084,7 +1084,7 @@ UnitGroup UnitGroup::operator()(FliterAttributeScalar a, const char* compare, in
 	}
 	return result;
 }
-UnitGroup UnitGroup::operator()(BWAPI::Player* player) const
+UnitGroup UnitGroup::operator()(BWAPI::Player player) const
 {
 	UnitGroup result;
 	for(set<Unit>::const_iterator i=this->begin();i!=this->end();i++)
@@ -1311,7 +1311,7 @@ UnitGroup UnitGroup::not(FliterAttributeScalar a, const char* compare, int value
 	}
 	return result;
 }
-UnitGroup UnitGroup::not(BWAPI::Player* player) const
+UnitGroup UnitGroup::not(BWAPI::Player player) const
 {
 	UnitGroup result;
 	for(set<Unit>::const_iterator i=this->begin();i!=this->end();i++)

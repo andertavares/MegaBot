@@ -30,8 +30,8 @@ public:
 	void setInformationManager	(InformationManager*);
 	void setBaseManager					(BaseManager*);
 	virtual void onOffer(std::set<BWAPI::Unit> unitGroup);
-	virtual void onRevoke(BWAPI::Unit *p, double bid);
-	void onRemoveUnit(BWAPI::Unit *unit);
+	virtual void onRevoke(BWAPI::Unit p, double bid);
+	void onRemoveUnit(BWAPI::Unit unit);
 	virtual void update();
 	virtual std::string getName() const;
 	virtual std::string getShortName() const;

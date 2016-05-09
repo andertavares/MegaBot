@@ -152,7 +152,7 @@ void WorkerManager::updateWorkerAssignments()
 
 bool mineralCompare (const pair<Unit, int> i, const pair<Unit, int> j) { return (i.second>j.second); }
 
-void WorkerManager::setDestinationMineral(BWAPI::Unit *destinationMineral)
+void WorkerManager::setDestinationMineral(BWAPI::Unit destinationMineral)
 {
 	this->destinationMineral = destinationMineral;
 }
@@ -250,7 +250,7 @@ if(early_rush == false)
 
 					int enemy_assimilator = 0;
 					int	enemy_gateway = 0;
-					for (std::set<BWAPI::Unit *>::const_iterator en = Broodwar->enemy()->getUnits().begin(); en != BWAPI::Broodwar->enemy()->getUnits().end(); ++en)
+					for (std::set<BWAPI::Unit >::const_iterator en = Broodwar->enemy()->getUnits().begin(); en != BWAPI::Broodwar->enemy()->getUnits().end(); ++en)
 					{
 						if((*en)->getType() == BWAPI::UnitTypes::Protoss_Assimilator)
 							enemy_assimilator++;
@@ -276,7 +276,7 @@ if(early_rush == false)
 
 					if(!firsss)
 					{
-						for (std::set<BWAPI::Unit *>::const_iterator en = Broodwar->enemy()->getUnits().begin(); en != BWAPI::Broodwar->enemy()->getUnits().end(); ++en)
+						for (std::set<BWAPI::Unit >::const_iterator en = Broodwar->enemy()->getUnits().begin(); en != BWAPI::Broodwar->enemy()->getUnits().end(); ++en)
 						{
 							if(Broodwar->self()->incompleteUnitCount(UnitTypes::Protoss_Cybernetics_Core) != 1 && BWAPI::Broodwar->self()->allUnitCount(BWAPI::UnitTypes::Protoss_Cybernetics_Core) == 1)
 							{

@@ -1,11 +1,11 @@
 #include <UnitGroupManager.h>
 
-std::map<BWAPI::Unit,BWAPI::Player*> unitOwner;
+std::map<BWAPI::Unit,BWAPI::Player> unitOwner;
 std::map<BWAPI::Unit,BWAPI::UnitType> unitType;
-std::map<BWAPI::Player*, std::map<BWAPI::UnitType,UnitGroup > > data;
-std::map<BWAPI::Player*, UnitGroup> allOwnedUnits;
+std::map<BWAPI::Player, std::map<BWAPI::UnitType,UnitGroup > > data;
+std::map<BWAPI::Player, UnitGroup> allOwnedUnits;
 UnitGroup allUnits;
-BWAPI::Player* neutral;
+BWAPI::Player neutral;
 UnitGroupManager* TheUnitGroupManager = NULL;
 
 UnitGroupManager* UnitGroupManager::create()
@@ -26,7 +26,7 @@ UnitGroupManager::UnitGroupManager()
 		onUnitDiscover(*i);
 	}
 	neutral=NULL;
-	for(std::set<BWAPI::Player*>::iterator i=BWAPI::Broodwar->getPlayers().begin();i!=BWAPI::Broodwar->getPlayers().end();i++)
+	for(std::set<BWAPI::Player>::iterator i=BWAPI::Broodwar->getPlayers().begin();i!=BWAPI::Broodwar->getPlayers().end();i++)
 	{
 		if ((*i)->isNeutral())
 			neutral=*i;
@@ -90,7 +90,7 @@ UnitGroup SelectAllEnemy(BWAPI::UnitType type)
 {
 	return data[BWAPI::Broodwar->enemy()][type];
 }
-UnitGroup SelectAll(BWAPI::Player* player, BWAPI::UnitType type)
+UnitGroup SelectAll(BWAPI::Player player, BWAPI::UnitType type)
 {
 	return data[player][type];
 }

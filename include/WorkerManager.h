@@ -46,8 +46,8 @@ private:
 	std::map<BWAPI::Unit, Base*> resourceBase;
 	std::map<BWAPI::Unit, int> desiredWorkerCount;
 	std::vector<std::pair<BWAPI::Unit, int> > mineralOrder;
-	BWAPI::Unit *destinationMineral;
-	BWAPI::Unit *cleaner;
+	BWAPI::Unit destinationMineral;
+	BWAPI::Unit cleaner;
 	int mineralOrderIndex;
 	int lastSCVBalance;
 	std::set<Base*> basesCache;

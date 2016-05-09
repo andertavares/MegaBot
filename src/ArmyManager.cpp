@@ -83,7 +83,7 @@ void ArmyManager::update()
 			(*Probe)->rightClick(*em);
 			d = false;
 			}
-			if((*Probe)->getPosition().x() < 3000 && (*Probe)->getPosition().x() > 1500 && (*Probe)->getPosition().y() < 3000 && (*Probe)->getPosition().y() > 1500)
+			if((*Probe)->getPosition().x < 3000 && (*Probe)->getPosition().x > 1500 && (*Probe)->getPosition().y < 3000 && (*Probe)->getPosition().y > 1500)
 				(*Probe)->rightClick(*e);		
 
 
@@ -239,7 +239,7 @@ void ArmyManager::update()
 		{
 				total_attack = true;
 			
-				for (std::set<BWAPI::Unit >::const_iterator its = BWAPI::Broodwar->self()->getUnits().begin(); its != BWAPI::Broodwar->self()->getUnits().end(); ++its)
+				for (BWAPI::Unitset::const_iterator its = BWAPI::Broodwar->self()->getUnits().begin(); its != BWAPI::Broodwar->self()->getUnits().end(); ++its)
 	{
 		if((*its)->getType().groundWeapon().damageAmount() >= 8) // 데미지가 8보다 크다면 . 공격유닛 선택하기 위함  질럿은 8씩 두번공격하는것임.
 		{

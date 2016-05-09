@@ -34,8 +34,8 @@ void BaseManager::update()
 				if ((*b)->getResourceDepot() == NULL)
 				{
 					BWAPI::TilePosition tile = (*b)->getBaseLocation()->getTilePosition();
-					std::set<BWAPI::Unit> units = BWAPI::Broodwar->getUnitsOnTile(tile.x(),tile.y());
-					for(std::set<BWAPI::Unit>::iterator u = units.begin(); u != units.end(); u++)
+					BWAPI::Unitset units = BWAPI::Broodwar->getUnitsOnTile(tile.x, tile.y);
+					for (BWAPI::Unitset::iterator u = units.begin(); u != units.end(); u++)
 						if ((*u)->getPlayer() == BWAPI::Broodwar->self() && (*u)->getType().isResourceDepot())
 						{
 							(*b)->setResourceDepot(*u);
@@ -59,7 +59,7 @@ void BaseManager::update()
 			//Set Refinerys
 			if (!(*b)->isActiveGas() && (*b)->hasGas())
 			{
-				if ((*b)->getRefinery() == NULL)
+				if ((*b)->getRefinery == NULL)
 				{
 					std::set<BWAPI::Unit> baseGeysers = (*b)->getBaseLocation()->getGeysers();
 
@@ -72,9 +72,9 @@ void BaseManager::update()
 					}
 
 					//check for refinery already on geyser
-					std::set<BWAPI::Unit> unitsOnGeyser = BWAPI::Broodwar->getUnitsOnTile(geyserLocation.x(),geyserLocation.y());
+					BWAPI::Unitset unitsOnGeyser = BWAPI::Broodwar->getUnitsOnTile(geyserLocation.x, geyserLocation.y);
 
-					for(std::set<BWAPI::Unit>::iterator u = unitsOnGeyser.begin(); u != unitsOnGeyser.end(); u++)
+					for (BWAPI::Unitset::iterator u = unitsOnGeyser.begin(); u != unitsOnGeyser.end(); u++)
 					{
 						if ((*u)->getPlayer() == BWAPI::Broodwar->self() && (*u)->getType().isRefinery())
 						{
@@ -104,8 +104,8 @@ void BaseManager::update()
 			if (location2base.find(*bl) == location2base.end())
 			{
 				BWAPI::TilePosition tile = (*bl)->getTilePosition();
-				std::set<BWAPI::Unit> units = BWAPI::Broodwar->getUnitsOnTile(tile.x(), tile.y());
-				for(std::set<BWAPI::Unit>::iterator u = units.begin(); u != units.end(); u++)
+				BWAPI::Unitset units = BWAPI::Broodwar->getUnitsOnTile(tile.x, tile.y);
+				for (BWAPI::Unitset::iterator u = units.begin(); u != units.end(); u++)
 					if ((*u)->getPlayer() == BWAPI::Broodwar->self() && (*u)->getType().isResourceDepot())
 						addBase(*bl);
 			}
@@ -306,10 +306,10 @@ bool BaseManager::hasRefinery(BWTA::BaseLocation* location)
 		//check for refinery already on geyser
 
 		//get units on geyser
-		std::set<BWAPI::Unit> unitsOnGeyser = BWAPI::Broodwar->getUnitsOnTile(geyserlocation.x(),geyserlocation.y());
+		BWAPI::Unitset unitsOnGeyser = BWAPI::Broodwar->getUnitsOnTile(geyserlocation.x,geyserlocation.y);
 
 		//cycle through units on geyser
-		for(std::set<BWAPI::Unit>::iterator u = unitsOnGeyser.begin(); u != unitsOnGeyser.end(); u++)
+		for (BWAPI::Unitset::iterator u = unitsOnGeyser.begin(); u != unitsOnGeyser.end(); u++)
 		{
 			//if unit is a refinery
 			if ((*u)->getType().isRefinery())

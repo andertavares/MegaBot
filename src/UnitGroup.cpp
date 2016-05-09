@@ -851,28 +851,28 @@ double getAttribute(Unit u, FliterAttributeScalar a)
 		return u->getStimTimer();
 		break;
 	case PositionX:
-		return u->getPosition().x();
+		return u->getPosition().x;
 		break;
 	case PositionY:
-		return u->getPosition().y();
+		return u->getPosition().y;
 		break;
 	case InitialPositionX:
-		return u->getInitialPosition().x();
+		return u->getInitialPosition().x;
 		break;
 	case InitialPositionY:
-		return u->getInitialPosition().y();
+		return u->getInitialPosition().y;
 		break;
 	case TilePositionX:
-		return u->getTilePosition().x();
+		return u->getTilePosition().x;
 		break;
 	case TilePositionY:
-		return u->getTilePosition().y();
+		return u->getTilePosition().y;
 		break;
 	case InitialTilePositionX:
-		return u->getInitialTilePosition().x();
+		return u->getInitialTilePosition().x;
 		break;
 	case InitialTilePositionY:
-		return u->getInitialTilePosition().y();
+		return u->getInitialTilePosition().y;
 		break;
 	case Angle:
 		return u->getAngle();
@@ -884,10 +884,10 @@ double getAttribute(Unit u, FliterAttributeScalar a)
 		return u->getVelocityY();
 		break;
 	case TargetPositionX:
-		return u->getTargetPosition().x();
+		return u->getTargetPosition().x;
 		break;
 	case TargetPositionY:
-		return u->getTargetPosition().y();
+		return u->getTargetPosition().y;
 		break;
 	case OrderTimer:
 		return u->getOrderTimer();
@@ -920,10 +920,10 @@ double getAttribute(Unit u, FliterAttributeScalar a)
 		return u->getRemainingUpgradeTime();
 		break;
 	case RallyPositionX:
-		return u->getRallyPosition().x();
+		return u->getRallyPosition().x;
 		break;
 	case RallyPositionY:
-		return u->getRallyPosition().y();
+		return u->getRallyPosition().y;
 		break;
 	case maxAirHits:
 		return u->getType().maxAirHits();
@@ -1567,8 +1567,8 @@ Position UnitGroup::getCenter() const
 		if (p!=Positions::None && p!=Positions::Unknown)
 		{
 			count++;
-			x+=p.x();
-			y+=p.y();
+			x+=p.x;
+			y+=p.y;
 		}
 	}
 	if (count==0)

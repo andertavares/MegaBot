@@ -4,7 +4,7 @@ ProductionManager::ProductionManager(Arbitrator::Arbitrator<BWAPI::Unit,double>*
 {
 	this->arbitrator = arbitrator;
 	this->placer = placer;
-	for(std::set<BWAPI::UnitType>::const_iterator i=BWAPI::UnitTypes::allUnitTypes().begin();i!=BWAPI::UnitTypes::allUnitTypes().end();i++)
+	for(BWAPI::UnitType::set::const_iterator i=BWAPI::UnitTypes::allUnitTypes().begin();i!=BWAPI::UnitTypes::allUnitTypes().end();i++)
 	{//chcconst ¹Ù²Þ.
 		plannedCount[*i]=0;
 		startedCount[*i]=0;

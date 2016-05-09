@@ -4,7 +4,7 @@ ConstructionManager::ConstructionManager(Arbitrator::Arbitrator<BWAPI::Unit,doub
 {
 	this->arbitrator   = arbitrator;
 	this->placer       = placer;
-	for(std::set<BWAPI::UnitType>::const_iterator i=BWAPI::UnitTypes::allUnitTypes().begin();i!=BWAPI::UnitTypes::allUnitTypes().end();i++)
+	for(BWAPI::UnitType::set::const_iterator i=BWAPI::UnitTypes::allUnitTypes().begin();i!=BWAPI::UnitTypes::allUnitTypes().end();i++)
 	{//chcconst ¹Ù²Þ.
 		plannedCount[*i]=0;
 		startedCount[*i]=0;
@@ -28,7 +28,7 @@ void ConstructionManager::onOffer(std::set<BWAPI::Unit> units)
 			double min_dist = 1000000;
 			BWAPI::Unit builder = NULL;
 			//find the best builder based on distance
-			for(std::set<BWAPI::Unit>::iterator u = units.begin(); u != units.end(); u++)
+			for(BWAPI::Unitset::iterator u = units.begin(); u != units.end(); u++)
 			{
 				//only consider this builder if it can build this type of building
 				if (((*b)->type.whatBuilds().first)==(*u)->getType() && (!(*b)->type.isAddon() || (*u)->getAddon()==NULL))
@@ -67,8 +67,8 @@ void ConstructionManager::onOffer(std::set<BWAPI::Unit> units)
 					else
 					{
 						bool buildable=true;
-						for(int x=(*b)->tilePosition.x()+4;x<(*b)->tilePosition.x()+6;x++)
-							for(int y=(*b)->tilePosition.y()+1;y<(*b)->tilePosition.y()+3;y++)
+						for(int x=(*b)->tilePosition.x+4;x<(*b)->tilePosition.x+6;x++)
+							for(int y=(*b)->tilePosition.y+1;y<(*b)->tilePosition.y+3;y++)
 								if (!this->placer->buildable(x,y))
 									buildable=false;
 						if (!buildable)
@@ -90,7 +90,7 @@ void ConstructionManager::onOffer(std::set<BWAPI::Unit> units)
 		}
 	}
 	//decline whatever is left
-	for(std::set<BWAPI::Unit>::iterator u = units.begin(); u != units.end(); u++)
+	for(BWAPI::Unitset::iterator u = units.begin(); u != units.end(); u++)
 	{
 		arbitrator->decline(this, *u, 0);
 		arbitrator->removeBid(this, *u);
@@ -104,14 +104,14 @@ void ConstructionManager::onRevoke(BWAPI::Unit unit, double bid)
 
 void ConstructionManager::update()
 {
-	std::set<BWAPI::Unit> myPlayerUnits = SelectAll()(isCompleted)(GetAddon,(BWAPI::Unit)NULL).not(isCarryingMinerals,isCarryingGas,isGatheringGas);
+	UnitGroup myPlayerUnits = SelectAll()(isCompleted)(GetAddon,(BWAPI::Unit)NULL).not(isCarryingMinerals,isCarryingGas,isGatheringGas);
 
 	//iterate through all the builder types
 	for(std::map<BWAPI::UnitType,std::set<Building*> >::iterator i=this->buildingsNeedingBuilders.begin();i!=this->buildingsNeedingBuilders.end();i++)
 	{
 		if (!i->second.empty()) //if its empty, we don't really need builders of this type
 		{
-			for(std::set<BWAPI::Unit>::iterator u = myPlayerUnits.begin(); u != myPlayerUnits.end(); u++)
+			for(UnitGroup::iterator u = myPlayerUnits.begin(); u != myPlayerUnits.end(); u++)
 			{
 				//if this unit is completed and the right type, and doesn't have an addon, and we aren't already using it
 				if ((*u)->getType()==i->first && this->builders.find(*u)==this->builders.end())
@@ -220,8 +220,8 @@ void ConstructionManager::update()
 									{
 										//check to see if we can build here
 										bool buildable=true;
-										for(int x=b->tilePosition.x()+4;x<b->tilePosition.x()+6;x++)
-											for(int y=b->tilePosition.y()+1;y<b->tilePosition.y()+3;y++)
+										for(int x=b->tilePosition.x+4;x<b->tilePosition.x+6;x++)
+											for(int y=b->tilePosition.y+1;y<b->tilePosition.y+3;y++)
 												if (!this->placer->buildable(x,y) || BWAPI::Broodwar->hasCreep(x,y))
 													buildable=false;
 										if (buildable) //if so, start making the add-on
@@ -252,7 +252,7 @@ void ConstructionManager::update()
 					b->tilePosition = this->placer->getBuildLocationNear(b->goalPosition, b->type);
 					if (b->tilePosition!=BWAPI::TilePositions::None)
 					{
-						b->position = BWAPI::Position(b->tilePosition.x()*32 + b->type.tileWidth()*16, b->tilePosition.y()*32 + b->type.tileHeight()*16);
+						b->position = BWAPI::Position(b->tilePosition.x*32 + b->type.tileWidth()*16, b->tilePosition.y*32 + b->type.tileHeight()*16);
 						this->placer->reserveTiles(b->tilePosition, b->type.tileWidth(), b->type.tileHeight());
 					}
 				}
@@ -272,8 +272,8 @@ void ConstructionManager::update()
 			if (b->buildingUnit == NULL) //if we don't have a building yet, look for it
 			{
 				//look at the units on the tile to see if it exists yet
-				std::set<BWAPI::Unit> getUnitsOnTile = BWAPI::Broodwar->getUnitsOnTile(b->tilePosition.x(), b->tilePosition.y());
-				for(std::set<BWAPI::Unit>::iterator t = getUnitsOnTile.begin(); t != getUnitsOnTile.end(); t++)
+				BWAPI::Unitset getUnitsOnTile = BWAPI::Broodwar->getUnitsOnTile(b->tilePosition.x, b->tilePosition.y);
+				for(BWAPI::Unitset::iterator t = getUnitsOnTile.begin(); t != getUnitsOnTile.end(); t++)
 					if ((*t)->getType() == b->type && !(*t)->isLifted())
 					{
 						//we found the building

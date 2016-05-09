@@ -208,7 +208,7 @@ void ScoutManager::onRemoveUnit(BWAPI::Unit unit)
 			baseLocationsToScout.push_back(lostTarget);
 			if (debugMode)
 			{
-				BWAPI::Broodwar->printf("Reassigning (%d,%d)", lostTarget->getPosition().x(), lostTarget->getPosition().y());
+				BWAPI::Broodwar->printf("Reassigning (%d,%d)", lostTarget->getPosition().x, lostTarget->getPosition().y);
 			}
 		}
 		scouts.erase(unit);
@@ -234,9 +234,9 @@ void ScoutManager::drawAssignments()
 		{
 			BWAPI::Position scoutPos = (*s).first->getPosition();
 			BWAPI::Position targetPos = (*s).second.target->getPosition();
-			BWAPI::Broodwar->drawLineMap(scoutPos.x(), scoutPos.y(), targetPos.x(), targetPos.y(), BWAPI::Colors::Yellow);
-			BWAPI::Broodwar->drawCircleMap(scoutPos.x(), scoutPos.y(), 6, BWAPI::Colors::Yellow);
-			BWAPI::Broodwar->drawCircleMap(targetPos.x(), targetPos.y(), (*s).first->getType().sightRange(), BWAPI::Colors::Yellow);
+			BWAPI::Broodwar->drawLineMap(scoutPos.x, scoutPos.y, targetPos.x, targetPos.y, BWAPI::Colors::Yellow);
+			BWAPI::Broodwar->drawCircleMap(scoutPos.x, scoutPos.y, 6, BWAPI::Colors::Yellow);
+			BWAPI::Broodwar->drawCircleMap(targetPos.x, targetPos.y, (*s).first->getType().sightRange(), BWAPI::Colors::Yellow);
 		}
 	}
 }
@@ -277,9 +277,9 @@ void ScoutManager::updateScoutAssignments()
 			&& (*u).first->getPosition().getApproxDistance((*u).second.target->getPosition()) < (*u).first->getType().sightRange() - 2)
 		{
 			bool empty = true;
-			for(int x=(*u).second.target->getTilePosition().x();x<(*u).second.target->getTilePosition().x()+4;x++)
+			for(int x=(*u).second.target->getTilePosition().x;x<(*u).second.target->getTilePosition().x+4;x++)
 			{
-				for(int y=(*u).second.target->getTilePosition().y();y<(*u).second.target->getTilePosition().y()+3;y++)
+				for(int y=(*u).second.target->getTilePosition().y;y<(*u).second.target->getTilePosition().y+3;y++)
 				{
 					std::set<BWAPI::Unit> getUnitsOnTile = BWAPI::Broodwar->getUnitsOnTile(x,y);
 					for each(BWAPI::Unit u in getUnitsOnTile)
@@ -396,8 +396,8 @@ for (std::set<BWAPI::Unit >::const_iterator en = Broodwar->enemy()->getUnits().b
 
 					//chc ¸ô·¡°Ç¹° À§Ä¡·Î Á¤Âûº´ ¿Å±è
 			/*	
-				int a = this->informationManager->getEnemyStartLocation()->getPosition().x();  
-			    int b = this->informationManager->getEnemyStartLocation()->getPosition().y();
+				int a = this->informationManager->getEnemyStartLocation()->getPosition().x;  
+			    int b = this->informationManager->getEnemyStartLocation()->getPosition().y;
 				Position *c = new Position(880,790);
 				Position *d = new Position(3310,3530);
 			
@@ -424,8 +424,8 @@ for (std::set<BWAPI::Unit >::const_iterator en = Broodwar->enemy()->getUnits().b
 							
 			
 				
-				BWAPI::Broodwar->printf("Sucessfully scouted (%d,%d)", exploredBaseLocation->getPosition().x(), exploredBaseLocation->getPosition().y());
-				BWAPI::Broodwar->printf("Sucessfully EnemyStartLocation (%d,%d)",this->informationManager->getEnemyStartLocation()->getPosition().x(),this->informationManager->getEnemyStartLocation()->getPosition().y());
+				BWAPI::Broodwar->printf("Sucessfully scouted (%d,%d)", exploredBaseLocation->getPosition().x, exploredBaseLocation->getPosition().y);
+				BWAPI::Broodwar->printf("Sucessfully EnemyStartLocation (%d,%d)",this->informationManager->getEnemyStartLocation()->getPosition().x,this->informationManager->getEnemyStartLocation()->getPosition().y);
 
 			     break;
 			}
@@ -433,8 +433,8 @@ for (std::set<BWAPI::Unit >::const_iterator en = Broodwar->enemy()->getUnits().b
 			
 			if (debugMode)//
 			{
-				BWAPI::Broodwar->printf("Sucessfully scouted (%d,%d)", exploredBaseLocation->getPosition().x(), exploredBaseLocation->getPosition().y());
-				BWAPI::Broodwar->printf("Sucessfully EnemyStartLocation (%d,%d)",this->informationManager->getEnemyStartLocation()->getPosition().x(),this->informationManager->getEnemyStartLocation()->getPosition().y());
+				BWAPI::Broodwar->printf("Sucessfully scouted (%d,%d)", exploredBaseLocation->getPosition().x, exploredBaseLocation->getPosition().y);
+				BWAPI::Broodwar->printf("Sucessfully EnemyStartLocation (%d,%d)",this->informationManager->getEnemyStartLocation()->getPosition().x,this->informationManager->getEnemyStartLocation()->getPosition().y);
 
 			}
 		}
@@ -450,8 +450,8 @@ for (std::set<BWAPI::Unit >::const_iterator en = Broodwar->enemy()->getUnits().b
 
 
 			//chc ¸ô·¡°Ç¹°À§Ä¡·Î Á¤Âûº´ ¿Å±è
-	/*	int a = this->informationManager->getEnemyStartLocation()->getPosition().x();
-			    int b = this->informationManager->getEnemyStartLocation()->getPosition().y();
+	/*	int a = this->informationManager->getEnemyStartLocation()->getPosition().x;
+			    int b = this->informationManager->getEnemyStartLocation()->getPosition().y;
 				Position *c = new Position(880,790);
 				Position *d = new Position(3310,3530);
 				
@@ -486,7 +486,7 @@ for (std::set<BWAPI::Unit >::const_iterator en = Broodwar->enemy()->getUnits().b
 				(*u).second.target = target;
 				if (debugMode)
 				{
-					BWAPI::Broodwar->printf("Scouting (%d,%d)", target->getPosition().x(), target->getPosition().y());
+					BWAPI::Broodwar->printf("Scouting (%d,%d)", target->getPosition().x, target->getPosition().y);
 				}
 			}
 		} // for

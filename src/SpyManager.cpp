@@ -104,12 +104,12 @@ void SpyManager::update()
 					surroundingUnitGroup = surroundingUnitGroup(BWAPI::Broodwar->enemy())(isDetector);
 					if (!surroundingUnitGroup.empty())
 					{
-						int x = it->first->getPosition().x();
-						int	y = it->first->getPosition().y();
+						int x = it->first->getPosition().x;
+						int	y = it->first->getPosition().y;
 						for each (BWAPI::Unit u in surroundingUnitGroup)
 						{
-							x -= (u->getPosition().x() - it->first->getPosition().x())/2;
-							y -= (u->getPosition().y() - it->first->getPosition().y())/2;						
+							x -= (u->getPosition().x - it->first->getPosition().x)/2;
+							y -= (u->getPosition().y - it->first->getPosition().y)/2;						
 						}
 
 						x += (randomDodge->nextAnotherInt() - 10);
@@ -165,7 +165,7 @@ void SpyManager::onRemoveUnit(BWAPI::Unit unit)
 			baseLocationsToSpy.push(lostTarget);
 			if (debugMode)
 			{
-				BWAPI::Broodwar->printf("Reassigning (%d,%d)", lostTarget->getPosition().x(), lostTarget->getPosition().y());
+				BWAPI::Broodwar->printf("Reassigning (%d,%d)", lostTarget->getPosition().x, lostTarget->getPosition().y);
 			}
 		}
 		spies.erase(unit);
@@ -218,9 +218,9 @@ void SpyManager::drawAssignments()
 		{
 			BWAPI::Position SpyPos = (*s).first->getPosition();
 			BWAPI::Position targetPos = (*s).second.target->getPosition();
-			BWAPI::Broodwar->drawLineMap(SpyPos.x(), SpyPos.y(), targetPos.x(), targetPos.y(), BWAPI::Colors::Yellow);
-			BWAPI::Broodwar->drawCircleMap(SpyPos.x(), SpyPos.y(), 6, BWAPI::Colors::Yellow);
-			BWAPI::Broodwar->drawCircleMap(targetPos.x(), targetPos.y(), (*s).first->getType().sightRange(), BWAPI::Colors::Yellow);
+			BWAPI::Broodwar->drawLineMap(SpyPos.x, SpyPos.y, targetPos.x, targetPos.y, BWAPI::Colors::Yellow);
+			BWAPI::Broodwar->drawCircleMap(SpyPos.x, SpyPos.y, 6, BWAPI::Colors::Yellow);
+			BWAPI::Broodwar->drawCircleMap(targetPos.x, targetPos.y, (*s).first->getType().sightRange(), BWAPI::Colors::Yellow);
 		}
 	}
 }

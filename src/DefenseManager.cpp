@@ -72,7 +72,7 @@ void DefenseManager::update()
 	//chc
 					int enemy_assimilator = 0;
 					int	enemy_gateway = 0;
-					for (std::set<BWAPI::Unit >::const_iterator en = Broodwar->enemy()->getUnits().begin(); en != BWAPI::Broodwar->enemy()->getUnits().end(); ++en)
+					for (BWAPI::Unitset::const_iterator en = Broodwar->enemy()->getUnits().begin(); en != BWAPI::Broodwar->enemy()->getUnits().end(); ++en)
 					{
 						if((*en)->getType() == BWAPI::UnitTypes::Protoss_Assimilator)
 							enemy_assimilator++;
@@ -112,8 +112,8 @@ void DefenseManager::update()
 		lastFrameCheck = BWAPI::Broodwar->getFrameCount();
 
 		// Bid on all completed military units
-		std::set<BWAPI::Unit> myPlayerUnits=BWAPI::Broodwar->self()->getUnits();
-		for (std::set<BWAPI::Unit>::iterator u = myPlayerUnits.begin(); u != myPlayerUnits.end(); u++)
+		BWAPI::Unitset myPlayerUnits=BWAPI::Broodwar->self()->getUnits();
+		for (BWAPI::Unitset::iterator u = myPlayerUnits.begin(); u != myPlayerUnits.end(); u++)
 		{
 			if ((*u)->isCompleted() && 
 				!(*u)->getType().isWorker() && 
@@ -266,12 +266,12 @@ void DefenseManager::update()
 					//wait to the 2/3 between your current position and the center of the choke to protect
 					int borderBasesSize = (int)borderBases.size();
 					BWAPI::Position lastBase = borderBases[borderBasesSize - round - 1]->getBaseLocation()->getPosition();					
-					int x_wait = chokePosition.x() - lastBase.x();
-					int y_wait = chokePosition.y() - lastBase.y();
+					int x_wait = chokePosition.x - lastBase.x;
+					int y_wait = chokePosition.y - lastBase.y;
 					x_wait = (x_wait / 4) * 3;
 					y_wait = (y_wait / 4) * 3;
-					x_wait += lastBase.x();
-					y_wait += lastBase.y();
+					x_wait += lastBase.x;
+					y_wait += lastBase.y;
 
 					BWAPI::Position waitPosition(x_wait, y_wait); 
 

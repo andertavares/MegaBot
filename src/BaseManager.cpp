@@ -34,8 +34,8 @@ void BaseManager::update()
 				if ((*b)->getResourceDepot() == NULL)
 				{
 					BWAPI::TilePosition tile = (*b)->getBaseLocation()->getTilePosition();
-					std::set<BWAPI::Unit*> units = BWAPI::Broodwar->getUnitsOnTile(tile.x(),tile.y());
-					for(std::set<BWAPI::Unit*>::iterator u = units.begin(); u != units.end(); u++)
+					std::set<BWAPI::Unit> units = BWAPI::Broodwar->getUnitsOnTile(tile.x(),tile.y());
+					for(std::set<BWAPI::Unit>::iterator u = units.begin(); u != units.end(); u++)
 						if ((*u)->getPlayer() == BWAPI::Broodwar->self() && (*u)->getType().isResourceDepot())
 						{
 							(*b)->setResourceDepot(*u);
@@ -61,20 +61,20 @@ void BaseManager::update()
 			{
 				if ((*b)->getRefinery() == NULL)
 				{
-					std::set<BWAPI::Unit*> baseGeysers = (*b)->getBaseLocation()->getGeysers();
+					std::set<BWAPI::Unit> baseGeysers = (*b)->getBaseLocation()->getGeysers();
 
 					BWAPI::TilePosition geyserLocation;
 
 					//cycle through geysers & get tile location
-					for(std::set<BWAPI::Unit*>::iterator bg = baseGeysers.begin(); bg != baseGeysers.end(); bg++)
+					for(std::set<BWAPI::Unit>::iterator bg = baseGeysers.begin(); bg != baseGeysers.end(); bg++)
 					{
 						geyserLocation = (*bg)->getTilePosition();
 					}
 
 					//check for refinery already on geyser
-					std::set<BWAPI::Unit*> unitsOnGeyser = BWAPI::Broodwar->getUnitsOnTile(geyserLocation.x(),geyserLocation.y());
+					std::set<BWAPI::Unit> unitsOnGeyser = BWAPI::Broodwar->getUnitsOnTile(geyserLocation.x(),geyserLocation.y());
 
-					for(std::set<BWAPI::Unit*>::iterator u = unitsOnGeyser.begin(); u != unitsOnGeyser.end(); u++)
+					for(std::set<BWAPI::Unit>::iterator u = unitsOnGeyser.begin(); u != unitsOnGeyser.end(); u++)
 					{
 						if ((*u)->getPlayer() == BWAPI::Broodwar->self() && (*u)->getType().isRefinery())
 						{
@@ -104,8 +104,8 @@ void BaseManager::update()
 			if (location2base.find(*bl) == location2base.end())
 			{
 				BWAPI::TilePosition tile = (*bl)->getTilePosition();
-				std::set<BWAPI::Unit*> units = BWAPI::Broodwar->getUnitsOnTile(tile.x(), tile.y());
-				for(std::set<BWAPI::Unit*>::iterator u = units.begin(); u != units.end(); u++)
+				std::set<BWAPI::Unit> units = BWAPI::Broodwar->getUnitsOnTile(tile.x(), tile.y());
+				for(std::set<BWAPI::Unit>::iterator u = units.begin(); u != units.end(); u++)
 					if ((*u)->getPlayer() == BWAPI::Broodwar->self() && (*u)->getType().isResourceDepot())
 						addBase(*bl);
 			}
@@ -210,7 +210,7 @@ BWTA::BaseLocation* BaseManager::expand(BWTA::BaseLocation* location, int priori
 	if(!(location->isMineralOnly()))  
 	{
 		this->refineryNeeded += 1;
-		const std::set<BWAPI::Unit*> closestGeyser = location->getGeysers();
+		const std::set<BWAPI::Unit> closestGeyser = location->getGeysers();
 
 		if (!(this->hasRefinery(location)))
 			this->builder->buildAdditional(1,BWAPI::Broodwar->self()->getRace().getRefinery(),priority, (*closestGeyser.begin())->getTilePosition());
@@ -258,7 +258,7 @@ std::string BaseManager::getName()
 {
 	return "Base Manager";
 }
-void BaseManager::onRemoveUnit(BWAPI::Unit* unit)
+void BaseManager::onRemoveUnit(BWAPI::Unit unit)
 {
 	for(std::set<Base*>::const_iterator b = this->allBases.begin(); b != this->allBases.end(); b++)
 	{
@@ -293,12 +293,12 @@ bool BaseManager::hasRefinery(BWTA::BaseLocation* location)
 	//if base has gas
 	if(!(location->isMineralOnly()))
 	{
-		std::set<BWAPI::Unit*> basegeysers = location->getGeysers();
+		std::set<BWAPI::Unit> basegeysers = location->getGeysers();
 
 		BWAPI::TilePosition geyserlocation;
 
 		//cycle through geysers & get tile location
-		for(std::set<BWAPI::Unit*>::iterator bg = basegeysers.begin(); bg != basegeysers.end(); bg++)
+		for(std::set<BWAPI::Unit>::iterator bg = basegeysers.begin(); bg != basegeysers.end(); bg++)
 		{
 			geyserlocation = (*bg)->getInitialTilePosition();
 		}
@@ -306,10 +306,10 @@ bool BaseManager::hasRefinery(BWTA::BaseLocation* location)
 		//check for refinery already on geyser
 
 		//get units on geyser
-		std::set<BWAPI::Unit*> unitsOnGeyser = BWAPI::Broodwar->getUnitsOnTile(geyserlocation.x(),geyserlocation.y());
+		std::set<BWAPI::Unit> unitsOnGeyser = BWAPI::Broodwar->getUnitsOnTile(geyserlocation.x(),geyserlocation.y());
 
 		//cycle through units on geyser
-		for(std::set<BWAPI::Unit*>::iterator u = unitsOnGeyser.begin(); u != unitsOnGeyser.end(); u++)
+		for(std::set<BWAPI::Unit>::iterator u = unitsOnGeyser.begin(); u != unitsOnGeyser.end(); u++)
 		{
 			//if unit is a refinery
 			if ((*u)->getType().isRefinery())

@@ -28,7 +28,7 @@ public:
 	class MetaUnit
 	{
 	public:
-		MetaUnit(BWAPI::Unit* unit);
+		MetaUnit(BWAPI::Unit unit);
 		MetaUnit(int larvaSpawnTime);
 		int nextFreeTime() const;
 		int nextFreeTime(BWAPI::UnitType t) const;
@@ -47,19 +47,19 @@ public:
 		bool isMorphing() const;
 		bool isTraining() const;
 		bool isUpgrading() const;
-		BWAPI::Unit* unit;
+		BWAPI::Unit unit;
 		int larvaSpawnTime;
 	};
 	class Type
 	{
 	public:
-		Type(BWAPI::UnitType t, MetaUnit* unit, int priority, int time=0) : unitType(t), unit(unit), priority(priority), time(time) {}
-		Type(BWAPI::TechType t, MetaUnit* unit, int priority, int time=0) : techType(t), unit(unit), priority(priority), time(time) {}
-		Type(BWAPI::UpgradeType t, MetaUnit* unit, int priority, int time=0) : upgradeType(t), unit(unit), priority(priority), time(time) {}
+		Type(BWAPI::UnitType t, MetaUnit unit, int priority, int time=0) : unitType(t), unit(unit), priority(priority), time(time) {}
+		Type(BWAPI::TechType t, MetaUnit unit, int priority, int time=0) : techType(t), unit(unit), priority(priority), time(time) {}
+		Type(BWAPI::UpgradeType t, MetaUnit unit, int priority, int time=0) : upgradeType(t), unit(unit), priority(priority), time(time) {}
 		BWAPI::UnitType unitType;
 		BWAPI::TechType techType;
 		BWAPI::UpgradeType upgradeType;
-		MetaUnit* unit;
+		MetaUnit unit;
 		int priority;
 		int time;
 	};
@@ -82,25 +82,25 @@ public:
 	int getPlannedCount(BWAPI::UnitType t, int minPriority);
 	void enableDependencyResolver();
 	void setDebugMode(bool debugMode);
-	std::set<BWAPI::UnitType> unitsCanMake(MetaUnit* builder, int time);
-	std::set<BWAPI::TechType> techsCanResearch(MetaUnit* techUnit, int time);
-	std::set<BWAPI::UpgradeType> upgradesCanResearch(MetaUnit* techUnit, int time);
+	std::set<BWAPI::UnitType> unitsCanMake(MetaUnit builder, int time);
+	std::set<BWAPI::TechType> techsCanResearch(MetaUnit techUnit, int time);
+	std::set<BWAPI::UpgradeType> upgradesCanResearch(MetaUnit techUnit, int time);
 
-	int nextFreeTime(const MetaUnit* unit);
+	int nextFreeTime(const MetaUnit unit);
 	int nextFreeTime(BWAPI::UnitType t);
-	int nextFreeTime(const MetaUnit* unit, BWAPI::UnitType t);
-	int nextFreeTime(const MetaUnit* unit, BWAPI::TechType t);
-	int nextFreeTime(const MetaUnit* unit, BWAPI::UpgradeType t);
-	std::set<MetaUnit*> MetaUnitPointers;
+	int nextFreeTime(const MetaUnit unit, BWAPI::UnitType t);
+	int nextFreeTime(const MetaUnit unit, BWAPI::TechType t);
+	int nextFreeTime(const MetaUnit unit, BWAPI::UpgradeType t);
+	std::set<MetaUnit> MetaUnitPointers;
 
 private:
 	bool hasResources(BWAPI::UnitType t, int time);
 	bool hasResources(BWAPI::TechType t, int time);
 	bool hasResources(BWAPI::UpgradeType t, int time);
 	bool hasResources(std::pair<int, BuildOrderManager::Resources> res);
-	std::pair<int, Resources> reserveResources(MetaUnit* builder, BWAPI::UnitType unitType);
-	std::pair<int, Resources> reserveResources(MetaUnit* techUnit, BWAPI::TechType techType);
-	std::pair<int, Resources> reserveResources(MetaUnit* techUnit, BWAPI::UpgradeType upgradeType);
+	std::pair<int, Resources> reserveResources(MetaUnit builder, BWAPI::UnitType unitType);
+	std::pair<int, Resources> reserveResources(MetaUnit techUnit, BWAPI::TechType techType);
+	std::pair<int, Resources> reserveResources(MetaUnit techUnit, BWAPI::UpgradeType upgradeType);
 	void reserveResources(std::pair<int, BuildOrderManager::Resources> res);
 	void unreserveResources(std::pair<int, BuildOrderManager::Resources> res);
 	bool updateUnits();
@@ -118,7 +118,7 @@ private:
 	int usedGas;
 	std::list<MetaUnit> MetaUnits;
 	std::map<int, Resources> reservedResources;
-	std::set<MetaUnit*> reservedUnits;
+	std::set<MetaUnit> reservedUnits;
 	std::map<BWAPI::UnitType,int> currentlyPlannedCount;
 	std::list<Type> savedPlan;
 	bool dependencyResolver;

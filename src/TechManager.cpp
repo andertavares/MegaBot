@@ -1,6 +1,6 @@
 #include <TechManager.h>
 
-TechManager::TechManager(Arbitrator::Arbitrator<BWAPI::Unit*,double>* arbitrator)
+TechManager::TechManager(Arbitrator::Arbitrator<BWAPI::Unit,double>* arbitrator)
 {
 	this->arbitrator = arbitrator;
 	this->placer = NULL;
@@ -9,9 +9,9 @@ void TechManager::setBuildingPlacer(BuildingPlacer* placer)
 {
 	this->placer = placer;
 }
-void TechManager::onOffer(std::set<BWAPI::Unit*> units)
+void TechManager::onOffer(std::set<BWAPI::Unit> units)
 {
-	for(std::set<BWAPI::Unit*>::iterator i=units.begin();i!=units.end();i++)
+	for(std::set<BWAPI::Unit>::iterator i=units.begin();i!=units.end();i++)
 	{
 		std::map<BWAPI::UnitType,std::list<BWAPI::TechType> >::iterator q=researchQueues.find((*i)->getType());
 		bool used=false;
@@ -41,7 +41,7 @@ void TechManager::onOffer(std::set<BWAPI::Unit*> units)
 	}
 }
 
-void TechManager::onRevoke(BWAPI::Unit* unit, double bid)
+void TechManager::onRevoke(BWAPI::Unit unit, double bid)
 {
 	this->onRemoveUnit(unit);
 }
@@ -52,16 +52,16 @@ void TechManager::update()
 	{
 		lastFrameCheck = BWAPI::Broodwar->getFrameCount();
 
-		std::set<BWAPI::Unit*> myPlayerUnits=BWAPI::Broodwar->self()->getUnits();
-		for(std::set<BWAPI::Unit*>::iterator u = myPlayerUnits.begin(); u != myPlayerUnits.end(); u++)
+		std::set<BWAPI::Unit> myPlayerUnits=BWAPI::Broodwar->self()->getUnits();
+		for(std::set<BWAPI::Unit>::iterator u = myPlayerUnits.begin(); u != myPlayerUnits.end(); u++)
 		{
 			std::map<BWAPI::UnitType,std::list<BWAPI::TechType> >::iterator r=researchQueues.find((*u)->getType());
 			if ((*u)->isCompleted() && r!=researchQueues.end() && !r->second.empty())
 				arbitrator->setBid(this, *u, 50);
 		}
-		std::map<BWAPI::Unit*,BWAPI::TechType>::iterator i_next;
+		std::map<BWAPI::Unit,BWAPI::TechType>::iterator i_next;
 		//iterate through all the researching units
-		for(std::map<BWAPI::Unit*,BWAPI::TechType>::iterator i=researchingUnits.begin();i!=researchingUnits.end();i=i_next)
+		for(std::map<BWAPI::Unit,BWAPI::TechType>::iterator i=researchingUnits.begin();i!=researchingUnits.end();i=i_next)
 		{
 			i_next=i;
 			i_next++;
@@ -102,9 +102,9 @@ std::string TechManager::getName() const
 	return "Tech Manager";
 }
 
-void TechManager::onRemoveUnit(BWAPI::Unit* unit)
+void TechManager::onRemoveUnit(BWAPI::Unit unit)
 {
-	std::map<BWAPI::Unit*,BWAPI::TechType>::iterator r=researchingUnits.find(unit);
+	std::map<BWAPI::Unit,BWAPI::TechType>::iterator r=researchingUnits.find(unit);
 	if (r!=researchingUnits.end())
 	{
 		BWAPI::TechType type=r->second;

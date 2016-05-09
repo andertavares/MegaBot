@@ -1,6 +1,6 @@
 #include <ProductionManager.h>
 
-ProductionManager::ProductionManager(Arbitrator::Arbitrator<BWAPI::Unit*,double>* arbitrator, BuildingPlacer* placer)
+ProductionManager::ProductionManager(Arbitrator::Arbitrator<BWAPI::Unit,double>* arbitrator, BuildingPlacer* placer)
 {
 	this->arbitrator = arbitrator;
 	this->placer = placer;
@@ -10,7 +10,7 @@ ProductionManager::ProductionManager(Arbitrator::Arbitrator<BWAPI::Unit*,double>
 		startedCount[*i]=0;
 	}
 }
-bool ProductionManager::canMake(BWAPI::Unit* builder, BWAPI::UnitType type)
+bool ProductionManager::canMake(BWAPI::Unit builder, BWAPI::UnitType type)
 {
 	if (builder != NULL)
 	{
@@ -77,10 +77,10 @@ bool ProductionManager::canMake(BWAPI::Unit* builder, BWAPI::UnitType type)
 	return true;
 }
 
-void ProductionManager::onOffer(std::set<BWAPI::Unit*> units)
+void ProductionManager::onOffer(std::set<BWAPI::Unit> units)
 {
 	//go through all the units that are being offered to us
-	for(std::set<BWAPI::Unit*>::iterator i=units.begin();i!=units.end();i++)
+	for(std::set<BWAPI::Unit>::iterator i=units.begin();i!=units.end();i++)
 	{
 		//we will loop through the unit types in the production queue for this type of unit
 		std::map<BWAPI::UnitType,std::list<ProductionUnitType> >::iterator q=productionQueues.find((*i)->getType());
@@ -116,24 +116,24 @@ void ProductionManager::onOffer(std::set<BWAPI::Unit*> units)
 	}
 }
 
-void ProductionManager::onRevoke(BWAPI::Unit* unit, double bid)
+void ProductionManager::onRevoke(BWAPI::Unit unit, double bid)
 {
 	onRemoveUnit(unit);
 }
 
 void ProductionManager::update()
 {
-	std::set<BWAPI::Unit*> myPlayerUnits=BWAPI::Broodwar->self()->getUnits();
-	for(std::set<BWAPI::Unit*>::iterator u = myPlayerUnits.begin(); u != myPlayerUnits.end(); u++)
+	std::set<BWAPI::Unit> myPlayerUnits=BWAPI::Broodwar->self()->getUnits();
+	for(std::set<BWAPI::Unit>::iterator u = myPlayerUnits.begin(); u != myPlayerUnits.end(); u++)
 	{
 		std::map<BWAPI::UnitType,std::list<ProductionUnitType> >::iterator p=productionQueues.find((*u)->getType());
 		if (p!=productionQueues.end() && !p->second.empty() && (*u)->isCompleted() && producingUnits.find(*u)==producingUnits.end())
 			arbitrator->setBid(this, *u, 50);
 	}
 
-	std::map<BWAPI::Unit*,Unit>::iterator i_next;
+	std::map<BWAPI::Unit,Unit>::iterator i_next;
 	//go through all the factories that are producing units
-	for(std::map<BWAPI::Unit*,Unit>::iterator i=producingUnits.begin();i!=producingUnits.end();i=i_next)
+	for(std::map<BWAPI::Unit,Unit>::iterator i=producingUnits.begin();i!=producingUnits.end();i=i_next)
 	{
 		i_next=i;
 		i_next++;
@@ -206,7 +206,7 @@ std::string ProductionManager::getShortName() const
 	return "Prod";
 }
 
-void ProductionManager::onRemoveUnit(BWAPI::Unit* unit)
+void ProductionManager::onRemoveUnit(BWAPI::Unit unit)
 {
 	//remove this unit from the producingUnits map
 	if (producingUnits.find(unit)!=producingUnits.end())
@@ -252,7 +252,7 @@ int ProductionManager::getStartedCount(BWAPI::UnitType type) const
 	return 0;
 }
 
-BWAPI::UnitType ProductionManager::getBuildType(BWAPI::Unit* unit) const
+BWAPI::UnitType ProductionManager::getBuildType(BWAPI::Unit unit) const
 {
 	if (producingUnits.find(unit)==producingUnits.end())
 		return BWAPI::UnitTypes::None;

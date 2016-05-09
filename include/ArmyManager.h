@@ -8,7 +8,7 @@
 #include <BWTA.h>
 //#include <SpendManager.h>
 
-class ArmyManager : Arbitrator::Controller<BWAPI::Unit*,double>
+class ArmyManager : Arbitrator::Controller<BWAPI::Unit,double>
 {
 public:
 	class ArmyData
@@ -25,11 +25,11 @@ public:
 		BWTA::BaseLocation* target;
 		ArmyMode mode;
 	};
-	ArmyManager(Arbitrator::Arbitrator<BWAPI::Unit*,double>* arbitrator);
+	ArmyManager(Arbitrator::Arbitrator<BWAPI::Unit,double>* arbitrator);
 	void setDefenseManager			(DefenseManager*);
 	void setInformationManager	(InformationManager*);
 	void setBaseManager					(BaseManager*);
-	virtual void onOffer(std::set<BWAPI::Unit*> unitGroup);
+	virtual void onOffer(std::set<BWAPI::Unit> unitGroup);
 	virtual void onRevoke(BWAPI::Unit *p, double bid);
 	void onRemoveUnit(BWAPI::Unit *unit);
 	virtual void update();
@@ -41,13 +41,13 @@ public:
 	bool   total_attack;
 	//SpendManager					*spendManager;
 private:
-	Arbitrator::Arbitrator<BWAPI::Unit*,double>* arbitrator;
+	Arbitrator::Arbitrator<BWAPI::Unit,double>* arbitrator;
 //chc
 	std::vector<BWTA::Chokepoint*>							myBorderVector;
 	DefenseManager										*defenseManager;
 	InformationManager								*informationManager;
 	BaseManager												*baseManager;
-	std::map<BWAPI::Unit*, ArmyData>	company;
+	std::map<BWAPI::Unit, ArmyData>	company;
 	std::vector<BWAPI::Position>			enemyBuildings;
 	int																lastFrameCheck;
 	int																lastExpandFrame;

@@ -21,7 +21,7 @@ void EnhancedUI::drawBases() const
 		//Broodwar->drawText(CoordinateType::Map,p.x()*32+3*16,p.y()*32+3*16,"%dx%d",p.x(),p.y());
 
 		//draw a circle at each mineral patch
-		for(std::set<BWAPI::Unit*>::const_iterator j=(*i)->getMinerals().begin();j!=(*i)->getMinerals().end();j++)
+		for(std::set<BWAPI::Unit>::const_iterator j=(*i)->getMinerals().begin();j!=(*i)->getMinerals().end();j++)
 		{
 			Position q=(*j)->getPosition();
 			Broodwar->drawCircle(CoordinateType::Map,q.x(),q.y(),30,Colors::Cyan,false);
@@ -29,7 +29,7 @@ void EnhancedUI::drawBases() const
 		}
 
 		//draw the outlines of vespene geysers
-		for(std::set<BWAPI::Unit*>::const_iterator j=(*i)->getGeysers().begin();j!=(*i)->getGeysers().end();j++)
+		for(std::set<BWAPI::Unit>::const_iterator j=(*i)->getGeysers().begin();j!=(*i)->getGeysers().end();j++)
 		{
 			TilePosition q=(*j)->getTilePosition();
 			Broodwar->drawBox(CoordinateType::Map,q.x()*32,q.y()*32,q.x()*32+4*32,q.y()*32+2*32,Colors::Orange,false);
@@ -72,14 +72,14 @@ void EnhancedUI::drawTerrain() const
 void EnhancedUI::drawProgress() const
 {
 	UnitGroup constructing = SelectAll()(isBuilding).not(isCompleted);
-	for each (Unit* c in constructing)
+	for each (Unit c in constructing)
 	{
 		double progress = 1.0 - (static_cast<double>(c->getRemainingBuildTime()) / c->getType().buildTime());
 		drawProgressBar(c->getPosition(), progress, BWAPI::Colors::Red);
 	}
 
 	UnitGroup producing = SelectAll()(isTraining);
-	for each (Unit* c in producing)
+	for each (Unit c in producing)
 	{
 		if (c->getRemainingTrainTime() > .0)
 		{
@@ -89,14 +89,14 @@ void EnhancedUI::drawProgress() const
 	}
 
 	UnitGroup upgrading = SelectAll()(isUpgrading);
-	for each (Unit* c in upgrading)
+	for each (Unit c in upgrading)
 	{
 		double progress = 1.0 - (static_cast<double>(c->getRemainingUpgradeTime()) / c->getUpgrade().upgradeTime());
 		drawProgressBar(c->getPosition(), progress, BWAPI::Colors::Orange);
 	}
 
 	UnitGroup researching = SelectAll()(isResearching);
-	for each (Unit* c in researching)
+	for each (Unit c in researching)
 	{
 		double progress = 1.0 - (static_cast<double>(c->getRemainingResearchTime()) / c->getTech().researchTime());
 		drawProgressBar(c->getPosition(), progress, BWAPI::Colors::Yellow);

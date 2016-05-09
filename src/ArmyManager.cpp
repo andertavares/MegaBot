@@ -1,6 +1,6 @@
 #include <ArmyManager.h>
 using namespace BWAPI;
-ArmyManager::ArmyManager(Arbitrator::Arbitrator<BWAPI::Unit*,double>* arbitrator)
+ArmyManager::ArmyManager(Arbitrator::Arbitrator<BWAPI::Unit,double>* arbitrator)
 {
 	this->arbitrator = arbitrator;
 	lastFrameCheck = 0;
@@ -179,11 +179,11 @@ void ArmyManager::update()
 				firstAttack = true;
 			}
 
-			std::set<BWAPI::Unit*> idleDefenders = defenseManager->getIdleDefenders();
+			std::set<BWAPI::Unit> idleDefenders = defenseManager->getIdleDefenders();
 			//int count = 0;
 			if (!idleDefenders.empty())
 			{
-				for (std::set<BWAPI::Unit*>::iterator it = idleDefenders.begin(); it != idleDefenders.end(); it++)
+				for (std::set<BWAPI::Unit>::iterator it = idleDefenders.begin(); it != idleDefenders.end(); it++)
 				{
 					arbitrator->setBid(this, *it, 70);
 					//++count;
@@ -214,11 +214,11 @@ void ArmyManager::update()
 				firstAttack = true;
 			}
 
-			std::set<BWAPI::Unit*> idleDefenders = defenseManager->getIdleDefenders();
+			std::set<BWAPI::Unit> idleDefenders = defenseManager->getIdleDefenders();
 			//int count = 0;
 			if (!idleDefenders.empty())
 			{
-				for (std::set<BWAPI::Unit*>::iterator it = idleDefenders.begin(); it != idleDefenders.end(); it++)
+				for (std::set<BWAPI::Unit>::iterator it = idleDefenders.begin(); it != idleDefenders.end(); it++)
 				{
 					arbitrator->setBid(this, *it, 70);
 					//++count;
@@ -253,11 +253,11 @@ void ArmyManager::update()
 				firstAttack = true;
 			}
 
-			std::set<BWAPI::Unit*> idleDefenders = defenseManager->getIdleDefenders();
+			std::set<BWAPI::Unit> idleDefenders = defenseManager->getIdleDefenders();
 			//int count = 0;
 			if (!idleDefenders.empty())
 			{
-				for (std::set<BWAPI::Unit*>::iterator it = idleDefenders.begin(); it != idleDefenders.end(); it++)
+				for (std::set<BWAPI::Unit>::iterator it = idleDefenders.begin(); it != idleDefenders.end(); it++)
 				{
 					arbitrator->setBid(this, *it, 70);
 					//++count;
@@ -289,11 +289,11 @@ void ArmyManager::update()
 				firstAttack = true;
 			}
 
-			std::set<BWAPI::Unit*> idleDefenders = defenseManager->getIdleDefenders();
+			std::set<BWAPI::Unit> idleDefenders = defenseManager->getIdleDefenders();
 			//int count = 0;
 			if (!idleDefenders.empty())
 			{
-				for (std::set<BWAPI::Unit*>::iterator it = idleDefenders.begin(); it != idleDefenders.end(); it++)
+				for (std::set<BWAPI::Unit>::iterator it = idleDefenders.begin(); it != idleDefenders.end(); it++)
 				{
 					arbitrator->setBid(this, *it, 70);
 					//++count;
@@ -302,9 +302,9 @@ void ArmyManager::update()
 		}
 			}
 
-		std::map<BWAPI::Unit*, InformationManager::UnitData> savedData = informationManager->getSavedData();
+		std::map<BWAPI::Unit, InformationManager::UnitData> savedData = informationManager->getSavedData();
 		enemyBuildings.clear();
-		for (std::map<BWAPI::Unit*, InformationManager::UnitData>::const_iterator sd = savedData.begin(); sd != savedData.end(); sd++)
+		for (std::map<BWAPI::Unit, InformationManager::UnitData>::const_iterator sd = savedData.begin(); sd != savedData.end(); sd++)
 		{
 			if ((sd->second.exists) && (sd->second.player == BWAPI::Broodwar->enemy()) && (sd->second.type.isBuilding()) && (!sd->second.type.isInvincible()))
 			{
@@ -314,7 +314,7 @@ void ArmyManager::update()
 		round = (int)enemyBuildings.size() - 1;
 
 		//for each (BWAPI::Unit *u in company)
-		for(std::map<BWAPI::Unit*,ArmyManager::ArmyData>::iterator it = company.begin(); it != company.end(); it++)
+		for(std::map<BWAPI::Unit,ArmyManager::ArmyData>::iterator it = company.begin(); it != company.end(); it++)
 		{
 			if (it->first->isIdle())
 			{
@@ -350,7 +350,7 @@ void ArmyManager::update()
 				it->second.mode = ArmyManager::ArmyData::Attacking;
 			}
 
-			//std::set<BWAPI::Unit*> aroundMe = it->first->getUnitsInRadius(it->first->getType().sightRange()); //u->getUnitsInWeaponRange(u->getType().groundWeapon());
+			//std::set<BWAPI::Unit> aroundMe = it->first->getUnitsInRadius(it->first->getType().sightRange()); //u->getUnitsInWeaponRange(u->getType().groundWeapon());
 			//for each (BWAPI::Unit *am in aroundMe)
 			//{
 				/* attack workers IF there is no danger!!! */
@@ -371,7 +371,7 @@ std::string ArmyManager::getShortName() const
 	return "Arm";
 }
 
-void ArmyManager::onOffer(std::set<BWAPI::Unit*> units)
+void ArmyManager::onOffer(std::set<BWAPI::Unit> units)
 {
 	for each (BWAPI::Unit *u in units)
 	{
@@ -390,7 +390,7 @@ void ArmyManager::onRevoke(BWAPI::Unit *u, double bid)
 	onRemoveUnit(u);
 }
 
-void ArmyManager::onRemoveUnit(BWAPI::Unit* u)
+void ArmyManager::onRemoveUnit(BWAPI::Unit u)
 {
 	company.erase(u);
 }

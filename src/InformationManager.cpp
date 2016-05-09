@@ -39,7 +39,7 @@ InformationManager::~InformationManager()
 {
 	TheInformationManager = NULL;
 }
-void InformationManager::onUnitDiscover(Unit* unit)
+void InformationManager::onUnitDiscover(Unit unit)
 {
 	savedData[unit].exists = true;
 	int test2=0;
@@ -65,14 +65,14 @@ void InformationManager::onUnitDiscover(Unit* unit)
 		scoutedAnEnemyBase = true;
 	}
 }
-void InformationManager::onUnitEvade(Unit* unit)
+void InformationManager::onUnitEvade(Unit unit)
 {
 	savedData[unit].player=unit->getPlayer();
 	savedData[unit].type=unit->getType();
 	savedData[unit].position=unit->getPosition();
 	savedData[unit].lastSeenTime=Broodwar->getFrameCount();
 }
-void InformationManager::onUnitDestroy(Unit* unit)
+void InformationManager::onUnitDestroy(Unit unit)
 {
 	this->onUnitEvade(unit);
 	savedData[unit].exists=false;
@@ -88,51 +88,51 @@ void InformationManager::onUnitDestroy(Unit* unit)
 	}
 }
 
-Player* InformationManager::getPlayer(Unit* unit) const
+Player* InformationManager::getPlayer(Unit unit) const
 {
 	if (unit->exists())
 		return unit->getPlayer();
-	map<Unit*,UnitData>::const_iterator i=savedData.find(unit);
+	map<Unit,UnitData>::const_iterator i=savedData.find(unit);
 	if (i==savedData.end())
 		return NULL;
 	return (*i).second.player;
 }
 
-UnitType InformationManager::getType(Unit* unit) const
+UnitType InformationManager::getType(Unit unit) const
 {
 	if (unit->exists())
 		return unit->getType();
-	map<Unit*,UnitData>::const_iterator i=savedData.find(unit);
+	map<Unit,UnitData>::const_iterator i=savedData.find(unit);
 	if (i==savedData.end())
 		return UnitTypes::None;
 	return (*i).second.type;
 }
 
-Position InformationManager::getLastPosition(Unit* unit) const
+Position InformationManager::getLastPosition(Unit unit) const
 {
 	if (unit->exists())
 		return unit->getPosition();
-	map<Unit*,UnitData>::const_iterator i=savedData.find(unit);
+	map<Unit,UnitData>::const_iterator i=savedData.find(unit);
 	if (i==savedData.end())
 		return Positions::None;
 	return (*i).second.position;
 }
 
-int InformationManager::getLastSeenTime(Unit* unit) const
+int InformationManager::getLastSeenTime(Unit unit) const
 {
 	if (unit->exists())
 		return Broodwar->getFrameCount();
-	map<Unit*,UnitData>::const_iterator i=savedData.find(unit);
+	map<Unit,UnitData>::const_iterator i=savedData.find(unit);
 	if (i==savedData.end())
 		return -1;
 	return (*i).second.lastSeenTime;
 }
 
-bool InformationManager::exists(Unit* unit) const
+bool InformationManager::exists(Unit unit) const
 {
 	if (unit->exists())
 		return true;
-	map<Unit*,UnitData>::const_iterator i=savedData.find(unit);
+	map<Unit,UnitData>::const_iterator i=savedData.find(unit);
 	if (i==savedData.end())
 		return false;
 	return (*i).second.exists;
@@ -156,7 +156,7 @@ const set<BWTA::BaseLocation*>& InformationManager::getEnemyBases() const
 	return this->enemyBases;
 }
 
-const std::map<BWAPI::Unit*, InformationManager::UnitData>& InformationManager::getSavedData() const
+const std::map<BWAPI::Unit, InformationManager::UnitData>& InformationManager::getSavedData() const
 {
 	return this->savedData;
 }

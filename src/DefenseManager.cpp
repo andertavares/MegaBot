@@ -1,7 +1,7 @@
 #include <DefenseManager.h>
 #include <BorderManager.h>
 using namespace BWAPI;
-DefenseManager::DefenseManager(Arbitrator::Arbitrator<BWAPI::Unit*,double>* arbitrator)
+DefenseManager::DefenseManager(Arbitrator::Arbitrator<BWAPI::Unit,double>* arbitrator)
 {
 	firsss2 = false; //chc
 	very_early_rush = false;
@@ -29,11 +29,11 @@ void DefenseManager::setInformationManager(InformationManager *informationManage
 	this->informationManager = informationManager;
 }
 
-std::set<BWAPI::Unit*>& DefenseManager::getIdleDefenders()
+std::set<BWAPI::Unit>& DefenseManager::getIdleDefenders()
 {
 	idleDefenders.clear();
 
-	for (std::map<BWAPI::Unit*, DefenseData>::iterator it = defenders.begin(); it != defenders.end(); it++)
+	for (std::map<BWAPI::Unit, DefenseData>::iterator it = defenders.begin(); it != defenders.end(); it++)
 	{
 		if ((it->second.mode == DefenseData::Idle) || (it->second.mode == DefenseData::Moving))
 			idleDefenders.insert(it->first);
@@ -42,9 +42,9 @@ std::set<BWAPI::Unit*>& DefenseManager::getIdleDefenders()
 	return idleDefenders;
 }
 
-void DefenseManager::onOffer(std::set<BWAPI::Unit*> units)
+void DefenseManager::onOffer(std::set<BWAPI::Unit> units)
 {
-	for(std::set<BWAPI::Unit*>::iterator u = units.begin(); u != units.end(); u++)
+	for(std::set<BWAPI::Unit>::iterator u = units.begin(); u != units.end(); u++)
 	{
 		if (defenders.find(*u) == defenders.end())
 		{
@@ -55,12 +55,12 @@ void DefenseManager::onOffer(std::set<BWAPI::Unit*> units)
 	}
 }
 
-void DefenseManager::onRevoke(BWAPI::Unit* unit, double bid)
+void DefenseManager::onRevoke(BWAPI::Unit unit, double bid)
 {
 	defenders.erase(unit);
 }
 
-void DefenseManager::onRemoveUnit(BWAPI::Unit* unit)
+void DefenseManager::onRemoveUnit(BWAPI::Unit unit)
 {
 	defenders.erase(unit);
 }
@@ -112,8 +112,8 @@ void DefenseManager::update()
 		lastFrameCheck = BWAPI::Broodwar->getFrameCount();
 
 		// Bid on all completed military units
-		std::set<BWAPI::Unit*> myPlayerUnits=BWAPI::Broodwar->self()->getUnits();
-		for (std::set<BWAPI::Unit*>::iterator u = myPlayerUnits.begin(); u != myPlayerUnits.end(); u++)
+		std::set<BWAPI::Unit> myPlayerUnits=BWAPI::Broodwar->self()->getUnits();
+		for (std::set<BWAPI::Unit>::iterator u = myPlayerUnits.begin(); u != myPlayerUnits.end(); u++)
 		{
 			if ((*u)->isCompleted() && 
 				!(*u)->getType().isWorker() && 
@@ -196,7 +196,7 @@ void DefenseManager::update()
   int i=0;
   if (!myBorder.empty())
   {
-    for (std::map<BWAPI::Unit*,DefenseData>::iterator u = defenders.begin(); u != defenders.end(); u++)
+    for (std::map<BWAPI::Unit,DefenseData>::iterator u = defenders.begin(); u != defenders.end(); u++)
     {
       if ((*u).second.mode == DefenseData::Idle || borderUpdated)
       {
@@ -228,7 +228,7 @@ void DefenseManager::update()
   int i=0;
   if (!enemyBorder.empty())
   {
-    for (std::map<BWAPI::Unit*,DefenseData>::iterator u = defenders.begin(); u != defenders.end(); u++)
+    for (std::map<BWAPI::Unit,DefenseData>::iterator u = defenders.begin(); u != defenders.end(); u++)
     {
    
         BWAPI::Position chokePosition2=enemyBorderVector[i]->getCenter();
@@ -249,7 +249,7 @@ void DefenseManager::update()
 		round = (int)myBorderVector.size() - 1;
 		if (!myBorder.empty())
 		{
-			for (std::map<BWAPI::Unit*,DefenseData>::iterator u = defenders.begin(); u != defenders.end(); u++)
+			for (std::map<BWAPI::Unit,DefenseData>::iterator u = defenders.begin(); u != defenders.end(); u++)
 			{
 				if (u->first->isIdle())
 				{
@@ -299,7 +299,7 @@ void DefenseManager::update()
 		int i=0;
 		if (!myBorder.empty())
 		{
-			for (std::map<BWAPI::Unit*,DefenseData>::iterator u = defenders.begin(); u != defenders.end(); u++)
+			for (std::map<BWAPI::Unit,DefenseData>::iterator u = defenders.begin(); u != defenders.end(); u++)
 			{
 				if (u->first->isIdle())
 				{

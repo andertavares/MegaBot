@@ -3,7 +3,7 @@
 #include <ConstructionManager.h>
 #include <ProductionManager.h>
 #include <MorphManager.h>
-BuildManager::BuildManager(Arbitrator::Arbitrator<BWAPI::Unit*,double>* arbitrator)
+BuildManager::BuildManager(Arbitrator::Arbitrator<BWAPI::Unit,double>* arbitrator)
 {
 	this->arbitrator=arbitrator;
 	this->buildingPlacer=new BuildingPlacer();
@@ -44,7 +44,7 @@ BuildingPlacer* BuildManager::getBuildingPlacer() const
 {
 	return this->buildingPlacer;
 }
-void BuildManager::onRemoveUnit(BWAPI::Unit* unit)
+void BuildManager::onRemoveUnit(BWAPI::Unit unit)
 {
 	this->constructionManager->onRemoveUnit(unit);
 	this->productionManager->onRemoveUnit(unit);
@@ -117,7 +117,7 @@ void BuildManager::setBuildDistance(int distance)
 {
 	this->buildingPlacer->setBuildDistance(distance);
 }
-BWAPI::UnitType BuildManager::getBuildType(BWAPI::Unit* unit) const
+BWAPI::UnitType BuildManager::getBuildType(BWAPI::Unit unit) const
 {
 	BWAPI::UnitType t=this->productionManager->getBuildType(unit);
 	if (t==BWAPI::UnitTypes::None)

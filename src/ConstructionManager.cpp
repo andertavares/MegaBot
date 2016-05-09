@@ -1,6 +1,6 @@
 #include <ConstructionManager.h>
 #include <UnitGroupManager.h>
-ConstructionManager::ConstructionManager(Arbitrator::Arbitrator<BWAPI::Unit*,double>* arbitrator, BuildingPlacer* placer)
+ConstructionManager::ConstructionManager(Arbitrator::Arbitrator<BWAPI::Unit,double>* arbitrator, BuildingPlacer* placer)
 {
 	this->arbitrator   = arbitrator;
 	this->placer       = placer;
@@ -11,7 +11,7 @@ ConstructionManager::ConstructionManager(Arbitrator::Arbitrator<BWAPI::Unit*,dou
 	}
 }
 
-void ConstructionManager::onOffer(std::set<BWAPI::Unit*> units)
+void ConstructionManager::onOffer(std::set<BWAPI::Unit> units)
 {
 	//we are being offered some units (hopefully builders).
 	//accept want we need and decline the rest
@@ -26,9 +26,9 @@ void ConstructionManager::onOffer(std::set<BWAPI::Unit*> units)
 			b_next=b;
 			b_next++;
 			double min_dist = 1000000;
-			BWAPI::Unit* builder = NULL;
+			BWAPI::Unit builder = NULL;
 			//find the best builder based on distance
-			for(std::set<BWAPI::Unit*>::iterator u = units.begin(); u != units.end(); u++)
+			for(std::set<BWAPI::Unit>::iterator u = units.begin(); u != units.end(); u++)
 			{
 				//only consider this builder if it can build this type of building
 				if (((*b)->type.whatBuilds().first)==(*u)->getType() && (!(*b)->type.isAddon() || (*u)->getAddon()==NULL))
@@ -90,28 +90,28 @@ void ConstructionManager::onOffer(std::set<BWAPI::Unit*> units)
 		}
 	}
 	//decline whatever is left
-	for(std::set<BWAPI::Unit*>::iterator u = units.begin(); u != units.end(); u++)
+	for(std::set<BWAPI::Unit>::iterator u = units.begin(); u != units.end(); u++)
 	{
 		arbitrator->decline(this, *u, 0);
 		arbitrator->removeBid(this, *u);
 	}
 }
 
-void ConstructionManager::onRevoke(BWAPI::Unit* unit, double bid)
+void ConstructionManager::onRevoke(BWAPI::Unit unit, double bid)
 {
 	this->onRemoveUnit(unit);
 }
 
 void ConstructionManager::update()
 {
-	std::set<BWAPI::Unit*> myPlayerUnits = SelectAll()(isCompleted)(GetAddon,(BWAPI::Unit*)NULL).not(isCarryingMinerals,isCarryingGas,isGatheringGas);
+	std::set<BWAPI::Unit> myPlayerUnits = SelectAll()(isCompleted)(GetAddon,(BWAPI::Unit)NULL).not(isCarryingMinerals,isCarryingGas,isGatheringGas);
 
 	//iterate through all the builder types
 	for(std::map<BWAPI::UnitType,std::set<Building*> >::iterator i=this->buildingsNeedingBuilders.begin();i!=this->buildingsNeedingBuilders.end();i++)
 	{
 		if (!i->second.empty()) //if its empty, we don't really need builders of this type
 		{
-			for(std::set<BWAPI::Unit*>::iterator u = myPlayerUnits.begin(); u != myPlayerUnits.end(); u++)
+			for(std::set<BWAPI::Unit>::iterator u = myPlayerUnits.begin(); u != myPlayerUnits.end(); u++)
 			{
 				//if this unit is completed and the right type, and doesn't have an addon, and we aren't already using it
 				if ((*u)->getType()==i->first && this->builders.find(*u)==this->builders.end())
@@ -158,8 +158,8 @@ void ConstructionManager::update()
 			if (b->builderUnit!=NULL)
 				b->buildingUnit=b->builderUnit->getAddon(); //set buildingUnit to the addon (whether the addon exists or not)
 
-			BWAPI::Unit* u = b->builderUnit;
-			BWAPI::Unit* s = b->buildingUnit;
+			BWAPI::Unit u = b->builderUnit;
+			BWAPI::Unit s = b->buildingUnit;
 			if (s!=NULL && s->isCompleted()) //if the building exists and is completed
 			{
 				startedCount[b->type]--;
@@ -272,8 +272,8 @@ void ConstructionManager::update()
 			if (b->buildingUnit == NULL) //if we don't have a building yet, look for it
 			{
 				//look at the units on the tile to see if it exists yet
-				std::set<BWAPI::Unit*> getUnitsOnTile = BWAPI::Broodwar->getUnitsOnTile(b->tilePosition.x(), b->tilePosition.y());
-				for(std::set<BWAPI::Unit*>::iterator t = getUnitsOnTile.begin(); t != getUnitsOnTile.end(); t++)
+				std::set<BWAPI::Unit> getUnitsOnTile = BWAPI::Broodwar->getUnitsOnTile(b->tilePosition.x(), b->tilePosition.y());
+				for(std::set<BWAPI::Unit>::iterator t = getUnitsOnTile.begin(); t != getUnitsOnTile.end(); t++)
 					if ((*t)->getType() == b->type && !(*t)->isLifted())
 					{
 						//we found the building
@@ -287,8 +287,8 @@ void ConstructionManager::update()
 						b->buildingUnit = b->builderUnit;
 					}
 			}
-			BWAPI::Unit* u = b->builderUnit;
-			BWAPI::Unit* s = b->buildingUnit;
+			BWAPI::Unit u = b->builderUnit;
+			BWAPI::Unit s = b->buildingUnit;
 			if (s != NULL && s->isCompleted()) //if the building is completed, we're done
 			{
 				startedCount[b->type]--;
@@ -377,7 +377,7 @@ std::string ConstructionManager::getShortName() const
 	return "Con";
 }
 
-void ConstructionManager::onRemoveUnit(BWAPI::Unit* unit)
+void ConstructionManager::onRemoveUnit(BWAPI::Unit unit)
 {
 	//remove the builder if needed - incomplete buildings will ask for a new builder during update()
 	if (builders.find(unit) != builders.end())

@@ -5314,11 +5314,11 @@ if(difference_army <= -3 && in_enemy_n >= 3)
 		*/
 		/*
 		//chc
-		for(std::set<Unit*>::const_iterator i=Broodwar->self()->getUnits().begin();i!=Broodwar->self()->getUnits().end();i++)
+		for(std::set<Unit>::const_iterator i=Broodwar->self()->getUnits().begin();i!=Broodwar->self()->getUnits().end();i++)
 		{
 		if ((*i)->getType().isWorker())
 		{
-		//BWAPI::Unit* u = b->builderUnit;
+		//BWAPI::Unit u = b->builderUnit;
 		Position *q = new Position(1760,208);;
 		(*i)->rightClick(*q);
 		}
@@ -5351,21 +5351,21 @@ if(difference_army <= -3 && in_enemy_n >= 3)
 
 
 
-					std::set<Unit*> units=Broodwar->self()->getUnits();
+					std::set<Unit> units=Broodwar->self()->getUnits();
 					if (this->showManagerAssignments)
 					{
-						for(std::set<Unit*>::iterator i=units.begin();i!=units.end();i++)
+						for(std::set<Unit>::iterator i=units.begin();i!=units.end();i++)
 						{
 							if (this->arbitrator.hasBid(*i))
 							{
 								int x=(*i)->getPosition().x();
 								int y=(*i)->getPosition().y();
-								std::list< std::pair< Arbitrator::Controller<BWAPI::Unit*,double>*, double> > bids=this->arbitrator.getAllBidders(*i);
+								std::list< std::pair< Arbitrator::Controller<BWAPI::Unit,double>*, double> > bids=this->arbitrator.getAllBidders(*i);
 								int y_off=0;
 								bool first = false;
 								const char activeColor = '\x07', inactiveColor = '\x16';
 								char color = activeColor;
-								for(std::list< std::pair< Arbitrator::Controller<BWAPI::Unit*,double>*, double> >::iterator j=bids.begin();j!=bids.end();j++)
+								for(std::list< std::pair< Arbitrator::Controller<BWAPI::Unit,double>*, double> >::iterator j=bids.begin();j!=bids.end();j++)
 								{
 									//Broodwar->drawTextMap(x,y+y_off,"%c%s: %d",color,j->first->getShortName().c_str(),(int)j->second);
 									y_off+=15;
@@ -5376,7 +5376,7 @@ if(difference_army <= -3 && in_enemy_n >= 3)
 					}
 	}
 }
-void Protoss_FD::onUnitDestroy(BWAPI::Unit* unit)
+void Protoss_FD::onUnitDestroy(BWAPI::Unit unit)
 {
 	if (Broodwar->isReplay()) return;
 	this->arbitrator.onRemoveObject(unit);
@@ -5393,25 +5393,25 @@ void Protoss_FD::onUnitDestroy(BWAPI::Unit* unit)
 	this->armyManager->onRemoveUnit(unit);
 }
 
-void Protoss_FD::onUnitDiscover(BWAPI::Unit* unit)
+void Protoss_FD::onUnitDiscover(BWAPI::Unit unit)
 {
 	if (Broodwar->isReplay()) return;
 	this->informationManager->onUnitDiscover(unit);
 	this->unitGroupManager->onUnitDiscover(unit);
 }
-void Protoss_FD::onUnitEvade(BWAPI::Unit* unit)
+void Protoss_FD::onUnitEvade(BWAPI::Unit unit)
 {
 	if (Broodwar->isReplay()) return;
 	this->informationManager->onUnitEvade(unit);
 	this->unitGroupManager->onUnitEvade(unit);
 }
 
-void Protoss_FD::onUnitMorph(BWAPI::Unit* unit)
+void Protoss_FD::onUnitMorph(BWAPI::Unit unit)
 {
 	if (Broodwar->isReplay()) return;
 	this->unitGroupManager->onUnitMorph(unit);
 }
-void Protoss_FD::onUnitRenegade(BWAPI::Unit* unit)
+void Protoss_FD::onUnitRenegade(BWAPI::Unit unit)
 {
 	if (Broodwar->isReplay()) return;
 	this->unitGroupManager->onUnitRenegade(unit);

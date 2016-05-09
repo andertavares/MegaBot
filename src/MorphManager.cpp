@@ -1,6 +1,6 @@
 #include <MorphManager.h>
 
-MorphManager::MorphManager(Arbitrator::Arbitrator<BWAPI::Unit*,double>* arbitrator)
+MorphManager::MorphManager(Arbitrator::Arbitrator<BWAPI::Unit,double>* arbitrator)
 {
 	this->arbitrator = arbitrator;
 	for(std::set<BWAPI::UnitType>::const_iterator i=BWAPI::UnitTypes::allUnitTypes().begin();i!=BWAPI::UnitTypes::allUnitTypes().end();i++)
@@ -10,7 +10,7 @@ MorphManager::MorphManager(Arbitrator::Arbitrator<BWAPI::Unit*,double>* arbitrat
 	}
 }
 
-bool MorphManager::canMake(BWAPI::Unit* builder, BWAPI::UnitType type)
+bool MorphManager::canMake(BWAPI::Unit builder, BWAPI::UnitType type)
 {
 	if (builder != NULL)
 	{
@@ -77,10 +77,10 @@ bool MorphManager::canMake(BWAPI::Unit* builder, BWAPI::UnitType type)
 	return true;
 }
 
-void MorphManager::onOffer(std::set<BWAPI::Unit*> units)
+void MorphManager::onOffer(std::set<BWAPI::Unit> units)
 {
 	//go through all the units that are being offered to us
-	for(std::set<BWAPI::Unit*>::iterator i=units.begin();i!=units.end();i++)
+	for(std::set<BWAPI::Unit>::iterator i=units.begin();i!=units.end();i++)
 	{
 		//we will go through all the units in the morph queue
 		std::map<BWAPI::UnitType,std::list<BWAPI::UnitType> >::iterator q=morphQueues.find((*i)->getType());
@@ -120,9 +120,9 @@ void MorphManager::onOffer(std::set<BWAPI::Unit*> units)
 	}
 }
 
-void MorphManager::onRevoke(BWAPI::Unit* unit, double bid)
+void MorphManager::onRevoke(BWAPI::Unit unit, double bid)
 {
-	std::map<BWAPI::Unit*,Unit>::iterator m=morphingUnits.find(unit);
+	std::map<BWAPI::Unit,Unit>::iterator m=morphingUnits.find(unit);
 	if (m!=morphingUnits.end())
 	{
 		BWAPI::UnitType type=m->second.type;
@@ -134,16 +134,16 @@ void MorphManager::onRevoke(BWAPI::Unit* unit, double bid)
 
 void MorphManager::update()
 {
-	std::set<BWAPI::Unit*> myPlayerUnits=BWAPI::Broodwar->self()->getUnits();
-	for(std::set<BWAPI::Unit*>::iterator u = myPlayerUnits.begin(); u != myPlayerUnits.end(); u++)
+	std::set<BWAPI::Unit> myPlayerUnits=BWAPI::Broodwar->self()->getUnits();
+	for(std::set<BWAPI::Unit>::iterator u = myPlayerUnits.begin(); u != myPlayerUnits.end(); u++)
 	{
 		std::map<BWAPI::UnitType,std::list<BWAPI::UnitType> >::iterator q=morphQueues.find((*u)->getType());
 		if (q!=morphQueues.end() && !q->second.empty() && (*u)->isCompleted() && morphingUnits.find(*u)==morphingUnits.end())
 			arbitrator->setBid(this, *u, 50);
 	}
-	std::map<BWAPI::Unit*,Unit>::iterator i_next;
+	std::map<BWAPI::Unit,Unit>::iterator i_next;
 	//iterate through all the morphing units
-	for(std::map<BWAPI::Unit*,Unit>::iterator i=morphingUnits.begin();i!=morphingUnits.end();i=i_next)
+	for(std::map<BWAPI::Unit,Unit>::iterator i=morphingUnits.begin();i!=morphingUnits.end();i=i_next)
 	{
 		i_next=i;
 		i_next++;
@@ -183,9 +183,9 @@ std::string MorphManager::getShortName() const
 	return "Morph";
 }
 
-void MorphManager::onRemoveUnit(BWAPI::Unit* unit)
+void MorphManager::onRemoveUnit(BWAPI::Unit unit)
 {
-	std::map<BWAPI::Unit*,Unit>::iterator m=morphingUnits.find(unit);
+	std::map<BWAPI::Unit,Unit>::iterator m=morphingUnits.find(unit);
 	if (m!=morphingUnits.end())
 	{
 		BWAPI::UnitType type=m->second.type;
@@ -225,7 +225,7 @@ int MorphManager::getStartedCount(BWAPI::UnitType type) const
 		return i->second;
 	return 0;
 }
-BWAPI::UnitType MorphManager::getBuildType(BWAPI::Unit* unit) const
+BWAPI::UnitType MorphManager::getBuildType(BWAPI::Unit unit) const
 {
 	if (morphingUnits.find(unit)==morphingUnits.end())
 		return BWAPI::UnitTypes::None;

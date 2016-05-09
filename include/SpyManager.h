@@ -7,7 +7,7 @@
 #include <BWAPI.h>
 #include <stack>
 
-class SpyManager : public Arbitrator::Controller<BWAPI::Unit*,double>
+class SpyManager : public Arbitrator::Controller<BWAPI::Unit,double>
 {
 public:
 	class SpyData
@@ -26,16 +26,16 @@ public:
 		SpyMode mode;
 	};
 
-	SpyManager(Arbitrator::Arbitrator<BWAPI::Unit*,double>* arbitrator);
+	SpyManager(Arbitrator::Arbitrator<BWAPI::Unit,double>* arbitrator);
 	~SpyManager();
 
-	virtual void onOffer	(std::set<BWAPI::Unit*> units);
-	virtual void onRevoke	(BWAPI::Unit* unit, double bid);
+	virtual void onOffer	(std::set<BWAPI::Unit> units);
+	virtual void onRevoke	(BWAPI::Unit unit, double bid);
 	virtual void update		();
 
 	virtual std::string getName			() const;
 	virtual std::string getShortName() const;
-	void								onRemoveUnit(BWAPI::Unit* unit);
+	void								onRemoveUnit(BWAPI::Unit unit);
 
 	// Non-Controller methods.
 	void buildObserver				();
@@ -48,13 +48,13 @@ public:
 
 private:
 	void																				drawAssignments();
-	Arbitrator::Arbitrator<BWAPI::Unit*,double>	*arbitrator;
+	Arbitrator::Arbitrator<BWAPI::Unit,double>	*arbitrator;
 	InformationManager													*informationManager;
 	BuildOrderManager														*buildOrderManager;
 
 	Random																			*randomDodge;
 
-	std::map<BWAPI::Unit*, SpyData>							spies;
+	std::map<BWAPI::Unit, SpyData>							spies;
 	std::stack <BWTA::BaseLocation*>						baseLocationsToSpy;
 	std::set<BWTA::BaseLocation*>								baseLocationsSpied;
 	BWTA::BaseLocation													*myStartLocation;

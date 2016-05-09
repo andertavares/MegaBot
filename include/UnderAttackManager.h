@@ -6,7 +6,7 @@
 #include <BaseManager.h>
 #include <BWAPI.h>
 
-class UnderAttackManager : Arbitrator::Controller<BWAPI::Unit*,double>
+class UnderAttackManager : Arbitrator::Controller<BWAPI::Unit,double>
 {
 public:
 	class UAData
@@ -26,9 +26,9 @@ public:
 		BWAPI::Unit *needHelp;
 	};
 	
-	UnderAttackManager(Arbitrator::Arbitrator<BWAPI::Unit*,double>* arbitrator);
+	UnderAttackManager(Arbitrator::Arbitrator<BWAPI::Unit,double>* arbitrator);
 	
-	virtual void				onOffer						(std::set<BWAPI::Unit*> unitGroup);
+	virtual void				onOffer						(std::set<BWAPI::Unit> unitGroup);
 	virtual void				onRevoke					(BWAPI::Unit *p, double bid);
 	void								onRemoveUnit			(BWAPI::Unit *unit);
 	virtual void				update						();
@@ -39,11 +39,11 @@ public:
 	void								setBaseManager		(BaseManager*);
 
 private:
-	Arbitrator::Arbitrator<BWAPI::Unit*,double> *arbitrator;
+	Arbitrator::Arbitrator<BWAPI::Unit,double> *arbitrator;
 	DefenseManager															*defenseManager;
 	BaseManager																	*baseManager;
 	int																					lastFrameCheck;
 
 	//set of all units controlled by the UAM
-	std::map<BWAPI::Unit*, UAData>							backUp;
+	std::map<BWAPI::Unit, UAData>							backUp;
 };

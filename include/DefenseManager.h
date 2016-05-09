@@ -5,7 +5,7 @@
 #include <BaseManager.h>
 #include <InformationManager.h>
 class BorderManager;
-class DefenseManager : Arbitrator::Controller<BWAPI::Unit*,double>
+class DefenseManager : Arbitrator::Controller<BWAPI::Unit,double>
 {
 public:
 	class DefenseData
@@ -20,15 +20,15 @@ public:
 		DefenseData(){ mode = Idle; }
 		DefenseMode mode;
 	};
-	DefenseManager(Arbitrator::Arbitrator<BWAPI::Unit*,double>* arbitrator);
+	DefenseManager(Arbitrator::Arbitrator<BWAPI::Unit,double>* arbitrator);
 
 	void										setBorderManager			(BorderManager* borderManager);
 	void										setBaseManager				(BaseManager *baseManager);
 	void										setInformationManager	(InformationManager *informationManager);
-	std::set<BWAPI::Unit*>& getIdleDefenders			();
-	virtual void						onOffer								(std::set<BWAPI::Unit*> units);
-	virtual void						onRevoke							(BWAPI::Unit* unit, double bid);
-	void										onRemoveUnit					(BWAPI::Unit* unit);
+	std::set<BWAPI::Unit>& getIdleDefenders			();
+	virtual void						onOffer								(std::set<BWAPI::Unit> units);
+	virtual void						onRevoke							(BWAPI::Unit unit, double bid);
+	void										onRemoveUnit					(BWAPI::Unit unit);
 	virtual void						update								();
 	virtual std::string			getName								() const;
 	virtual std::string			getShortName					() const;
@@ -41,7 +41,7 @@ private:
 	BorderManager																*borderManager;
 	BaseManager																	*baseManager; 
 	InformationManager													*informationManager;
-	Arbitrator::Arbitrator<BWAPI::Unit*,double>	*arbitrator;
+	Arbitrator::Arbitrator<BWAPI::Unit,double>	*arbitrator;
 	std::set<BWTA::Chokepoint*>									myBorder;
 	std::vector<BWTA::Chokepoint*>							myBorderVector;
 
@@ -54,8 +54,8 @@ private:
 	bool	firsss;
 
 
-	std::map<BWAPI::Unit*,DefenseData>					defenders;
-	std::set<BWAPI::Unit*>											idleDefenders;
+	std::map<BWAPI::Unit,DefenseData>					defenders;
+	std::set<BWAPI::Unit>											idleDefenders;
 	int																					lastFrameCheck;
 	int																					round;
 };

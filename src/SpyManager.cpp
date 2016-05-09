@@ -19,7 +19,7 @@ BWTA::BaseLocation* findFarestBaseLocation(std::set<BWTA::BaseLocation *> allBas
 	return toReturn;
 }
 
-SpyManager::SpyManager(Arbitrator::Arbitrator<BWAPI::Unit*,double> *arbitrator)
+SpyManager::SpyManager(Arbitrator::Arbitrator<BWAPI::Unit,double> *arbitrator)
 {
 	this->arbitrator = arbitrator;
 	this->debugMode=false;
@@ -33,7 +33,7 @@ SpyManager::~SpyManager()
 	delete randomDodge;
 }
 
-void SpyManager::onOffer(std::set<BWAPI::Unit*> units)
+void SpyManager::onOffer(std::set<BWAPI::Unit> units)
 {
 	for each (BWAPI::Unit *unit in units)
 	{
@@ -72,14 +72,14 @@ void SpyManager::update()
 	{
 		lastFrameCheck = BWAPI::Broodwar->getFrameCount();
 
-		std::set<BWAPI::Unit*> w = SelectAll()(isCompleted)(Protoss_Observer);
+		std::set<BWAPI::Unit> w = SelectAll()(isCompleted)(Protoss_Observer);
 		for each(BWAPI::Unit *u in w)
 			arbitrator->setBid(this, u, 40);
 
 
 		if (!baseLocationsToSpy.empty())
 		{
-			std::map<BWAPI::Unit*, SpyData>::iterator it = spies.begin();
+			std::map<BWAPI::Unit, SpyData>::iterator it = spies.begin();
 			for ( ; it != spies.end(); it++)
 			{
 				if (it->second.mode == SpyData::Idle)
@@ -99,7 +99,7 @@ void SpyManager::update()
 						it->first->move(it->second.target->getPosition());
 					}
 					// Look if there are detectors around us. If yes, dodge it!
-					std::set<BWAPI::Unit*> surroundingUnits = it->first->getUnitsInRadius(it->first->getType().sightRange());
+					std::set<BWAPI::Unit> surroundingUnits = it->first->getUnitsInRadius(it->first->getType().sightRange());
 					UnitGroup surroundingUnitGroup = UnitGroup::getUnitGroup(surroundingUnits);
 					surroundingUnitGroup = surroundingUnitGroup(BWAPI::Broodwar->enemy())(isDetector);
 					if (!surroundingUnitGroup.empty())
@@ -153,7 +153,7 @@ std::string SpyManager::getShortName() const
 	return "Spy";
 }
 
-void SpyManager::onRemoveUnit(BWAPI::Unit* unit)
+void SpyManager::onRemoveUnit(BWAPI::Unit unit)
 {
 	if (spies.find(unit) != spies.end())
 	{
@@ -212,7 +212,7 @@ bool SpyManager::isInitialized()
 void SpyManager::drawAssignments()
 {
 	//draw target vector for each Spy
-	for (std::map<BWAPI::Unit*,SpyData>::iterator s = spies.begin(); s != spies.end(); s++)
+	for (std::map<BWAPI::Unit,SpyData>::iterator s = spies.begin(); s != spies.end(); s++)
 	{
 		if ((*s).second.mode != SpyData::Idle)
 		{

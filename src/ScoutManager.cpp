@@ -13,7 +13,7 @@ void ScoutManager::firstsearch()
 		if ((*it)->getType().isWorker() || (*it)->getType() == BWAPI::UnitTypes::Protoss_Observer)
         {
 			
-			static_cast< Arbitrator::Arbitrator<BWAPI::Unit*,double>* >(arbitrator)->setBid(this, (*it),92);
+			static_cast< Arbitrator::Arbitrator<BWAPI::Unit,double>* >(arbitrator)->setBid(this, (*it),92);
 		}
 	}
 }
@@ -88,7 +88,7 @@ std::pair<std::list<BWTA::BaseLocation*>, double> getBestPath(std::set<BWTA::Bas
 	}
 	return shortest_path;
 }
-ScoutManager::ScoutManager(Arbitrator::Arbitrator<BWAPI::Unit*,double> *arbitrator, InformationManager* infoManager)
+ScoutManager::ScoutManager(Arbitrator::Arbitrator<BWAPI::Unit,double> *arbitrator, InformationManager* infoManager)
 {
 	this->arbitrator = arbitrator;
 	this->informationManager = infoManager;
@@ -128,10 +128,10 @@ ScoutManager::ScoutManager(Arbitrator::Arbitrator<BWAPI::Unit*,double> *arbitrat
 	this->debugMode=true; //chc
 }
 
-void ScoutManager::onOffer(std::set<BWAPI::Unit*> units)
+void ScoutManager::onOffer(std::set<BWAPI::Unit> units)
 {
-	std::set<BWAPI::Unit*>::iterator u2;
-	for(std::set<BWAPI::Unit*>::iterator u = units.begin(); u != units.end(); u=u2)
+	std::set<BWAPI::Unit>::iterator u2;
+	for(std::set<BWAPI::Unit>::iterator u = units.begin(); u != units.end(); u=u2)
 	{
 		u2=u;
 		u2++;
@@ -150,7 +150,7 @@ void ScoutManager::onOffer(std::set<BWAPI::Unit*> units)
 	}
 
 	//decline remaining units
-	for(std::set<BWAPI::Unit*>::iterator u = units.begin(); u != units.end(); u++)
+	for(std::set<BWAPI::Unit>::iterator u = units.begin(); u != units.end(); u++)
 	{
 		arbitrator->decline(this, *u, 0);
 	}
@@ -198,7 +198,7 @@ std::string ScoutManager::getShortName() const
 	return "Scout";
 }
 
-void ScoutManager::onRemoveUnit(BWAPI::Unit* unit)
+void ScoutManager::onRemoveUnit(BWAPI::Unit unit)
 {
 	if (scouts.find(unit) != scouts.end())
 	{
@@ -228,7 +228,7 @@ void ScoutManager::setDebugMode(bool debugMode)
 void ScoutManager::drawAssignments()
 {
 	//draw target vector for each scout
-	for (std::map<BWAPI::Unit*,ScoutData>::iterator s = scouts.begin(); s != scouts.end(); s++)
+	for (std::map<BWAPI::Unit,ScoutData>::iterator s = scouts.begin(); s != scouts.end(); s++)
 	{
 		if ((*s).second.mode != ScoutData::Idle)
 		{
@@ -257,11 +257,11 @@ bool ScoutManager::needMoreScouts() const
 void ScoutManager::requestScout(double bid)
 {
 	// Bid on all completed workers.
-	std::set<BWAPI::Unit*> usefulUnits=SelectAll()(isWorker,Zerg_Overlord)(isCompleted).not(isCarryingMinerals,isCarryingGas,isGatheringGas);
+	std::set<BWAPI::Unit> usefulUnits=SelectAll()(isWorker,Zerg_Overlord)(isCompleted).not(isCarryingMinerals,isCarryingGas,isGatheringGas);
 	arbitrator->setBid(this,usefulUnits,bid);
 }
 
-void ScoutManager::addScout(BWAPI::Unit* u)
+void ScoutManager::addScout(BWAPI::Unit u)
 {
 	ScoutData temp;
 	scouts.insert(std::make_pair(u,temp));
@@ -270,7 +270,7 @@ void ScoutManager::addScout(BWAPI::Unit* u)
 void ScoutManager::updateScoutAssignments()
 {
 	// Remove scout positions if the enemy is not there.
-	std::map<BWAPI::Unit*, ScoutData>::iterator u;
+	std::map<BWAPI::Unit, ScoutData>::iterator u;
 	for(u = scouts.begin(); u != scouts.end(); u++)
 	{
 		if ( (*u).second.mode == ScoutData::Searching
@@ -281,8 +281,8 @@ void ScoutManager::updateScoutAssignments()
 			{
 				for(int y=(*u).second.target->getTilePosition().y();y<(*u).second.target->getTilePosition().y()+3;y++)
 				{
-					std::set<BWAPI::Unit*> getUnitsOnTile = BWAPI::Broodwar->getUnitsOnTile(x,y);
-					for each(BWAPI::Unit* u in getUnitsOnTile)
+					std::set<BWAPI::Unit> getUnitsOnTile = BWAPI::Broodwar->getUnitsOnTile(x,y);
+					for each(BWAPI::Unit u in getUnitsOnTile)
 					{
 						// u->getType().isInvincible() means it is a mineral field or a vespene geyser.
 						if (u->getType().isBuilding() && !(u->getType().isInvincible()))

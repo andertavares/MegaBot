@@ -19,7 +19,7 @@ BWTA::BaseLocation* findFarestBaseLocation(std::set<BWTA::BaseLocation *> allBas
 	return toReturn;
 }
 
-SpyManager::SpyManager(Arbitrator::Arbitrator<BWAPI::Unit,double> *arbitrator)
+SpyManager::SpyManager(Arbitrator::Arbitrator<BWAPI::Unit*,double> *arbitrator)
 {
 	this->arbitrator = arbitrator;
 	this->debugMode=false;
@@ -33,9 +33,9 @@ SpyManager::~SpyManager()
 	delete randomDodge;
 }
 
-void SpyManager::onOffer(std::set<BWAPI::Unit> units)
+void SpyManager::onOffer(std::set<BWAPI::Unit*> units)
 {
-	for each (BWAPI::Unit unit in units)
+	for each (BWAPI::Unit *unit in units)
 	{
 		if (spies.find(unit) == spies.end())
 		{
@@ -48,7 +48,7 @@ void SpyManager::onOffer(std::set<BWAPI::Unit> units)
 	}
 }
 
-void SpyManager::onRevoke(BWAPI::Unit unit, double bid)
+void SpyManager::onRevoke(BWAPI::Unit *unit, double bid)
 {
 	onRemoveUnit(unit);
 }
@@ -72,14 +72,14 @@ void SpyManager::update()
 	{
 		lastFrameCheck = BWAPI::Broodwar->getFrameCount();
 
-		std::set<BWAPI::Unit> w = SelectAll()(isCompleted)(Protoss_Observer);
-		for each(BWAPI::Unit u in w)
+		std::set<BWAPI::Unit*> w = SelectAll()(isCompleted)(Protoss_Observer);
+		for each(BWAPI::Unit *u in w)
 			arbitrator->setBid(this, u, 40);
 
 
 		if (!baseLocationsToSpy.empty())
 		{
-			std::map<BWAPI::Unit, SpyData>::iterator it = spies.begin();
+			std::map<BWAPI::Unit*, SpyData>::iterator it = spies.begin();
 			for ( ; it != spies.end(); it++)
 			{
 				if (it->second.mode == SpyData::Idle)
@@ -99,17 +99,17 @@ void SpyManager::update()
 						it->first->move(it->second.target->getPosition());
 					}
 					// Look if there are detectors around us. If yes, dodge it!
-					std::set<BWAPI::Unit> surroundingUnits = it->first->getUnitsInRadius(it->first->getType().sightRange());
+					std::set<BWAPI::Unit*> surroundingUnits = it->first->getUnitsInRadius(it->first->getType().sightRange());
 					UnitGroup surroundingUnitGroup = UnitGroup::getUnitGroup(surroundingUnits);
 					surroundingUnitGroup = surroundingUnitGroup(BWAPI::Broodwar->enemy())(isDetector);
 					if (!surroundingUnitGroup.empty())
 					{
-						int x = it->first->getPosition().x;
-						int	y = it->first->getPosition().y;
-						for each (BWAPI::Unit u in surroundingUnitGroup)
+						int x = it->first->getPosition().x();
+						int	y = it->first->getPosition().y();
+						for each (BWAPI::Unit *u in surroundingUnitGroup)
 						{
-							x -= (u->getPosition().x - it->first->getPosition().x)/2;
-							y -= (u->getPosition().y - it->first->getPosition().y)/2;						
+							x -= (u->getPosition().x() - it->first->getPosition().x())/2;
+							y -= (u->getPosition().y() - it->first->getPosition().y())/2;						
 						}
 
 						x += (randomDodge->nextAnotherInt() - 10);
@@ -153,7 +153,7 @@ std::string SpyManager::getShortName() const
 	return "Spy";
 }
 
-void SpyManager::onRemoveUnit(BWAPI::Unit unit)
+void SpyManager::onRemoveUnit(BWAPI::Unit* unit)
 {
 	if (spies.find(unit) != spies.end())
 	{
@@ -165,7 +165,7 @@ void SpyManager::onRemoveUnit(BWAPI::Unit unit)
 			baseLocationsToSpy.push(lostTarget);
 			if (debugMode)
 			{
-				BWAPI::Broodwar->printf("Reassigning (%d,%d)", lostTarget->getPosition().x, lostTarget->getPosition().y);
+				BWAPI::Broodwar->printf("Reassigning (%d,%d)", lostTarget->getPosition().x(), lostTarget->getPosition().y());
 			}
 		}
 		spies.erase(unit);
@@ -212,15 +212,15 @@ bool SpyManager::isInitialized()
 void SpyManager::drawAssignments()
 {
 	//draw target vector for each Spy
-	for (std::map<BWAPI::Unit,SpyData>::iterator s = spies.begin(); s != spies.end(); s++)
+	for (std::map<BWAPI::Unit*,SpyData>::iterator s = spies.begin(); s != spies.end(); s++)
 	{
 		if ((*s).second.mode != SpyData::Idle)
 		{
 			BWAPI::Position SpyPos = (*s).first->getPosition();
 			BWAPI::Position targetPos = (*s).second.target->getPosition();
-			BWAPI::Broodwar->drawLineMap(SpyPos.x, SpyPos.y, targetPos.x, targetPos.y, BWAPI::Colors::Yellow);
-			BWAPI::Broodwar->drawCircleMap(SpyPos.x, SpyPos.y, 6, BWAPI::Colors::Yellow);
-			BWAPI::Broodwar->drawCircleMap(targetPos.x, targetPos.y, (*s).first->getType().sightRange(), BWAPI::Colors::Yellow);
+			BWAPI::Broodwar->drawLineMap(SpyPos.x(), SpyPos.y(), targetPos.x(), targetPos.y(), BWAPI::Colors::Yellow);
+			BWAPI::Broodwar->drawCircleMap(SpyPos.x(), SpyPos.y(), 6, BWAPI::Colors::Yellow);
+			BWAPI::Broodwar->drawCircleMap(targetPos.x(), targetPos.y(), (*s).first->getType().sightRange(), BWAPI::Colors::Yellow);
 		}
 	}
 }

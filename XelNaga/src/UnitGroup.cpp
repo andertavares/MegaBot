@@ -3,7 +3,7 @@
 using namespace BWAPI;
 using namespace std;
 
-bool passesFlag(Unit u, int f)
+bool passesFlag(Unit* u, int f)
 {
 	if (f<0)
 		return !passesFlag(u,-f);
@@ -786,7 +786,7 @@ bool passesFlag(Unit u, int f)
 	return false;
 }
 
-double getAttribute(Unit u, FliterAttributeScalar a)
+double getAttribute(Unit* u, FliterAttributeScalar a)
 {
 	switch(a)
 	{
@@ -851,28 +851,28 @@ double getAttribute(Unit u, FliterAttributeScalar a)
 		return u->getStimTimer();
 		break;
 	case PositionX:
-		return u->getPosition().x;
+		return u->getPosition().x();
 		break;
 	case PositionY:
-		return u->getPosition().y;
+		return u->getPosition().y();
 		break;
 	case InitialPositionX:
-		return u->getInitialPosition().x;
+		return u->getInitialPosition().x();
 		break;
 	case InitialPositionY:
-		return u->getInitialPosition().y;
+		return u->getInitialPosition().y();
 		break;
 	case TilePositionX:
-		return u->getTilePosition().x;
+		return u->getTilePosition().x();
 		break;
 	case TilePositionY:
-		return u->getTilePosition().y;
+		return u->getTilePosition().y();
 		break;
 	case InitialTilePositionX:
-		return u->getInitialTilePosition().x;
+		return u->getInitialTilePosition().x();
 		break;
 	case InitialTilePositionY:
-		return u->getInitialTilePosition().y;
+		return u->getInitialTilePosition().y();
 		break;
 	case Angle:
 		return u->getAngle();
@@ -884,10 +884,10 @@ double getAttribute(Unit u, FliterAttributeScalar a)
 		return u->getVelocityY();
 		break;
 	case TargetPositionX:
-		return u->getTargetPosition().x;
+		return u->getTargetPosition().x();
 		break;
 	case TargetPositionY:
-		return u->getTargetPosition().y;
+		return u->getTargetPosition().y();
 		break;
 	case OrderTimer:
 		return u->getOrderTimer();
@@ -920,10 +920,10 @@ double getAttribute(Unit u, FliterAttributeScalar a)
 		return u->getRemainingUpgradeTime();
 		break;
 	case RallyPositionX:
-		return u->getRallyPosition().x;
+		return u->getRallyPosition().x();
 		break;
 	case RallyPositionY:
-		return u->getRallyPosition().y;
+		return u->getRallyPosition().y();
 		break;
 	case maxAirHits:
 		return u->getType().maxAirHits();
@@ -935,7 +935,7 @@ double getAttribute(Unit u, FliterAttributeScalar a)
 	return 0;
 }
 
-Unit getUnit(Unit u,FilterAttributeUnit a)
+Unit* getUnit(Unit* u,FilterAttributeUnit a)
 {
 	switch(a)
 	{
@@ -988,7 +988,7 @@ UnitGroup UnitGroup::operator-(const UnitGroup& other) const
 UnitGroup UnitGroup::operator()(int f1) const
 {
 	UnitGroup result;
-	for(set<Unit>::const_iterator i=this->begin();i!=this->end();i++)
+	for(set<Unit*>::const_iterator i=this->begin();i!=this->end();i++)
 	{
 		if (passesFlag(*i,f1))
 			result.insert(*i);
@@ -999,7 +999,7 @@ UnitGroup UnitGroup::operator()(int f1) const
 UnitGroup UnitGroup::operator()(int f1, int f2) const
 {
 	UnitGroup result;
-	for(set<Unit>::const_iterator i=this->begin();i!=this->end();i++)
+	for(set<Unit*>::const_iterator i=this->begin();i!=this->end();i++)
 	{
 		if (passesFlag(*i,f1) || passesFlag(*i,f2))
 			result.insert(*i);
@@ -1010,7 +1010,7 @@ UnitGroup UnitGroup::operator()(int f1, int f2) const
 UnitGroup UnitGroup::operator()(int f1, int f2, int f3) const
 {
 	UnitGroup result;
-	for(set<Unit>::const_iterator i=this->begin();i!=this->end();i++)
+	for(set<Unit*>::const_iterator i=this->begin();i!=this->end();i++)
 	{
 		if (passesFlag(*i,f1) || passesFlag(*i,f2) || passesFlag(*i,f3))
 			result.insert(*i);
@@ -1021,7 +1021,7 @@ UnitGroup UnitGroup::operator()(int f1, int f2, int f3) const
 UnitGroup UnitGroup::operator()(int f1, int f2, int f3, int f4) const
 {
 	UnitGroup result;
-	for(set<Unit>::const_iterator i=this->begin();i!=this->end();i++)
+	for(set<Unit*>::const_iterator i=this->begin();i!=this->end();i++)
 	{
 		if (passesFlag(*i,f1) || passesFlag(*i,f2) || passesFlag(*i,f3) || passesFlag(*i,f4))
 			result.insert(*i);
@@ -1032,7 +1032,7 @@ UnitGroup UnitGroup::operator()(int f1, int f2, int f3, int f4) const
 UnitGroup UnitGroup::operator()(int f1, int f2, int f3, int f4, int f5) const
 {
 	UnitGroup result;
-	for(set<Unit>::const_iterator i=this->begin();i!=this->end();i++)
+	for(set<Unit*>::const_iterator i=this->begin();i!=this->end();i++)
 	{
 		if (passesFlag(*i,f1) || passesFlag(*i,f2) || passesFlag(*i,f3) || passesFlag(*i,f4) || passesFlag(*i,f5))
 			result.insert(*i);
@@ -1044,7 +1044,7 @@ UnitGroup UnitGroup::operator()(FliterAttributeScalar a, const char* compare, do
 {
 	UnitGroup result;
 	string cmp(compare);
-	for(set<Unit>::const_iterator i=this->begin();i!=this->end();i++)
+	for(set<Unit*>::const_iterator i=this->begin();i!=this->end();i++)
 	{
 		double val=getAttribute(*i,a);
 		bool passes=false;
@@ -1066,7 +1066,7 @@ UnitGroup UnitGroup::operator()(FliterAttributeScalar a, const char* compare, in
 {
 	UnitGroup result;
 	string cmp(compare);
-	for(set<Unit>::const_iterator i=this->begin();i!=this->end();i++)
+	for(set<Unit*>::const_iterator i=this->begin();i!=this->end();i++)
 	{
 		int val=(int)getAttribute(*i,a);
 		bool passes=false;
@@ -1084,22 +1084,22 @@ UnitGroup UnitGroup::operator()(FliterAttributeScalar a, const char* compare, in
 	}
 	return result;
 }
-UnitGroup UnitGroup::operator()(BWAPI::Player player) const
+UnitGroup UnitGroup::operator()(BWAPI::Player* player) const
 {
 	UnitGroup result;
-	for(set<Unit>::const_iterator i=this->begin();i!=this->end();i++)
+	for(set<Unit*>::const_iterator i=this->begin();i!=this->end();i++)
 	{
 		if ((*i)->getPlayer()==player)
 			result.insert(*i);
 	}
 	return result;
 }
-UnitGroup UnitGroup::operator()(FilterAttributeUnit a, BWAPI::Unit unit) const
+UnitGroup UnitGroup::operator()(FilterAttributeUnit a, BWAPI::Unit* unit) const
 {
 	UnitGroup result;
-	for(set<Unit>::const_iterator i=this->begin();i!=this->end();i++)
+	for(set<Unit*>::const_iterator i=this->begin();i!=this->end();i++)
 	{
-		Unit target=getUnit(*i,a);
+		Unit* target=getUnit(*i,a);
 		if (target==unit)
 			result.insert(*i);
 	}
@@ -1108,7 +1108,7 @@ UnitGroup UnitGroup::operator()(FilterAttributeUnit a, BWAPI::Unit unit) const
 UnitGroup UnitGroup::operator()(FilterAttributeType a, BWAPI::UnitType type) const
 {
 	UnitGroup result;
-	for(set<Unit>::const_iterator i=this->begin();i!=this->end();i++)
+	for(set<Unit*>::const_iterator i=this->begin();i!=this->end();i++)
 	{
 		bool passes=false;
 		if (a==GetType)
@@ -1128,7 +1128,7 @@ UnitGroup UnitGroup::operator()(FilterAttributeType a, BWAPI::UnitType type) con
 UnitGroup UnitGroup::operator()(FilterAttributeType a, BWAPI::TechType type) const
 {
 	UnitGroup result;
-	for(set<Unit>::const_iterator i=this->begin();i!=this->end();i++)
+	for(set<Unit*>::const_iterator i=this->begin();i!=this->end();i++)
 	{
 		bool passes=false;
 		if (a==GetTech)
@@ -1142,7 +1142,7 @@ UnitGroup UnitGroup::operator()(FilterAttributeType a, BWAPI::TechType type) con
 UnitGroup UnitGroup::operator()(FilterAttributeOrder a, BWAPI::Order type) const
 {
 	UnitGroup result;
-	for(set<Unit>::const_iterator i=this->begin();i!=this->end();i++)
+	for(set<Unit*>::const_iterator i=this->begin();i!=this->end();i++)
 	{
 		bool passes=false;
 		if (a==GetOrder)
@@ -1159,7 +1159,7 @@ UnitGroup UnitGroup::operator()(FilterAttributeOrder a, BWAPI::Order type) const
 UnitGroup UnitGroup::operator()(FilterAttributeType a, BWAPI::UpgradeType type) const
 {
 	UnitGroup result;
-	for(set<Unit>::const_iterator i=this->begin();i!=this->end();i++)
+	for(set<Unit*>::const_iterator i=this->begin();i!=this->end();i++)
 	{
 		bool passes=false;
 		if (a==GetUpgrade)
@@ -1173,7 +1173,7 @@ UnitGroup UnitGroup::operator()(FilterAttributeType a, BWAPI::UpgradeType type) 
 UnitGroup UnitGroup::operator()(FilterAttributePosition a, BWAPI::Position position) const
 {
 	UnitGroup result;
-	for(set<Unit>::const_iterator i=this->begin();i!=this->end();i++)
+	for(set<Unit*>::const_iterator i=this->begin();i!=this->end();i++)
 	{
 		bool passes=false;
 		if (a==GetPosition)
@@ -1196,7 +1196,7 @@ UnitGroup UnitGroup::operator()(FilterAttributePosition a, BWAPI::Position posit
 UnitGroup UnitGroup::operator()(FilterAttributeTilePosition a, BWAPI::TilePosition position) const
 {
 	UnitGroup result;
-	for(set<Unit>::const_iterator i=this->begin();i!=this->end();i++)
+	for(set<Unit*>::const_iterator i=this->begin();i!=this->end();i++)
 	{
 		bool passes=false;
 		if (a==GetPosition)
@@ -1214,7 +1214,7 @@ UnitGroup UnitGroup::operator()(FilterAttributeTilePosition a, BWAPI::TilePositi
 UnitGroup UnitGroup::not(int f1) const
 {
 	UnitGroup result;
-	for(set<Unit>::const_iterator i=this->begin();i!=this->end();i++)
+	for(set<Unit*>::const_iterator i=this->begin();i!=this->end();i++)
 	{
 		if (!(passesFlag(*i,f1)))
 			result.insert(*i);
@@ -1225,7 +1225,7 @@ UnitGroup UnitGroup::not(int f1) const
 UnitGroup UnitGroup::not(int f1, int f2) const
 {
 	UnitGroup result;
-	for(set<Unit>::const_iterator i=this->begin();i!=this->end();i++)
+	for(set<Unit*>::const_iterator i=this->begin();i!=this->end();i++)
 	{
 		if (!(passesFlag(*i,f1) || passesFlag(*i,f2)))
 			result.insert(*i);
@@ -1236,7 +1236,7 @@ UnitGroup UnitGroup::not(int f1, int f2) const
 UnitGroup UnitGroup::not(int f1, int f2, int f3) const
 {
 	UnitGroup result;
-	for(set<Unit>::const_iterator i=this->begin();i!=this->end();i++)
+	for(set<Unit*>::const_iterator i=this->begin();i!=this->end();i++)
 	{
 		if (!(passesFlag(*i,f1) || passesFlag(*i,f2) || passesFlag(*i,f3)))
 			result.insert(*i);
@@ -1247,7 +1247,7 @@ UnitGroup UnitGroup::not(int f1, int f2, int f3) const
 UnitGroup UnitGroup::not(int f1, int f2, int f3, int f4) const
 {
 	UnitGroup result;
-	for(set<Unit>::const_iterator i=this->begin();i!=this->end();i++)
+	for(set<Unit*>::const_iterator i=this->begin();i!=this->end();i++)
 	{
 		if (!(passesFlag(*i,f1) || passesFlag(*i,f2) || passesFlag(*i,f3) || passesFlag(*i,f4)))
 			result.insert(*i);
@@ -1258,7 +1258,7 @@ UnitGroup UnitGroup::not(int f1, int f2, int f3, int f4) const
 UnitGroup UnitGroup::not(int f1, int f2, int f3, int f4, int f5) const
 {
 	UnitGroup result;
-	for(set<Unit>::const_iterator i=this->begin();i!=this->end();i++)
+	for(set<Unit*>::const_iterator i=this->begin();i!=this->end();i++)
 	{
 		if (!(passesFlag(*i,f1) || passesFlag(*i,f2) || passesFlag(*i,f3) || passesFlag(*i,f4) || passesFlag(*i,f5)))
 			result.insert(*i);
@@ -1271,7 +1271,7 @@ UnitGroup UnitGroup::not(FliterAttributeScalar a, const char* compare, double va
 {
 	UnitGroup result;
 	string cmp(compare);
-	for(set<Unit>::const_iterator i=this->begin();i!=this->end();i++)
+	for(set<Unit*>::const_iterator i=this->begin();i!=this->end();i++)
 	{
 		double val=getAttribute(*i,a);
 		bool passes=false;
@@ -1293,7 +1293,7 @@ UnitGroup UnitGroup::not(FliterAttributeScalar a, const char* compare, int value
 {
 	UnitGroup result;
 	string cmp(compare);
-	for(set<Unit>::const_iterator i=this->begin();i!=this->end();i++)
+	for(set<Unit*>::const_iterator i=this->begin();i!=this->end();i++)
 	{
 		int val=(int)getAttribute(*i,a);
 		bool passes=false;
@@ -1311,22 +1311,22 @@ UnitGroup UnitGroup::not(FliterAttributeScalar a, const char* compare, int value
 	}
 	return result;
 }
-UnitGroup UnitGroup::not(BWAPI::Player player) const
+UnitGroup UnitGroup::not(BWAPI::Player* player) const
 {
 	UnitGroup result;
-	for(set<Unit>::const_iterator i=this->begin();i!=this->end();i++)
+	for(set<Unit*>::const_iterator i=this->begin();i!=this->end();i++)
 	{
 		if ((*i)->getPlayer()!=player)
 			result.insert(*i);
 	}
 	return result;
 }
-UnitGroup UnitGroup::not(FilterAttributeUnit a, BWAPI::Unit unit) const
+UnitGroup UnitGroup::not(FilterAttributeUnit a, BWAPI::Unit* unit) const
 {
 	UnitGroup result;
-	for(set<Unit>::const_iterator i=this->begin();i!=this->end();i++)
+	for(set<Unit*>::const_iterator i=this->begin();i!=this->end();i++)
 	{
-		Unit target=getUnit(*i,a);
+		Unit* target=getUnit(*i,a);
 		if (target!=unit)
 			result.insert(*i);
 	}
@@ -1335,7 +1335,7 @@ UnitGroup UnitGroup::not(FilterAttributeUnit a, BWAPI::Unit unit) const
 UnitGroup UnitGroup::not(FilterAttributeType a, BWAPI::UnitType type) const
 {
 	UnitGroup result;
-	for(set<Unit>::const_iterator i=this->begin();i!=this->end();i++)
+	for(set<Unit*>::const_iterator i=this->begin();i!=this->end();i++)
 	{
 		bool passes=false;
 		if (a==GetType)
@@ -1355,7 +1355,7 @@ UnitGroup UnitGroup::not(FilterAttributeType a, BWAPI::UnitType type) const
 UnitGroup UnitGroup::not(FilterAttributeType a, BWAPI::TechType type) const
 {
 	UnitGroup result;
-	for(set<Unit>::const_iterator i=this->begin();i!=this->end();i++)
+	for(set<Unit*>::const_iterator i=this->begin();i!=this->end();i++)
 	{
 		bool passes=false;
 		if (a==GetTech)
@@ -1369,7 +1369,7 @@ UnitGroup UnitGroup::not(FilterAttributeType a, BWAPI::TechType type) const
 UnitGroup UnitGroup::not(FilterAttributeOrder a, BWAPI::Order type) const
 {
 	UnitGroup result;
-	for(set<Unit>::const_iterator i=this->begin();i!=this->end();i++)
+	for(set<Unit*>::const_iterator i=this->begin();i!=this->end();i++)
 	{
 		bool passes=false;
 		if (a==GetOrder)
@@ -1386,7 +1386,7 @@ UnitGroup UnitGroup::not(FilterAttributeOrder a, BWAPI::Order type) const
 UnitGroup UnitGroup::not(FilterAttributeType a, BWAPI::UpgradeType type) const
 {
 	UnitGroup result;
-	for(set<Unit>::const_iterator i=this->begin();i!=this->end();i++)
+	for(set<Unit*>::const_iterator i=this->begin();i!=this->end();i++)
 	{
 		bool passes=false;
 		if (a==GetUpgrade)
@@ -1400,7 +1400,7 @@ UnitGroup UnitGroup::not(FilterAttributeType a, BWAPI::UpgradeType type) const
 UnitGroup UnitGroup::not(FilterAttributePosition a, BWAPI::Position position) const
 {
 	UnitGroup result;
-	for(set<Unit>::const_iterator i=this->begin();i!=this->end();i++)
+	for(set<Unit*>::const_iterator i=this->begin();i!=this->end();i++)
 	{
 		bool passes=false;
 		if (a==GetPosition)
@@ -1423,7 +1423,7 @@ UnitGroup UnitGroup::not(FilterAttributePosition a, BWAPI::Position position) co
 UnitGroup UnitGroup::not(FilterAttributeTilePosition a, BWAPI::TilePosition position) const
 {
 	UnitGroup result;
-	for(set<Unit>::const_iterator i=this->begin();i!=this->end();i++)
+	for(set<Unit*>::const_iterator i=this->begin();i!=this->end();i++)
 	{
 		bool passes=false;
 		if (a==GetPosition)
@@ -1441,7 +1441,7 @@ UnitGroup UnitGroup::not(FilterAttributeTilePosition a, BWAPI::TilePosition posi
 UnitGroup UnitGroup::inRadius(double radius,BWAPI::Position position) const
 {
 	UnitGroup result;
-	for(set<Unit>::const_iterator i=this->begin();i!=this->end();i++)
+	for(set<Unit*>::const_iterator i=this->begin();i!=this->end();i++)
 	{
 		if ((*i)->getDistance(position)<=radius)
 			result.insert(*i);
@@ -1452,7 +1452,7 @@ UnitGroup UnitGroup::inRadius(double radius,BWAPI::Position position) const
 UnitGroup UnitGroup::inRegion(BWTA::Region* region) const
 {
 	UnitGroup result;
-	for(set<Unit>::const_iterator i=this->begin();i!=this->end();i++)
+	for(set<Unit*>::const_iterator i=this->begin();i!=this->end();i++)
 	{
 		if (BWTA::getRegion((*i)->getTilePosition())==region)
 			result.insert(*i);
@@ -1462,7 +1462,7 @@ UnitGroup UnitGroup::inRegion(BWTA::Region* region) const
 UnitGroup UnitGroup::onlyNearestChokepoint(BWTA::Chokepoint* choke) const
 {
 	UnitGroup result;
-	for(set<Unit>::const_iterator i=this->begin();i!=this->end();i++)
+	for(set<Unit*>::const_iterator i=this->begin();i!=this->end();i++)
 	{
 		if (BWTA::getNearestChokepoint((*i)->getTilePosition())==choke)
 			result.insert(*i);
@@ -1473,7 +1473,7 @@ UnitGroup UnitGroup::onlyNearestChokepoint(BWTA::Chokepoint* choke) const
 UnitGroup UnitGroup::onlyNearestBaseLocation(BWTA::BaseLocation* location) const
 {
 	UnitGroup result;
-	for(set<Unit>::const_iterator i=this->begin();i!=this->end();i++)
+	for(set<Unit*>::const_iterator i=this->begin();i!=this->end();i++)
 	{
 		if (BWTA::getNearestBaseLocation((*i)->getTilePosition())==location)
 			result.insert(*i);
@@ -1483,7 +1483,7 @@ UnitGroup UnitGroup::onlyNearestBaseLocation(BWTA::BaseLocation* location) const
 UnitGroup UnitGroup::onlyNearestUnwalkablePolygon(BWTA::Polygon* polygon) const
 {
 	UnitGroup result;
-	for(set<Unit>::const_iterator i=this->begin();i!=this->end();i++)
+	for(set<Unit*>::const_iterator i=this->begin();i!=this->end();i++)
 	{
 		if (BWTA::getNearestUnwalkablePolygon((*i)->getTilePosition())==polygon)
 			result.insert(*i);
@@ -1493,14 +1493,14 @@ UnitGroup UnitGroup::onlyNearestUnwalkablePolygon(BWTA::Polygon* polygon) const
 
 UnitGroup& UnitGroup::operator+=(const UnitGroup& other)
 {
-	for(set<Unit>::const_iterator i=other.begin();i!=other.end();i++)
+	for(set<Unit*>::const_iterator i=other.begin();i!=other.end();i++)
 		this->insert(*i);
 	return *this;
 }
 UnitGroup& UnitGroup::operator*=(const UnitGroup& other)
 {
-	set<Unit>::iterator i2;
-	for(set<Unit>::iterator i=this->begin();i!=this->end();i=i2)
+	set<Unit*>::iterator i2;
+	for(set<Unit*>::iterator i=this->begin();i!=this->end();i=i2)
 	{
 		i2=i;
 		i2++;
@@ -1512,7 +1512,7 @@ UnitGroup& UnitGroup::operator*=(const UnitGroup& other)
 UnitGroup& UnitGroup::operator^=(const UnitGroup& other)
 {
 	UnitGroup result=*this;
-	for(set<Unit>::const_iterator i=other.begin();i!=other.end();i++)
+	for(set<Unit*>::const_iterator i=other.begin();i!=other.end();i++)
 	{
 		if (this->contains(*i))
 			this->erase(*i);
@@ -1523,16 +1523,16 @@ UnitGroup& UnitGroup::operator^=(const UnitGroup& other)
 }
 UnitGroup& UnitGroup::operator-=(const UnitGroup& other)
 {
-	for(set<Unit>::const_iterator i=other.begin();i!=other.end();i++)
+	for(set<Unit*>::const_iterator i=other.begin();i!=other.end();i++)
 		this->erase(*i);
 	return *this;
 }
 
-BWAPI::Unit UnitGroup::getNearest(BWAPI::Position position) const
+BWAPI::Unit* UnitGroup::getNearest(BWAPI::Position position) const
 {
 	if (this->empty()) return NULL;
-	set<Unit>::const_iterator i=this->begin();
-	Unit result=*i;
+	set<Unit*>::const_iterator i=this->begin();
+	Unit* result=*i;
 	double d=(*i)->getDistance(position);
 	i++;
 	for(;i!=this->end();i++)
@@ -1547,7 +1547,7 @@ BWAPI::Unit UnitGroup::getNearest(BWAPI::Position position) const
 	return result;
 }
 
-bool UnitGroup::contains(BWAPI::Unit u) const
+bool UnitGroup::contains(BWAPI::Unit* u) const
 {
 	return this->find(u)!=this->end();
 }
@@ -1561,14 +1561,14 @@ Position UnitGroup::getCenter() const
 	int count=0;
 	double x=0;
 	double y=0;
-	for(set<Unit>::const_iterator i=this->begin();i!=this->end();i++)
+	for(set<Unit*>::const_iterator i=this->begin();i!=this->end();i++)
 	{
 		Position p((*i)->getPosition());
 		if (p!=Positions::None && p!=Positions::Unknown)
 		{
 			count++;
-			x+=p.x;
-			y+=p.y;
+			x+=p.x();
+			y+=p.y();
 		}
 	}
 	if (count==0)
@@ -1581,16 +1581,16 @@ Position UnitGroup::getCenter() const
 bool UnitGroup::attack(Position position, bool enqueue) const
 {
 	bool retval=true;
-	for(set<Unit>::const_iterator i=this->begin();i!=this->end();i++)
+	for(set<Unit*>::const_iterator i=this->begin();i!=this->end();i++)
 	{
 		retval = retval && (*i)->attack(position, enqueue);
 	}
 	return retval;
 }
-bool UnitGroup::attack(Unit target, bool enqueue) const
+bool UnitGroup::attack(Unit* target, bool enqueue) const
 {
 	bool retval=true;
-	for(set<Unit>::const_iterator i=this->begin();i!=this->end();i++)
+	for(set<Unit*>::const_iterator i=this->begin();i!=this->end();i++)
 	{
 		retval = retval && (*i)->attack(target, enqueue);
 	}
@@ -1599,16 +1599,16 @@ bool UnitGroup::attack(Unit target, bool enqueue) const
 bool UnitGroup::rightClick(Position position) const
 {
 	bool retval=true;
-	for(set<Unit>::const_iterator i=this->begin();i!=this->end();i++)
+	for(set<Unit*>::const_iterator i=this->begin();i!=this->end();i++)
 	{
 		retval = retval && (*i)->rightClick(position);
 	}
 	return retval;
 }
-bool UnitGroup::rightClick(Unit target) const
+bool UnitGroup::rightClick(Unit* target) const
 {
 	bool retval=true;
-	for(set<Unit>::const_iterator i=this->begin();i!=this->end();i++)
+	for(set<Unit*>::const_iterator i=this->begin();i!=this->end();i++)
 	{
 		retval = retval && (*i)->rightClick(target);
 	}
@@ -1617,7 +1617,7 @@ bool UnitGroup::rightClick(Unit target) const
 bool UnitGroup::train(UnitType type) const
 {
 	bool retval=true;
-	for(set<Unit>::const_iterator i=this->begin();i!=this->end();i++)
+	for(set<Unit*>::const_iterator i=this->begin();i!=this->end();i++)
 	{
 		retval = retval && (*i)->train(type);
 	}
@@ -1626,7 +1626,7 @@ bool UnitGroup::train(UnitType type) const
 bool UnitGroup::build(TilePosition position, UnitType type) const
 {
 	bool retval=true;
-	for(set<Unit>::const_iterator i=this->begin();i!=this->end();i++)
+	for(set<Unit*>::const_iterator i=this->begin();i!=this->end();i++)
 	{
 		retval = retval && (*i)->build(position,type);
 	}
@@ -1635,7 +1635,7 @@ bool UnitGroup::build(TilePosition position, UnitType type) const
 bool UnitGroup::buildAddon(UnitType type) const
 {
 	bool retval=true;
-	for(set<Unit>::const_iterator i=this->begin();i!=this->end();i++)
+	for(set<Unit*>::const_iterator i=this->begin();i!=this->end();i++)
 	{
 		retval = retval && (*i)->buildAddon(type);
 	}
@@ -1644,7 +1644,7 @@ bool UnitGroup::buildAddon(UnitType type) const
 bool UnitGroup::research(TechType tech) const
 {
 	bool retval=true;
-	for(set<Unit>::const_iterator i=this->begin();i!=this->end();i++)
+	for(set<Unit*>::const_iterator i=this->begin();i!=this->end();i++)
 	{
 		retval = retval && (*i)->research(tech);
 	}
@@ -1653,7 +1653,7 @@ bool UnitGroup::research(TechType tech) const
 bool UnitGroup::upgrade(UpgradeType upgrade) const
 {
 	bool retval=true;
-	for(set<Unit>::const_iterator i=this->begin();i!=this->end();i++)
+	for(set<Unit*>::const_iterator i=this->begin();i!=this->end();i++)
 	{
 		retval = retval && (*i)->upgrade(upgrade);
 	}
@@ -1662,7 +1662,7 @@ bool UnitGroup::upgrade(UpgradeType upgrade) const
 bool UnitGroup::stop() const
 {
 	bool retval=true;
-	for(set<Unit>::const_iterator i=this->begin();i!=this->end();i++)
+	for(set<Unit*>::const_iterator i=this->begin();i!=this->end();i++)
 	{
 		retval = retval && (*i)->stop();
 	}
@@ -1671,7 +1671,7 @@ bool UnitGroup::stop() const
 bool UnitGroup::holdPosition() const
 {
 	bool retval=true;
-	for(set<Unit>::const_iterator i=this->begin();i!=this->end();i++)
+	for(set<Unit*>::const_iterator i=this->begin();i!=this->end();i++)
 	{
 		retval = retval && (*i)->holdPosition();
 	}
@@ -1680,16 +1680,16 @@ bool UnitGroup::holdPosition() const
 bool UnitGroup::patrol(Position position) const
 {
 	bool retval=true;
-	for(set<Unit>::const_iterator i=this->begin();i!=this->end();i++)
+	for(set<Unit*>::const_iterator i=this->begin();i!=this->end();i++)
 	{
 		retval = retval && (*i)->patrol(position);
 	}
 	return retval;
 }
-bool UnitGroup::follow(Unit target) const
+bool UnitGroup::follow(Unit* target) const
 {
 	bool retval=true;
-	for(set<Unit>::const_iterator i=this->begin();i!=this->end();i++)
+	for(set<Unit*>::const_iterator i=this->begin();i!=this->end();i++)
 	{
 		retval = retval && (*i)->follow(target);
 	}
@@ -1698,25 +1698,25 @@ bool UnitGroup::follow(Unit target) const
 bool UnitGroup::setRallyPoint(Position target) const
 {
 	bool retval=true;
-	for(set<Unit>::const_iterator i=this->begin();i!=this->end();i++)
+	for(set<Unit*>::const_iterator i=this->begin();i!=this->end();i++)
 	{
 		retval = retval && (*i)->setRallyPoint(target);
 	}
 	return retval;
 }
-bool UnitGroup::setRallyPoint(Unit target) const
+bool UnitGroup::setRallyPoint(Unit* target) const
 {
 	bool retval=true;
-	for(set<Unit>::const_iterator i=this->begin();i!=this->end();i++)
+	for(set<Unit*>::const_iterator i=this->begin();i!=this->end();i++)
 	{
 		retval = retval && (*i)->setRallyPoint(target);
 	}
 	return retval;
 }
-bool UnitGroup::repair(Unit target) const
+bool UnitGroup::repair(Unit* target) const
 {
 	bool retval=true;
-	for(set<Unit>::const_iterator i=this->begin();i!=this->end();i++)
+	for(set<Unit*>::const_iterator i=this->begin();i!=this->end();i++)
 	{
 		retval = retval && (*i)->repair(target);
 	}
@@ -1725,7 +1725,7 @@ bool UnitGroup::repair(Unit target) const
 bool UnitGroup::morph(UnitType type) const
 {
 	bool retval=true;
-	for(set<Unit>::const_iterator i=this->begin();i!=this->end();i++)
+	for(set<Unit*>::const_iterator i=this->begin();i!=this->end();i++)
 	{
 		retval = retval && (*i)->morph(type);
 	}
@@ -1734,7 +1734,7 @@ bool UnitGroup::morph(UnitType type) const
 bool UnitGroup::burrow() const
 {
 	bool retval=true;
-	for(set<Unit>::const_iterator i=this->begin();i!=this->end();i++)
+	for(set<Unit*>::const_iterator i=this->begin();i!=this->end();i++)
 	{
 		retval = retval && (*i)->burrow();
 	}
@@ -1743,7 +1743,7 @@ bool UnitGroup::burrow() const
 bool UnitGroup::unburrow() const
 {
 	bool retval=true;
-	for(set<Unit>::const_iterator i=this->begin();i!=this->end();i++)
+	for(set<Unit*>::const_iterator i=this->begin();i!=this->end();i++)
 	{
 		retval = retval && (*i)->unburrow();
 	}
@@ -1752,7 +1752,7 @@ bool UnitGroup::unburrow() const
 bool UnitGroup::siege() const
 {
 	bool retval=true;
-	for(set<Unit>::const_iterator i=this->begin();i!=this->end();i++)
+	for(set<Unit*>::const_iterator i=this->begin();i!=this->end();i++)
 	{
 		retval = retval && (*i)->siege();
 	}
@@ -1761,7 +1761,7 @@ bool UnitGroup::siege() const
 bool UnitGroup::unsiege() const
 {
 	bool retval=true;
-	for(set<Unit>::const_iterator i=this->begin();i!=this->end();i++)
+	for(set<Unit*>::const_iterator i=this->begin();i!=this->end();i++)
 	{
 		retval = retval && (*i)->unsiege();
 	}
@@ -1770,7 +1770,7 @@ bool UnitGroup::unsiege() const
 bool UnitGroup::cloak() const
 {
 	bool retval=true;
-	for(set<Unit>::const_iterator i=this->begin();i!=this->end();i++)
+	for(set<Unit*>::const_iterator i=this->begin();i!=this->end();i++)
 	{
 		retval = retval && (*i)->cloak();
 	}
@@ -1779,7 +1779,7 @@ bool UnitGroup::cloak() const
 bool UnitGroup::decloak() const
 {
 	bool retval=true;
-	for(set<Unit>::const_iterator i=this->begin();i!=this->end();i++)
+	for(set<Unit*>::const_iterator i=this->begin();i!=this->end();i++)
 	{
 		retval = retval && (*i)->decloak();
 	}
@@ -1788,7 +1788,7 @@ bool UnitGroup::decloak() const
 bool UnitGroup::lift() const
 {
 	bool retval=true;
-	for(set<Unit>::const_iterator i=this->begin();i!=this->end();i++)
+	for(set<Unit*>::const_iterator i=this->begin();i!=this->end();i++)
 	{
 		retval = retval && (*i)->lift();
 	}
@@ -1797,25 +1797,25 @@ bool UnitGroup::lift() const
 bool UnitGroup::land(TilePosition position) const
 {
 	bool retval=true;
-	for(set<Unit>::const_iterator i=this->begin();i!=this->end();i++)
+	for(set<Unit*>::const_iterator i=this->begin();i!=this->end();i++)
 	{
 		retval = retval && (*i)->land(position);
 	}
 	return retval;
 }
-bool UnitGroup::load(Unit target) const
+bool UnitGroup::load(Unit* target) const
 {
 	bool retval=true;
-	for(set<Unit>::const_iterator i=this->begin();i!=this->end();i++)
+	for(set<Unit*>::const_iterator i=this->begin();i!=this->end();i++)
 	{
 		retval = retval && (*i)->load(target);
 	}
 	return retval;
 }
-bool UnitGroup::unload(Unit target) const
+bool UnitGroup::unload(Unit* target) const
 {
 	bool retval=true;
-	for(set<Unit>::const_iterator i=this->begin();i!=this->end();i++)
+	for(set<Unit*>::const_iterator i=this->begin();i!=this->end();i++)
 	{
 		retval = retval && (*i)->unload(target);
 	}
@@ -1824,7 +1824,7 @@ bool UnitGroup::unload(Unit target) const
 bool UnitGroup::unloadAll() const
 {
 	bool retval=true;
-	for(set<Unit>::const_iterator i=this->begin();i!=this->end();i++)
+	for(set<Unit*>::const_iterator i=this->begin();i!=this->end();i++)
 	{
 		retval = retval && (*i)->unloadAll();
 	}
@@ -1833,7 +1833,7 @@ bool UnitGroup::unloadAll() const
 bool UnitGroup::unloadAll(Position position) const
 {
 	bool retval=true;
-	for(set<Unit>::const_iterator i=this->begin();i!=this->end();i++)
+	for(set<Unit*>::const_iterator i=this->begin();i!=this->end();i++)
 	{
 		retval = retval && (*i)->unloadAll(position);
 	}
@@ -1842,7 +1842,7 @@ bool UnitGroup::unloadAll(Position position) const
 bool UnitGroup::cancelConstruction() const
 {
 	bool retval=true;
-	for(set<Unit>::const_iterator i=this->begin();i!=this->end();i++)
+	for(set<Unit*>::const_iterator i=this->begin();i!=this->end();i++)
 	{
 		retval = retval && (*i)->cancelConstruction();
 	}
@@ -1851,7 +1851,7 @@ bool UnitGroup::cancelConstruction() const
 bool UnitGroup::haltConstruction() const
 {
 	bool retval=true;
-	for(set<Unit>::const_iterator i=this->begin();i!=this->end();i++)
+	for(set<Unit*>::const_iterator i=this->begin();i!=this->end();i++)
 	{
 		retval = retval && (*i)->haltConstruction();
 	}
@@ -1860,7 +1860,7 @@ bool UnitGroup::haltConstruction() const
 bool UnitGroup::cancelMorph() const
 {
 	bool retval=true;
-	for(set<Unit>::const_iterator i=this->begin();i!=this->end();i++)
+	for(set<Unit*>::const_iterator i=this->begin();i!=this->end();i++)
 	{
 		retval = retval && (*i)->cancelMorph();
 	}
@@ -1869,7 +1869,7 @@ bool UnitGroup::cancelMorph() const
 bool UnitGroup::cancelTrain() const
 {
 	bool retval=true;
-	for(set<Unit>::const_iterator i=this->begin();i!=this->end();i++)
+	for(set<Unit*>::const_iterator i=this->begin();i!=this->end();i++)
 	{
 		retval = retval && (*i)->cancelTrain();
 	}
@@ -1878,7 +1878,7 @@ bool UnitGroup::cancelTrain() const
 bool UnitGroup::cancelTrain(int slot) const
 {
 	bool retval=true;
-	for(set<Unit>::const_iterator i=this->begin();i!=this->end();i++)
+	for(set<Unit*>::const_iterator i=this->begin();i!=this->end();i++)
 	{
 		retval = retval && (*i)->cancelTrain(slot);
 	}
@@ -1887,7 +1887,7 @@ bool UnitGroup::cancelTrain(int slot) const
 bool UnitGroup::cancelAddon() const
 {
 	bool retval=true;
-	for(set<Unit>::const_iterator i=this->begin();i!=this->end();i++)
+	for(set<Unit*>::const_iterator i=this->begin();i!=this->end();i++)
 	{
 		retval = retval && (*i)->cancelAddon();
 	}
@@ -1896,7 +1896,7 @@ bool UnitGroup::cancelAddon() const
 bool UnitGroup::cancelResearch() const
 {
 	bool retval=true;
-	for(set<Unit>::const_iterator i=this->begin();i!=this->end();i++)
+	for(set<Unit*>::const_iterator i=this->begin();i!=this->end();i++)
 	{
 		retval = retval && (*i)->cancelResearch();
 	}
@@ -1905,7 +1905,7 @@ bool UnitGroup::cancelResearch() const
 bool UnitGroup::cancelUpgrade() const
 {
 	bool retval=true;
-	for(set<Unit>::const_iterator i=this->begin();i!=this->end();i++)
+	for(set<Unit*>::const_iterator i=this->begin();i!=this->end();i++)
 	{
 		retval = retval && (*i)->cancelUpgrade();
 	}
@@ -1914,7 +1914,7 @@ bool UnitGroup::cancelUpgrade() const
 bool UnitGroup::useTech(TechType tech) const
 {
 	bool retval=true;
-	for(set<Unit>::const_iterator i=this->begin();i!=this->end();i++)
+	for(set<Unit*>::const_iterator i=this->begin();i!=this->end();i++)
 	{
 		retval = retval && (*i)->useTech(tech);
 	}
@@ -1923,16 +1923,16 @@ bool UnitGroup::useTech(TechType tech) const
 bool UnitGroup::useTech(TechType tech, Position position) const
 {
 	bool retval=true;
-	for(set<Unit>::const_iterator i=this->begin();i!=this->end();i++)
+	for(set<Unit*>::const_iterator i=this->begin();i!=this->end();i++)
 	{
 		retval = retval && (*i)->useTech(tech,position);
 	}
 	return retval;
 }
-bool UnitGroup::useTech(TechType tech, Unit target) const
+bool UnitGroup::useTech(TechType tech, Unit* target) const
 {
 	bool retval=true;
-	for(set<Unit>::const_iterator i=this->begin();i!=this->end();i++)
+	for(set<Unit*>::const_iterator i=this->begin();i!=this->end();i++)
 	{
 		retval = retval && (*i)->useTech(tech,target);
 	}

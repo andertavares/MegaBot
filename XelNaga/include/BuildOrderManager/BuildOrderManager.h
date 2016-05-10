@@ -28,7 +28,7 @@ public:
 	class MetaUnit
 	{
 	public:
-		MetaUnit(BWAPI::Unit unit);
+		MetaUnit(BWAPI::Unit* unit);
 		MetaUnit(int larvaSpawnTime);
 		int nextFreeTime() const;
 		int nextFreeTime(BWAPI::UnitType t) const;
@@ -47,7 +47,7 @@ public:
 		bool isMorphing() const;
 		bool isTraining() const;
 		bool isUpgrading() const;
-		BWAPI::Unit unit;
+		BWAPI::Unit* unit;
 		int larvaSpawnTime;
 	};
 	class Type
@@ -82,7 +82,7 @@ public:
 	int getPlannedCount(BWAPI::UnitType t, int minPriority);
 	void enableDependencyResolver();
 	void setDebugMode(bool debugMode);
-	BWAPI::UnitType::set unitsCanMake(MetaUnit* builder, int time);
+	std::set<BWAPI::UnitType> unitsCanMake(MetaUnit* builder, int time);
 	std::set<BWAPI::TechType> techsCanResearch(MetaUnit* techUnit, int time);
 	std::set<BWAPI::UpgradeType> upgradesCanResearch(MetaUnit* techUnit, int time);
 

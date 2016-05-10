@@ -10,7 +10,7 @@ using namespace BWAPI;
 using namespace std;
 using namespace Util;
 
-WorkerManager::WorkerManager(Arbitrator::Arbitrator<Unit,double>* arbitrator)
+WorkerManager::WorkerManager(Arbitrator::Arbitrator<Unit*,double>* arbitrator)
 {
 	this->arbitrator					= arbitrator;
 	this->baseManager					= NULL;
@@ -45,9 +45,9 @@ void WorkerManager::setBuildOrderManager(BuildOrderManager* buildOrderManager)
 {
 	this->buildOrderManager = buildOrderManager;
 }
-void WorkerManager::onOffer(set<Unit> units)
+void WorkerManager::onOffer(set<Unit*> units)
 {
-	for(set<Unit>::iterator u = units.begin(); u != units.end(); u++)
+	for(set<Unit*>::iterator u = units.begin(); u != units.end(); u++)
 	{
 		if ((*u)->getType().isWorker() && !this->mineralOrder.empty() && ((*u)->getTarget() == NULL))
 		{
@@ -63,7 +63,7 @@ void WorkerManager::onOffer(set<Unit> units)
 			arbitrator->decline(this, *u, 0);
 	}
 }
-void WorkerManager::onRevoke(Unit unit, double bid)
+void WorkerManager::onRevoke(Unit* unit, double bid)
 {
 	this->onRemoveUnit(unit);
 }
@@ -73,7 +73,7 @@ void WorkerManager::updateWorkerAssignments()
 	//determine current worker assignments
 	//also workers that are mining from resources that dont belong to any of our bases will be set to free
 
-	for(map<Unit,WorkerData >::iterator w = this->workers.begin(); w != this->workers.end(); w++)
+	for(map<Unit*,WorkerData >::iterator w = this->workers.begin(); w != this->workers.end(); w++)
 	{
 		if (w->second.newResource != NULL)
 		{
@@ -85,8 +85,8 @@ void WorkerManager::updateWorkerAssignments()
 	}
 
 	// get free workers
-	set<Unit> freeWorkers;
-	for(map<Unit,WorkerData>::iterator w = this->workers.begin(); w != this->workers.end(); w++)
+	set<Unit*> freeWorkers;
+	for(map<Unit*,WorkerData>::iterator w = this->workers.begin(); w != this->workers.end(); w++)
 	{
 		if (w->second.newResource == NULL)
 			freeWorkers.insert(w->first);
@@ -103,29 +103,29 @@ void WorkerManager::updateWorkerAssignments()
 	}
 
 	// free workers from resources with too many workers
-	for(map<Unit,int>::iterator i = desiredWorkerCount.begin(); i != desiredWorkerCount.end(); i++)
+	for(map<Unit*,int>::iterator i = desiredWorkerCount.begin(); i != desiredWorkerCount.end(); i++)
 		if (i->second < (int)currentWorkers[i->first].size())
 		{
 			// desired worker count is less than the current worker count for this resource, so lets remove some workers.
 			int amountToRemove = currentWorkers[i->first].size() - i->second;
 			for(int j = 0; j < amountToRemove; j++)
 			{
-				Unit worker = *currentWorkers[i->first].begin();
+				Unit* worker = *currentWorkers[i->first].begin();
 				freeWorkers.insert(worker);
 				workers[worker].newResource = NULL;
 				currentWorkers[i->first].erase(worker);
 			}
 		}
 
-		vector< Unit > workerUnit;
-		vector< Unit > taskUnit;
+		vector< Unit* > workerUnit;
+		vector< Unit* > taskUnit;
 		map<int,int> assignment;
 
-		for(set<Unit>::iterator i=freeWorkers.begin();i!=freeWorkers.end();i++)
+		for(set<Unit*>::iterator i=freeWorkers.begin();i!=freeWorkers.end();i++)
 			workerUnit.push_back(*i);
 
 		// assign workers to resources that need more workers
-		for(map<Unit,int>::iterator i = desiredWorkerCount.begin(); i != desiredWorkerCount.end(); i++)
+		for(map<Unit*,int>::iterator i = desiredWorkerCount.begin(); i != desiredWorkerCount.end(); i++)
 			if (i->second>(int)currentWorkers[i->first].size())
 				for(int j=(int)currentWorkers[i->first].size();j<i->second;j++)
 					taskUnit.push_back(i->first);
@@ -143,16 +143,16 @@ void WorkerManager::updateWorkerAssignments()
 		//use assignment
 		for(map<int,int>::iterator a=assignment.begin();a!=assignment.end();a++)
 		{
-			Unit worker=workerUnit[a->first];
-			Unit resource=taskUnit[a->second];
+			Unit* worker=workerUnit[a->first];
+			Unit* resource=taskUnit[a->second];
 			workers[worker].newResource = resource;
 			currentWorkers[resource].insert(worker);
 		}
 }
 
-bool mineralCompare (const pair<Unit, int> i, const pair<Unit, int> j) { return (i.second>j.second); }
+bool mineralCompare (const pair<Unit*, int> i, const pair<Unit*, int> j) { return (i.second>j.second); }
 
-void WorkerManager::setDestinationMineral(BWAPI::Unit destinationMineral)
+void WorkerManager::setDestinationMineral(BWAPI::Unit *destinationMineral)
 {
 	this->destinationMineral = destinationMineral;
 }
@@ -169,9 +169,9 @@ void WorkerManager::rebalanceWorkers()
 	// iterate over all the resources of each active base
 	for(set<Base*>::iterator b = this->basesCache.begin(); b != this->basesCache.end(); b++)
 	{
-		set<Unit> baseMinerals = (*b)->getMinerals();
-		vector< std::pair<Unit,int> > baseMineralOrder;
-		for(set<Unit>::iterator m = baseMinerals.begin(); m != baseMinerals.end(); m++)
+		set<Unit*> baseMinerals = (*b)->getMinerals();
+		vector< std::pair<Unit*,int> > baseMineralOrder;
+		for(set<Unit*>::iterator m = baseMinerals.begin(); m != baseMinerals.end(); m++)
 		{
 			resourceBase[*m] = *b;
 			desiredWorkerCount[*m] = 0;
@@ -182,11 +182,11 @@ void WorkerManager::rebalanceWorkers()
 		sort(baseMineralOrder.begin(), baseMineralOrder.end(), mineralCompare);
 		for(int i=0;i<(int)baseMineralOrder.size();i++)
 		{
-			Unit mineral=baseMineralOrder[i].first;
+			Unit* mineral=baseMineralOrder[i].first;
 			mineralOrder.push_back(make_pair(mineral, mineral->getResources() - 2*(int)mineral->getPosition().getApproxDistance((*b)->getBaseLocation()->getPosition())-3000*i));
 		}
-		set<Unit> baseGeysers = (*b)->getGeysers();
-		for(set<Unit>::iterator g = baseGeysers.begin(); g != baseGeysers.end(); g++)
+		set<Unit*> baseGeysers = (*b)->getGeysers();
+		for(set<Unit*>::iterator g = baseGeysers.begin(); g != baseGeysers.end(); g++)
 		{
 			if (optimalWorkerCount+3 <= 70)
 				optimalWorkerCount+=3;
@@ -250,7 +250,7 @@ if(early_rush == false)
 
 					int enemy_assimilator = 0;
 					int	enemy_gateway = 0;
-					for (std::set<BWAPI::Unit >::const_iterator en = Broodwar->enemy()->getUnits().begin(); en != BWAPI::Broodwar->enemy()->getUnits().end(); ++en)
+					for (std::set<BWAPI::Unit *>::const_iterator en = Broodwar->enemy()->getUnits().begin(); en != BWAPI::Broodwar->enemy()->getUnits().end(); ++en)
 					{
 						if((*en)->getType() == BWAPI::UnitTypes::Protoss_Assimilator)
 							enemy_assimilator++;
@@ -276,7 +276,7 @@ if(early_rush == false)
 
 					if(!firsss)
 					{
-						for (std::set<BWAPI::Unit >::const_iterator en = Broodwar->enemy()->getUnits().begin(); en != BWAPI::Broodwar->enemy()->getUnits().end(); ++en)
+						for (std::set<BWAPI::Unit *>::const_iterator en = Broodwar->enemy()->getUnits().begin(); en != BWAPI::Broodwar->enemy()->getUnits().end(); ++en)
 						{
 							if(Broodwar->self()->incompleteUnitCount(UnitTypes::Protoss_Cybernetics_Core) != 1 && BWAPI::Broodwar->self()->allUnitCount(BWAPI::UnitTypes::Protoss_Cybernetics_Core) == 1)
 							{
@@ -324,8 +324,8 @@ if(early_rush == false)
 }
 */
 	//bid a constant value of 10 on all completed workers
-	set<Unit> w = SelectAll()(isCompleted)(isWorker);
-	for each(Unit u in w)
+	set<Unit*> w = SelectAll()(isCompleted)(isWorker);
+	for each(Unit* u in w)
 		arbitrator->setBid(this, u, 10);
 
 	//rebalance workers when necessary 
@@ -343,7 +343,7 @@ if(early_rush == false)
 		//Destination: clean this f***ing fake mineral
 		if (workers.size() == 20 && !cleaningInProgress)
 		{
-			map<Unit,WorkerData>::iterator u;
+			map<Unit*,WorkerData>::iterator u;
 
 			while (cleaner == NULL)
 			{
@@ -374,9 +374,9 @@ if(early_rush == false)
 	//order workers to gather from their assigned resources
 	this->mineralRate=0;
 	this->gasRate=0;
-	for(map<Unit,WorkerData>::iterator u = workers.begin(); u != workers.end(); u++)
+	for(map<Unit*,WorkerData>::iterator u = workers.begin(); u != workers.end(); u++)
 	{
-		Unit i = u->first;
+		Unit* i = u->first;
 
 		if (u->second.resource!=NULL)
 		{
@@ -391,7 +391,7 @@ if(early_rush == false)
 		if (u->second.resource == NULL || (i->getTarget() != NULL && !i->getTarget()->getType().isResourceDepot()))
 			u->second.resource = u->second.newResource;
 
-		Unit resource = u->second.resource;
+		Unit* resource = u->second.resource;
 		if (i->getOrder() == Orders::MoveToMinerals || 
 			i->getOrder() == Orders::WaitForMinerals || 
 			i->getOrder() == Orders::MoveToGas || 
@@ -407,7 +407,7 @@ if(early_rush == false)
 				Base* b=this->baseManager->getBase(BWTA::getNearestBaseLocation(i->getTilePosition()));
 				if (b!=NULL)
 				{
-					Unit center = b->getResourceDepot();
+					Unit* center = b->getResourceDepot();
 					if (i->getTarget()==NULL || !i->getTarget()->exists() || i->getTarget()!=center || (center->isCompleted() &&  i->getOrder() == Orders::PlayerGuard))
 						i->rightClick(center);
 				}
@@ -427,19 +427,19 @@ string WorkerManager::getShortName() const
 	return "Work";
 }
 
-void WorkerManager::onRemoveUnit(Unit unit)
+void WorkerManager::onRemoveUnit(Unit* unit)
 {
 	if (unit->getType().isWorker())
 		workers.erase(unit);
 			
 	if (unit->getType().isResourceContainer())
 	{
-		map<Unit,set<Unit> >::iterator c=currentWorkers.find(unit);
+		map<Unit*,set<Unit*> >::iterator c=currentWorkers.find(unit);
 		if (c==currentWorkers.end())
 			return;
-		for(set<Unit>::iterator i=c->second.begin();i!=c->second.end();i++)
+		for(set<Unit*>::iterator i=c->second.begin();i!=c->second.end();i++)
 		{
-			std::map<Unit,WorkerData>::iterator j=workers.find(*i);
+			std::map<Unit*,WorkerData>::iterator j=workers.find(*i);
 			if (j!=workers.end())
 			{
 				if (j->second.resource==unit)

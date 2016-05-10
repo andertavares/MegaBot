@@ -360,10 +360,10 @@ enum FilterAttributeOrder
 };
 
 
-class UnitGroup : public std::set<BWAPI::Unit>
+class UnitGroup : public std::set<BWAPI::Unit*>
 {
 public:
-	static UnitGroup getUnitGroup(const std::set<BWAPI::Unit> units)
+	static UnitGroup getUnitGroup(const std::set<BWAPI::Unit*> units)
 	{
 		UnitGroup u;
 		u.insert(units.begin(), units.end());
@@ -386,8 +386,8 @@ public:
 	UnitGroup operator()(int f1, int f2, int f3, int f4, int f5) const;
 	UnitGroup operator()(FliterAttributeScalar a, const char* compare, double value) const;
 	UnitGroup operator()(FliterAttributeScalar a, const char* compare, int value) const;
-	UnitGroup operator()(BWAPI::Player player) const;
-	UnitGroup operator()(FilterAttributeUnit a, BWAPI::Unit unit) const;
+	UnitGroup operator()(BWAPI::Player* player) const;
+	UnitGroup operator()(FilterAttributeUnit a, BWAPI::Unit* unit) const;
 	UnitGroup operator()(FilterAttributeType a, BWAPI::UnitType type) const;
 	UnitGroup operator()(FilterAttributeType a, BWAPI::TechType type) const;
 	UnitGroup operator()(FilterAttributeType a, BWAPI::UpgradeType type) const;
@@ -402,8 +402,8 @@ public:
 	UnitGroup not(int f1, int f2, int f3, int f4, int f5) const;
 	UnitGroup not(FliterAttributeScalar a, const char* compare, double value) const;
 	UnitGroup not(FliterAttributeScalar a, const char* compare, int value) const;
-	UnitGroup not(BWAPI::Player player) const;
-	UnitGroup not(FilterAttributeUnit a, BWAPI::Unit unit) const;
+	UnitGroup not(BWAPI::Player* player) const;
+	UnitGroup not(FilterAttributeUnit a, BWAPI::Unit* unit) const;
 	UnitGroup not(FilterAttributeType a, BWAPI::UnitType type) const;
 	UnitGroup not(FilterAttributeType a, BWAPI::TechType type) const;
 	UnitGroup not(FilterAttributeType a, BWAPI::UpgradeType type) const;
@@ -415,14 +415,14 @@ public:
 	UnitGroup& operator*=(const UnitGroup& other);//intersection
 	UnitGroup& operator^=(const UnitGroup& other);//symmetric difference
 	UnitGroup& operator-=(const UnitGroup& other);//difference
-	BWAPI::Unit getNearest(BWAPI::Position position) const;
-	bool contains(BWAPI::Unit u) const;
+	BWAPI::Unit* getNearest(BWAPI::Position position) const;
+	bool contains(BWAPI::Unit* u) const;
 	BWAPI::Position getCenter() const;
 
 	bool attack(BWAPI::Position position, bool enqueue=false) const;
-	bool attack(BWAPI::Unit target, bool enqueue=false) const;
+	bool attack(BWAPI::Unit* target, bool enqueue=false) const;
 	bool rightClick(BWAPI::Position position) const;
-	bool rightClick(BWAPI::Unit target) const;
+	bool rightClick(BWAPI::Unit* target) const;
 	bool train(BWAPI::UnitType type) const;
 	bool build(BWAPI::TilePosition position, BWAPI::UnitType type) const;
 	bool buildAddon(BWAPI::UnitType type) const;
@@ -431,10 +431,10 @@ public:
 	bool stop() const;
 	bool holdPosition() const;
 	bool patrol(BWAPI::Position position) const;
-	bool follow(BWAPI::Unit target) const;
+	bool follow(BWAPI::Unit* target) const;
 	bool setRallyPoint(BWAPI::Position target) const;
-	bool setRallyPoint(BWAPI::Unit target) const;
-	bool repair(BWAPI::Unit target) const;
+	bool setRallyPoint(BWAPI::Unit* target) const;
+	bool repair(BWAPI::Unit* target) const;
 	bool morph(BWAPI::UnitType type) const;
 	bool burrow() const;
 	bool unburrow() const;
@@ -444,8 +444,8 @@ public:
 	bool decloak() const;
 	bool lift() const;
 	bool land(BWAPI::TilePosition position) const;
-	bool load(BWAPI::Unit target) const;
-	bool unload(BWAPI::Unit target) const;
+	bool load(BWAPI::Unit* target) const;
+	bool unload(BWAPI::Unit* target) const;
 	bool unloadAll() const;
 	bool unloadAll(BWAPI::Position position) const;
 	bool cancelConstruction() const;
@@ -458,6 +458,6 @@ public:
 	bool cancelUpgrade() const;
 	bool useTech(BWAPI::TechType tech) const;
 	bool useTech(BWAPI::TechType tech, BWAPI::Position position) const;
-	bool useTech(BWAPI::TechType tech, BWAPI::Unit target) const;
+	bool useTech(BWAPI::TechType tech, BWAPI::Unit* target) const;
 };
 

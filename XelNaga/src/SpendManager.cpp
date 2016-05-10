@@ -223,7 +223,7 @@ void SpendManager::update()
 		{
 			UnitGroup myGateways = SelectAll(BWAPI::UnitTypes::Protoss_Gateway);
 			bool allTraining = true;
-			for each (BWAPI::Unit gateway in myGateways)
+			for each (BWAPI::Unit *gateway in myGateways)
 			{
 				if (!gateway->isTraining())
 				{

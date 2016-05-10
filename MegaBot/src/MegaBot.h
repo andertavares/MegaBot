@@ -10,8 +10,9 @@ extern BWTA::Region* home;
 extern BWTA::Region* enemy_base;
 DWORD WINAPI AnalyzeThread();
 
-class MegaBot : public BWAPI::AIModule
-{
+class MegaBot : public BWAPI::AIModule {
+	BWAPI::AIModule* behavior;
+
 public:
   virtual void onStart();
   virtual void onEnd(bool isWinner);

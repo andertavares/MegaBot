@@ -6,7 +6,7 @@
 #include <BWAPI.h>
 #include <cmath>
 
-class ScoutManager : public Arbitrator::Controller<BWAPI::Unit,double>
+class ScoutManager : public Arbitrator::Controller<BWAPI::Unit*,double>
 {
 public:
 	class ScoutData
@@ -24,22 +24,22 @@ public:
 		BWTA::BaseLocation* target;
 		ScoutMode mode;
 	};
-	ScoutManager(Arbitrator::Arbitrator<BWAPI::Unit,double>*, InformationManager*);
+	ScoutManager(Arbitrator::Arbitrator<BWAPI::Unit*,double>*, InformationManager*);
 
-	virtual void onOffer(std::set<BWAPI::Unit>);
-	virtual void onRevoke(BWAPI::Unit, double);
+	virtual void onOffer(std::set<BWAPI::Unit*>);
+	virtual void onRevoke(BWAPI::Unit*, double);
 	virtual void update();
 
 	virtual std::string getName() const;
 	virtual std::string getShortName() const;
-	void onRemoveUnit(BWAPI::Unit unit);
+	void onRemoveUnit(BWAPI::Unit* unit);
 
 	// Non-Controller methods.
 	bool scoutDone_chc;
 	bool isScouting() const;
 	void setScoutCount(int count);
 	void setDebugMode(bool debugMode);
-	void setDestinationMineral(BWAPI::Unit);
+	void setDestinationMineral(BWAPI::Unit*);
 	
 	
 	//chc
@@ -55,8 +55,8 @@ public:
 
 
 
-	std::map<BWAPI::Unit, ScoutData> scouts;
-	Arbitrator::Arbitrator<BWAPI::Unit,double>* arbitrator;
+	std::map<BWAPI::Unit*, ScoutData> scouts;
+	Arbitrator::Arbitrator<BWAPI::Unit*,double>* arbitrator;
 
 	std::list<BWTA::BaseLocation*> baseLocationsToScout;
 	std::set<BWTA::BaseLocation*> baseLocationsExplored;
@@ -65,7 +65,7 @@ public:
 private:
 	bool needMoreScouts() const;
 	void requestScout(double bid);
-	void addScout(BWAPI::Unit unit);
+	void addScout(BWAPI::Unit* unit);
 	void updateScoutAssignments();
 	void drawAssignments();
 	InformationManager* informationManager;

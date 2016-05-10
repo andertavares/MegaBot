@@ -26,7 +26,7 @@ public:
 	const std::set<BWTA::Region*>& getMyRegions	() const;
 
 	std::string					getName									();
-	void								onRemoveUnit						(BWAPI::Unit unit);
+	void								onRemoveUnit						(BWAPI::Unit* unit);
 
 	bool								hasRefinery							(BWTA::BaseLocation* location);
 	bool								isRefineryNeeded				();

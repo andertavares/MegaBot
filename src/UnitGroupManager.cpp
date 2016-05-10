@@ -1,11 +1,11 @@
 #include <UnitGroupManager.h>
 
-std::map<BWAPI::Unit,BWAPI::Player> unitOwner;
-std::map<BWAPI::Unit,BWAPI::UnitType> unitType;
-std::map<BWAPI::Player, std::map<BWAPI::UnitType,UnitGroup > > data;
-std::map<BWAPI::Player, UnitGroup> allOwnedUnits;
+std::map<BWAPI::Unit*,BWAPI::Player*> unitOwner;
+std::map<BWAPI::Unit*,BWAPI::UnitType> unitType;
+std::map<BWAPI::Player*, std::map<BWAPI::UnitType,UnitGroup > > data;
+std::map<BWAPI::Player*, UnitGroup> allOwnedUnits;
 UnitGroup allUnits;
-BWAPI::Player neutral;
+BWAPI::Player* neutral;
 UnitGroupManager* TheUnitGroupManager = NULL;
 
 UnitGroupManager* UnitGroupManager::create()
@@ -21,12 +21,12 @@ void UnitGroupManager::destroy()
 UnitGroupManager::UnitGroupManager()
 {
 	TheUnitGroupManager = this;
-	for(std::set<BWAPI::Unit>::iterator i=BWAPI::Broodwar->getAllUnits().begin();i!=BWAPI::Broodwar->getAllUnits().end();i++)
+	for(std::set<BWAPI::Unit*>::iterator i=BWAPI::Broodwar->getAllUnits().begin();i!=BWAPI::Broodwar->getAllUnits().end();i++)
 	{
 		onUnitDiscover(*i);
 	}
 	neutral=NULL;
-	for(std::set<BWAPI::Player>::iterator i=BWAPI::Broodwar->getPlayers().begin();i!=BWAPI::Broodwar->getPlayers().end();i++)
+	for(std::set<BWAPI::Player*>::iterator i=BWAPI::Broodwar->getPlayers().begin();i!=BWAPI::Broodwar->getPlayers().end();i++)
 	{
 		if ((*i)->isNeutral())
 			neutral=*i;
@@ -36,7 +36,7 @@ UnitGroupManager::~UnitGroupManager()
 {
 	TheUnitGroupManager = NULL;
 }
-void UnitGroupManager::onUnitDiscover(BWAPI::Unit unit)
+void UnitGroupManager::onUnitDiscover(BWAPI::Unit* unit)
 {
 	unitOwner[unit]=unit->getPlayer();
 	unitType[unit]=unit->getType();
@@ -44,7 +44,7 @@ void UnitGroupManager::onUnitDiscover(BWAPI::Unit unit)
 	allOwnedUnits[unit->getPlayer()].insert(unit);
 	allUnits.insert(unit);
 }
-void UnitGroupManager::onUnitEvade(BWAPI::Unit unit)
+void UnitGroupManager::onUnitEvade(BWAPI::Unit* unit)
 {
 	unitOwner[unit]=unit->getPlayer();
 	unitType[unit]=unit->getType();
@@ -52,14 +52,14 @@ void UnitGroupManager::onUnitEvade(BWAPI::Unit unit)
 	allOwnedUnits[unit->getPlayer()].erase(unit);
 	allUnits.erase(unit);
 }
-void UnitGroupManager::onUnitMorph(BWAPI::Unit unit)
+void UnitGroupManager::onUnitMorph(BWAPI::Unit* unit)
 {
 	data[unitOwner[unit]][unitType[unit]].erase(unit);
 	unitType[unit]=unit->getType();
 	unitOwner[unit]=unit->getPlayer();
 	data[unit->getPlayer()][unit->getType()].insert(unit);
 }
-void UnitGroupManager::onUnitRenegade(BWAPI::Unit unit)
+void UnitGroupManager::onUnitRenegade(BWAPI::Unit* unit)
 {
 	data[unitOwner[unit]][unitType[unit]].erase(unit);
 	allOwnedUnits[unitOwner[unit]].erase(unit);
@@ -90,7 +90,7 @@ UnitGroup SelectAllEnemy(BWAPI::UnitType type)
 {
 	return data[BWAPI::Broodwar->enemy()][type];
 }
-UnitGroup SelectAll(BWAPI::Player player, BWAPI::UnitType type)
+UnitGroup SelectAll(BWAPI::Player* player, BWAPI::UnitType type)
 {
 	return data[player][type];
 }

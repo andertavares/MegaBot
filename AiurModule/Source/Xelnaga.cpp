@@ -429,7 +429,7 @@ if(Broodwar->enemy()->getRace() == Races::Terran)
 }
 
 
-void Xelnaga::onUnitDestroy(BWAPI::Unit unit)
+void Xelnaga::onUnitDestroy(BWAPI::Unit* unit)
 {	
 	if (Broodwar->isReplay()) return;
 
@@ -589,7 +589,7 @@ if(Broodwar->enemy()->getRace() == Races::Terran)
 	
 }
 
-void Xelnaga::onUnitDiscover(BWAPI::Unit unit)
+void Xelnaga::onUnitDiscover(BWAPI::Unit* unit)
 {
 	if (Broodwar->isReplay()) return;
 	
@@ -662,7 +662,7 @@ if(Broodwar->enemy()->getRace() == Races::Terran)
 	
 	
 }
-void Xelnaga::onUnitEvade(BWAPI::Unit unit)
+void Xelnaga::onUnitEvade(BWAPI::Unit* unit)
 {
 	if (Broodwar->isReplay()) return;
 
@@ -733,7 +733,7 @@ if(Broodwar->enemy()->getRace() == Races::Terran)
 	
 }
 
-void Xelnaga::onUnitMorph(BWAPI::Unit unit)
+void Xelnaga::onUnitMorph(BWAPI::Unit* unit)
 {
 	if (Broodwar->isReplay()) return;
 	
@@ -796,7 +796,7 @@ if(Broodwar->enemy()->getRace() == Races::Terran)
 	
 	
 }
-void Xelnaga::onUnitRenegade(BWAPI::Unit unit)
+void Xelnaga::onUnitRenegade(BWAPI::Unit* unit)
 {
 	if (Broodwar->isReplay()) return;
 	

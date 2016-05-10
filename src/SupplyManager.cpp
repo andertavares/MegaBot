@@ -22,14 +22,14 @@ void SupplyManager::update()
 	{
 		int productionCapacity       = 0;
 		lastFrameCheck               = BWAPI::Broodwar->getFrameCount();
-		BWAPI::Unitset units = BWAPI::Broodwar->self()->getUnits();
+		std::set<BWAPI::Unit*> units = BWAPI::Broodwar->self()->getUnits();
 		int supplyBuildTime = BWAPI::Broodwar->self()->getRace().getSupplyProvider().buildTime();
 		int time = BWAPI::Broodwar->getFrameCount() + supplyBuildTime*2;
 		for(std::set<BuildOrderManager::MetaUnit*>::iterator i = this->buildOrderManager->MetaUnitPointers.begin(); i != this->buildOrderManager->MetaUnitPointers.end(); i++)
 		{
-			BWAPI::UnitType::set m=this->buildOrderManager->unitsCanMake(*i,time);
+			std::set<BWAPI::UnitType> m=this->buildOrderManager->unitsCanMake(*i,time);
 			int max=0;
-			for(BWAPI::UnitType::set::iterator j=m.begin();j!=m.end();j++)
+			for(std::set<BWAPI::UnitType>::iterator j=m.begin();j!=m.end();j++)
 			{
 				int s=j->supplyRequired();
 				if (j->isTwoUnitsInOneEgg())
@@ -78,9 +78,9 @@ int SupplyManager::getSupplyTime(int supplyCount) const
 
 	int supply=BWAPI::Broodwar->self()->supplyTotal();
 	int time = BWAPI::Broodwar->getFrameCount();
-	std::set<BWAPI::Unit> units = SelectAll()(-isCompleted);
+	std::set<BWAPI::Unit*> units = SelectAll()(-isCompleted);
 	std::map<int, int> supplyAdditions;
-	for(std::set<BWAPI::Unit>::iterator i = units.begin(); i != units.end(); i++)
+	for(std::set<BWAPI::Unit*>::iterator i = units.begin(); i != units.end(); i++)
 	{
 		if ((*i)->getType().supplyProvided()>0)
 		{

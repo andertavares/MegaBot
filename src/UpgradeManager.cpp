@@ -1,6 +1,6 @@
 #include <UpgradeManager.h>
 
-UpgradeManager::UpgradeManager(Arbitrator::Arbitrator<BWAPI::Unit,double>* arbitrator)
+UpgradeManager::UpgradeManager(Arbitrator::Arbitrator<BWAPI::Unit*,double>* arbitrator)
 {
 	this->arbitrator = arbitrator;
 	this->placer = NULL;
@@ -14,9 +14,9 @@ void UpgradeManager::setBuildingPlacer(BuildingPlacer* placer)
 {
 	this->placer = placer;
 }
-void UpgradeManager::onOffer(std::set<BWAPI::Unit> units)
+void UpgradeManager::onOffer(std::set<BWAPI::Unit*> units)
 {
-	for(std::set<BWAPI::Unit>::iterator i=units.begin();i!=units.end();i++)
+	for(std::set<BWAPI::Unit*>::iterator i=units.begin();i!=units.end();i++)
 	{
 		std::map<BWAPI::UnitType,std::list<Upgrade> >::iterator q=upgradeQueues.find((*i)->getType());
 		bool used=false;
@@ -46,7 +46,7 @@ void UpgradeManager::onOffer(std::set<BWAPI::Unit> units)
 	}
 }
 
-void UpgradeManager::onRevoke(BWAPI::Unit unit, double bid)
+void UpgradeManager::onRevoke(BWAPI::Unit* unit, double bid)
 {
 	this->onRemoveUnit(unit);
 }
@@ -57,8 +57,8 @@ void UpgradeManager::update()
 	{
 		lastFrameCheck = BWAPI::Broodwar->getFrameCount();
 
-		std::set<BWAPI::Unit> myPlayerUnits=BWAPI::Broodwar->self()->getUnits();
-		for(std::set<BWAPI::Unit>::iterator u = myPlayerUnits.begin(); u != myPlayerUnits.end(); u++)
+		std::set<BWAPI::Unit*> myPlayerUnits=BWAPI::Broodwar->self()->getUnits();
+		for(std::set<BWAPI::Unit*>::iterator u = myPlayerUnits.begin(); u != myPlayerUnits.end(); u++)
 		{
 			std::map<BWAPI::UnitType,std::list<Upgrade> >::iterator r=upgradeQueues.find((*u)->getType());
 			if ((*u)->isCompleted() && r!=upgradeQueues.end() && !r->second.empty())
@@ -66,9 +66,9 @@ void UpgradeManager::update()
 				arbitrator->setBid(this, *u, 50);
 			}
 		}
-		std::map<BWAPI::Unit,Upgrade>::iterator i_next;
+		std::map<BWAPI::Unit*,Upgrade>::iterator i_next;
 		//iterate through all the upgrading units
-		for(std::map<BWAPI::Unit,Upgrade>::iterator i=upgradingUnits.begin();i!=upgradingUnits.end();i=i_next)
+		for(std::map<BWAPI::Unit*,Upgrade>::iterator i=upgradingUnits.begin();i!=upgradingUnits.end();i=i_next)
 		{
 			i_next=i;
 			i_next++;
@@ -121,9 +121,9 @@ std::string UpgradeManager::getName() const
 	return "Upgrade Manager";
 }
 
-void UpgradeManager::onRemoveUnit(BWAPI::Unit unit)
+void UpgradeManager::onRemoveUnit(BWAPI::Unit* unit)
 {
-	std::map<BWAPI::Unit,Upgrade>::iterator r=upgradingUnits.find(unit);
+	std::map<BWAPI::Unit*,Upgrade>::iterator r=upgradingUnits.find(unit);
 	if (r!=upgradingUnits.end())
 	{
 		Upgrade type=r->second;

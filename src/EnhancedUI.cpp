@@ -17,28 +17,28 @@ void EnhancedUI::drawBases() const
 		Position c=(*i)->getPosition();
 
 		//draw outline of center location
-		Broodwar->drawBox(CoordinateType::Map,p.x*32,p.y*32,p.x*32+4*32,p.y*32+3*32,Colors::Blue,false);
-		//Broodwar->drawText(CoordinateType::Map,p.x*32+3*16,p.y*32+3*16,"%dx%d",p.x,p.y);
+		Broodwar->drawBox(CoordinateType::Map,p.x()*32,p.y()*32,p.x()*32+4*32,p.y()*32+3*32,Colors::Blue,false);
+		//Broodwar->drawText(CoordinateType::Map,p.x()*32+3*16,p.y()*32+3*16,"%dx%d",p.x(),p.y());
 
 		//draw a circle at each mineral patch
-		for(BWAPI::Unitset::const_iterator j=(*i)->getMinerals().begin();j!=(*i)->getMinerals().end();j++)
+		for(std::set<BWAPI::Unit*>::const_iterator j=(*i)->getMinerals().begin();j!=(*i)->getMinerals().end();j++)
 		{
 			Position q=(*j)->getPosition();
-			Broodwar->drawCircle(CoordinateType::Map,q.x,q.y,30,Colors::Cyan,false);
-			//Broodwar->drawText(CoordinateType::Map,q.x,q.y,"%dx%d", q.x, q.y);
+			Broodwar->drawCircle(CoordinateType::Map,q.x(),q.y(),30,Colors::Cyan,false);
+			//Broodwar->drawText(CoordinateType::Map,q.x(),q.y(),"%dx%d", q.x(), q.y());
 		}
 
 		//draw the outlines of vespene geysers
-		for(BWAPI::Unitset::const_iterator j=(*i)->getGeysers().begin();j!=(*i)->getGeysers().end();j++)
+		for(std::set<BWAPI::Unit*>::const_iterator j=(*i)->getGeysers().begin();j!=(*i)->getGeysers().end();j++)
 		{
 			TilePosition q=(*j)->getTilePosition();
-			Broodwar->drawBox(CoordinateType::Map,q.x*32,q.y*32,q.x*32+4*32,q.y*32+2*32,Colors::Orange,false);
+			Broodwar->drawBox(CoordinateType::Map,q.x()*32,q.y()*32,q.x()*32+4*32,q.y()*32+2*32,Colors::Orange,false);
 		}
 
 		//if this is an island expansion, draw a yellow circle around the base location
 		if ((*i)->isIsland())
 		{
-			Broodwar->drawCircle(CoordinateType::Map,c.x,c.y,80,Colors::Yellow,false);
+			Broodwar->drawCircle(CoordinateType::Map,c.x(),c.y(),80,Colors::Yellow,false);
 		}
 	}
 }
@@ -53,7 +53,7 @@ void EnhancedUI::drawTerrain() const
 		{
 			Position point1=p[j];
 			Position point2=p[(j+1) % p.size()];
-			Broodwar->drawLine(CoordinateType::Map,point1.x,point1.y,point2.x,point2.y,Colors::Green);
+			Broodwar->drawLine(CoordinateType::Map,point1.x(),point1.y(),point2.x(),point2.y(),Colors::Green);
 		}
 	}
 
@@ -64,7 +64,7 @@ void EnhancedUI::drawTerrain() const
 		{
 			Position point1=(*c)->getSides().first;
 			Position point2=(*c)->getSides().second;
-			Broodwar->drawLine(CoordinateType::Map,point1.x,point1.y,point2.x,point2.y,Colors::Yellow);
+			Broodwar->drawLine(CoordinateType::Map,point1.x(),point1.y(),point2.x(),point2.y(),Colors::Yellow);
 		}
 	}
 }
@@ -72,14 +72,14 @@ void EnhancedUI::drawTerrain() const
 void EnhancedUI::drawProgress() const
 {
 	UnitGroup constructing = SelectAll()(isBuilding).not(isCompleted);
-	for each (Unit c in constructing)
+	for each (Unit* c in constructing)
 	{
 		double progress = 1.0 - (static_cast<double>(c->getRemainingBuildTime()) / c->getType().buildTime());
 		drawProgressBar(c->getPosition(), progress, BWAPI::Colors::Red);
 	}
 
 	UnitGroup producing = SelectAll()(isTraining);
-	for each (Unit c in producing)
+	for each (Unit* c in producing)
 	{
 		if (c->getRemainingTrainTime() > .0)
 		{
@@ -89,14 +89,14 @@ void EnhancedUI::drawProgress() const
 	}
 
 	UnitGroup upgrading = SelectAll()(isUpgrading);
-	for each (Unit c in upgrading)
+	for each (Unit* c in upgrading)
 	{
 		double progress = 1.0 - (static_cast<double>(c->getRemainingUpgradeTime()) / c->getUpgrade().upgradeTime());
 		drawProgressBar(c->getPosition(), progress, BWAPI::Colors::Orange);
 	}
 
 	UnitGroup researching = SelectAll()(isResearching);
-	for each (Unit c in researching)
+	for each (Unit* c in researching)
 	{
 		double progress = 1.0 - (static_cast<double>(c->getRemainingResearchTime()) / c->getTech().researchTime());
 		drawProgressBar(c->getPosition(), progress, BWAPI::Colors::Yellow);
@@ -109,8 +109,8 @@ void EnhancedUI::drawProgressBar(BWAPI::Position pos, double progressFraction, B
 	const int width = 20, height = 4;
 	const BWAPI::Color outline = BWAPI::Colors::Blue;
 	const BWAPI::Color barBG = BWAPI::Color(0, 0, 170);
-	int xLeft = pos.x - width / 2, xRight = pos.x + width / 2;
-	int yTop = pos.y - height / 2, yBottom = pos.y + height / 2;
+	int xLeft = pos.x() - width / 2, xRight = pos.x() + width / 2;
+	int yTop = pos.y() - height / 2, yBottom = pos.y() + height / 2;
 
 	//Draw outline
 	Broodwar->drawLineMap(xLeft + 1, yTop, xRight - 1, yTop, outline);        //top

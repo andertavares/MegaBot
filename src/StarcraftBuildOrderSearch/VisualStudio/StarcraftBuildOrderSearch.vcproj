@@ -41,6 +41,7 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
+				AdditionalIncludeDirectories="$(BOOST_DIR);$(BWAPI_DIR)/include;%(AdditionalIncludeDirectories)"
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"
@@ -106,6 +107,7 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
+				AdditionalIncludeDirectories="$(BOOST_DIR);$(BWAPI_DIR)/include;%(AdditionalIncludeDirectories)"
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"

@@ -4,3 +4,7 @@
 /NUSBot/src/NUSBot/VisualStudio/NUSBot.suo
 *.ncb
 *.suo
+/NUSBot/src/SparCraft/VisualStudio/Debug
+/NUSBot/src/SparCraft/VisualStudio/Release
+/NUSBot/src/StarcraftBuildOrderSearch/VisualStudio/Release
+/NUSBot/src/StarcraftBuildOrderSearch/VisualStudio/Debug

@@ -5,7 +5,7 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "StarcraftBuildOrderSearch",
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SparCraft", "..\..\SparCraft\VisualStudio\SparCraft.vcxproj", "{66236439-5968-4756-B2E7-8A29BEA99078}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "NUSBot", "NUSBot.vcxproj", "{6C685B5E-324A-4F3C-A53C-2A800E1C7EB9}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "NUSBot", "NUSBot.vcproj", "{A0F5203C-219C-4AAC-9AC2-87AC2C2603F1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,10 +21,10 @@ Global
 		{66236439-5968-4756-B2E7-8A29BEA99078}.Debug|Win32.Build.0 = Debug|Win32
 		{66236439-5968-4756-B2E7-8A29BEA99078}.Release|Win32.ActiveCfg = Release|Win32
 		{66236439-5968-4756-B2E7-8A29BEA99078}.Release|Win32.Build.0 = Release|Win32
-		{6C685B5E-324A-4F3C-A53C-2A800E1C7EB9}.Debug|Win32.ActiveCfg = Debug|Win32
-		{6C685B5E-324A-4F3C-A53C-2A800E1C7EB9}.Debug|Win32.Build.0 = Debug|Win32
-		{6C685B5E-324A-4F3C-A53C-2A800E1C7EB9}.Release|Win32.ActiveCfg = Release|Win32
-		{6C685B5E-324A-4F3C-A53C-2A800E1C7EB9}.Release|Win32.Build.0 = Release|Win32
+		{A0F5203C-219C-4AAC-9AC2-87AC2C2603F1}.Debug|Win32.ActiveCfg = Debug|Win32
+		{A0F5203C-219C-4AAC-9AC2-87AC2C2603F1}.Debug|Win32.Build.0 = Debug|Win32
+		{A0F5203C-219C-4AAC-9AC2-87AC2C2603F1}.Release|Win32.ActiveCfg = Release|Win32
+		{A0F5203C-219C-4AAC-9AC2-87AC2C2603F1}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

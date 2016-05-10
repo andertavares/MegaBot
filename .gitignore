@@ -2,3 +2,5 @@
 /NUSBot/src/NUSBot/VisualStudio/Debug
 /NUSBot/src/NUSBot/VisualStudio/Release
 /NUSBot/src/NUSBot/VisualStudio/NUSBot.suo
+*.ncb
+*.suo

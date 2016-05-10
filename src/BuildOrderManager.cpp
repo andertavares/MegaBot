@@ -12,7 +12,7 @@ using namespace BWAPI;
 map<BWAPI::UnitType, map<BWAPI::UnitType, UnitItem* > >* globalUnitSet;
 int y;
 int currentPriority;
-map<const BWAPI::Unit,int> nextFreeTimeData;
+map<const BWAPI::Unit*,int> nextFreeTimeData;
 map<BWAPI::UnitType, set<BWAPI::UnitType> > makes;
 map<BWAPI::UnitType, set<BWAPI::TechType> > researches;
 map<BWAPI::UnitType, set<BWAPI::UpgradeType> > upgrades;
@@ -30,15 +30,15 @@ BuildOrderManager::BuildOrderManager(BuildManager* buildManager, TechManager* te
 	this->dependencyResolver = false;
 	this->debugMode          = false;
 	UnitItem::getBuildManager() = buildManager;
-	for(UnitType::set::const_iterator i=UnitTypes::allUnitTypes().begin();i!=UnitTypes::allUnitTypes().end();i++)//chcconst ¹Ù²Þ.
+	for(set<BWAPI::UnitType>::const_iterator i=UnitTypes::allUnitTypes().begin();i!=UnitTypes::allUnitTypes().end();i++)//chcconst ¹Ù²Þ.
 	{
 		makes[(*i).whatBuilds().first].insert(*i);
 	}
-	for(TechType::set::const_iterator i=TechTypes::allTechTypes().begin();i!=TechTypes::allTechTypes().end();i++)//chcconst ¹Ù²Þ.
+	for(set<BWAPI::TechType>::const_iterator i=TechTypes::allTechTypes().begin();i!=TechTypes::allTechTypes().end();i++)//chcconst ¹Ù²Þ.
 	{
 		researches[i->whatResearches()].insert(*i);
 	}
-	for(UpgradeType::set::const_iterator i=UpgradeTypes::allUpgradeTypes().begin();i!=UpgradeTypes::allUpgradeTypes().end();i++)//chcconst ¹Ù²Þ.
+	for(set<BWAPI::UpgradeType>::const_iterator i=UpgradeTypes::allUpgradeTypes().begin();i!=UpgradeTypes::allUpgradeTypes().end();i++)//chcconst ¹Ù²Þ.
 	{
 		upgrades[i->whatUpgrades()].insert(*i);
 	}
@@ -64,8 +64,8 @@ int BuildOrderManager::nextFreeTime(const MetaUnit* unit)
 	natime=max(natime,ctime+unit->getRemainingUpgradeTime());
 	if (unit->unit!=NULL)
 		natime=max(natime,nextFreeTimeData[unit->unit]);
-	if (this->buildManager->getBuildType((Unit)(unit->unit))!=UnitTypes::None && !unit->hasBuildUnit() && !unit->isTraining() && !unit->isMorphing())
-		natime=max(natime,ctime+this->buildManager->getBuildType((Unit)(unit->unit)).buildTime());
+	if (this->buildManager->getBuildType((Unit*)(unit->unit))!=UnitTypes::None && !unit->hasBuildUnit() && !unit->isTraining() && !unit->isMorphing())
+		natime=max(natime,ctime+this->buildManager->getBuildType((Unit*)(unit->unit)).buildTime());
 	return natime;
 }
 
@@ -475,7 +475,7 @@ void BuildOrderManager::updatePlan()
 
 	this->MetaUnits.clear();
 	this->MetaUnitPointers.clear();
-	for(BWAPI::Unitset::const_iterator i=BWAPI::Broodwar->self()->getUnits().begin();i!=BWAPI::Broodwar->self()->getUnits().end();i++)
+	for(set<Unit*>::const_iterator i=BWAPI::Broodwar->self()->getUnits().begin();i!=BWAPI::Broodwar->self()->getUnits().end();i++)
 	{
 		MetaUnits.push_back(MetaUnit(*i));
 		if ((*i)->getType()==UnitTypes::Zerg_Hatchery || (*i)->getType()==UnitTypes::Zerg_Lair || (*i)->getType()==UnitTypes::Zerg_Hive)
@@ -491,7 +491,7 @@ void BuildOrderManager::updatePlan()
 	{
 		this->MetaUnitPointers.insert(&(*i));
 	}
-	for(BWAPI::UnitType::set::const_iterator i=UnitTypes::allUnitTypes().begin();i!=UnitTypes::allUnitTypes().end();i++)//chcconst ¹Ù²Þ.
+	for(set<UnitType>::const_iterator i=UnitTypes::allUnitTypes().begin();i!=UnitTypes::allUnitTypes().end();i++)//chcconst ¹Ù²Þ.
 	{
 		currentlyPlannedCount[*i]=this->buildManager->getPlannedCount(*i);
 	}
@@ -519,7 +519,7 @@ void BuildOrderManager::updatePlan()
 		currentPriority=l->first;
 
 		//First consider all techs and upgrades for this priority level
-		BWAPI::UnitType::set techUnitTypes;
+		set<UnitType> techUnitTypes;
 		for(list<TechItem>::iterator i=l->second.techs.begin();i!=l->second.techs.end();i++)
 		{
 			if (i->techType!=TechTypes::None)

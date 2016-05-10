@@ -1,5 +1,5 @@
 #include "BuildOrderManager.h"
-BuildOrderManager::MetaUnit::MetaUnit(BWAPI::Unit unit)
+BuildOrderManager::MetaUnit::MetaUnit(BWAPI::Unit* unit)
 {
 	this->unit=unit;
 }

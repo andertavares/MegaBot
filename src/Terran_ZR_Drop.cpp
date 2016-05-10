@@ -182,7 +182,7 @@ void Terran_ZR_Drop::onStart()
 	{
 	/*
 			
-	BWAPI::Unitset::const_iterator it = BWAPI::Broodwar->self()->getUnits().begin(); 
+	std::set<BWAPI::Unit *>::const_iterator it = BWAPI::Broodwar->self()->getUnits().begin(); 
 			
 		Position *e = new Position(2300,120);
 		(*it)->rightClick(*e);
@@ -221,11 +221,11 @@ void Terran_ZR_Drop::onStart()
 
 
 		//병력 모이면 공격
-		for (BWAPI::Unitset::const_iterator it = BWAPI::Broodwar->self()->getUnits().begin(); it != BWAPI::Broodwar->self()->getUnits().end(); ++it)
+		for (std::set<BWAPI::Unit *>::const_iterator it = BWAPI::Broodwar->self()->getUnits().begin(); it != BWAPI::Broodwar->self()->getUnits().end(); ++it)
     {			
 		if ((*it)->getType() == BWAPI::UnitTypes::Protoss_Zealot)
         {
-			BWAPI::Unitset::const_iterator zealot = it;
+			std::set<BWAPI::Unit *>::const_iterator zealot = it;
 			BWAPI::Position pos = informationManager->getEnemyStartLocation()->getPosition();
 
 
@@ -269,11 +269,11 @@ for(std::set<BWTA::Region*>::const_iterator r=BWTA::getRegions().begin();r!=BWTA
 /*	
 		//test
 	//병력 모이면 공격
-		for (BWAPI::Unitset::const_iterator it = BWAPI::Broodwar->self()->getUnits().begin(); it != BWAPI::Broodwar->self()->getUnits().end(); ++it)
+		for (std::set<BWAPI::Unit *>::const_iterator it = BWAPI::Broodwar->self()->getUnits().begin(); it != BWAPI::Broodwar->self()->getUnits().end(); ++it)
     {			
 		if ((*it)->getType() == BWAPI::UnitTypes::Protoss_Zealot)
         {
-			BWAPI::Unitset::const_iterator zealot = it;
+			std::set<BWAPI::Unit *>::const_iterator zealot = it;
 			BWAPI::Position pos = informationManager->getEnemyStartLocation()->getPosition();
 
 
@@ -294,13 +294,13 @@ for(std::set<BWTA::Region*>::const_iterator r=BWTA::getRegions().begin();r!=BWTA
 	
 							if(spendManager->getUnitCount()->zealot >= 1)
 							{
-		for (BWAPI::Unitset::const_iterator its = BWAPI::Broodwar->self()->getUnits().begin(); its != BWAPI::Broodwar->self()->getUnits().end(); ++its)
+		for (std::set<BWAPI::Unit *>::const_iterator its = BWAPI::Broodwar->self()->getUnits().begin(); its != BWAPI::Broodwar->self()->getUnits().end(); ++its)
     {			
 		
 	
 		if ((*its)->getType() == BWAPI::UnitTypes::Protoss_Probe)
         {
-			BWAPI::Unitset::const_iterator Probe = its;
+			std::set<BWAPI::Unit *>::const_iterator Probe = its;
 			Position *e = new Position(2300,120);
 			Position *em = new Position(2100,2100);
 			(*Probe)->rightClick(*em,true);
@@ -384,11 +384,11 @@ for(std::set<BWTA::Region*>::const_iterator r=BWTA::getRegions().begin();r!=BWTA
 
 		//다크컨트롤
 /*
-   for (BWAPI::Unitset::const_iterator its = BWAPI::Broodwar->self()->getUnits().begin(); its != BWAPI::Broodwar->self()->getUnits().end(); ++its)
+   for (std::set<BWAPI::Unit *>::const_iterator its = BWAPI::Broodwar->self()->getUnits().begin(); its != BWAPI::Broodwar->self()->getUnits().end(); ++its)
     {			
 		if ((*its)->getType() == BWAPI::UnitTypes::Protoss_Dark_Templar)
         {
-			BWAPI::Unitset::const_iterator dark = its;
+			std::set<BWAPI::Unit *>::const_iterator dark = its;
 			
 			BWAPI::Position pos = this->informationManager->getEnemyStartLocation()->getPosition();
 			(*dark)->rightClick(pos);
@@ -462,7 +462,7 @@ void Terran_ZR_Drop::onFrame()
 
 
 //적 다크일때
-for (BWAPI::Unitset::const_iterator t = Broodwar->enemy()->getUnits().begin(); t != BWAPI::Broodwar->enemy()->getUnits().end(); ++t)
+for (std::set<BWAPI::Unit *>::const_iterator t = Broodwar->enemy()->getUnits().begin(); t != BWAPI::Broodwar->enemy()->getUnits().end(); ++t)
 			{
 				
 				if((*t)->getType() == BWAPI::UnitTypes::Protoss_Citadel_of_Adun || (*t)->getType() == BWAPI::UnitTypes::Protoss_Templar_Archives)   
@@ -474,12 +474,12 @@ for (BWAPI::Unitset::const_iterator t = Broodwar->enemy()->getUnits().begin(); t
 						this->buildOrderManager->build(1,UnitTypes::Protoss_Pylon,379);
 
 
-						 for (BWAPI::Unitset::const_iterator its5 = BWAPI::Broodwar->self()->getUnits().begin(); its5 != BWAPI::Broodwar->self()->getUnits().end(); ++its5)
+						 for (std::set<BWAPI::Unit *>::const_iterator its5 = BWAPI::Broodwar->self()->getUnits().begin(); its5 != BWAPI::Broodwar->self()->getUnits().end(); ++its5)
     {		
 	
 		if ((*its5)->getType() == BWAPI::UnitTypes::Protoss_Observer)
         {
-			 for (BWAPI::Unitset::const_iterator its6 = BWAPI::Broodwar->self()->getUnits().begin(); its6 != BWAPI::Broodwar->self()->getUnits().end(); ++its6)
+			 for (std::set<BWAPI::Unit *>::const_iterator its6 = BWAPI::Broodwar->self()->getUnits().begin(); its6 != BWAPI::Broodwar->self()->getUnits().end(); ++its6)
     {		
 
 		if ((*its6)->getType() == BWAPI::UnitTypes::Protoss_Zealot)
@@ -525,9 +525,9 @@ for (BWAPI::Unitset::const_iterator t = Broodwar->enemy()->getUnits().begin(); t
 	
 /*	if(dddd && spendManager->getUnitCount()->darkTemplar >= 2 )
 	{
-	 for (BWAPI::Unitset::const_iterator its = BWAPI::Broodwar->self()->getUnits().begin(); its != BWAPI::Broodwar->self()->getUnits().end(); ++its)
+	 for (std::set<BWAPI::Unit *>::const_iterator its = BWAPI::Broodwar->self()->getUnits().begin(); its != BWAPI::Broodwar->self()->getUnits().end(); ++its)
     {		
-		BWAPI::Unitset::const_iterator all = its;
+		std::set<BWAPI::Unit *>::const_iterator all = its;
 
 	//	BWTA::getStartLocation(BWAPI::Broodwar->self())->getPosition();
 		
@@ -547,12 +547,12 @@ BWAPI::Position poss = BWTA::getStartLocation(BWAPI::Broodwar->self())->getPosit
 		//다크적진으로 가기
 		if(d)
 	{
-   for (BWAPI::Unitset::const_iterator its = BWAPI::Broodwar->self()->getUnits().begin(); its != BWAPI::Broodwar->self()->getUnits().end(); ++its)
+   for (std::set<BWAPI::Unit *>::const_iterator its = BWAPI::Broodwar->self()->getUnits().begin(); its != BWAPI::Broodwar->self()->getUnits().end(); ++its)
     {		
 	
 		if ((*its)->getType() == BWAPI::UnitTypes::Protoss_Dark_Templar)
         {
-			BWAPI::Unitset::const_iterator dark = its;
+			std::set<BWAPI::Unit *>::const_iterator dark = its;
 			
 			
 			BWAPI::Position pos = this->informationManager->getEnemyStartLocation()->getPosition();
@@ -561,7 +561,7 @@ BWAPI::Position poss = BWTA::getStartLocation(BWAPI::Broodwar->self())->getPosit
 
 
 
-			if((*dark)->getPosition().x < pos.x + 200 && (*dark)->getPosition().x > pos.x - 200 && (*dark)->getPosition().y < pos.y + 200 && (*dark)->getPosition().y > pos.y - 200)
+			if((*dark)->getPosition().x() < pos.x() + 200 && (*dark)->getPosition().x() > pos.x() - 200 && (*dark)->getPosition().y() < pos.y() + 200 && (*dark)->getPosition().y() > pos.y() - 200)
 			d = false;
 			
 			}
@@ -575,13 +575,13 @@ BWAPI::Position poss = BWTA::getStartLocation(BWAPI::Broodwar->self())->getPosit
 		//넥서스부터 공격
 		if(d5)
 		{
-for (BWAPI::Unitset::const_iterator pn = Broodwar->enemy()->getUnits().begin(); pn != BWAPI::Broodwar->enemy()->getUnits().end(); ++pn)
+for (std::set<BWAPI::Unit *>::const_iterator pn = Broodwar->enemy()->getUnits().begin(); pn != BWAPI::Broodwar->enemy()->getUnits().end(); ++pn)
 			{
 				
 				if((*pn)->getType() == BWAPI::UnitTypes::Protoss_Nexus)
 				{
 
-				 for (BWAPI::Unitset::const_iterator itss = BWAPI::Broodwar->self()->getUnits().begin(); itss != BWAPI::Broodwar->self()->getUnits().end(); ++itss)
+				 for (std::set<BWAPI::Unit *>::const_iterator itss = BWAPI::Broodwar->self()->getUnits().begin(); itss != BWAPI::Broodwar->self()->getUnits().end(); ++itss)
     {		
 	
 		if ((*itss)->getType() == BWAPI::UnitTypes::Protoss_Dark_Templar)
@@ -611,22 +611,22 @@ for (BWAPI::Unitset::const_iterator pn = Broodwar->enemy()->getUnits().begin(); 
 			if(dd)
 			{
 
-				 for (BWAPI::Unitset::const_iterator its2 = BWAPI::Broodwar->self()->getUnits().begin(); its2 != BWAPI::Broodwar->self()->getUnits().end(); ++its2)
+				 for (std::set<BWAPI::Unit *>::const_iterator its2 = BWAPI::Broodwar->self()->getUnits().begin(); its2 != BWAPI::Broodwar->self()->getUnits().end(); ++its2)
     {		
 	
 		if ((*its2)->getType() == BWAPI::UnitTypes::Protoss_Dark_Templar)
         {
 
-			BWAPI::Unitset::const_iterator dark2 = its2;
+			std::set<BWAPI::Unit *>::const_iterator dark2 = its2;
 			if((*dark2)->isUnderAttack())
 			{
 				d = false;
 				d5 = false;
 				 int i=0;
 
-				  for (BWAPI::Unitset::const_iterator its = BWAPI::Broodwar->self()->getUnits().begin(); its != BWAPI::Broodwar->self()->getUnits().end(); ++its)
+				  for (std::set<BWAPI::Unit *>::const_iterator its = BWAPI::Broodwar->self()->getUnits().begin(); its != BWAPI::Broodwar->self()->getUnits().end(); ++its)
     {		
-		BWAPI::Unitset::const_iterator all = its;
+		std::set<BWAPI::Unit *>::const_iterator all = its;
 
 	//	BWTA::getStartLocation(BWAPI::Broodwar->self())->getPosition();
 		
@@ -647,7 +647,7 @@ BWAPI::Position poss = BWTA::getStartLocation(BWAPI::Broodwar->self())->getPosit
               //      i=0;
 
 
- for (BWAPI::Unitset::const_iterator its = BWAPI::Broodwar->self()->getUnits().begin(); its != BWAPI::Broodwar->self()->getUnits().end(); ++its)
+ for (std::set<BWAPI::Unit *>::const_iterator its = BWAPI::Broodwar->self()->getUnits().begin(); its != BWAPI::Broodwar->self()->getUnits().end(); ++its)
     {		
 	
 		if ((*its)->getType() == BWAPI::UnitTypes::Protoss_Dragoon)
@@ -674,14 +674,14 @@ if(Broodwar->enemy()->getRace() == Races::Protoss)
 	
 			
 //병력 모이면 공격
-		for (BWAPI::Unitset::const_iterator it = BWAPI::Broodwar->self()->getUnits().begin(); it != BWAPI::Broodwar->self()->getUnits().end(); ++it)
+		for (std::set<BWAPI::Unit *>::const_iterator it = BWAPI::Broodwar->self()->getUnits().begin(); it != BWAPI::Broodwar->self()->getUnits().end(); ++it)
     {			
 		if ((*it)->getType() == BWAPI::UnitTypes::Protoss_Zealot)
         {
-			BWAPI::Unitset::const_iterator zealot = it;
+			std::set<BWAPI::Unit *>::const_iterator zealot = it;
 			BWAPI::Position pos = this->informationManager->getEnemyStartLocation()->getPosition();
 		if ((*it)->getType() == BWAPI::UnitTypes::Protoss_Zealot || (*it)->getType() == BWAPI::UnitTypes::Protoss_Dragoon || (*it)->getType() == BWAPI::UnitTypes::Protoss_Dark_Templar)
-		{                   BWAPI::Unitset::const_iterator alot = it;
+		{                   std::set<BWAPI::Unit *>::const_iterator alot = it;
 
 
 for(std::set<BWTA::Region*>::const_iterator r=BWTA::getRegions().begin();r!=BWTA::getRegions().end();r++)
@@ -708,7 +708,7 @@ for(std::set<BWTA::Region*>::const_iterator r=BWTA::getRegions().begin();r!=BWTA
 				
 		
 
-			/*		for (BWAPI::Unitset::const_iterator it = BWAPI::Broodwar->self()->getUnits().begin(); it != BWAPI::Broodwar->self()->getUnits().end(); ++it)
+			/*		for (std::set<BWAPI::Unit *>::const_iterator it = BWAPI::Broodwar->self()->getUnits().begin(); it != BWAPI::Broodwar->self()->getUnits().end(); ++it)
 					{		
 						a = 0;
 
@@ -726,12 +726,12 @@ for(std::set<BWTA::Region*>::const_iterator r=BWTA::getRegions().begin();r!=BWTA
 					if(BWAPI::Broodwar->self()->allUnitCount(BWAPI::UnitTypes::Protoss_Shuttle) >= 3)
 					{
 
-					for (BWAPI::Unitset::const_iterator it = BWAPI::Broodwar->self()->getUnits().begin(); it != BWAPI::Broodwar->self()->getUnits().end(); ++it)
+					for (std::set<BWAPI::Unit *>::const_iterator it = BWAPI::Broodwar->self()->getUnits().begin(); it != BWAPI::Broodwar->self()->getUnits().end(); ++it)
 					{		
 		if((*it)->getType() == BWAPI::UnitTypes::Protoss_Zealot)
 		{
 			
-			for (BWAPI::Unitset::const_iterator it2 = BWAPI::Broodwar->self()->getUnits().begin(); it2 != BWAPI::Broodwar->self()->getUnits().end(); ++it2)
+			for (std::set<BWAPI::Unit *>::const_iterator it2 = BWAPI::Broodwar->self()->getUnits().begin(); it2 != BWAPI::Broodwar->self()->getUnits().end(); ++it2)
     {		
 		
 			
@@ -750,12 +750,12 @@ for(std::set<BWTA::Region*>::const_iterator r=BWTA::getRegions().begin();r!=BWTA
 							if(BWAPI::Broodwar->self()->allUnitCount(BWAPI::UnitTypes::Protoss_Shuttle) >= 3)
 					{
 
-					for (BWAPI::Unitset::const_iterator it = BWAPI::Broodwar->self()->getUnits().begin(); it != BWAPI::Broodwar->self()->getUnits().end(); ++it)
+					for (std::set<BWAPI::Unit *>::const_iterator it = BWAPI::Broodwar->self()->getUnits().begin(); it != BWAPI::Broodwar->self()->getUnits().end(); ++it)
 					{		
 						if((*it)->getType() == BWAPI::UnitTypes::Protoss_Reaver)
 		{
 			
-			for (BWAPI::Unitset::const_iterator it2 = BWAPI::Broodwar->self()->getUnits().begin(); it2 != BWAPI::Broodwar->self()->getUnits().end(); ++it2)
+			for (std::set<BWAPI::Unit *>::const_iterator it2 = BWAPI::Broodwar->self()->getUnits().begin(); it2 != BWAPI::Broodwar->self()->getUnits().end(); ++it2)
     {		
 		
 			
@@ -780,7 +780,7 @@ for(std::set<BWTA::Region*>::const_iterator r=BWTA::getRegions().begin();r!=BWTA
 /*
 	if(BWAPI::Broodwar->self()->allUnitCount(BWAPI::UnitTypes::Protoss_Gateway) >= 3) 
 				{
-						for (BWAPI::Unitset::const_iterator it7 = BWAPI::Broodwar->self()->getUnits().begin(); it7 != BWAPI::Broodwar->self()->getUnits().end(); ++it7)
+						for (std::set<BWAPI::Unit *>::const_iterator it7 = BWAPI::Broodwar->self()->getUnits().begin(); it7 != BWAPI::Broodwar->self()->getUnits().end(); ++it7)
     {	
 
 			if ((*it7)->getType() == BWAPI::UnitTypes::Protoss_Reaver)
@@ -801,7 +801,7 @@ for(std::set<BWTA::Region*>::const_iterator r=BWTA::getRegions().begin();r!=BWTA
 					//BWAPI::Position pos[99999];
 					int al = 0;
 					
-						for (BWAPI::Unitset::const_iterator it3 = BWAPI::Broodwar->self()->getUnits().begin(); it3 != BWAPI::Broodwar->self()->getUnits().end(); ++it3)
+						for (std::set<BWAPI::Unit *>::const_iterator it3 = BWAPI::Broodwar->self()->getUnits().begin(); it3 != BWAPI::Broodwar->self()->getUnits().end(); ++it3)
     {	
 
 			if ((*it3)->getType() == BWAPI::UnitTypes::Protoss_Shuttle)
@@ -828,13 +828,13 @@ for(std::set<BWTA::Region*>::const_iterator r=BWTA::getRegions().begin();r!=BWTA
 
 			
 			
-				for (BWAPI::Unitset::const_iterator it3 = BWAPI::Broodwar->self()->getUnits().begin(); it3 != BWAPI::Broodwar->self()->getUnits().end(); ++it3)
+				for (std::set<BWAPI::Unit *>::const_iterator it3 = BWAPI::Broodwar->self()->getUnits().begin(); it3 != BWAPI::Broodwar->self()->getUnits().end(); ++it3)
 
     {	
 			if ((*it3)->getType() == BWAPI::UnitTypes::Protoss_Shuttle)
         {
 
-				for (BWAPI::Unitset::const_iterator n = Broodwar->enemy()->getUnits().begin(); n != BWAPI::Broodwar->enemy()->getUnits().end(); ++n)
+				for (std::set<BWAPI::Unit *>::const_iterator n = Broodwar->enemy()->getUnits().begin(); n != BWAPI::Broodwar->enemy()->getUnits().end(); ++n)
 			{
 				
 				if((*n)->getType() == BWAPI::UnitTypes::Terran_Bunker || (*n)->getType() == BWAPI::UnitTypes::Terran_Siege_Tank_Tank_Mode || (*n)->getType() == BWAPI::UnitTypes::Terran_Siege_Tank_Siege_Mode || (*n)->getType() == BWAPI::UnitTypes::Terran_Missile_Turret || (*n)->getType() == BWAPI::UnitTypes::Terran_Command_Center)
@@ -849,13 +849,13 @@ for(std::set<BWTA::Region*>::const_iterator r=BWTA::getRegions().begin();r!=BWTA
 					BWAPI::Position pos = (*n)->getPosition();
 					//ddddd=false;
 
-	if((*it3)->getPosition().x > BWTA::getNearestChokepoint(pos10)->getCenter().x - 900 && (*it3)->getPosition().x < BWTA::getNearestChokepoint(pos10)->getCenter().x + 900 && (*it3)->getPosition().y > BWTA::getNearestChokepoint(pos10)->getCenter().y - 900 && (*it3)->getPosition().y < BWTA::getNearestChokepoint(pos10)->getCenter().y + 900)
+	if((*it3)->getPosition().x() > BWTA::getNearestChokepoint(pos10)->getCenter().x() - 900 && (*it3)->getPosition().x() < BWTA::getNearestChokepoint(pos10)->getCenter().x() + 900 && (*it3)->getPosition().y() > BWTA::getNearestChokepoint(pos10)->getCenter().y() - 900 && (*it3)->getPosition().y() < BWTA::getNearestChokepoint(pos10)->getCenter().y() + 900)
 	{
 		if((*it3)->getDistance(*n)<180)
 					{
 
 						
-							for (BWAPI::Unitset::const_iterator it4 = BWAPI::Broodwar->self()->getUnits().begin(); it4 != BWAPI::Broodwar->self()->getUnits().end(); ++it4)
+							for (std::set<BWAPI::Unit *>::const_iterator it4 = BWAPI::Broodwar->self()->getUnits().begin(); it4 != BWAPI::Broodwar->self()->getUnits().end(); ++it4)
 
     {	
 		if ((*it4)->getType() == BWAPI::UnitTypes::Protoss_Zealot)
@@ -882,7 +882,7 @@ for(std::set<BWTA::Region*>::const_iterator r=BWTA::getRegions().begin();r!=BWTA
 				}
 				
 
-//				BWAPI::Unitset::const_iterator dark = its;
+//				std::set<BWAPI::Unit *>::const_iterator dark = its;
 
 				}
 				
@@ -913,7 +913,7 @@ for(std::set<BWTA::Region*>::const_iterator r=BWTA::getRegions().begin();r!=BWTA
 			frametest_defens2 = frametest_defens2 + 24*5;
 			if(total_attack)
 			{
-				for (BWAPI::Unitset::const_iterator allMyUnit = BWAPI::Broodwar->self()->getUnits().begin(); allMyUnit != BWAPI::Broodwar->self()->getUnits().end(); ++allMyUnit) 
+				for (std::set<BWAPI::Unit *>::const_iterator allMyUnit = BWAPI::Broodwar->self()->getUnits().begin(); allMyUnit != BWAPI::Broodwar->self()->getUnits().end(); ++allMyUnit) 
 		{
 			if((double)(*allMyUnit)->getType().groundWeapon().damageAmount() > 6 || (*allMyUnit)->BWAPI::UnitTypes::Protoss_Reaver)
 							{
@@ -955,7 +955,7 @@ for(std::set<BWTA::Region*>::const_iterator r=BWTA::getRegions().begin();r!=BWTA
 
 		/////방어시작
 
-		for (BWAPI::Unitset::const_iterator allMyUnit = BWAPI::Broodwar->self()->getUnits().begin(); allMyUnit != BWAPI::Broodwar->self()->getUnits().end(); ++allMyUnit) 
+		for (std::set<BWAPI::Unit *>::const_iterator allMyUnit = BWAPI::Broodwar->self()->getUnits().begin(); allMyUnit != BWAPI::Broodwar->self()->getUnits().end(); ++allMyUnit) 
 		{
 			if((*allMyUnit)->getType() == BWAPI::UnitTypes::Protoss_Nexus) 
 			{
@@ -976,9 +976,9 @@ for(std::set<BWTA::Region*>::const_iterator r=BWTA::getRegions().begin();r!=BWTA
 			{
 
 				//AIIDE2014 적일꾼 방어하기위함.
-				for (BWAPI::Unitset::const_iterator allEnemyUnit = BWAPI::Broodwar->enemy()->getUnits().begin(); allEnemyUnit != BWAPI::Broodwar->enemy()->getUnits().end(); ++allEnemyUnit) 
+				for (std::set<BWAPI::Unit *>::const_iterator allEnemyUnit = BWAPI::Broodwar->enemy()->getUnits().begin(); allEnemyUnit != BWAPI::Broodwar->enemy()->getUnits().end(); ++allEnemyUnit) 
 				{
-					for (BWAPI::Unitset::const_iterator allMyUnit = BWAPI::Broodwar->self()->getUnits().begin(); allMyUnit != BWAPI::Broodwar->self()->getUnits().end(); ++allMyUnit) 
+					for (std::set<BWAPI::Unit *>::const_iterator allMyUnit = BWAPI::Broodwar->self()->getUnits().begin(); allMyUnit != BWAPI::Broodwar->self()->getUnits().end(); ++allMyUnit) 
 						{
 							if((*allMyUnit)->getType() == BWAPI::UnitTypes::Protoss_Probe) 
 								if((*allEnemyUnit)->getType() == BWAPI::UnitTypes::Terran_SCV ||  (*allEnemyUnit)->getType() == BWAPI::UnitTypes::Protoss_Probe)
@@ -999,7 +999,7 @@ for(std::set<BWTA::Region*>::const_iterator r=BWTA::getRegions().begin();r!=BWTA
 
 
 
-				for (BWAPI::Unitset::const_iterator allEnemyUnit = BWAPI::Broodwar->enemy()->getUnits().begin(); allEnemyUnit != BWAPI::Broodwar->enemy()->getUnits().end(); ++allEnemyUnit) 
+				for (std::set<BWAPI::Unit *>::const_iterator allEnemyUnit = BWAPI::Broodwar->enemy()->getUnits().begin(); allEnemyUnit != BWAPI::Broodwar->enemy()->getUnits().end(); ++allEnemyUnit) 
 				{
 					//if((*allEnemyUnit)->BWAPI::UnitTypes::Zerg_Overlord)
 					//	continue;  //적이 오버로드이면 그냥 넘어감.
@@ -1020,7 +1020,7 @@ for(std::set<BWTA::Region*>::const_iterator r=BWTA::getRegions().begin();r!=BWTA
 
 					//본진
 					/*
-					for (BWAPI::Unitset::const_iterator allMyUnit = BWAPI::Broodwar->self()->getUnits().begin(); allMyUnit != BWAPI::Broodwar->self()->getUnits().end(); ++allMyUnit) 
+					for (std::set<BWAPI::Unit *>::const_iterator allMyUnit = BWAPI::Broodwar->self()->getUnits().begin(); allMyUnit != BWAPI::Broodwar->self()->getUnits().end(); ++allMyUnit) 
 					{
 					if((*allMyUnit)->getType() == BWAPI::UnitTypes::Protoss_Nexus) 
 					{
@@ -1032,7 +1032,7 @@ for(std::set<BWTA::Region*>::const_iterator r=BWTA::getRegions().begin();r!=BWTA
 					*/
 
 					//앞마당
-					for (BWAPI::Unitset::const_iterator allMyUnit = BWAPI::Broodwar->self()->getUnits().begin(); allMyUnit != BWAPI::Broodwar->self()->getUnits().end(); ++allMyUnit) 
+					for (std::set<BWAPI::Unit *>::const_iterator allMyUnit = BWAPI::Broodwar->self()->getUnits().begin(); allMyUnit != BWAPI::Broodwar->self()->getUnits().end(); ++allMyUnit) 
 					{
 						if((*allMyUnit)->getType() == BWAPI::UnitTypes::Protoss_Nexus) 
 						{
@@ -1051,7 +1051,7 @@ for(std::set<BWTA::Region*>::const_iterator r=BWTA::getRegions().begin();r!=BWTA
 
 					if((*allEnemyUnit)->getDistance(pos1241) < 550 || distEnemyNexus < 340 || (*allEnemyUnit)->getDistance(my_ex1) < 340)
 					{
-						for (BWAPI::Unitset::const_iterator allMyUnit = BWAPI::Broodwar->self()->getUnits().begin(); allMyUnit != BWAPI::Broodwar->self()->getUnits().end(); ++allMyUnit) 
+						for (std::set<BWAPI::Unit *>::const_iterator allMyUnit = BWAPI::Broodwar->self()->getUnits().begin(); allMyUnit != BWAPI::Broodwar->self()->getUnits().end(); ++allMyUnit) 
 						{
 
 
@@ -1096,7 +1096,7 @@ for(std::set<BWTA::Region*>::const_iterator r=BWTA::getRegions().begin();r!=BWTA
 								j++;
 								if(enemyi<=j || k==true)
 								{			
-									//BWAPI::Broodwar->drawLineMap((*allMyUnit)->getPosition().x, (*allMyUnit)->getPosition().y, (*allEnemyUnit)->getPosition().x, (*allEnemyUnit)->getPosition().y, BWAPI::Colors::Red);
+									//BWAPI::Broodwar->drawLineMap((*allMyUnit)->getPosition().x(), (*allMyUnit)->getPosition().y(), (*allEnemyUnit)->getPosition().x(), (*allEnemyUnit)->getPosition().y(), BWAPI::Colors::Red);
 									(*allMyUnit)->attack((*allEnemyUnit)->getPosition());	
 									defense_ing = true;
 									//(*allMyUnit)->rightClick(*allEnemyUnit);
@@ -1175,7 +1175,7 @@ for(std::set<BWTA::Region*>::const_iterator r=BWTA::getRegions().begin();r!=BWTA
 		Position *p;
 
 		//Low position
-		if (BWAPI::Broodwar->self()->getStartLocation().y > 50)
+		if (BWAPI::Broodwar->self()->getStartLocation().y() > 50)
 		{
 			p = new Position(1312,3856);
 		}
@@ -1184,9 +1184,9 @@ for(std::set<BWTA::Region*>::const_iterator r=BWTA::getRegions().begin();r!=BWTA
 		{
 			p = new Position(1760,208);
 		}
-		for each (BWAPI::Unit u in Broodwar->getAllUnits())
+		for each (BWAPI::Unit *u in Broodwar->getAllUnits())
 		{
-			if ((u->getType() == BWAPI::UnitTypes::Resource_Mineral_Field) && (u->getPosition().x == p->x) && (u->getPosition().y == p->y))
+			if ((u->getType() == BWAPI::UnitTypes::Resource_Mineral_Field) && (u->getPosition().x() == p->x()) && (u->getPosition().y() == p->y()))
 			{
 				workerManager->setDestinationMineral(u);
 				break;
@@ -1217,11 +1217,11 @@ for(std::set<BWTA::Region*>::const_iterator r=BWTA::getRegions().begin();r!=BWTA
 		*/
 		/*
 	//chc
- for(Unitset::const_iterator i=Broodwar->self()->getUnits().begin();i!=Broodwar->self()->getUnits().end();i++)
+ for(std::set<Unit*>::const_iterator i=Broodwar->self()->getUnits().begin();i!=Broodwar->self()->getUnits().end();i++)
     {
       if ((*i)->getType().isWorker())
       {
-			//BWAPI::Unit u = b->builderUnit;
+			//BWAPI::Unit* u = b->builderUnit;
 			Position *q = new Position(1760,208);;
 			(*i)->rightClick(*q);
 	   }
@@ -1236,21 +1236,21 @@ for(std::set<BWTA::Region*>::const_iterator r=BWTA::getRegions().begin();r!=BWTA
 	}
 
 
-	Unitset units=Broodwar->self()->getUnits();
+	std::set<Unit*> units=Broodwar->self()->getUnits();
 	if (this->showManagerAssignments)
 	{
-		for(Unitset::iterator i=units.begin();i!=units.end();i++)
+		for(std::set<Unit*>::iterator i=units.begin();i!=units.end();i++)
 		{
 			if (this->arbitrator.hasBid(*i))
 			{
-				int x=(*i)->getPosition().x;
-				int y=(*i)->getPosition().y;
-				std::list< std::pair< Arbitrator::Controller<BWAPI::Unit,double>*, double> > bids=this->arbitrator.getAllBidders(*i);
+				int x=(*i)->getPosition().x();
+				int y=(*i)->getPosition().y();
+				std::list< std::pair< Arbitrator::Controller<BWAPI::Unit*,double>*, double> > bids=this->arbitrator.getAllBidders(*i);
 				int y_off=0;
 				bool first = false;
 				const char activeColor = '\x07', inactiveColor = '\x16';
 				char color = activeColor;
-				for(std::list< std::pair< Arbitrator::Controller<BWAPI::Unit,double>*, double> >::iterator j=bids.begin();j!=bids.end();j++)
+				for(std::list< std::pair< Arbitrator::Controller<BWAPI::Unit*,double>*, double> >::iterator j=bids.begin();j!=bids.end();j++)
 				{
 					Broodwar->drawTextMap(x,y+y_off,"%c%s: %d",color,j->first->getShortName().c_str(),(int)j->second);
 					y_off+=15;
@@ -1261,7 +1261,7 @@ for(std::set<BWTA::Region*>::const_iterator r=BWTA::getRegions().begin();r!=BWTA
 	}
 }
 
-void Terran_ZR_Drop::onUnitDestroy(BWAPI::Unit unit)
+void Terran_ZR_Drop::onUnitDestroy(BWAPI::Unit* unit)
 {
 	if (Broodwar->isReplay()) return;
 	this->arbitrator.onRemoveObject(unit);
@@ -1278,25 +1278,25 @@ void Terran_ZR_Drop::onUnitDestroy(BWAPI::Unit unit)
 	this->armyManager->onRemoveUnit(unit);
 }
 
-void Terran_ZR_Drop::onUnitDiscover(BWAPI::Unit unit)
+void Terran_ZR_Drop::onUnitDiscover(BWAPI::Unit* unit)
 {
 	if (Broodwar->isReplay()) return;
 	this->informationManager->onUnitDiscover(unit);
 	this->unitGroupManager->onUnitDiscover(unit);
 }
-void Terran_ZR_Drop::onUnitEvade(BWAPI::Unit unit)
+void Terran_ZR_Drop::onUnitEvade(BWAPI::Unit* unit)
 {
 	if (Broodwar->isReplay()) return;
 	this->informationManager->onUnitEvade(unit);
 	this->unitGroupManager->onUnitEvade(unit);
 }
 
-void Terran_ZR_Drop::onUnitMorph(BWAPI::Unit unit)
+void Terran_ZR_Drop::onUnitMorph(BWAPI::Unit* unit)
 {
 	if (Broodwar->isReplay()) return;
 	this->unitGroupManager->onUnitMorph(unit);
 }
-void Terran_ZR_Drop::onUnitRenegade(BWAPI::Unit unit)
+void Terran_ZR_Drop::onUnitRenegade(BWAPI::Unit* unit)
 {
 	if (Broodwar->isReplay()) return;
 	this->unitGroupManager->onUnitRenegade(unit);

@@ -8,12 +8,12 @@ class MorphManager;
 class BuildManager
 {
 public:
-	BuildManager(Arbitrator::Arbitrator<BWAPI::Unit,double>* arbitrator);
+	BuildManager(Arbitrator::Arbitrator<BWAPI::Unit*,double>* arbitrator);
 	~BuildManager();
 	void update();
 	std::string getName() const;
 	BuildingPlacer* getBuildingPlacer() const;
-	void onRemoveUnit(BWAPI::Unit unit);
+	void onRemoveUnit(BWAPI::Unit* unit);
 	bool build(BWAPI::UnitType type);
 	bool build(BWAPI::UnitType type, bool forceNoAddon);
 	bool build(BWAPI::UnitType type, BWAPI::TilePosition goalPosition);
@@ -22,11 +22,11 @@ public:
 	int getStartedCount(BWAPI::UnitType type) const;
 	int getCompletedCount(BWAPI::UnitType type) const;
 	void setBuildDistance(int distance);
-	BWAPI::UnitType getBuildType(BWAPI::Unit unit) const;
+	BWAPI::UnitType getBuildType(BWAPI::Unit* unit) const;
 	void setDebugMode(bool debugMode);
 
 private:
-	Arbitrator::Arbitrator<BWAPI::Unit,double>* arbitrator;
+	Arbitrator::Arbitrator<BWAPI::Unit*,double>* arbitrator;
 	BuildingPlacer* buildingPlacer;
 	ConstructionManager* constructionManager;
 	ProductionManager* productionManager;

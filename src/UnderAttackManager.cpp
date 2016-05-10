@@ -1,7 +1,7 @@
 #include <UnderAttackManager.h>
 #include <UnitGroup.h>
 
-UnderAttackManager::UnderAttackManager(Arbitrator::Arbitrator<BWAPI::Unit,double>* arbitrator)
+UnderAttackManager::UnderAttackManager(Arbitrator::Arbitrator<BWAPI::Unit*,double>* arbitrator)
 {
 	this->arbitrator = arbitrator;
 	lastFrameCheck = 0;
@@ -14,7 +14,7 @@ void UnderAttackManager::update()
 		lastFrameCheck = BWAPI::Broodwar->getFrameCount();
 
 		// Spot and free idle backups and workers purchasing enemy
-		for (std::map<BWAPI::Unit, UAData>::iterator it = backUp.begin(); it != backUp.end(); ++it)
+		for (std::map<BWAPI::Unit*, UAData>::iterator it = backUp.begin(); it != backUp.end(); ++it)
 		{
 			if ( it->first->isIdle() || 
 				(it->second.mode == UAData::WorkerDefending && it->first->getTarget() != NULL && !it->first->getTarget()->isAttacking()) )
@@ -29,7 +29,7 @@ void UnderAttackManager::update()
 		}
 
 		UnitGroup myPrecious = SelectAll()(isBuilding) + SelectAll()(isWorker);
-		for each (BWAPI::Unit u in myPrecious)
+		for each (BWAPI::Unit *u in myPrecious)
 		{
 			if (u->isUnderAttack())
 			{
@@ -37,18 +37,18 @@ void UnderAttackManager::update()
 				// If I am an under attacked worker, myCoWorkers are my buddy workers from the same base
 				UnitGroup myCoWorkers;
 
-				std::set<BWAPI::Unit> idleDef = defenseManager->getIdleDefenders();
-				for each (BWAPI::Unit def in idleDef)
+				std::set<BWAPI::Unit*> idleDef = defenseManager->getIdleDefenders();
+				for each (BWAPI::Unit *def in idleDef)
 				{
 					arbitrator->setBid(this, def, 50);
 				}
 
 				if (u->getType().isWorker())
 				{
-					std::set<BWAPI::Unit> aroundMe = u->getUnitsInRadius(u->getType().sightRange());
+					std::set<BWAPI::Unit*> aroundMe = u->getUnitsInRadius(u->getType().sightRange());
 					myCoWorkers = UnitGroup::getUnitGroup(aroundMe);
 					myCoWorkers = myCoWorkers(BWAPI::Broodwar->self())(isWorker)(isCompleted);
-					for each (BWAPI::Unit def in myCoWorkers)
+					for each (BWAPI::Unit *def in myCoWorkers)
 					{
 						arbitrator->setBid(this, def, 60);
 					}
@@ -59,7 +59,7 @@ void UnderAttackManager::update()
 					u->cancelConstruction();
 				}
 
-				for (std::map<BWAPI::Unit, UAData>::iterator it = backUp.begin(); it != backUp.end(); it++)
+				for (std::map<BWAPI::Unit*, UAData>::iterator it = backUp.begin(); it != backUp.end(); it++)
 				{
 					if (it->second.mode == UAData::Defender)
 					{
@@ -78,18 +78,18 @@ void UnderAttackManager::update()
 		// Anti gas steal (and anti in-base enemy building)
 		UnitGroup intruders = SelectAllEnemy()(isBuilding);
 
-		for each (BWAPI::Unit u in intruders)
+		for each (BWAPI::Unit *u in intruders)
 		{
 			// if build u is placed inside one of our region, blast it!
 			if (baseManager->getMyRegions().find(BWTA::getRegion(u->getTilePosition())) != baseManager->getMyRegions().end())
 			{
-				std::set<BWAPI::Unit> idleDef = defenseManager->getIdleDefenders();
-				for each (BWAPI::Unit def in idleDef)
+				std::set<BWAPI::Unit*> idleDef = defenseManager->getIdleDefenders();
+				for each (BWAPI::Unit *def in idleDef)
 				{
 					arbitrator->setBid(this, def, 50);
 				}
 
-				for (std::map<BWAPI::Unit, UAData>::iterator it = backUp.begin(); it != backUp.end(); it++)
+				for (std::map<BWAPI::Unit*, UAData>::iterator it = backUp.begin(); it != backUp.end(); it++)
 				{
 					if (it->second.mode == UAData::Defender)
 					{
@@ -122,9 +122,9 @@ std::string UnderAttackManager::getShortName() const
 	return "UAM";
 }
 
-void UnderAttackManager::onOffer(std::set<BWAPI::Unit> units)
+void UnderAttackManager::onOffer(std::set<BWAPI::Unit*> units)
 {
-	for each (BWAPI::Unit u in units)
+	for each (BWAPI::Unit *u in units)
 	{
 		if (backUp.find(u) == backUp.end())
 		{
@@ -145,12 +145,12 @@ void UnderAttackManager::onOffer(std::set<BWAPI::Unit> units)
 	}
 }
 
-void UnderAttackManager::onRevoke(BWAPI::Unit u, double bid)
+void UnderAttackManager::onRevoke(BWAPI::Unit *u, double bid)
 {
 	onRemoveUnit(u);
 }
 
-void UnderAttackManager::onRemoveUnit(BWAPI::Unit u)
+void UnderAttackManager::onRemoveUnit(BWAPI::Unit* u)
 {
 	backUp.erase(u);
 }

@@ -42,6 +42,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				AdditionalIncludeDirectories="$(SDL_IMAGE_DIR);$(SDL_GFX_DIR);$(SDL_DIR)/include;$(BWAPI_DIR)/include;$(BOOST_DIR);%(AdditionalIncludeDirectories)"
+				PreprocessorDefinitions="NOMINMAX;WIN32;_WINDLL"
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"
@@ -86,7 +87,7 @@
 			Name="Release|Win32"
 			OutputDirectory="$(SolutionDir)$(ConfigurationName)"
 			IntermediateDirectory="$(ConfigurationName)"
-			ConfigurationType="2"
+			ConfigurationType="4"
 			CharacterSet="1"
 			WholeProgramOptimization="1"
 			>
@@ -107,8 +108,8 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories="$(SDL_IMAGE_DIR);$(SDL_GFX_DIR);$(SDL_DIR)/include;$(BWAPI_DIR)/include;$(BOOST_DIR);%(AdditionalIncludeDirectories)"
-				PreprocessorDefinitions="WIN32"
+				AdditionalIncludeDirectories="&quot;$(BWAPI_DIR)/include&quot;;&quot;$(BOOST_DIR)&quot;"
+				PreprocessorDefinitions="NOMINMAX;WIN32;_WINDLL"
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"
@@ -120,20 +121,10 @@
 				Name="VCPreLinkEventTool"
 			/>
 			<Tool
-				Name="VCLinkerTool"
-				AdditionalDependencies="$(BWAPI_DIR)/lib/BWAPI.lib;$(EXTERNAL_LIB_DIR)/SDL.lib;$(EXTERNAL_LIB_DIR)/SDLmain.lib;$(EXTERNAL_LIB_DIR)/opengl32.lib;$(EXTERNAL_LIB_DIR)/SDL_image.lib;$(EXTERNAL_LIB_DIR)/SDL_gfx.lib;%(AdditionalDependencies)"
-				LinkIncremental="1"
-				GenerateDebugInformation="true"
-				SubSystem="2"
-				OptimizeReferences="2"
-				EnableCOMDATFolding="2"
-				TargetMachine="1"
+				Name="VCLibrarianTool"
 			/>
 			<Tool
 				Name="VCALinkTool"
-			/>
-			<Tool
-				Name="VCManifestTool"
 			/>
 			<Tool
 				Name="VCXDCMakeTool"
@@ -143,9 +134,6 @@
 			/>
 			<Tool
 				Name="VCFxCopTool"
-			/>
-			<Tool
-				Name="VCAppVerifierTool"
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"

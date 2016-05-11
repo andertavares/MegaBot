@@ -108,6 +108,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				AdditionalIncludeDirectories="$(SDL_IMAGE_DIR);$(SDL_GFX_DIR);$(SDL_DIR)/include;$(BWAPI_DIR)/include;$(BOOST_DIR);%(AdditionalIncludeDirectories)"
+				PreprocessorDefinitions="WIN32"
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"

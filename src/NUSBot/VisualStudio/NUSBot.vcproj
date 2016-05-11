@@ -108,6 +108,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				AdditionalIncludeDirectories="../SparCraft/source;../Source;$(BWAPI_DIR)/include;$(BOOST_DIR);$(FREETYPE_DIR)/include/freetype2;$(FREETYPE_DIR)/include;$(SDL_IMAGE_DIR);$(SDL_DIR)/include;$(SDL_GFX_DIR);$(FTGL_DIR)/include;%(AdditionalIncludeDirectories)"
+				PreprocessorDefinitions="WIN32"
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"

@@ -108,6 +108,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				AdditionalIncludeDirectories="$(BOOST_DIR);$(BWAPI_DIR)/include;%(AdditionalIncludeDirectories)"
+				PreprocessorDefinitions="WIN32"
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"

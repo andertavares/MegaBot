@@ -42,6 +42,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				AdditionalIncludeDirectories="../SparCraft/source;../Source;$(BWAPI_DIR)/include;$(BOOST_DIR);$(FREETYPE_DIR)/include/freetype2;$(FREETYPE_DIR)/include;$(SDL_IMAGE_DIR);$(SDL_DIR)/include;$(SDL_GFX_DIR);$(FTGL_DIR)/include;%(AdditionalIncludeDirectories)"
+				PreprocessorDefinitions="NOMINMAX;WIN32;_WINDLL"
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"
@@ -54,6 +55,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
+				AdditionalOptions="/FORCE:MULTIPLE"
 				AdditionalDependencies="$(BWAPI_DIR)/lib/BWAPId.lib;$(BWAPI_DIR)/lib/BWTAd.lib;$(BWAPI_DIR)/lib/tinyxmld.lib;$(BWAPI_DIR)/lib/CGAL-vc90-mt-gd.lib;$(BWAPI_DIR)/lib/libboost_thread-vc90-mt-gd-1_40.lib;$(BWAPI_DIR)/lib/gmp-vc90-mt-gd.lib;$(BWAPI_DIR)/lib/mpfr-vc90-mt-gd.lib;../../StarcraftBuildOrderSearch/VisualStudio/$(Configuration)/StarCraftData.obj;$(Configuration)/SparCraft.lib;$(EXTERNAL_LIB_DIR)/SDL.lib;$(EXTERNAL_LIB_DIR)/SDLmain.lib;$(EXTERNAL_LIB_DIR)/opengl32.lib;$(EXTERNAL_LIB_DIR)/SDL_image.lib;$(EXTERNAL_LIB_DIR)/SDL_gfx.lib;%(AdditionalDependencies)"
 				LinkIncremental="2"
 				GenerateDebugInformation="true"
@@ -107,8 +109,8 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories="../SparCraft/source;../Source;$(BWAPI_DIR)/include;$(BOOST_DIR);$(FREETYPE_DIR)/include/freetype2;$(FREETYPE_DIR)/include;$(SDL_IMAGE_DIR);$(SDL_DIR)/include;$(SDL_GFX_DIR);$(FTGL_DIR)/include;%(AdditionalIncludeDirectories)"
-				PreprocessorDefinitions="WIN32"
+				AdditionalIncludeDirectories="../SparCraft/source;../Source;&quot;$(BWAPI_DIR)/include&quot;;&quot;$(BOOST_DIR)&quot;"
+				PreprocessorDefinitions="NOMINMAX;WIN32;_WINDLL"
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"
@@ -121,7 +123,8 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="$(BWAPI_DIR)/lib/BWAPId.lib;$(BWAPI_DIR)/lib/BWTAd.lib;$(BWAPI_DIR)/lib/tinyxmld.lib;$(BWAPI_DIR)/lib/CGAL-vc90-mt-gd.lib;$(BWAPI_DIR)/lib/libboost_thread-vc90-mt-gd-1_40.lib;$(BWAPI_DIR)/lib/gmp-vc90-mt-gd.lib;$(BWAPI_DIR)/lib/mpfr-vc90-mt-gd.lib;../../StarcraftBuildOrderSearch/VisualStudio/$(Configuration)/StarCraftData.obj;$(Configuration)/SparCraft.lib;$(EXTERNAL_LIB_DIR)/SDL.lib;$(EXTERNAL_LIB_DIR)/SDLmain.lib;$(EXTERNAL_LIB_DIR)/opengl32.lib;$(EXTERNAL_LIB_DIR)/SDL_image.lib;$(EXTERNAL_LIB_DIR)/SDL_gfx.lib;%(AdditionalDependencies)"
+				AdditionalOptions="/FORCE:MULTIPLE"
+				AdditionalDependencies="$(BWAPI_DIR)/lib/BWAPI.lib $(BWAPI_DIR)/lib/BWTA.lib $(BWAPI_DIR)/lib/tinyxml.lib $(BWAPI_DIR)/lib/CGAL-vc90-mt.lib $(BWAPI_DIR)/lib/libboost_thread-vc90-mt-1_40.lib $(BWAPI_DIR)/lib/gmp-vc90-mt.lib $(BWAPI_DIR)/lib/mpfr-vc90-mt.lib ../../StarcraftBuildOrderSearch/VisualStudio/Release/StarCraftData.obj $(OutDir)/SparCraft.lib"
 				LinkIncremental="1"
 				GenerateDebugInformation="true"
 				SubSystem="2"

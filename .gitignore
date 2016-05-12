@@ -2,3 +2,7 @@ Xelnaga.v12.suo
 Release
 Xelnaga.sdf
 /Xelnaga.ncb
+*.ncb
+*.sdf
+*.opensdf
+*.suo

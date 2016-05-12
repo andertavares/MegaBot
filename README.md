@@ -1,2 +1,2 @@
-# MegaBot
-Proof-of-concept StarCraft bot to test strategy selection.
+# Skynet
+Automatically exported from code.google.com/p/skynetbot

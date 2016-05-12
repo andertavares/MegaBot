@@ -1,0 +1,8 @@
+/Skynet/*.obj
+/*.ncb
+/*.suo
+*.sdf
+/Skynet.v11.opensdf
+/Competition
+/Release
+/Backup

@@ -1,6 +1,7 @@
 #include "Condition.h"
 
 #include <cassert>
+#include <ctime>
 
 #include "MapHelper.h"
 #include "WallTracker.h"

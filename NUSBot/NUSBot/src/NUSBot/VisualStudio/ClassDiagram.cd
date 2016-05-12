@@ -1,0 +1,476 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="TimerManager" Collapsed="true">
+    <Position X="19" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IAQAAAAAAAAAAAAACAgAAAAAAAgACAACBAAAAAAAAAA=</HashCode>
+      <FileName>E:\projects\fyp\bots_codes\UAlbertaBot\src\UAlbertaBot\Source\IPBManager.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="UnitToAssign" Collapsed="true">
+    <Position X="15.5" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAgAAAgAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>E:\projects\fyp\bots_codes\UAlbertaBot\src\UAlbertaBot\Source\IPBManager.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="IPBManager" Collapsed="true">
+    <Position X="15.5" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AUAEgAAgIGAESCEAAAAAAAAkQAAgAEwQAEARAKAEBEQ=</HashCode>
+      <FileName>E:\projects\fyp\bots_codes\UAlbertaBot\src\UAlbertaBot\Source\IPBManager.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="StarcraftBuildOrderSearchManager" Collapsed="true">
+    <Position X="13.75" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAEIAAUAABAQAICAAEAEAECQAACQKAEAEAkAAQ=</HashCode>
+      <FileName>E:\projects\fyp\bots_codes\UAlbertaBot\src\UAlbertaBot\Source\base\StarcraftBuildOrderSearchManager.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="StarcraftSearchData" Collapsed="true">
+    <Position X="15.5" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>pAAEAAAAAABgAAgEAQAAgAAACAAAAEAAAAAAAQgGAAA=</HashCode>
+      <FileName>E:\projects\fyp\bots_codes\UAlbertaBot\src\UAlbertaBot\Source\base\StarcraftSearchData.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Building" Collapsed="true">
+    <Position X="12" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAABAAAAAAAEAAAAAIIwCAAAAJAAACAAAAAAACAAA=</HashCode>
+      <FileName>E:\projects\fyp\bots_codes\UAlbertaBot\src\UAlbertaBot\Source\base\BuildingData.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ConstructionData" Collapsed="true">
+    <Position X="20.75" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAACAAAEAAAAACAIUAMAABAQAAAgAAAAAIAAACAAAAA=</HashCode>
+      <FileName>E:\projects\fyp\bots_codes\UAlbertaBot\src\UAlbertaBot\Source\base\BuildingData.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BuildOrderItem&lt;T&gt;" Collapsed="true">
+    <Position X="12" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAQAQAQAAAAAAAAAAAAAAAAgAAAgAAAAAAA=</HashCode>
+      <FileName>E:\projects\fyp\bots_codes\UAlbertaBot\src\UAlbertaBot\Source\base\BuildOrderQueue.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BuildOrderQueue" Collapsed="true">
+    <Position X="13.75" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QAAAADAQAFAAAAQAiJBAAACIAAkAgAAAAgAAGBAAwAI=</HashCode>
+      <FileName>E:\projects\fyp\bots_codes\UAlbertaBot\src\UAlbertaBot\Source\base\BuildOrderQueue.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WorkerMoveData" Collapsed="true">
+    <Position X="22.5" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAEAgAAAA=</HashCode>
+      <FileName>E:\projects\fyp\bots_codes\UAlbertaBot\src\UAlbertaBot\Source\base\WorkerData.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WorkerData" Collapsed="true">
+    <Position X="19" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIQAUAsAUgKBEAAAAGAAEAoUYoBCACkYhAQAUgRAAAA=</HashCode>
+      <FileName>E:\projects\fyp\bots_codes\UAlbertaBot\src\UAlbertaBot\Source\base\WorkerData.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BuildLearner" Collapsed="true">
+    <Position X="17.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ACAAAAAAABAEAABAQAAAAAAAQAQAAAACAAAAAEAEAQA=</HashCode>
+      <FileName>E:\projects\fyp\bots_codes\UAlbertaBot\src\UAlbertaBot\Source\base\BuildLearner.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BuildingManager" Collapsed="true">
+    <Position X="13.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AJQEAAAECEAAAAAQEgCAgJAAQAAABAAwQYAAACQGKko=</HashCode>
+      <FileName>E:\projects\fyp\bots_codes\UAlbertaBot\src\UAlbertaBot\Source\base\BuildingManager.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BuildingPlacer" Collapsed="true">
+    <Position X="15.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgSAABQAEQAAAAAECAQAAAQAAAMAAAAASJABAAAECAg=</HashCode>
+      <FileName>E:\projects\fyp\bots_codes\UAlbertaBot\src\UAlbertaBot\Source\base\BuildingPlacer.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BuildOrderGoalItem" Collapsed="true">
+    <Position X="20.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAACAAAAAAQAAAAAAAAAAQBAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>E:\projects\fyp\bots_codes\UAlbertaBot\src\UAlbertaBot\Source\base\BuildOrderGoalManager.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BuildOrderGoal" Collapsed="true">
+    <Position X="19" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAIAAEEAAAQAAAAAAACAAAAAEAAAgAAEAAAgAAAAAAA=</HashCode>
+      <FileName>E:\projects\fyp\bots_codes\UAlbertaBot\src\UAlbertaBot\Source\base\BuildOrderGoalManager.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BuildOrderGoalManager" Collapsed="true">
+    <Position X="22.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAABAAAAIEAACAAAAEAAAAAAAAAAgAAAIAAA=</HashCode>
+      <FileName>E:\projects\fyp\bots_codes\UAlbertaBot\src\UAlbertaBot\Source\base\BuildOrderGoalManager.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CompareWhenStarted" Collapsed="true">
+    <Position X="19" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAEAAAAAAAAAAQAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>E:\projects\fyp\bots_codes\UAlbertaBot\src\UAlbertaBot\Source\base\ProductionManager.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ProductionManager" Collapsed="true">
+    <Position X="15.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ABQEKDAAAAAAAAkgEABAEAgJQAEgAIEESIABCJYGAAA=</HashCode>
+      <FileName>E:\projects\fyp\bots_codes\UAlbertaBot\src\UAlbertaBot\Source\base\ProductionManager.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WorkerManager" Collapsed="true">
+    <Position X="20.75" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CAQVAAAiACAEAAAAAiAAABEE4QBIEAkAQGABgAoEhgA=</HashCode>
+      <FileName>E:\projects\fyp\bots_codes\UAlbertaBot\src\UAlbertaBot\Source\base\WorkerManager.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CombatSimulation" Collapsed="true">
+    <Position X="17.25" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ABAAAAAAIAAAAAAAAAAACCAIAAAAAEAEAAAAAEAAAAI=</HashCode>
+      <FileName>E:\projects\fyp\bots_codes\UAlbertaBot\src\UAlbertaBot\Source\CombatSimulation.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CombatCommander" Collapsed="true">
+    <Position X="15.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AQAGAABBAEAAElAAABBAEEAAAACECgAEIMIFAAAEAQQ=</HashCode>
+      <FileName>E:\projects\fyp\bots_codes\UAlbertaBot\src\UAlbertaBot\Source\CombatCommander.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MicroManager" Collapsed="true">
+    <Position X="5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QAAFgAEBACEAFAAAAAAEAAAAAAgSABAAAAUAAAAAAhA=</HashCode>
+      <FileName>E:\projects\fyp\bots_codes\UAlbertaBot\src\UAlbertaBot\Source\micromanagement\MicroManager.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MicroUtil" Collapsed="true">
+    <Position X="13.75" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAQAAAAAAAQAAAAAAAAAAAAAAAAAACAAAA=</HashCode>
+      <FileName>E:\projects\fyp\bots_codes\UAlbertaBot\src\UAlbertaBot\Source\micromanagement\MicroUtil.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DetectorManager" Collapsed="true">
+    <Position X="0.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QIAAAAAhIAAAGAAAAAAAAAAAAAAAAEAAAAAAAAAAAAA=</HashCode>
+      <FileName>E:\projects\fyp\bots_codes\UAlbertaBot\src\UAlbertaBot\Source\micromanagement\DetectorManager.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MeleeManager" Collapsed="true">
+    <Position X="2.75" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAACABAAABAAAAAAAAQAAAAgAAAAAAEAAAAAAAAAA=</HashCode>
+      <FileName>E:\projects\fyp\bots_codes\UAlbertaBot\src\UAlbertaBot\Source\micromanagement\MeleeManager.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ObserverManager" Collapsed="true">
+    <Position X="5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAhIAAAGAABAAAAAAAAAAAAAEAAAAAAABAAAAA=</HashCode>
+      <FileName>E:\projects\fyp\bots_codes\UAlbertaBot\src\UAlbertaBot\Source\micromanagement\ObserverManager.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RangedManager" Collapsed="true">
+    <Position X="7.25" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACACABAAAAAQAAAQAAAAAAAgAAAAAAEAAAAEAAAAA=</HashCode>
+      <FileName>E:\projects\fyp\bots_codes\UAlbertaBot\src\UAlbertaBot\Source\micromanagement\RangedManager.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TransportManager" Collapsed="true">
+    <Position X="9.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAACAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAA=</HashCode>
+      <FileName>E:\projects\fyp\bots_codes\UAlbertaBot\src\UAlbertaBot\Source\micromanagement\TransportManager.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ScoutManager" Collapsed="true">
+    <Position X="19" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QUAEQQAECCAEQEAAAAAAAADAQEAAAIAAAEABAAAEJCQ=</HashCode>
+      <FileName>E:\projects\fyp\bots_codes\UAlbertaBot\src\UAlbertaBot\Source\ScoutManager.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Squad" Collapsed="true">
+    <Position X="20.75" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAGAiABIAMUEAAAAAAAWABAIpASARIAAAEAgACEAAA=</HashCode>
+      <FileName>E:\projects\fyp\bots_codes\UAlbertaBot\src\UAlbertaBot\Source\Squad.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SquadData" Collapsed="true">
+    <Position X="22.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAA0AAAAAAAEACQAAAAEAACAAAAAAAAAAAAAgEAAA=</HashCode>
+      <FileName>E:\projects\fyp\bots_codes\UAlbertaBot\src\UAlbertaBot\Source\SquadData.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SquadOrder" Collapsed="true">
+    <Position X="12" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAACAAAAAAAAAAAIAAAAAABBAAAIAAAAAAAAAA=</HashCode>
+      <FileName>E:\projects\fyp\bots_codes\UAlbertaBot\src\UAlbertaBot\Source\SquadOrder.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Logger" Collapsed="true">
+    <Position X="20.75" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gAAABAAAAAIAAAAAAACACAAAAAAAAAAAQAAAAAAAAAA=</HashCode>
+      <FileName>E:\projects\fyp\bots_codes\UAlbertaBot\src\UAlbertaBot\Source\Logger.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="InformationManager" Collapsed="true">
+    <Position X="19" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CWGMMQKQCAIAACAAIgBCOBAEQAZAAQgARMIFAIhEDAQ=</HashCode>
+      <FileName>E:\projects\fyp\bots_codes\UAlbertaBot\src\UAlbertaBot\Source\InformationManager.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="StrategyManager" Collapsed="true">
+    <Position X="17.25" Y="4.5" Width="1.5" />
+    <NestedTypes>
+      <Enum Name="StrategyManager::__unnamed_enum_0048_1" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>E:\projects\fyp\bots_codes\UAlbertaBot\src\UAlbertaBot\Source\StrategyManager.h</NewMemberFileName>
+        </TypeIdentifier>
+      </Enum>
+      <Enum Name="StrategyManager::__unnamed_enum_0048_2" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>E:\projects\fyp\bots_codes\UAlbertaBot\src\UAlbertaBot\Source\StrategyManager.h</NewMemberFileName>
+        </TypeIdentifier>
+      </Enum>
+      <Enum Name="StrategyManager::__unnamed_enum_0048_3" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>E:\projects\fyp\bots_codes\UAlbertaBot\src\UAlbertaBot\Source\StrategyManager.h</NewMemberFileName>
+        </TypeIdentifier>
+      </Enum>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>CAAAAAcCgAQgCC4gIAoCJgBBCAABAMqAQQISAAAgAAA=</HashCode>
+      <FileName>E:\projects\fyp\bots_codes\UAlbertaBot\src\UAlbertaBot\Source\StrategyManager.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="UnitCommandData" Collapsed="true">
+    <Position X="22.5" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAAAAAAAgAAIggAAIACBAAAAgAGAAI=</HashCode>
+      <FileName>E:\projects\fyp\bots_codes\UAlbertaBot\src\UAlbertaBot\Source\UnitCommandData.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="UnitCommandManager" Collapsed="true">
+    <Position X="12" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAEAiAADAAAAAgIAAAAAAAIAgAAgEAQwAEACCECgA=</HashCode>
+      <FileName>E:\projects\fyp\bots_codes\UAlbertaBot\src\UAlbertaBot\Source\UnitCommandManager.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="UnitData" Collapsed="true">
+    <Position X="13.75" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAACAAAAAECAIKAwSEAAABQTACABQACAAIAAAAAA=</HashCode>
+      <FileName>E:\projects\fyp\bots_codes\UAlbertaBot\src\UAlbertaBot\Source\UnitData.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DistanceMap" Collapsed="true">
+    <Position X="12" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAFAAgAgAAAAABAUACAAAmQAAAACAAABAAAAAA=</HashCode>
+      <FileName>E:\projects\fyp\bots_codes\UAlbertaBot\src\UAlbertaBot\Source\DistanceMap.hpp</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GridCell" Collapsed="true">
+    <Position X="17.25" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAgAAAAAAAAAAAAAABAAAAAgABAAAAAAAAAQAAQAAAA=</HashCode>
+      <FileName>E:\projects\fyp\bots_codes\UAlbertaBot\src\UAlbertaBot\Source\MapGrid.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MapGrid" Collapsed="true">
+    <Position X="22.5" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ABAQAEAAAAIAACAAQRBEQAAOAACAAAIAQAAAEAAkAAA=</HashCode>
+      <FileName>E:\projects\fyp\bots_codes\UAlbertaBot\src\UAlbertaBot\Source\MapGrid.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MapTools" Collapsed="true">
+    <Position X="12" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>jgAAEAAEEAQAAABoAABAMAABQACQEAAAQygAAQAEARA=</HashCode>
+      <FileName>E:\projects\fyp\bots_codes\UAlbertaBot\src\UAlbertaBot\Source\MapTools.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="UAlbertaBotModule" Collapsed="true">
+    <Position X="20.75" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AQAEAAAgAQAAAAIAAAACABCAQBAAAAIAAEABAAAAAAQ=</HashCode>
+      <FileName>E:\projects\fyp\bots_codes\UAlbertaBot\src\UAlbertaBot\Source\UAlbertaBotModule.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ControlGroupData" Collapsed="true">
+    <Position X="22.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAIAAAAAAAAAAAAAAAAAAAAAEBAAAAAAAEAgA=</HashCode>
+      <FileName>E:\projects\fyp\bots_codes\UAlbertaBot\src\UAlbertaBot\Source\EnhancedInterface.hpp</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EnhancedInterface" Collapsed="true">
+    <Position X="13.75" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAABAIAAAAAAAAAAAAQAAAACAAAACQAABEAgA=</HashCode>
+      <FileName>E:\projects\fyp\bots_codes\UAlbertaBot\src\UAlbertaBot\Source\EnhancedInterface.hpp</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ReplayVisualizer" Collapsed="true">
+    <Position X="17.25" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AACEEAAAIAAAAQAAAAAAAAAEAEAAAAAAAAAAAAAAIAA=</HashCode>
+      <FileName>E:\projects\fyp\bots_codes\UAlbertaBot\src\UAlbertaBot\Source\ReplayVisualizer.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Visualizer" Collapsed="true">
+    <Position X="17.25" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAEAAAAAAAAQEAAAAAAAAAAAEAAAMEQAAAAAAAAAQ=</HashCode>
+      <FileName>E:\projects\fyp\bots_codes\UAlbertaBot\src\UAlbertaBot\Source\Visualizer.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Struct Name="MetaType" Collapsed="true">
+    <Position X="17.25" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QAAAAABAAYAAAgBAAEAAAQAAIAABAAAiAAwEAAAAAQE=</HashCode>
+      <FileName>E:\projects\fyp\bots_codes\UAlbertaBot\src\UAlbertaBot\Source\base\MetaType.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="AirThreat" Collapsed="true">
+    <Position X="12" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAA=</HashCode>
+      <FileName>E:\projects\fyp\bots_codes\UAlbertaBot\src\UAlbertaBot\Source\micromanagement\MicroManager.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="GroundThreat" Collapsed="true">
+    <Position X="15.5" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAA=</HashCode>
+      <FileName>E:\projects\fyp\bots_codes\UAlbertaBot\src\UAlbertaBot\Source\micromanagement\MicroManager.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="UnitInfo" Collapsed="true">
+    <Position X="19" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QAAQgAAAAgAoAAAAAAAAAQAgACABAAQBAAAgAAAAAAA=</HashCode>
+      <FileName>E:\projects\fyp\bots_codes\UAlbertaBot\src\UAlbertaBot\Source\UnitData.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="double2" Collapsed="true">
+    <Position X="13.75" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIAAAAAAIAAAAAAAAACaAAgAAAAAAAAAAABgAAAAAAI=</HashCode>
+      <FileName>E:\projects\fyp\bots_codes\UAlbertaBot\src\UAlbertaBot\Source\Common.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Typedef Name="mapType" Collapsed="true">
+    <Position X="19" Y="9" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>E:\projects\fyp\bots_codes\UAlbertaBot\src\UAlbertaBot\Source\base\StarcraftBuildOrderSearchManager.cpp</FileName>
+    </TypeIdentifier>
+  </Typedef>
+  <Typedef Name="Action" Collapsed="true">
+    <Position X="12" Y="9" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>E:\projects\fyp\bots_codes\UAlbertaBot\src\UAlbertaBot\Source\base\ProductionManager.h</FileName>
+    </TypeIdentifier>
+  </Typedef>
+  <Typedef Name="BaseInfoVector" Collapsed="true">
+    <Position X="13.75" Y="9" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>E:\projects\fyp\bots_codes\UAlbertaBot\src\UAlbertaBot\Source\InformationManager.h</FileName>
+    </TypeIdentifier>
+  </Typedef>
+  <Typedef Name="IntPair" Collapsed="true">
+    <Position X="17.25" Y="9" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>E:\projects\fyp\bots_codes\UAlbertaBot\src\UAlbertaBot\Source\StrategyManager.h</FileName>
+    </TypeIdentifier>
+  </Typedef>
+  <Typedef Name="MetaPair" Collapsed="true">
+    <Position X="20.75" Y="9" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>E:\projects\fyp\bots_codes\UAlbertaBot\src\UAlbertaBot\Source\StrategyManager.h</FileName>
+    </TypeIdentifier>
+  </Typedef>
+  <Typedef Name="MetaPairVector" Collapsed="true">
+    <Position X="22.5" Y="9" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>E:\projects\fyp\bots_codes\UAlbertaBot\src\UAlbertaBot\Source\StrategyManager.h</FileName>
+    </TypeIdentifier>
+  </Typedef>
+  <Typedef Name="UnitInfoVector" Collapsed="true">
+    <Position X="15.5" Y="9.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>E:\projects\fyp\bots_codes\UAlbertaBot\src\UAlbertaBot\Source\UnitData.h</FileName>
+    </TypeIdentifier>
+  </Typedef>
+  <Typedef Name="UIMap" Collapsed="true">
+    <Position X="12" Y="9.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>E:\projects\fyp\bots_codes\UAlbertaBot\src\UAlbertaBot\Source\UnitData.h</FileName>
+    </TypeIdentifier>
+  </Typedef>
+  <Typedef Name="UIMapIter" Collapsed="true">
+    <Position X="13.75" Y="9.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>E:\projects\fyp\bots_codes\UAlbertaBot\src\UAlbertaBot\Source\UnitData.h</FileName>
+    </TypeIdentifier>
+  </Typedef>
+  <Typedef Name="ConstUIMapIter" Collapsed="true">
+    <Position X="15.5" Y="9" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>E:\projects\fyp\bots_codes\UAlbertaBot\src\UAlbertaBot\Source\UnitData.h</FileName>
+    </TypeIdentifier>
+  </Typedef>
+  <Typedef Name="UnitVector" Collapsed="true">
+    <Position X="17.25" Y="9.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>E:\projects\fyp\bots_codes\UAlbertaBot\src\UAlbertaBot\Source\Common.h</FileName>
+    </TypeIdentifier>
+  </Typedef>
+  <Enum Name="Options::BotModes::__unnamed_enum_003d_1" Collapsed="true">
+    <Position X="12" Y="8" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAABAAAAhAABAAAAAAAAAAABAAAAAAAAAIA=</HashCode>
+      <FileName>E:\projects\fyp\bots_codes\UAlbertaBot\src\UAlbertaBot\Source\Options.h</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

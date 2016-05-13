@@ -1,6 +1,8 @@
 #include "Common.h"
 #include "WorkerManager.h"
 
+using namespace NUSBot;
+
 WorkerManager::WorkerManager() 
     : workersPerRefinery(3) 
 {

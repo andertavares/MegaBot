@@ -1,6 +1,8 @@
 #include "Common.h"
 #include "SquadData.h"
 
+using namespace NUSBot;
+
 SquadData::SquadData() 
 {
 	

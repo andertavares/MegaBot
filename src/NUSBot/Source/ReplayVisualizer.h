@@ -9,6 +9,8 @@
 #include "InformationManager.h"
 #include "MapGrid.h"
 
+using namespace NUSBot;
+
 class ReplayVisualizer 
 {
 	SparCraft::Map map;

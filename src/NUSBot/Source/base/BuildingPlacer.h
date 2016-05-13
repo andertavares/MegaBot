@@ -5,44 +5,48 @@
 #include "MetaType.h"
 #include "../InformationManager.h"
 
-class BuildingPlacer
-{
+using namespace NUSBot;
 
-	BuildingPlacer();
+namespace NUSBot {
+	class BuildingPlacer
+	{
 
-	std::vector< std::vector<bool> > reserveMap;
-	int buildDistance;
+		BuildingPlacer();
 
-	int					boxTop, 
-						boxBottom, 
-						boxLeft, 
-						boxRight;
+		std::vector< std::vector<bool> > reserveMap;
+		int buildDistance;
 
- public:
+		int					boxTop, 
+							boxBottom, 
+							boxLeft, 
+							boxRight;
 
-	static BuildingPlacer & Instance();
+	 public:
 
-	// queries for various BuildingPlacer data
-	bool					buildable(int x, int y) const;
-	bool					isReserved(int x, int y) const;
-	bool					isInResourceBox(int x, int y) const;
-	bool					tileOverlapsBaseLocation(BWAPI::TilePosition tile, BWAPI::UnitType type) const;
+		static BuildingPlacer & Instance();
 
-	// determines whether we can build at a given location
-	bool					canBuildHere(BWAPI::TilePosition position, const Building & b) const;
-	bool					canBuildHereWithSpace(BWAPI::TilePosition position, const Building & b, int buildDist, bool horizontalOnly = false) const;
+		// queries for various BuildingPlacer data
+		bool					buildable(int x, int y) const;
+		bool					isReserved(int x, int y) const;
+		bool					isInResourceBox(int x, int y) const;
+		bool					tileOverlapsBaseLocation(BWAPI::TilePosition tile, BWAPI::UnitType type) const;
 
-	// returns a build location near a building's desired location
-	BWAPI::TilePosition		getBuildLocationNear(const Building & b, int buildDist, bool inRegion = false, bool horizontalOnly = false) const;
+		// determines whether we can build at a given location
+		bool					canBuildHere(BWAPI::TilePosition position, const Building & b) const;
+		bool					canBuildHereWithSpace(BWAPI::TilePosition position, const Building & b, int buildDist, bool horizontalOnly = false) const;
+
+		// returns a build location near a building's desired location
+		BWAPI::TilePosition		getBuildLocationNear(const Building & b, int buildDist, bool inRegion = false, bool horizontalOnly = false) const;
 	
-	void					reserveTiles(BWAPI::TilePosition position, int width, int height);
-	void					freeTiles(BWAPI::TilePosition position, int width, int height);
-	void					setBuildDistance(int distance);
-	int						getBuildDistance() const;
+		void					reserveTiles(BWAPI::TilePosition position, int width, int height);
+		void					freeTiles(BWAPI::TilePosition position, int width, int height);
+		void					setBuildDistance(int distance);
+		int						getBuildDistance() const;
 	
-	void					drawReservedTiles();
-	void					computeResourceBox();
+		void					drawReservedTiles();
+		void					computeResourceBox();
 	
-	BWAPI::TilePosition		getRefineryPosition();
+		BWAPI::TilePosition		getRefineryPosition();
 	
-};
+	};
+}

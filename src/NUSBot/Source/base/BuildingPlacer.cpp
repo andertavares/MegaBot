@@ -1,6 +1,8 @@
 #include "Common.h"
 #include "BuildingPlacer.h"
 
+using namespace NUSBot;
+
 BuildingPlacer::BuildingPlacer() : boxTop(100000), boxBottom(-1), boxLeft(100000), boxRight(-1)
 {
 	reserveMap = std::vector< std::vector<bool> >(BWAPI::Broodwar->mapWidth(), std::vector<bool>(BWAPI::Broodwar->mapHeight(), false));

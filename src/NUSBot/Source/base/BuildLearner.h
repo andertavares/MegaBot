@@ -14,6 +14,8 @@
 
 #include "StarcraftSearchData.h"
 
+using namespace NUSBot;
+
 class BuildLearner
 {
 	std::vector<MetaType>				actionsTaken;

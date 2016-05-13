@@ -1,6 +1,8 @@
 #include "Common.h"
 #include "MicroManager.h"
 
+using namespace NUSBot;
+
 void MicroManager::setUnits(const UnitVector & u) 
 { 
 	units = u; 

@@ -7,6 +7,8 @@
 #include "InformationManager.h"
 #include "MapTools.h"
 
+using namespace NUSBot;
+
 class BuildingManager {
 
 	BuildingManager();

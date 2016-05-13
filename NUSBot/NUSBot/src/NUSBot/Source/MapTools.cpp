@@ -1,5 +1,7 @@
 #include "MapTools.h"
 
+using namespace NUSBot;
+
 MapTools & MapTools::Instance() 
 {
 	static MapTools instance;

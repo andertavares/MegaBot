@@ -3,6 +3,10 @@
 #include "Common.h"
 #include "UnitAction.hpp"
 
+//the following two lines prevent error C2589: '(' : illegal token on right side of '::'
+#undef min
+#undef max
+
 namespace SparCraft
 {
 

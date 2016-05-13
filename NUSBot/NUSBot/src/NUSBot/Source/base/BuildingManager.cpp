@@ -1,6 +1,8 @@
 #include "Common.h"
 #include "BuildingManager.h"
 
+using namespace NUSBot;
+
 
 BuildingManager::BuildingManager() 
 	: debugMode(false)

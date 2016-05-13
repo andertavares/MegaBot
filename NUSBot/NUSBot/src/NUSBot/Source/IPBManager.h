@@ -12,6 +12,8 @@
 
 #include "..\..\StarcraftBuildOrderSearch\Source\starcraftsearch\Timer.hpp"
 
+using namespace NUSBot;
+
 class TimerManager
 {
 
@@ -107,7 +109,7 @@ enum GAME_PHASE  { INITIAL=0,
 class IPBManager 
 {
 	CombatCommander		combatCommander;
-	ScoutManager		scoutManager;
+	NUSBot::ScoutManager		scoutManager;	//prevents ambiguity with other bots' ScoutManager
 	TimerManager		timerManager;
 
 	std::set<BWAPI::Unit *> combatUnits;

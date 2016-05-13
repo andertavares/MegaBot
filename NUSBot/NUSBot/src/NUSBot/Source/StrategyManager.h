@@ -11,6 +11,8 @@
 
 #include "..\..\StarcraftBuildOrderSearch\Source\starcraftsearch\StarcraftData.hpp"
 
+using namespace NUSBot;
+
 typedef std::pair<int, int> IntPair;
 typedef std::pair<MetaType, UnitCountType> MetaPair;
 typedef std::vector<MetaPair> MetaPairVector;

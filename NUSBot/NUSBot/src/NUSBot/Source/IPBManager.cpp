@@ -1,6 +1,8 @@
 #include "Common.h"
 #include "IPBManager.h"
 
+using namespace NUSBot;
+
 
 IPBManager::IPBManager() : numWorkerScouts(0), currentScout(NULL)
 {

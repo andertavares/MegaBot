@@ -2,6 +2,8 @@
 #include "ScoutManager.h"
 #include "InformationManager.h"
 
+using namespace NUSBot;
+
 ScoutManager::ScoutManager() : workerScout(NULL), numWorkerScouts(0), scoutUnderAttack(false)
 {
 }

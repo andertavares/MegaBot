@@ -10,6 +10,10 @@
 #include "SearchParameters.hpp"
 #include "TranspositionTable.hpp"
 
+//the following two lines prevent error C2589: '(' : illegal token on right side of '::'
+#undef min
+#undef max
+
 namespace BuildOrderSearch
 {
 class DFBBStarcraftSearch : public StarcraftSearch

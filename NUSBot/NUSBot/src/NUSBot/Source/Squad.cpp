@@ -1,6 +1,8 @@
 #include "Common.h"
 #include "Squad.h"
 
+using namespace NUSBot;
+
 int  Squad::lastRetreatSwitch = 0;
 bool Squad::lastRetreatSwitchVal = false;
 

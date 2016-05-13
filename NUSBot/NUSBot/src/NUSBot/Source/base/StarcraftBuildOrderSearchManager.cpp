@@ -1,6 +1,8 @@
 #include "Common.h"
 #include "StarcraftBuildOrderSearchManager.h"
 
+using namespace NUSBot;
+
 typedef std::map<MetaType, UnitCountType> mapType;
 
 // get an instance of this

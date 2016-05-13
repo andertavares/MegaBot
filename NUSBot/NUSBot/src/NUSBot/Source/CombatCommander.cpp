@@ -1,6 +1,8 @@
 #include "Common.h"
 #include "CombatCommander.h"
 
+using namespace NUSBot;
+
 CombatCommander::CombatCommander() 
 	: attacking(false)
 	, foundEnemy(false)

@@ -13,6 +13,8 @@
 #include "ScoutManager.h"
 #include "PylonPowerTracker.h"
 
+using namespace SkynetBot;
+
 BuildingPlacerClass::BuildingPlacerClass()
 {
 }

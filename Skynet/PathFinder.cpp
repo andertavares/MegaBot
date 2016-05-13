@@ -5,6 +5,8 @@
 #include "DrawBuffer.h"
 #include "Logger.h"
 
+using namespace SkynetBot;
+
 BuildTilePath PathFinderClass::CreateTilePath(TilePosition start, TilePosition target, std::tr1::function<bool (TilePosition)> tileTest, std::tr1::function<int (TilePosition, TilePosition, int)> gFunction, std::tr1::function<int (TilePosition, TilePosition)> hFunction, int maxGValue, bool diaganol)
 {
 	BuildTilePath path;

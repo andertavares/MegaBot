@@ -2,6 +2,8 @@
 
 #include <assert.h>
 
+using namespace SkynetBot;
+
 RequirementGroup::RequirementGroup()
 {
 }

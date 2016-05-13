@@ -5,6 +5,8 @@
 #include "LatencyTracker.h"
 #include "Logger.h"
 
+using namespace SkynetBot;
+
 bool ArconZealotKillUnDetected::update(const Goal &squadGoal, const UnitGroup &squadUnitGroup)
 {
 	if(mUnit->getOrder() == BWAPI::Orders::CompletingArchonsummon)

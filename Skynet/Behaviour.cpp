@@ -10,6 +10,8 @@
 #include "DetectorAction.h"
 #include "TrainInterceptorAction.h"
 
+using namespace SkynetBot;
+
 Behaviour::Behaviour(Unit unit)
 	: mUnit(unit)
 {

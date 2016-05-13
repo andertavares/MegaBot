@@ -5,6 +5,8 @@
 #include "Singleton.h"
 #include "Base.h"
 
+using namespace SkynetBot;
+
 class BaseTrackerClass
 {
 public:

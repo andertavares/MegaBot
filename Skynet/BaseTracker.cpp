@@ -3,6 +3,8 @@
 #include <limits>
 #include <cassert>
 
+using namespace SkynetBot;
+
 BaseTrackerClass::BaseTrackerClass()
 {
 }

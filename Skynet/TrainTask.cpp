@@ -3,6 +3,8 @@
 #include "Logger.h"
 #include "ResourceTracker.h"
 
+using namespace SkynetBot;
+
 TrainTask::TrainTask(TaskType priority, BWAPI::UnitType type)
 	: Task(priority)
 	, mType(type)

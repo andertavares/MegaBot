@@ -17,6 +17,8 @@
 #include "MacroManager.h"
 #include "GameProgressDetection.h"
 
+using namespace SkynetBot;
+
 TaskManagerClass::TaskManagerClass()
 {
 }

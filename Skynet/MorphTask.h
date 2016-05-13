@@ -4,6 +4,8 @@
 
 #include "Task.h"
 
+using namespace SkynetBot;
+
 class MorphTask : public Task
 {
 public:

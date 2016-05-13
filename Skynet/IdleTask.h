@@ -4,6 +4,8 @@
 
 #include "Task.h"
 
+using namespace SkynetBot;
+
 class IdleTask : public Task
 {
 public:

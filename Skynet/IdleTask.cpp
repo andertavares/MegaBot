@@ -1,5 +1,7 @@
 #include "IdleTask.h"
 
+using namespace SkynetBot;
+
 IdleTask::IdleTask(TaskType priority)
 : Task(priority)
 {

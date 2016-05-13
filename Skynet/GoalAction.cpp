@@ -2,6 +2,8 @@
 
 #include "Vector.h"
 
+using namespace SkynetBot;
+
 bool GoalAction::update(const Goal &squadGoal, const UnitGroup &squadUnitGroup)
 {
 	switch(squadGoal.getGoalType().underlying())

@@ -9,6 +9,8 @@
 #include "GameProgressDetection.h"
 #include "Logger.h"
 
+using namespace SkynetBot;
+
 DefaultSquadTask::DefaultSquadTask(ArmyBehaviour behaviour)
 	: BaseSquadTask(behaviour)
 	, mEngageFull(false)

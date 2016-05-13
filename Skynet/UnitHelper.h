@@ -2,6 +2,8 @@
 
 #include "Interface.h"
 
+using namespace SkynetBot;
+
 namespace UnitHelper
 {
 	bool unitProducesGround(BWAPI::UnitType type);

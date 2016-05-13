@@ -6,6 +6,8 @@
 
 #include <limits>
 
+using namespace SkynetBot;
+
 bool DetectorAction::update(const Goal &squadGoal, const UnitGroup &squadUnitGroup)
 {
 	if(squadGoal.getActionType() == ActionType::Retreat || squadGoal.getActionType() == ActionType::FallBack)

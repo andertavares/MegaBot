@@ -7,6 +7,8 @@
 #include "TypeSafeEnum.h"
 #include "UnitGroup.h"
 
+using namespace SkynetBot;
+
 struct TaskTypeDef
 {
 	enum type
@@ -59,7 +61,7 @@ public:
 	virtual void giveUnit(Unit unit) = 0;
 	virtual void returnUnit(Unit unit) = 0;
 	virtual bool morph(Unit unit, BWAPI::UnitType previousType) = 0;
-	virtual UnitGroup getFinishedUnits() = 0;
+	virtual SkynetBot::UnitGroup getFinishedUnits() = 0;
 
 	virtual std::string getTaskName() const = 0;
 	virtual std::string getOutputName() const = 0;

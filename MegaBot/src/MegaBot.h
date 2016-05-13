@@ -13,6 +13,7 @@ DWORD WINAPI AnalyzeThread();
 class MegaBot : public BWAPI::AIModule {
 	BWAPI::AIModule* behavior1;
 	BWAPI::AIModule* behavior2;
+	BWAPI::AIModule* behavior3;
 
 public:
   virtual void onStart();

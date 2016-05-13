@@ -1,5 +1,6 @@
 #include <EnhancedUI.h>
 using namespace BWAPI;
+using namespace XelnagaBot;
 
 void EnhancedUI::update() const
 {

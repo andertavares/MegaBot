@@ -29,5 +29,5 @@ BOOL APIENTRY DllMain( HANDLE hModule,
 extern "C" __declspec(dllexport) BWAPI::AIModule* newAIModule(BWAPI::Game* game)
 {
 	BWAPI::Broodwar=game;
-	return new Xelnaga();
+	return new XelnagaBot::Xelnaga();
 }

@@ -2,6 +2,7 @@
 
 using namespace BWAPI;
 using namespace std;
+using namespace XelnagaBot;
 
 bool passesFlag(Unit* u, int f)
 {

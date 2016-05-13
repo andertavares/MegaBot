@@ -1,6 +1,9 @@
 #pragma once
 #include <BWAPI.h>
 #include <UnitGroup.h>
+
+using namespace XelnagaBot;
+
 class UnitGroupManager
 {
 public:

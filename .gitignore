@@ -3,3 +3,5 @@
 /MegaBot/Release
 /MegaBot/Debug
 /Skynet/Skynet/Competition
+/MegaBot/*.opensdf
+/MegaBot/*.sdf

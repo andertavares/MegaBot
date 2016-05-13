@@ -11,7 +11,8 @@ extern BWTA::Region* enemy_base;
 DWORD WINAPI AnalyzeThread();
 
 class MegaBot : public BWAPI::AIModule {
-	BWAPI::AIModule* behavior;
+	BWAPI::AIModule* behavior1;
+	BWAPI::AIModule* behavior2;
 
 public:
   virtual void onStart();

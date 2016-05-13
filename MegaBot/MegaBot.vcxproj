@@ -69,6 +69,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
       <TargetMachine>MachineX86</TargetMachine>
+      <AdditionalLibraryDirectories>$(BOOST_DIR)\lib\;$(BWAPI_DIR)\lib\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -90,6 +91,7 @@
       <OptimizeReferences>true</OptimizeReferences>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <TargetMachine>MachineX86</TargetMachine>
+      <AdditionalLibraryDirectories>$(BOOST_DIR)\lib\;$(BWAPI_DIR)\lib\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -100,6 +102,9 @@
     <ClInclude Include="src\MegaBot.h" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Skynet\Skynet\Skynet-lib.vcxproj">
+      <Project>{1e54f46b-2c51-4f26-abec-f8f8d6cd0657}</Project>
+    </ProjectReference>
     <ProjectReference Include="..\XelNaga\AiurModule\XelNagaLib.vcxproj">
       <Project>{a0f5203c-219c-4aac-9ac2-87ac2c2603f1}</Project>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>

@@ -6,6 +6,8 @@
 #include "UnitGroup.h"
 #include "Region.h"
 
+using namespace SkynetBot;
+
 struct UnitThreatTypeDef
 {
 	enum type

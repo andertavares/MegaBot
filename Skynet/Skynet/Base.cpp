@@ -8,6 +8,8 @@
 #include "MapHelper.h"
 #include "UnitHelper.h"
 
+using namespace SkynetBot;
+
 BaseClass::BaseClass(Region region, std::set<TilePosition> tiles, bool startLocation)
 	: mCenterTilePosition(BWAPI::TilePositions::None)
 	, mCenterPosition(region->getCenter())

@@ -5,6 +5,8 @@
 #include "Singleton.h"
 #include "Task.h"
 
+using namespace SkynetBot;
+
 class PylonPowerTrackerClass
 {
 public:

@@ -1,5 +1,8 @@
 #include "AdvancedGroup.h"
 
+using namespace SkynetBot;
+
+
 void AdvancedGroup::update(Goal goal)
 {
 	// Reshuffle the groups

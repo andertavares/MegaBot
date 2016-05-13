@@ -5,6 +5,8 @@
 #include "BaseSquad.h"
 #include "Behaviour.h"
 
+using namespace SkynetBot;
+
 class DefaultSquadTask : public BaseSquadTask
 {
 public:

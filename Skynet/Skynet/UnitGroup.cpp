@@ -4,6 +4,8 @@
 
 #include "TerrainAnaysis.h"
 
+using namespace SkynetBot;
+
 UnitGroup::UnitGroup()
 {
 }

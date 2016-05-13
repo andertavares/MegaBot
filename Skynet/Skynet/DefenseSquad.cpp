@@ -6,6 +6,8 @@
 #include "BuildOrderManager.h"
 #include "PlayerTracker.h"
 
+using namespace SkynetBot;
+
 DefenseSquadTask::DefenseSquadTask(ArmyBehaviour behaviour)
 	: BaseSquadTask(behaviour)
 	, mNeededWorkers(0)

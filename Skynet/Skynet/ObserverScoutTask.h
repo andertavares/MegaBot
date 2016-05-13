@@ -9,6 +9,8 @@
 #include "UnitGroup.h"
 #include "Behaviour.h"
 
+using namespace SkynetBot;
+
 class ObserverScoutTask : public Task
 {
 public:

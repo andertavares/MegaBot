@@ -2,6 +2,8 @@
 
 #include <algorithm>
 
+using namespace SkynetBot;
+
 bool UnitHelper::unitProducesGround(BWAPI::UnitType type)
 {
 	static std::set<BWAPI::UnitType> unitData;

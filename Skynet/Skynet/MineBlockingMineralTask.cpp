@@ -1,5 +1,7 @@
 #include "MineBlockingMineralTask.h"
 
+using namespace SkynetBot;
+
 MineBlockingMineralTask::MineBlockingMineralTask(TaskType priority, UnitGroup minerals)
 	: Task(priority)
 	, mMinerals(minerals)

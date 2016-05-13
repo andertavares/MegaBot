@@ -10,6 +10,8 @@
 #include "UnitGroup.h"
 #include "BuildingPlacer.h"
 
+using namespace SkynetBot;
+
 class DefaultGValue
 {
 public:

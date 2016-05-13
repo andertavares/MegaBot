@@ -9,6 +9,8 @@
 #include "PylonPowerTracker.h"
 #include "Logger.h"
 
+using namespace SkynetBot;
+
 UnitTrackerClass::UnitTrackerClass()
 	: mOnBeginCalled(false)
 {

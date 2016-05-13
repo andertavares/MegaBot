@@ -4,6 +4,8 @@
 #include "MicroAction.h"
 #include "Goal.h"
 
+using namespace SkynetBot;
+
 class Behaviour
 {
 public:

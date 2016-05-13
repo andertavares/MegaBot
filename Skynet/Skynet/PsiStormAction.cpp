@@ -5,6 +5,8 @@
 #include "LatencyTracker.h"
 #include "Logger.h"
 
+using namespace SkynetBot;
+
 bool PsiStormAction::update(const Goal &squadGoal, const UnitGroup &squadUnitGroup)
 {
 	if(mUnit->getOrder() == BWAPI::Orders::CastPsionicStorm)

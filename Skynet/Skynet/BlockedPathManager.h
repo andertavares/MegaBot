@@ -6,6 +6,8 @@
 #include "Task.h"
 #include "Base.h"
 
+using namespace SkynetBot;
+
 class BlockedPathManagerClass
 {
 public:

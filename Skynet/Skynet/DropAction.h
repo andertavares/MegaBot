@@ -3,6 +3,8 @@
 #include "Interface.h"
 #include "MicroAction.h"
 
+using namespace SkynetBot;
+
 class DropAction : public GroupMicroActionBaseClass
 {
 public:

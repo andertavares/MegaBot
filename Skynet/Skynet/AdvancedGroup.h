@@ -5,6 +5,8 @@
 #include "Goal.h"
 #include "Behaviour.h"
 
+using namespace SkynetBot;
+
 class AdvancedGroup
 {
 public:

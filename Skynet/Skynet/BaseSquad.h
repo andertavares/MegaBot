@@ -5,6 +5,8 @@
 #include "Task.h"
 #include "BuildOrder.h"
 
+using namespace SkynetBot;
+
 class BaseSquadTask : public Task
 {
 public:

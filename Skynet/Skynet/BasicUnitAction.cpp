@@ -6,6 +6,8 @@
 #include "AOEThreatTracker.h"
 #include "UnitHelper.h"
 
+using namespace SkynetBot;
+
 void stayAtRange(Unit unit, Position targetPositon, int maxRange, int currentRange)
 {
 	Position current = unit->getPosition();

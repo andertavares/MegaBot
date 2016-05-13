@@ -7,6 +7,8 @@
 #include "UnitHelper.h"
 #include "LatencyTracker.h"
 
+using namespace SkynetBot;
+
 bool ArbiterAction::update(const Goal &squadGoal, const UnitGroup &squadUnitGroup)
 {
 	if(mUnit->getOrder() == BWAPI::Orders::CastStasisField)

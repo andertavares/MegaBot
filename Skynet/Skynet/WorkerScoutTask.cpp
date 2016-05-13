@@ -6,6 +6,8 @@
 #include "UnitTracker.h"
 #include "BaseTracker.h"
 
+using namespace SkynetBot;
+
 WorkerScoutTask::WorkerScoutTask(TaskType priority, ScoutData data)
 	: Task(priority)
 	, mData(data)

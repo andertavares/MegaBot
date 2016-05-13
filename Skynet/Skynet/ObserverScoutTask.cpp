@@ -1,6 +1,8 @@
 #include "ObserverScoutTask.h"
 #include "ScoutManager.h"
 
+using namespace SkynetBot;
+
 ObserverScoutTask::ObserverScoutTask(TaskType priority, ScoutData data)
 	: Task(priority)
 	, mData(data)

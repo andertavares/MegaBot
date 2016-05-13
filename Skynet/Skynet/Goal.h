@@ -6,6 +6,8 @@
 #include "Base.h"
 #include "AOEThreat.h"
 
+using namespace SkynetBot;
+
 struct GoalTypeDef
 {
 	enum type

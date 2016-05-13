@@ -1,5 +1,7 @@
 #include "Goal.h"
 
+using namespace SkynetBot;
+
 Goal::Goal()
 	: mGoalType(GoalType::None)
 	, mActionType(ActionType::None)

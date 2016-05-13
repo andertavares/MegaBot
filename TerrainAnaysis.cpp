@@ -12,6 +12,8 @@
 #include "Logger.h"
 #include "Heap.h"
 
+using namespace SkynetBot;
+
 TerrainAnaysisClass::TerrainAnaysisClass()
 {
 }

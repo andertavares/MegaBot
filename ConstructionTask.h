@@ -5,6 +5,8 @@
 #include "Task.h"
 #include "BuildingPlacer.h"
 
+using namespace SkynetBot;
+
 class ConstructionTask : public Task
 {
 public:

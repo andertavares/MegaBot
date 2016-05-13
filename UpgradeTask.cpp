@@ -2,6 +2,8 @@
 
 #include "ResourceTracker.h"
 
+using namespace SkynetBot;
+
 UpgradeTask::UpgradeTask(TaskType priority, BWAPI::UpgradeType type, int level)
 	: Task(priority)
 	, mType(type)

@@ -6,6 +6,8 @@
 #include "BaseTracker.h"
 #include "UnitHelper.h"
 
+using namespace SkynetBot;
+
 void PlayerTrackerClass::onBegin()
 {
 	updatePlayers();

@@ -7,6 +7,8 @@
 #include "ReservedLocation.h"
 #include "TypeSafeEnum.h"
 
+using namespace SkynetBot;
+
 struct ExpandTypeDef
 {
 	enum type

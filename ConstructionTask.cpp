@@ -4,6 +4,8 @@
 #include "MapHelper.h"
 #include "DrawBuffer.h"
 
+using namespace SkynetBot;
+
 ConstructionTask::ConstructionTask(TaskType priority, BuildingLocation position, BWAPI::UnitType type)
 	: Task(priority)
 	, mType(type)

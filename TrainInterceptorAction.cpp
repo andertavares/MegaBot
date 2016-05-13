@@ -1,5 +1,7 @@
 #include "TrainInterceptorAction.h"
 
+using namespace SkynetBot;
+
 bool TrainInterceptorAction::update(const Goal &squadGoal, const UnitGroup &squadUnitGroup)
 {
 	int maxAmout = 4;

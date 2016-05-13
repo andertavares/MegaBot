@@ -8,6 +8,8 @@
 #include "BuildTilePath.h"
 #include "UnitGroup.h"
 
+using namespace SkynetBot;
+
 class WorkerScoutTask : public Task
 {
 public:

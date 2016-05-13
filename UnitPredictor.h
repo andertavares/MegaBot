@@ -6,6 +6,8 @@
 #include "Unit.h"
 #include "UnitGroup.h"
 
+using namespace SkynetBot;
+
 class UnitPredictorClass
 {
 public:

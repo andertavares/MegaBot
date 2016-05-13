@@ -2,6 +2,8 @@
 
 #include "ResourceManager.h"
 
+using namespace SkynetBot;
+
 GatherTask::GatherTask(Unit resource, Base base)
 	: Task(TaskType::Medium)
 	, mResource(resource)

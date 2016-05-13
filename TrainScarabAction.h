@@ -3,6 +3,8 @@
 #include "Interface.h"
 #include "MicroAction.h"
 
+using namespace SkynetBot;
+
 class TrainScarabAction : public SingleMicroActionBaseClass
 {
 public:

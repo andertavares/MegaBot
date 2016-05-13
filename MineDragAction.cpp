@@ -5,6 +5,8 @@
 #include "UnitTracker.h"
 #include "UnitInformation.h"
 
+using namespace SkynetBot;
+
 bool MineDragAction::update(const Goal &squadGoal, const UnitGroup &squadUnitGroup)
 {
 	for each(Unit unit in UnitInformation::Instance().getUnitsTargetting(mUnit))

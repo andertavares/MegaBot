@@ -6,6 +6,8 @@
 #include "BuildOrderManager.h"
 #include "UnitTracker.h"
 
+using namespace SkynetBot;
+
 ResourceManagerClass::ResourceManagerClass()
 	: mTaskPump(BWAPI::Broodwar->self()->getRace().getWorker(), TaskType::Worker)
 	, mSaturated(false)

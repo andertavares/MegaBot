@@ -2,6 +2,8 @@
 
 #include "ResourceTracker.h"
 
+using namespace SkynetBot;
+
 MorphTask::MorphTask(TaskType priority, BWAPI::UnitType type)
 	: Task(priority)
 	, mType(type)

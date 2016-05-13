@@ -1,5 +1,7 @@
 #include "DropAction.h"
 
+using namespace SkynetBot;
+
 bool DropAction::update(const Goal &squadGoal, const UnitGroup &squadUnitGroup)
 {
 	return false;

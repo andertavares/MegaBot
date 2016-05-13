@@ -5,6 +5,8 @@
 #include "Requirement.h"
 #include "UnitGroup.h"
 
+using namespace SkynetBot;
+
 class RequirementGroup
 {
 public:
@@ -20,7 +22,7 @@ public:
 	bool empty() const;
 	void clear();
 
-	UnitGroup getUnits() const;
+	SkynetBot::UnitGroup getUnits() const;
 
 	inline void addMineralRequirement(int minerals) { mOtherRequirements.push_back(Requirement(RequirementType(RequirementType::Mineral), minerals)); }
 	inline void addGasRequirement(int gas) { mOtherRequirements.push_back(Requirement(RequirementType(RequirementType::Gas), gas)); }

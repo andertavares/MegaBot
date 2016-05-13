@@ -2,6 +2,8 @@
 
 #include "ResourceTracker.h"
 
+using namespace SkynetBot;
+
 TechTask::TechTask(TaskType priority, BWAPI::TechType type)
 	: Task(priority)
 	, mType(type)

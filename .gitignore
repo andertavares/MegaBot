@@ -1,2 +1,5 @@
 /MegaBot/*.ncb
 /MegaBot/*.suo
+/MegaBot/Release
+/MegaBot/Debug
+/Skynet/Skynet/Competition

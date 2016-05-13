@@ -1,5 +1,7 @@
 #include "MegaBot.h"
 #include "Xelnaga.h"
+#include "Skynet.h"
+
 using namespace BWAPI;
 
 bool analyzed;
@@ -279,7 +281,7 @@ DWORD WINAPI AnalyzeThread() {
 }
 
 void MegaBot::drawStats() {
-  std::set<Unit*> myUnits = Broodwar->self()->getUnits();
+  /*std::set<Unit*> myUnits = Broodwar->self()->getUnits();
   Broodwar->drawTextScreen(5,0,"I have %d units:",myUnits.size());
   std::map<UnitType, int> unitTypeCounts;
   for(std::set<Unit*>::iterator i=myUnits.begin();i!=myUnits.end();i++) {
@@ -292,11 +294,11 @@ void MegaBot::drawStats() {
   for(std::map<UnitType,int>::iterator i=unitTypeCounts.begin();i!=unitTypeCounts.end();i++) {
     Broodwar->drawTextScreen(5,16*line,"- %d %ss",(*i).second, (*i).first.getName().c_str());
     line++;
-  }
+  }*/
 }
 
 void MegaBot::drawBullets() {
-  std::set<Bullet*> bullets = Broodwar->getBullets();
+  /*std::set<Bullet*> bullets = Broodwar->getBullets();
   for(std::set<Bullet*>::iterator i=bullets.begin();i!=bullets.end();i++)
   {
     Position p=(*i)->getPosition();
@@ -312,7 +314,7 @@ void MegaBot::drawBullets() {
       Broodwar->drawLineMap(p.x(),p.y(),p.x()+(int)velocityX,p.y()+(int)velocityY,Colors::Red);
       Broodwar->drawTextMap(p.x(),p.y(),"\x06%s",(*i)->getType().getName().c_str());
     }
-  }
+  }*/
 }
 
 void MegaBot::drawVisibilityData() {
@@ -332,7 +334,7 @@ void MegaBot::drawVisibilityData() {
 
 void MegaBot::drawTerrainData(){
   //we will iterate through all the base locations, and draw their outlines.
-  for(std::set<BWTA::BaseLocation*>::const_iterator i=BWTA::getBaseLocations().begin();i!=BWTA::getBaseLocations().end();i++)
+/*  for(std::set<BWTA::BaseLocation*>::const_iterator i=BWTA::getBaseLocations().begin();i!=BWTA::getBaseLocations().end();i++)
   {
     TilePosition p=(*i)->getTilePosition();
     Position c=(*i)->getPosition();
@@ -381,20 +383,21 @@ void MegaBot::drawTerrainData(){
       Broodwar->drawLine(CoordinateType::Map,point1.x(),point1.y(),point2.x(),point2.y(),Colors::Red);
     }
   }
+  */
 }
 
 void MegaBot::showPlayers()
 {
-  std::set<Player*> players=Broodwar->getPlayers();
+  /*std::set<Player*> players=Broodwar->getPlayers();
   for(std::set<Player*>::iterator i=players.begin();i!=players.end();i++)
   {
     Broodwar->printf("Player [%d]: %s is in force: %s",(*i)->getID(),(*i)->getName().c_str(), (*i)->getForce()->getName().c_str());
-  }
+  }*/
 }
 
 void MegaBot::showForces()
 {
-  std::set<Force*> forces=Broodwar->getForces();
+  /*std::set<Force*> forces=Broodwar->getForces();
   for(std::set<Force*>::iterator i=forces.begin();i!=forces.end();i++)
   {
     std::set<Player*> players=(*i)->getPlayers();
@@ -403,7 +406,7 @@ void MegaBot::showForces()
     {
       Broodwar->printf("  - Player [%d]: %s",(*j)->getID(),(*j)->getName().c_str());
     }
-  }
+  }*/
 }
 
 void MegaBot::onUnitComplete(BWAPI::Unit *unit) {

@@ -6,6 +6,8 @@
 #include "InformationManager.h"
 #include "StrategyManager.h"
 
+using namespace NUSBot;
+
 class CombatCommander
 {
 	SquadData			squadData;

@@ -1,5 +1,7 @@
 #include "CombatSimulation.h"
 
+using namespace NUSBot;
+
 CombatSimulation::CombatSimulation()
 	: hasLogged(false)
 {

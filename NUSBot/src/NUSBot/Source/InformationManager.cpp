@@ -1,6 +1,8 @@
 #include "Common.h"
 #include "InformationManager.h"
 
+using namespace NUSBot;
+
 #define SELF_INDEX 0
 #define ENEMY_INDEX 1
 

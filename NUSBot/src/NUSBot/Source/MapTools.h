@@ -7,6 +7,8 @@
 #include "InformationManager.h"
 #include "base/BuildingPlacer.h"
 
+using namespace NUSBot;
+
 // provides useful tools for analyzing the starcraft map
 // calculates connectivity and distances using flood fills
 class MapTools

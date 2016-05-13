@@ -1,6 +1,8 @@
 #include "Common.h"
 #include "StrategyManager.h"
 
+using namespace NUSBot;
+
 // constructor
 StrategyManager::StrategyManager() 
 	: firstAttackSent(false)

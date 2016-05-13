@@ -1,6 +1,8 @@
 #include "Common.h"
 #include "BuildLearner.h"
 
+using namespace NUSBot;
+
 // constructor
 BuildLearner::BuildLearner() 
 {

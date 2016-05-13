@@ -1,7 +1,7 @@
 #include "Xelnaga.h"
 #include "../src/Util.h"
 using namespace BWAPI;
-
+using namespace XelnagaBot;
 
 //int dd21 = 0;
 //파일 입출력

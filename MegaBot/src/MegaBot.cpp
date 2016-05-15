@@ -3,6 +3,9 @@
 #include "Skynet.h"
 #include "NUSBotModule.h"
 
+#include "data/Configuration.h"
+#include "data/MatchData.h"
+
 using namespace BWAPI;
 
 bool analyzed;
@@ -10,88 +13,74 @@ bool analysis_just_finished;
 BWTA::Region* home;
 BWTA::Region* enemy_base;
 
-/*MegaBot::MegaBot(){
-	//behavior = new Xelnaga();
-}*/
+//initializes consts
+const string MegaBot::SKYNET = "Skynet";
+const string MegaBot::XELNAGA = "Xelnaga";
+const string MegaBot::NUSBot = "NUSBot";
+
+MegaBot::MegaBot(){
+	//initalizes behaviors
+	behaviors.insert(make_pair(SKYNET, new Skynet()));
+	behaviors.insert(make_pair(XELNAGA, new Xelnaga()));
+	behaviors.insert(make_pair(NUSBot, new NUSBotModule()));
+
+	//initializes reverse map
+	behaviorNames.insert(make_pair(behaviors[SKYNET], SKYNET));
+	behaviorNames.insert(make_pair(behaviors[XELNAGA], XELNAGA));
+	behaviorNames.insert(make_pair(behaviors[NUSBot], NUSBot));
+
+	//for (auto behv : behaviors) {
+	//	behaviorNames.insert(make_pair(behv.second, behv.first));
+	//}
+
+}
 
 void MegaBot::onStart() {
-  Broodwar->sendText("Hello world!");
-  Broodwar->printf("The map is %s, a %d player map",Broodwar->mapName().c_str(),Broodwar->getStartLocations().size());
-  // Enable some cheat flags
-  Broodwar->enableFlag(Flag::UserInput);
   // Uncomment to enable complete map information
   //Broodwar->enableFlag(Flag::CompleteMapInformation);
 
-  behavior1 = new Xelnaga();
-  behavior2 = new Skynet();
-  behavior3 = new NUSBotModule();
-  behavior3->onStart();
-  //read map information into BWTA so terrain analysis can be done in another thread
-  /*BWTA::readMap();
-  analyzed=false;
-  analysis_just_finished=false;
+	myBehaviorName = Configuration::getInstance()->strategyID;
+	currentBehavior = behaviors[myBehaviorName];
 
-  show_bullets=false;
-  show_visibility_data=false;
+	MatchData::getInstance()->registerMatchBegin();
+	
+	currentBehavior->onStart();
+  
+	//overrides speed and gui set by currentBehavior
+	int speed = Configuration::getInstance()->speed;
+	Broodwar->printf("Setting speed to %d.", speed);
+	Broodwar->setLocalSpeed(speed);
 
-  if (Broodwar->isReplay()) {
-    Broodwar->printf("The following players are in this replay:");
-    for(std::set<Player*>::iterator p=Broodwar->getPlayers().begin();p!=Broodwar->getPlayers().end();p++) {
-      if (!(*p)->getUnits().empty() && !(*p)->isNeutral()) {
-        Broodwar->printf("%s, playing as a %s",(*p)->getName().c_str(),(*p)->getRace().getName().c_str());
-      }
-    }
-  }
-  else {
-    Broodwar->printf("The match up is %s v %s",
-      Broodwar->self()->getRace().getName().c_str(),
-      Broodwar->enemy()->getRace().getName().c_str());
-
-    //send each worker to the mineral field that is closest to it
-    for(std::set<Unit*>::const_iterator i=Broodwar->self()->getUnits().begin();i!=Broodwar->self()->getUnits().end();i++)
-    {
-      if ((*i)->getType().isWorker())
-      {
-        Unit* closestMineral=NULL;
-        for(std::set<Unit*>::iterator m=Broodwar->getMinerals().begin();m!=Broodwar->getMinerals().end();m++)
-        {
-          if (closestMineral==NULL || (*i)->getDistance(*m)<(*i)->getDistance(closestMineral))
-            closestMineral=*m;
-        }
-        if (closestMineral!=NULL)
-          (*i)->rightClick(closestMineral);
-      }
-      else if ((*i)->getType().isResourceDepot())
-      {
-        //if this is a center, tell it to build the appropiate type of worker
-        if ((*i)->getType().getRace()!=Races::Zerg)
-        {
-          (*i)->train(Broodwar->self()->getRace().getWorker());
-        }
-        else //if we are Zerg, we need to select a larva and morph it into a drone
-        {
-          std::set<Unit*> myLarva=(*i)->getLarva();
-          if (myLarva.size()>0)
-          {
-            Unit* larva=*myLarva.begin();
-            larva->morph(UnitTypes::Zerg_Drone);
-          }
-        }
-      }
-    }
-  }*/
+	//set gui
+	bool gui = Configuration::getInstance()->enableGUI;
+	Broodwar->printf("Setting GUI to %s.", gui ? "enabled" : "disabled");
+	Broodwar->setGUI(gui);
 }
 
 void MegaBot::onEnd(bool isWinner) {
-	behavior3->onEnd(isWinner);
-  /*if (isWinner)
-  {
-    //log win to file
-  }*/
+	currentBehavior->onEnd(isWinner);
+
+	int result = MatchData::LOSS;
+	if (isWinner) result = MatchData::WIN;
+	if (Broodwar->elapsedTime() / 60 >= 80) result = MatchData::DRAW;
+
+	//StrategySelector::getInstance()->addResult(win);
+	//StrategySelector::getInstance()->saveStats();
+	//Statistics::getInstance()->saveResult(win);
+
+	MatchData::getInstance()->registerMatchFinish(result);
+	MatchData::getInstance()->writeSummary();
+	MatchData::getInstance()->writeDetailedResult();
 }
 
 void MegaBot::onFrame() {
-	behavior3->onFrame();
+
+	if (Broodwar->elapsedTime() / 60 >= 81) {	//leave stalled game
+		Broodwar->leaveGame();
+		return;
+	}
+
+	currentBehavior->onFrame();
 	/*
 	if (show_visibility_data)
 		drawVisibilityData();
@@ -143,39 +132,40 @@ void MegaBot::onFrame() {
 }
 
 void MegaBot::onSendText(std::string text) {
-	behavior3->onSendText(text);
-  if (text=="/show bullets") {
-    show_bullets = !show_bullets;
-  } else if (text=="/show players") {
-    showPlayers();
-  } else if (text=="/show forces")  {
-    showForces();
-  } else if (text=="/show visibility") {
-    show_visibility_data=!show_visibility_data;
-  } else if (text=="/analyze") {
-    if (analyzed == false) {
-      Broodwar->printf("Analyzing map... this may take a minute");
-      CreateThread(NULL, 0, (LPTHREAD_START_ROUTINE)AnalyzeThread, NULL, 0, NULL);
-    }
-  } 
-  else{
-    Broodwar->printf("You typed '%s'!",text.c_str());
-    Broodwar->sendText("%s",text.c_str());
-  }
+	currentBehavior->onSendText(text);
+
+	if (text=="/show bullets") {
+		show_bullets = !show_bullets;
+	} else if (text=="/show players") {
+		showPlayers();
+	} else if (text=="/show forces")  {
+		showForces();
+	} else if (text=="/show visibility") {
+		show_visibility_data=!show_visibility_data;
+	} else if (text=="/analyze") {
+	if (analyzed == false) {
+		Broodwar->printf("Analyzing map... this may take a minute");
+		CreateThread(NULL, 0, (LPTHREAD_START_ROUTINE)AnalyzeThread, NULL, 0, NULL);
+	}
+	} 
+	else{
+		Broodwar->printf("You typed '%s'!",text.c_str());
+		Broodwar->sendText("%s",text.c_str());
+	}
 }
 
 void MegaBot::onReceiveText(BWAPI::Player* player, std::string text) {
-	behavior2->onReceiveText(player, text);
+	currentBehavior->onReceiveText(player, text);
 	Broodwar->printf("%s said '%s'", player->getName().c_str(), text.c_str());
 }
 
 void MegaBot::onPlayerLeft(BWAPI::Player* player) {
-	behavior2->onPlayerLeft(player);
+	currentBehavior->onPlayerLeft(player);
 	Broodwar->sendText("%s left the game.",player->getName().c_str());
 }
 
 void MegaBot::onNukeDetect(BWAPI::Position target) {
-	behavior3->onNukeDetect(target);
+	currentBehavior->onNukeDetect(target);
 
   if (target!=Positions::Unknown)
     Broodwar->printf("Nuclear Launch Detected at (%d,%d)",target.x(),target.y());
@@ -184,33 +174,33 @@ void MegaBot::onNukeDetect(BWAPI::Position target) {
 }
 
 void MegaBot::onUnitDiscover(BWAPI::Unit* unit) {
-	behavior3->onUnitDiscover(unit);
+	currentBehavior->onUnitDiscover(unit);
 
   //if (!Broodwar->isReplay() && Broodwar->getFrameCount()>1)
   //  Broodwar->printf("A %s [%x] has been discovered at (%d,%d)",unit->getType().getName().c_str(),unit,unit->getPosition().x(),unit->getPosition().y());
 }
 
 void MegaBot::onUnitEvade(BWAPI::Unit* unit) {
-	behavior3->onUnitEvade(unit);
+	currentBehavior->onUnitEvade(unit);
 
 	//if (!Broodwar->isReplay() && Broodwar->getFrameCount()>1)
 	//	Broodwar->printf("A %s [%x] was last accessible at (%d,%d)",unit->getType().getName().c_str(),unit,unit->getPosition().x(),unit->getPosition().y());
 }
 
 void MegaBot::onUnitShow(BWAPI::Unit* unit) {
-	behavior3->onUnitShow(unit);
+	currentBehavior->onUnitShow(unit);
 	//if (!Broodwar->isReplay() && Broodwar->getFrameCount()>1)
 	//	Broodwar->printf("A %s [%x] has been spotted at (%d,%d)",unit->getType().getName().c_str(),unit,unit->getPosition().x(),unit->getPosition().y());
 }
 
 void MegaBot::onUnitHide(BWAPI::Unit* unit) {
-	behavior3->onUnitHide(unit);
+	currentBehavior->onUnitHide(unit);
 	//if (!Broodwar->isReplay() && Broodwar->getFrameCount()>1)
 		//Broodwar->printf("A %s [%x] was last seen at (%d,%d)",unit->getType().getName().c_str(),unit,unit->getPosition().x(),unit->getPosition().y());
 }
 
 void MegaBot::onUnitCreate(BWAPI::Unit* unit){
-	behavior3->onUnitCreate(unit);
+	currentBehavior->onUnitCreate(unit);
 
   /*if (Broodwar->getFrameCount()>1)
   {
@@ -232,13 +222,13 @@ void MegaBot::onUnitCreate(BWAPI::Unit* unit){
 }
 
 void MegaBot::onUnitDestroy(BWAPI::Unit* unit) {
-	behavior3->onUnitDestroy(unit);
+	currentBehavior->onUnitDestroy(unit);
   //if (!Broodwar->isReplay() && Broodwar->getFrameCount()>1)
   //  Broodwar->printf("A %s [%x] has been destroyed at (%d,%d)",unit->getType().getName().c_str(),unit,unit->getPosition().x(),unit->getPosition().y());
 }
 
 void MegaBot::onUnitMorph(BWAPI::Unit* unit){
-	behavior3->onUnitMorph(unit);
+	currentBehavior->onUnitMorph(unit);
 
   /*if (!Broodwar->isReplay())
     Broodwar->printf("A %s [%x] has been morphed at (%d,%d)",unit->getType().getName().c_str(),unit,unit->getPosition().x(),unit->getPosition().y());
@@ -257,18 +247,16 @@ void MegaBot::onUnitMorph(BWAPI::Unit* unit){
 }
 
 void MegaBot::onUnitRenegade(BWAPI::Unit* unit) {
-	behavior3->onUnitRenegade(unit);
-  if (!Broodwar->isReplay())
-    Broodwar->printf("A %s [%x] is now owned by %s",unit->getType().getName().c_str(),unit,unit->getPlayer()->getName().c_str());
+	currentBehavior->onUnitRenegade(unit);
 }
 
 void MegaBot::onSaveGame(std::string gameName) {
-	behavior3->onSaveGame(gameName);
+	currentBehavior->onSaveGame(gameName);
 	Broodwar->printf("The game was saved to \"%s\".", gameName.c_str());
 }
 
 void MegaBot::onUnitComplete(BWAPI::Unit *unit) {
-	behavior3->onUnitComplete(unit);
+	currentBehavior->onUnitComplete(unit);
 
 	//if (!Broodwar->isReplay() && Broodwar->getFrameCount()>1)
 	//	Broodwar->printf("A %s [%x] has been completed at (%d,%d)",unit->getType().getName().c_str(),unit,unit->getPosition().x(),unit->getPosition().y());

@@ -1,0 +1,45 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="src\Dll.cpp">
+      <Filter>main</Filter>
+    </ClCompile>
+    <ClCompile Include="src\MegaBot.cpp">
+      <Filter>main</Filter>
+    </ClCompile>
+    <ClCompile Include="src\data\Configuration.cpp">
+      <Filter>data</Filter>
+    </ClCompile>
+    <ClCompile Include="src\data\MatchData.cpp">
+      <Filter>data</Filter>
+    </ClCompile>
+    <ClCompile Include="src\utils\tinyxml2.cpp">
+      <Filter>utils</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="main">
+      <UniqueIdentifier>{eeba81f7-7c43-4bc8-8307-34e1c9dffbb5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="data">
+      <UniqueIdentifier>{9573924f-8c47-4122-a877-101136c9ef69}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="utils">
+      <UniqueIdentifier>{e4bf65a2-bf18-4ab5-b7fd-d340fd55e14f}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\MegaBot.h">
+      <Filter>main</Filter>
+    </ClInclude>
+    <ClInclude Include="src\data\Configuration.h">
+      <Filter>data</Filter>
+    </ClInclude>
+    <ClInclude Include="src\data\MatchData.h">
+      <Filter>data</Filter>
+    </ClInclude>
+    <ClInclude Include="src\utils\tinyxml2.h">
+      <Filter>utils</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

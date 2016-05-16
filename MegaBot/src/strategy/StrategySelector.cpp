@@ -52,7 +52,7 @@ void StrategySelector::selectStrategy() {
 	string strategyId = Configuration::getInstance()->strategyID;
 	
 	//in case of metagame, will choose strategy probabilistically
-	if (strategyId == "metagame") {
+	if (strategyId == "probabilistic") {
 		currentStrategyId = probabilistic();
 	}
 	else {	//otherwise, use strategy explicitly described in config. 
@@ -60,98 +60,50 @@ void StrategySelector::selectStrategy() {
 	}
 	//Broodwar->printf("Selected strategy is: %s", currentStrategyId); - was causing 'broodwar not initialized' error
 	return;
-
-	/*int totWon = 0;
-	int totPlay = 0;
-	for (int i = 0; i < (int)stats.size(); i++)
-	{
-		string mOwnRace = Broodwar->self()->getRace().getName();
-		
-		if (stats.at(i).matches())
-		{
-			totWon += stats.at(i).won;
-			totPlay += stats.at(i).total;
-		}
-	}
-	if (totPlay == 0) totPlay = 1; //To avoid division by zero
-
-	//Random probability select one strategy
-	bool found = false;
-	int i = 0;
-	while (!found)
-	{
-		i = rand() % (int)stats.size();
-		
-		//Entry matches
-		if (stats.at(i).matches())
-		{
-			//Calculate probability for this entry.
-			int chance = stats.at(i).won * 100 / stats.at(i).getTotal();
-			chance = chance * totWon / totPlay;
-
-			//Have 75% chance to try a strategy that
-			//hasn't been tested much yet.
-			if (stats.at(i).total <= 2) chance = 75;
-
-			//Set a max/min so all strategies have a chance
-			//to be played.
-			if (chance < 15) chance = 15;
-			if (chance > 85) chance = 85;
-
-			//Make the roll!
-			int roll = rand() % 100;
-			if (roll <= chance)
-			{
-				currentStrategyId = stats.at(i).strategyId;
-				Broodwar << "Strategy selected: " << currentStrategyId << " (Roll: " << roll << " Prob: " << chance << ")" << endl;
-				found = true;
-				return;
-			}
-		}		
-	}*/
+	
 }
 
 string StrategySelector::probabilistic() {
 	using namespace tinyxml2;
 
-	string defaultOpening = MegaBot::SKYNET;	//in case something go wrong
+	string defaultBehavior = MegaBot::SKYNET;	//in case something go wrong
 
-	//parses the metagame file
-	map<string, float> openings;
+	//parses strategy file
+	map<string, float> behaviors;
 	
 	tinyxml2::XMLDocument doc;
-	int result = doc.LoadFile(Configuration::getInstance()->metaGamefile.c_str());
+	int result = doc.LoadFile(Configuration::getInstance()->strategyFile.c_str());
 
 	if (result != XML_NO_ERROR) {
 		Broodwar->printf(
-			"An error has occurred while parsing the metagame file '%s'. Error: '%s'", 
-			Configuration::getInstance()->metaGamefile.c_str(), 
+			"An error has occurred while parsing strategy file '%s'. Error: '%s'", 
+			Configuration::getInstance()->strategyFile.c_str(), 
 			doc.ErrorName()
 		);
-		return defaultOpening;	//returns a default strategy
+		return defaultBehavior;	//returns a default strategy
 	}
 
-	XMLElement* metaGameEntry = doc.FirstChildElement("metagame")->FirstChildElement("opening");
-	for ( ; metaGameEntry;  metaGameEntry = metaGameEntry->NextSiblingElement()) {
-		string name = string(metaGameEntry->Attribute("name"));
+	XMLElement* behaviorEntry = doc.FirstChildElement("strategy")->FirstChildElement("behavior");
+	for ( ; behaviorEntry;  behaviorEntry = behaviorEntry->NextSiblingElement()) {
+		string name = string(behaviorEntry->Attribute("name"));
 		float probability = 0;
-		metaGameEntry->QueryFloatAttribute("probability", &probability);
+		behaviorEntry->QueryFloatAttribute("probability", &probability);
 
-		openings.insert(make_pair(name, probability));
+		behaviors.insert(make_pair(name, probability));
 	}
 
 
 	//openings loaded, now will select one
 	float sum = 0.f; //probabilities should add to 1.0, but this is to guard against abnormal cases
-	map<string, float>::iterator opening;
-	for (opening = openings.begin(); opening != openings.end(); ++opening) {
-		sum += opening->second;
+	map<string, float>::iterator behv;
+	for (behv = behaviors.begin(); behv != behaviors.end(); ++behv) {
+		sum += behv->second;
 	}
 	
 	/*
 	uncomment when c++11 is available
-	for (auto opening : openings) {
-		sum += opening.second;
+	for (auto behv : behaviors) {
+		sum += behv.second;
 	}*/
 
 	//generates a pseudo-random number between 0 and sum
@@ -159,69 +111,26 @@ string StrategySelector::probabilistic() {
 
 	//traverses the list until we find an opening that matches the random number
 	float acc = 0;
-	for (opening = openings.begin(); opening != openings.end(); ++opening) {//for (auto opening : openings) {
-		if (random < acc + opening->second) {	//found!
+	for (behv = behaviors.begin(); behv != behaviors.end(); ++behv) {//for (auto opening : behaviors) {
+		if (random < acc + behv->second) {	//found!
 			Broodwar->printf(
-				"MetaBot chose: %s (random: %.3f, acc: %.3f, sum: %.3f)", 
-				opening->first.c_str(), random, acc, sum
+				"MetaBot chose: %s (random: %.3f, target: %.3f, acc: %.3f, sum: %.3f)", 
+				behv->first.c_str(), random, (acc + behv->second),  acc, sum
 			);
-			return opening->first;
+			return behv->first;
 		}
-		acc += opening->second;
+		acc += behv->second;
 	}
 	Broodwar->printf(
-		"ERROR: opening was not randomly selected (random: %.3f, acc: %.3f, sum: %.3f). Defaulting to: %s.",
-		random, acc, sum, defaultOpening
+		"ERROR: behavior was not randomly selected (random: %.3f, acc: %.3f, sum: %.3f). Defaulting to: %s.",
+		random, acc, sum, defaultBehavior
 	);
-	return defaultOpening;	//something went wrong, opening was not randomly selected =/
+	return defaultBehavior;	//something went wrong, opening was not randomly selected =/
 }
 
 string StrategySelector::getStrategy() {
-	/*int tot = 0;
-	for (int i = 0; i < (int)stats.size(); i++)
-	{
-		if (stats.at(i).matches()) tot++;
-	}
-	
-	if (tot > 0)
-	{
-		//Select a strategy among the tested
-		//ones.
-		selectStrategy();
-	}
-	else
-	{
-		//No strategy has been tested for this combo.
-		//Return one of the available strategies.
-		if (Broodwar->self()->getRace().getID() == Races::Terran.getID()) currentStrategyId = "Marine Rush";	//Previous was TerranMain
-		if (Broodwar->self()->getRace().getID() == Races::Protoss.getID()) currentStrategyId = "ProtossMain";
-		if (Broodwar->self()->getRace().getID() == Races::Zerg.getID()) currentStrategyId = "LurkerRush";
-	}*/
-
-	//begin: new code - only select strategy, no counting from statistics
 	selectStrategy();
-	//end: new code - only select strategy, no counting from statistics
-
-	//Get Commander for strategy -- TODO: return a single "commander" that loads a pre-defined build-order
-	
-	//Step 1 - check if strategyID ends with .json to use text parser
-	/*if (currentStrategyId.substr(max(5, int(currentStrategyId.size())) - 5) == string(".json")) {
-		return new TextParserStrategy();
-	}
-
-	//Step 2 - check if strategyID matches a pre-programmed strategy
-	if (currentStrategyId == ProtossMain::getStrategyId()) return new ProtossMain();
-	if (currentStrategyId == TerranMain::getStrategyId()) return new TerranMain();
-	if (currentStrategyId == OneRaxFE::getStrategyId()) return new OneRaxFE();
-	if (currentStrategyId == ThreeRaxFactory::getStrategyId()) return new ThreeRaxFactory();
-	if (currentStrategyId == QuickFactoryMines::getStrategyId()) return new QuickFactoryMines();
-	if (currentStrategyId == QuickBunkerFactory::getStrategyId()) return new QuickBunkerFactory();
-	if (currentStrategyId == MarineRush::getStrategyId()) return new MarineRush();
-	if (currentStrategyId == TextParserStrategy::getStrategyId()) return new TextParserStrategy();
-	if (currentStrategyId == LurkerRush::getStrategyId()) return new LurkerRush();
-	if (currentStrategyId == ZergMain::getStrategyId()) return new ZergMain();
-	*/
-	return NULL;
+	return currentStrategyId;
 }
 
 void StrategySelector::printInfo() {

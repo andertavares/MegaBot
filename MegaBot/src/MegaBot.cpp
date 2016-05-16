@@ -8,7 +8,7 @@
 #include "Xelnaga.h"
 #include "Skynet.h"
 #include "NUSBotModule.h"
-
+#include "strategy/StrategySelector.h"
 #include "data/Configuration.h"
 #include "data/MatchData.h"
 
@@ -45,11 +45,11 @@ MegaBot::MegaBot(){
 }
 
 void MegaBot::onStart() {
-  // Uncomment to enable complete map information
-  //Broodwar->enableFlag(Flag::CompleteMapInformation);
+	// Uncomment to enable complete map information
+	//Broodwar->enableFlag(Flag::CompleteMapInformation);
 	MatchData::getInstance()->registerMatchBegin();
 
-	myBehaviorName = Configuration::getInstance()->strategyID;
+	myBehaviorName = StrategySelector::getInstance()->getStrategy();//Configuration::getInstance()->strategyID;
 	currentBehavior = behaviors[myBehaviorName];
 	
 	currentBehavior->onStart();
@@ -173,7 +173,7 @@ void MegaBot::onReceiveText(BWAPI::Player* player, std::string text) {
 	currentBehavior->onReceiveText(player, text);
 	
 	//Broodwar->printf(">>>>> substr: %s", text.substr(0, 8).c_str());
-	if (text.substr(0, 8) == "Behavior") {	//receives behavior communication message
+	if (text.substr(0, 9) == "Behavior:") {	//receives behavior communication message
 		//splits text in 2 parts and gets 2nd part: this is enemy's name
 		istringstream iss(text);
 		vector<string> tokens;
@@ -181,7 +181,7 @@ void MegaBot::onReceiveText(BWAPI::Player* player, std::string text) {
 			istream_iterator<string>(iss),
 			istream_iterator<string>(),
 			back_inserter(tokens)
-			);
+		);
 		//the 'magic' above is from: http://stackoverflow.com/a/237280/1251716
 
 		enemyBehaviorName = tokens[1];

@@ -14,7 +14,7 @@ const string Configuration::CONFIG_FILE = Configuration::INPUT_DIR + "megabot_co
 //xml field names
 const string Configuration::FIELD_STRATEGY_ID = "strategy";
 const string Configuration::FIELD_MATCH_DATA_FILE = "match-output";
-const string Configuration::FIELD_METAGAME_FILE = "metagame-file";
+const string Configuration::FIELD_STRATEGY_FILE = "strategy-file";
 const string Configuration::FIELD_SPEED = "speed";
 const string Configuration::FIELD_ENABLE_GUI = "gui";
 
@@ -23,7 +23,7 @@ Configuration* Configuration::instance = NULL;
 Configuration::Configuration() {
 	//sets up default values
 	matchDataFile = OUTPUT_DIR + "output.xml";
-	metaGamefile = INPUT_DIR + "metagame.xml";
+	strategyFile = INPUT_DIR + "megabot_strategy.xml";
 	strategyID = MegaBot::SKYNET;
 	speed = 0;
 	enableGUI = true;
@@ -75,10 +75,10 @@ void Configuration::parseConfig() {
 		guiElement->QueryBoolAttribute("value", &enableGUI);
 	}
 
-	//metagame file
-	XMLElement* metaGameElement = doc.FirstChildElement("config")->FirstChildElement(FIELD_METAGAME_FILE.c_str());
-	if (metaGameElement) {
-		metaGamefile = string(metaGameElement->Attribute("value"));
+	//strategy file
+	XMLElement* strategyFileElement = doc.FirstChildElement("config")->FirstChildElement(FIELD_STRATEGY_FILE.c_str());
+	if (strategyFileElement) {
+		strategyFile = Configuration::INPUT_DIR + string(strategyFileElement->Attribute("value"));
 	}
 
 

@@ -1,7 +1,8 @@
 <!-- put this file under <starcraft>/bwapi-data/AI or <starcraft>/bwapi-data/read if in tournament -->
 <config>
-	<strategy value="NUSBot" />
+	<strategy value="probabilistic" />
+	<strategy-file value="megabot_protoss-nash.xml" />
 	<match-output value="output.xml" />
-	<speed value="20" />
+	<speed value="0" />
 	<gui value="true" />
 </config>

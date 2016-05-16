@@ -18,8 +18,8 @@ public:
 	//path to write the file with match details
 	string matchDataFile;
 
-	//path to xml file with metagame definition
-	string metaGamefile;
+	//path to xml file with strategy definition
+	string strategyFile;
 
 	//initial match speed
 	int speed;
@@ -53,7 +53,7 @@ public:
 	static const string FIELD_MATCH_DATA_FILE;
 
 	//xml field that contains the match data file
-	static const string FIELD_METAGAME_FILE;
+	static const string FIELD_STRATEGY_FILE;
 
 	//xml field that contains the initial match speed
 	static const string FIELD_SPEED;

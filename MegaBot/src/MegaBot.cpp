@@ -37,11 +37,11 @@ MegaBot::MegaBot(){
 
 	Configuration::getInstance()->parseConfig();
 
-	enemyBehaviorName = "Unknown";
+	MatchData::getInstance()->registerEnemyBehaviorName("Unknown");
 	//for (auto behv : behaviors) {
 	//	behaviorNames.insert(make_pair(behv.second, behv.first));
 	//}
-
+	enemyBehaviorName = "Unknown";
 }
 
 void MegaBot::onStart() {
@@ -50,18 +50,21 @@ void MegaBot::onStart() {
 	MatchData::getInstance()->registerMatchBegin();
 
 	myBehaviorName = StrategySelector::getInstance()->getStrategy();//Configuration::getInstance()->strategyID;
-	currentBehavior = behaviors[myBehaviorName];
 	
+	Broodwar->sendText("Behavior: %s", myBehaviorName.c_str());		//sends behavior communication message
+
+	MatchData::getInstance()->registerMyBehaviorName(myBehaviorName);
+	currentBehavior = behaviors[myBehaviorName];
 	currentBehavior->onStart();
 
-	//sends behavior communication message
-	Broodwar->sendText("Behavior: %s", myBehaviorName.c_str());
+	
+	
 
   
-	//overrides speed and gui set by currentBehavior
+	//overrides speed and GUI set by currentBehavior
 	int speed = Configuration::getInstance()->speed;
 	Broodwar->printf("Setting speed to %d.", speed);
-	Broodwar->setLocalSpeed(speed);
+	Broodwar->setLocalSpeed(20);
 
 	bool gui = Configuration::getInstance()->enableGUI;
 	Broodwar->printf("Setting GUI to %s.", gui ? "enabled" : "disabled");
@@ -92,6 +95,17 @@ void MegaBot::onFrame() {
 	}
 
 	currentBehavior->onFrame();
+
+	//temporary: sends behavior every 20 seconds
+	if((Broodwar->elapsedTime() % 20) == 0){
+		Broodwar->sendText("Behavior: %s", myBehaviorName.c_str());
+	}
+
+	//draws some text
+	Broodwar->drawTextScreen(5, 5,"\x0F MegaBot v0.1.0");
+	Broodwar->drawTextScreen(5, 15,"\x0F My behavior: %s", myBehaviorName.c_str());
+	Broodwar->drawTextScreen(5, 25,"\x0F Enemy behavior: %s", enemyBehaviorName.c_str());
+
 	/*
 	if (show_visibility_data)
 		drawVisibilityData();
@@ -170,9 +184,10 @@ void MegaBot::onSendText(std::string text) {
 }
 
 void MegaBot::onReceiveText(BWAPI::Player* player, std::string text) {
+	Broodwar->printf("on receive text");
 	currentBehavior->onReceiveText(player, text);
 	
-	//Broodwar->printf(">>>>> substr: %s", text.substr(0, 8).c_str());
+	Broodwar->printf(">>>>> substr: %s", text.substr(0, 9).c_str());
 	if (text.substr(0, 9) == "Behavior:") {	//receives behavior communication message
 		//splits text in 2 parts and gets 2nd part: this is enemy's name
 		istringstream iss(text);
@@ -187,6 +202,7 @@ void MegaBot::onReceiveText(BWAPI::Player* player, std::string text) {
 		enemyBehaviorName = tokens[1];
 
 		Broodwar->printf(">>>>> Enemy is: %s <<<<<", enemyBehaviorName);
+		MatchData::getInstance()->registerEnemyBehaviorName(enemyBehaviorName);
 	}
 	else {
 		Broodwar->printf("%s said '%s'", player->getName().c_str(), text.c_str());
@@ -209,75 +225,30 @@ void MegaBot::onNukeDetect(BWAPI::Position target) {
 
 void MegaBot::onUnitDiscover(BWAPI::Unit* unit) {
 	currentBehavior->onUnitDiscover(unit);
-
-  //if (!Broodwar->isReplay() && Broodwar->getFrameCount()>1)
-  //  Broodwar->printf("A %s [%x] has been discovered at (%d,%d)",unit->getType().getName().c_str(),unit,unit->getPosition().x(),unit->getPosition().y());
 }
 
 void MegaBot::onUnitEvade(BWAPI::Unit* unit) {
 	currentBehavior->onUnitEvade(unit);
-
-	//if (!Broodwar->isReplay() && Broodwar->getFrameCount()>1)
-	//	Broodwar->printf("A %s [%x] was last accessible at (%d,%d)",unit->getType().getName().c_str(),unit,unit->getPosition().x(),unit->getPosition().y());
 }
 
 void MegaBot::onUnitShow(BWAPI::Unit* unit) {
 	currentBehavior->onUnitShow(unit);
-	//if (!Broodwar->isReplay() && Broodwar->getFrameCount()>1)
-	//	Broodwar->printf("A %s [%x] has been spotted at (%d,%d)",unit->getType().getName().c_str(),unit,unit->getPosition().x(),unit->getPosition().y());
 }
 
 void MegaBot::onUnitHide(BWAPI::Unit* unit) {
 	currentBehavior->onUnitHide(unit);
-	//if (!Broodwar->isReplay() && Broodwar->getFrameCount()>1)
-		//Broodwar->printf("A %s [%x] was last seen at (%d,%d)",unit->getType().getName().c_str(),unit,unit->getPosition().x(),unit->getPosition().y());
 }
 
 void MegaBot::onUnitCreate(BWAPI::Unit* unit){
 	currentBehavior->onUnitCreate(unit);
-
-  /*if (Broodwar->getFrameCount()>1)
-  {
-    if (!Broodwar->isReplay())
-      Broodwar->printf("A %s [%x] has been created at (%d,%d)",unit->getType().getName().c_str(),unit,unit->getPosition().x(),unit->getPosition().y());
-    else
-    {
-      /*if we are in a replay, then we will print out the build order
-      (just of the buildings, not the units).*
-      if (unit->getType().isBuilding() && unit->getPlayer()->isNeutral()==false)
-      {
-        int seconds=Broodwar->getFrameCount()/24;
-        int minutes=seconds/60;
-        seconds%=60;
-        Broodwar->printf("%.2d:%.2d: %s creates a %s",minutes,seconds,unit->getPlayer()->getName().c_str(),unit->getType().getName().c_str());
-      }
-    }
-  }*/
 }
 
 void MegaBot::onUnitDestroy(BWAPI::Unit* unit) {
 	currentBehavior->onUnitDestroy(unit);
-  //if (!Broodwar->isReplay() && Broodwar->getFrameCount()>1)
-  //  Broodwar->printf("A %s [%x] has been destroyed at (%d,%d)",unit->getType().getName().c_str(),unit,unit->getPosition().x(),unit->getPosition().y());
 }
 
 void MegaBot::onUnitMorph(BWAPI::Unit* unit){
 	currentBehavior->onUnitMorph(unit);
-
-  /*if (!Broodwar->isReplay())
-    Broodwar->printf("A %s [%x] has been morphed at (%d,%d)",unit->getType().getName().c_str(),unit,unit->getPosition().x(),unit->getPosition().y());
-  else
-  {
-    /*if we are in a replay, then we will print out the build order
-    (just of the buildings, not the units).*
-    if (unit->getType().isBuilding() && unit->getPlayer()->isNeutral()==false)
-    {
-      int seconds=Broodwar->getFrameCount()/24;
-      int minutes=seconds/60;
-      seconds%=60;
-      Broodwar->printf("%.2d:%.2d: %s morphs a %s",minutes,seconds,unit->getPlayer()->getName().c_str(),unit->getType().getName().c_str());
-    }
-  }*/
 }
 
 void MegaBot::onUnitRenegade(BWAPI::Unit* unit) {
@@ -291,9 +262,14 @@ void MegaBot::onSaveGame(std::string gameName) {
 
 void MegaBot::onUnitComplete(BWAPI::Unit *unit) {
 	currentBehavior->onUnitComplete(unit);
+}
 
-	//if (!Broodwar->isReplay() && Broodwar->getFrameCount()>1)
-	//	Broodwar->printf("A %s [%x] has been completed at (%d,%d)",unit->getType().getName().c_str(),unit,unit->getPosition().x(),unit->getPosition().y());
+string MegaBot::myBehavior(){
+	return myBehaviorName;
+}
+
+string MegaBot::enemyBehavior(){
+	return enemyBehaviorName;
 }
 
 DWORD WINAPI AnalyzeThread() {

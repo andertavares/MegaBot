@@ -54,6 +54,13 @@ void MatchData::registerMatchFinish(int result) {
 	endTime = currentDateTime();
 }
 
+void MatchData::registerMyBehaviorName(string name){
+	myBehaviorName = name;
+}
+
+void MatchData::registerEnemyBehaviorName(string name){
+	enemyBehaviorName = name;
+}
 
 void MatchData::writeDetailedResult() {
 	string resFile = "output.res.xml";
@@ -69,6 +76,7 @@ void MatchData::writeDetailedResult() {
 		"\t<map value='" << Broodwar->mapFileName() << "'/>" << endl <<
 		endl << "\t<player>" << endl <<
 		"\t\t<race value='" << Broodwar->self()->getRace().getName() << "'/>" << endl <<
+		"\t\t<behavior value='" << myBehaviorName << "'/>" << endl <<
 		"\t\t<unitScore value='" << myUnitScore << "'/>" << endl <<
 		"\t\t<killScore value='" << myKillScore << "'/>" << endl <<
 		"\t\t<buildingScore value='" << myBuildingScore << "'/>" << endl <<
@@ -79,6 +87,7 @@ void MatchData::writeDetailedResult() {
 		"\t</player>" << endl <<
 		endl << "\t<enemy>" << endl <<
 		"\t\t<race value='" << Broodwar->enemy()->getRace().getName() << "'/>" << endl <<
+		"\t\t<behavior value='" << enemyBehaviorName << "'/>" << endl <<
 		"\t\t<unitScore value='" << enemyUnitScore << "'/>" << endl <<
 		"\t\t<unitScore value='" << enemyUnitScore << "'/>" << endl <<
 		"\t\t<killScore value='" << enemyKillScore << "'/>" << endl <<
@@ -130,8 +139,10 @@ void MatchData::writeSummary() {
 
 	stringstream ss;
 	ss << Broodwar->self()->getRace().getName() << ";";
+	ss << myBehaviorName << ";";
 	//ss << StrategySelector::getInstance()->getStrategyID() << ";";
 	ss << Broodwar->enemy()->getRace().getName() << ";";
+	ss << enemyBehaviorName << ";";
 	ss << Broodwar->mapFileName() << ";";
 	if (gameResult == WIN) ss << "Won";
 	if (gameResult == LOSS) ss << "Lost";

@@ -19,6 +19,9 @@
     <ClCompile Include="src\strategy\StrategySelector.cpp">
       <Filter>strategy</Filter>
     </ClCompile>
+    <ClCompile Include="src\information\MegaBotInfo.cpp">
+      <Filter>information</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="main">
@@ -32,6 +35,9 @@
     </Filter>
     <Filter Include="strategy">
       <UniqueIdentifier>{6e6fd1d4-7e84-4db7-b459-ced06372e597}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="information">
+      <UniqueIdentifier>{27aa1745-12e5-4d43-9467-02505ff4bb30}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -49,6 +55,9 @@
     </ClInclude>
     <ClInclude Include="src\strategy\StrategySelector.h">
       <Filter>strategy</Filter>
+    </ClInclude>
+    <ClInclude Include="src\information\MegaBotInfo.h">
+      <Filter>information</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

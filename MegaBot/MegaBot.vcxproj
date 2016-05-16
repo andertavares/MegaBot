@@ -83,6 +83,7 @@
       <PrecompiledHeader />
       <WarningLevel>Level3</WarningLevel>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
     </ClCompile>
     <Link>
       <AdditionalDependencies>$(BWAPI_DIR)/lib/BWAPI.lib;$(BWAPI_DIR)/lib/BWTA.lib;$(BWAPI_DIR)/lib/tinyxml.lib;$(BWAPI_DIR)/lib/CGAL-vc90-mt.lib;$(BWAPI_DIR)/lib/libboost_thread-vc90-mt-1_40.lib;$(BWAPI_DIR)/lib/gmp-vc90-mt.lib;$(BWAPI_DIR)/lib/mpfr-vc90-mt.lib;../NUSBot/NUSBot/src/StarcraftBuildOrderSearch/VisualStudio/$(Configuration)/StarCraftData.obj;%(AdditionalDependencies)</AdditionalDependencies>
@@ -98,6 +99,7 @@
     <ClCompile Include="src\data\Configuration.cpp" />
     <ClCompile Include="src\data\MatchData.cpp" />
     <ClCompile Include="src\Dll.cpp" />
+    <ClCompile Include="src\information\MegaBotInfo.cpp" />
     <ClCompile Include="src\MegaBot.cpp" />
     <ClCompile Include="src\strategy\StrategySelector.cpp" />
     <ClCompile Include="src\utils\tinyxml2.cpp" />
@@ -105,6 +107,7 @@
   <ItemGroup>
     <ClInclude Include="src\data\Configuration.h" />
     <ClInclude Include="src\data\MatchData.h" />
+    <ClInclude Include="src\information\MegaBotInfo.h" />
     <ClInclude Include="src\MegaBot.h" />
     <ClInclude Include="src\strategy\StrategySelector.h" />
     <ClInclude Include="src\utils\tinyxml2.h" />

@@ -5,11 +5,15 @@
 
 using namespace std;
 
-
-
 class MatchData {
 	//singleton instance of this class
 	static MatchData* instance;
+
+	//stores the behavior used in this match
+	string myBehaviorName;
+
+	//stores enemy behavior used in this match
+	string enemyBehaviorName;
 	
 	//start and finishing timestamps, stored as strings
 	string startTime, endTime; 
@@ -47,6 +51,12 @@ public:
 	 * Registers match result, end time and score data
 	 */
 	void registerMatchFinish(int result);
+
+	// registers my behavior used in this match
+	void registerMyBehaviorName(string name);
+
+	// registers enemy behavior used in this match
+	void registerEnemyBehaviorName(string name);
 
 	/* Writes match result in a file */
 	void writeDetailedResult();

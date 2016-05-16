@@ -55,7 +55,16 @@ public:
 	virtual void onUnitRenegade(BWAPI::Unit* unit);
 	virtual void onSaveGame(std::string gameName);
 	virtual void onUnitComplete(BWAPI::Unit *unit);
-	void drawStats(); //not part of BWAPI::AIModule
+
+	//below: not part of BWAPI::AIModule
+
+	//returns the name of the behavior i'm using
+	string myBehavior();
+
+	//returns the name of the behavior the enemy is using
+	string enemyBehavior();
+
+	void drawStats(); 
 	void drawBullets();
 	void drawVisibilityData();
 	void drawTerrainData();

@@ -9,7 +9,7 @@ const string Configuration::OUTPUT_DIR = "bwapi-data/AI/";
 //END: change these if you need to read/write in different folders
 
 //Unless you're programming MegaBot, don't change consts below
-const string Configuration::CONFIG_FILE = Configuration::INPUT_DIR + "config.xml";
+const string Configuration::CONFIG_FILE = Configuration::INPUT_DIR + "megabot_config.xml";
 
 //xml field names
 const string Configuration::FIELD_STRATEGY_ID = "strategy";
@@ -24,7 +24,7 @@ Configuration::Configuration() {
 	//sets up default values
 	matchDataFile = OUTPUT_DIR + "output.xml";
 	metaGamefile = INPUT_DIR + "metagame.xml";
-	strategyID = MegaBot::XELNAGA;
+	strategyID = MegaBot::SKYNET;
 	speed = 0;
 	enableGUI = true;
 }

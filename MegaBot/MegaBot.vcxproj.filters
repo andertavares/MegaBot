@@ -16,6 +16,9 @@
     <ClCompile Include="src\utils\tinyxml2.cpp">
       <Filter>utils</Filter>
     </ClCompile>
+    <ClCompile Include="src\strategy\StrategySelector.cpp">
+      <Filter>strategy</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="main">
@@ -26,6 +29,9 @@
     </Filter>
     <Filter Include="utils">
       <UniqueIdentifier>{e4bf65a2-bf18-4ab5-b7fd-d340fd55e14f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="strategy">
+      <UniqueIdentifier>{6e6fd1d4-7e84-4db7-b459-ced06372e597}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -40,6 +46,9 @@
     </ClInclude>
     <ClInclude Include="src\utils\tinyxml2.h">
       <Filter>utils</Filter>
+    </ClInclude>
+    <ClInclude Include="src\strategy\StrategySelector.h">
+      <Filter>strategy</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

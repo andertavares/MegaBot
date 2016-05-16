@@ -1,5 +1,7 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Express 2012 for Windows Desktop
+# Visual Studio Express 2013 for Windows Desktop
+VisualStudioVersion = 12.0.31101.0
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "MegaBot", "MegaBot.vcxproj", "{2E63AE74-758A-4607-9DE4-D28E814A6E13}"
 	ProjectSection(ProjectDependencies) = postProject
 		{6C685B5E-324A-4F3C-A53C-2A800E1C7EB9} = {6C685B5E-324A-4F3C-A53C-2A800E1C7EB9}
@@ -11,6 +13,10 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Skynet-lib", "..\Skynet\Skynet\Skynet-lib.vcxproj", "{1E54F46B-2C51-4F26-ABEC-F8F8D6CD0657}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "NUSBot-lib", "..\NUSBot\NUSBot\src\NUSBot\VisualStudio\NUSBot-lib.vcxproj", "{6C685B5E-324A-4F3C-A53C-2A800E1C7EB9}"
+	ProjectSection(ProjectDependencies) = postProject
+		{66236439-5968-4756-B2E7-8A29BEA99078} = {66236439-5968-4756-B2E7-8A29BEA99078}
+		{9F8709E3-AC4F-45F2-8105-4A99D8E2A127} = {9F8709E3-AC4F-45F2-8105-4A99D8E2A127}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SparCraft", "..\NUSBot\NUSBot\src\SparCraft\VisualStudio\SparCraft.vcxproj", "{66236439-5968-4756-B2E7-8A29BEA99078}"
 EndProject

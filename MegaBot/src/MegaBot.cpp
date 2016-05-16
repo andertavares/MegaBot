@@ -1,3 +1,9 @@
+#include <iostream>
+#include <string>
+#include <sstream>
+#include <algorithm>
+#include <iterator>
+
 #include "MegaBot.h"
 #include "Xelnaga.h"
 #include "Skynet.h"
@@ -29,6 +35,9 @@ MegaBot::MegaBot(){
 	behaviorNames.insert(make_pair(behaviors[XELNAGA], XELNAGA));
 	behaviorNames.insert(make_pair(behaviors[NUSBot], NUSBot));
 
+	Configuration::getInstance()->parseConfig();
+
+	enemyBehaviorName = "Unknown";
 	//for (auto behv : behaviors) {
 	//	behaviorNames.insert(make_pair(behv.second, behv.first));
 	//}
@@ -38,20 +47,22 @@ MegaBot::MegaBot(){
 void MegaBot::onStart() {
   // Uncomment to enable complete map information
   //Broodwar->enableFlag(Flag::CompleteMapInformation);
+	MatchData::getInstance()->registerMatchBegin();
 
 	myBehaviorName = Configuration::getInstance()->strategyID;
 	currentBehavior = behaviors[myBehaviorName];
-
-	MatchData::getInstance()->registerMatchBegin();
 	
 	currentBehavior->onStart();
+
+	//sends behavior communication message
+	Broodwar->sendText("Behavior: %s", myBehaviorName.c_str());
+
   
 	//overrides speed and gui set by currentBehavior
 	int speed = Configuration::getInstance()->speed;
 	Broodwar->printf("Setting speed to %d.", speed);
 	Broodwar->setLocalSpeed(speed);
 
-	//set gui
 	bool gui = Configuration::getInstance()->enableGUI;
 	Broodwar->printf("Setting GUI to %s.", gui ? "enabled" : "disabled");
 	Broodwar->setGUI(gui);
@@ -136,17 +147,21 @@ void MegaBot::onSendText(std::string text) {
 
 	if (text=="/show bullets") {
 		show_bullets = !show_bullets;
-	} else if (text=="/show players") {
+	} 
+	else if (text=="/show players") {
 		showPlayers();
-	} else if (text=="/show forces")  {
+	} 
+	else if (text=="/show forces")  {
 		showForces();
-	} else if (text=="/show visibility") {
-		show_visibility_data=!show_visibility_data;
-	} else if (text=="/analyze") {
-	if (analyzed == false) {
-		Broodwar->printf("Analyzing map... this may take a minute");
-		CreateThread(NULL, 0, (LPTHREAD_START_ROUTINE)AnalyzeThread, NULL, 0, NULL);
 	}
+	else if (text=="/show visibility") {
+		show_visibility_data=!show_visibility_data;
+	}
+	else if (text=="/analyze") {
+		if (analyzed == false) {
+			Broodwar->printf("Analyzing map... this may take a minute");
+			CreateThread(NULL, 0, (LPTHREAD_START_ROUTINE)AnalyzeThread, NULL, 0, NULL);
+		}
 	} 
 	else{
 		Broodwar->printf("You typed '%s'!",text.c_str());
@@ -156,7 +171,26 @@ void MegaBot::onSendText(std::string text) {
 
 void MegaBot::onReceiveText(BWAPI::Player* player, std::string text) {
 	currentBehavior->onReceiveText(player, text);
-	Broodwar->printf("%s said '%s'", player->getName().c_str(), text.c_str());
+	
+	//Broodwar->printf(">>>>> substr: %s", text.substr(0, 8).c_str());
+	if (text.substr(0, 8) == "Behavior") {	//receives behavior communication message
+		//splits text in 2 parts and gets 2nd part: this is enemy's name
+		istringstream iss(text);
+		vector<string> tokens;
+		copy(
+			istream_iterator<string>(iss),
+			istream_iterator<string>(),
+			back_inserter(tokens)
+			);
+		//the 'magic' above is from: http://stackoverflow.com/a/237280/1251716
+
+		enemyBehaviorName = tokens[1];
+
+		Broodwar->printf(">>>>> Enemy is: %s <<<<<", enemyBehaviorName);
+	}
+	else {
+		Broodwar->printf("%s said '%s'", player->getName().c_str(), text.c_str());
+	}
 }
 
 void MegaBot::onPlayerLeft(BWAPI::Player* player) {

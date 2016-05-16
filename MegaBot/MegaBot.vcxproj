@@ -99,7 +99,6 @@
     <ClCompile Include="src\data\Configuration.cpp" />
     <ClCompile Include="src\data\MatchData.cpp" />
     <ClCompile Include="src\Dll.cpp" />
-    <ClCompile Include="src\information\MegaBotInfo.cpp" />
     <ClCompile Include="src\MegaBot.cpp" />
     <ClCompile Include="src\strategy\StrategySelector.cpp" />
     <ClCompile Include="src\utils\tinyxml2.cpp" />
@@ -107,7 +106,6 @@
   <ItemGroup>
     <ClInclude Include="src\data\Configuration.h" />
     <ClInclude Include="src\data\MatchData.h" />
-    <ClInclude Include="src\information\MegaBotInfo.h" />
     <ClInclude Include="src\MegaBot.h" />
     <ClInclude Include="src\strategy\StrategySelector.h" />
     <ClInclude Include="src\utils\tinyxml2.h" />

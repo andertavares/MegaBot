@@ -1,0 +1,330 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav</Extensions>
+    </Filter>
+    <Filter Include="src">
+      <UniqueIdentifier>{e3b4c9b2-3785-447f-83f0-30a928f2c231}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\BaseManager">
+      <UniqueIdentifier>{a18dd827-daad-4843-b5aa-781587843a1a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\BuildingPlacer">
+      <UniqueIdentifier>{75fdf549-ef3b-4206-ba31-5ba4b2ae46e4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\BuildManager">
+      <UniqueIdentifier>{421bd02b-9ad6-4742-8af3-62f04d39e2f3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\BuildOrderManager">
+      <UniqueIdentifier>{5a41784c-c875-4071-bdd3-60308a446257}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\BWTA">
+      <UniqueIdentifier>{36547b72-2705-457a-a785-eaa0b481467d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\ConstructionManager">
+      <UniqueIdentifier>{625f5b2d-5b1a-4080-8abf-ed0fc0f2ef1a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\DefenseManager">
+      <UniqueIdentifier>{cddb3d88-1d48-4d8f-a96e-aa786b9ce283}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\InformationManager">
+      <UniqueIdentifier>{a4fc2c78-7832-47bb-be2b-ad6502db6bbc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\MorphManager">
+      <UniqueIdentifier>{bfcbd735-58fe-45d0-b456-18a802ccecae}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\WorkerManager">
+      <UniqueIdentifier>{7b7e6a2e-f8ad-4529-8d6f-0a55e1ad5d93}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\ProductionManager">
+      <UniqueIdentifier>{0b4b7988-3eda-4bd4-89d3-f392adbad6e8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\ScoutManager">
+      <UniqueIdentifier>{c76ea0e5-0df0-4400-9a52-9b40c3318d5b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\SupplyManager">
+      <UniqueIdentifier>{bcf8c602-142f-4c38-80c4-2d78410c7eeb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\TechManager">
+      <UniqueIdentifier>{c457337f-f418-4bd8-a0a2-83ca515b7f03}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\UnitGroupManager">
+      <UniqueIdentifier>{5ba8d4e2-79b3-47e2-95e7-4ded7f8df1db}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\UpgradeManager">
+      <UniqueIdentifier>{88762c21-e614-4f3d-96b0-7860070df485}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\UnderAttackManager">
+      <UniqueIdentifier>{ab94f0c5-f57d-42c8-a0a9-6547347f775b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\SpendManager">
+      <UniqueIdentifier>{cdad9a64-491d-44de-bfe7-81cee534d5b0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\ArmyManager">
+      <UniqueIdentifier>{19d0fde2-e0f9-4a31-8d81-a34fac4d6d72}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\SpyManager">
+      <UniqueIdentifier>{3fee85d4-3107-4973-aaef-d2385f2560ac}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\MoodManager">
+      <UniqueIdentifier>{49f555d9-ef63-40de-8037-31b2c6e5179d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\BorderManager">
+      <UniqueIdentifier>{aeb36344-bc18-4087-b92f-2cb116cd8974}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Arbitrator">
+      <UniqueIdentifier>{30417fe1-01e4-4bbc-ab11-71e692ab5214}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\src\Assignment.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Dll.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\EnhancedUI.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Protoss_FD.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Protoss_FZ.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Protoss_Multi.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Protoss_ZR.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Random.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Terran_ZR_Drop.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Util.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Xelnaga.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Base.cpp">
+      <Filter>src\BaseManager</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\BaseManager.cpp">
+      <Filter>src\BaseManager</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\BuildingPlacer.cpp">
+      <Filter>src\BuildingPlacer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\BuildManager.cpp">
+      <Filter>src\BuildManager</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\BuildOrderManager.cpp">
+      <Filter>src\BuildOrderManager</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\MetaUnit.cpp">
+      <Filter>src\BuildOrderManager</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\UnitItem.cpp">
+      <Filter>src\BuildOrderManager</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\ConstructionManager.cpp">
+      <Filter>src\ConstructionManager</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\DefenseManager.cpp">
+      <Filter>src\DefenseManager</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\InformationManager.cpp">
+      <Filter>src\InformationManager</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\MorphManager.cpp">
+      <Filter>src\MorphManager</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\WorkerManager.cpp">
+      <Filter>src\WorkerManager</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\ProductionManager.cpp">
+      <Filter>src\ProductionManager</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\ScoutManager.cpp">
+      <Filter>src\ScoutManager</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\SupplyManager.cpp">
+      <Filter>src\SupplyManager</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\TechManager.cpp">
+      <Filter>src\TechManager</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\UnitGroup.cpp">
+      <Filter>src\UnitGroupManager</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\UnitGroupManager.cpp">
+      <Filter>src\UnitGroupManager</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\UpgradeManager.cpp">
+      <Filter>src\UpgradeManager</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\UnderAttackManager.cpp">
+      <Filter>src\UnderAttackManager</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\SpendManager.cpp">
+      <Filter>src\SpendManager</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\ArmyManager.cpp">
+      <Filter>src\ArmyManager</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\SpyManager.cpp">
+      <Filter>src\SpyManager</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\MoodManager.cpp">
+      <Filter>src\MoodManager</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\BorderManager.cpp">
+      <Filter>src\BorderManager</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\include\EnhancedUI.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\Protoss_FD.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\Protoss_FZ.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\Protoss_Multi.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\Protoss_ZR.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\Random.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\RectangleArray.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\Terran_ZR_Drop.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Util.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Xelnaga.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\BaseManager\Base.h">
+      <Filter>src\BaseManager</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\BaseManager\BaseManager.h">
+      <Filter>src\BaseManager</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\BuildingPlacer.h">
+      <Filter>src\BuildingPlacer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\BuildManager.h">
+      <Filter>src\BuildManager</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\BuildOrderManager\BuildOrderManager.h">
+      <Filter>src\BuildOrderManager</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\BuildOrderManager\TechItem.h">
+      <Filter>src\BuildOrderManager</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\BuildOrderManager\UnitItem.h">
+      <Filter>src\BuildOrderManager</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\BWTA\BaseLocation.h">
+      <Filter>src\BWTA</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\BWTA\Chokepoint.h">
+      <Filter>src\BWTA</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\BWTA\Polygon.h">
+      <Filter>src\BWTA</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\BWTA\RectangleArray.h">
+      <Filter>src\BWTA</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\BWTA\Region.h">
+      <Filter>src\BWTA</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\ConstructionManager.h">
+      <Filter>src\ConstructionManager</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\DefenseManager.h">
+      <Filter>src\DefenseManager</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\InformationManager.h">
+      <Filter>src\InformationManager</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\MorphManager.h">
+      <Filter>src\MorphManager</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\WorkerManager.h">
+      <Filter>src\WorkerManager</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\ProductionManager.h">
+      <Filter>src\ProductionManager</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\ScoutManager.h">
+      <Filter>src\ScoutManager</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\SupplyManager.h">
+      <Filter>src\SupplyManager</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\TechManager.h">
+      <Filter>src\TechManager</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\UnitGroup.h">
+      <Filter>src\UnitGroupManager</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\UnitGroupManager.h">
+      <Filter>src\UnitGroupManager</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\UpgradeManager.h">
+      <Filter>src\UpgradeManager</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\UnderAttackManager.h">
+      <Filter>src\UnderAttackManager</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\SpendManager.h">
+      <Filter>src\SpendManager</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\ArmyManager.h">
+      <Filter>src\ArmyManager</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\SpyManager.h">
+      <Filter>src\SpyManager</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\MoodManager.h">
+      <Filter>src\MoodManager</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\BorderManager.h">
+      <Filter>src\BorderManager</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\Arbitrator\Arbitrator.h">
+      <Filter>src\Arbitrator</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\Arbitrator\Controller.h">
+      <Filter>src\Arbitrator</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\Heap.h">
+      <Filter>src\Arbitrator</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

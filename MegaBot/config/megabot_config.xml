@@ -1,0 +1,7 @@
+<!-- put this file under <starcraft>/bwapi-data/AI or <starcraft>/bwapi-data/read if in tournament -->
+<config>
+	<strategy value="NUSBot" />
+	<match-output value="output.xml" />
+	<speed value="20" />
+	<gui value="true" />
+</config>

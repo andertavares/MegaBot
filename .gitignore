@@ -6,3 +6,7 @@
 /MegaBot/*.opensdf
 /MegaBot/*.sdf
 /NUSBot/NUSBot/src/NUSBot/VisualStudio/*.sdf
+/TournamentModule/*.suo
+/TournamentModule/*.ncb
+/TournamentModule/Release
+/TournamentModule/TournamentModule.vcproj.VMSC-dev.programmer.user

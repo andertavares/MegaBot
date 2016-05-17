@@ -51,7 +51,7 @@ void MegaBot::onStart() {
 
 	myBehaviorName = StrategySelector::getInstance()->getStrategy();//Configuration::getInstance()->strategyID;
 	
-	Broodwar->sendText("Behavior: %s", myBehaviorName.c_str());		//sends behavior communication message
+	Broodwar->sendText("%s on!", myBehaviorName.c_str());		//sends behavior communication message
 
 	MatchData::getInstance()->registerMyBehaviorName(myBehaviorName);
 	currentBehavior = behaviors[myBehaviorName];
@@ -95,11 +95,11 @@ void MegaBot::onFrame() {
 	}
 
 	currentBehavior->onFrame();
-
-	//temporary: sends behavior every 20 seconds
-	if((Broodwar->elapsedTime() % 20) == 0){
-		Broodwar->sendText("Behavior: %s", myBehaviorName.c_str());
+	if((BWAPI::Broodwar->getFrameCount() % 100) == 0){
+		Broodwar->sendText("%s on!", myBehaviorName.c_str());		//sends behavior communication message
+		Broodwar->sendText("Enemy: %s", Broodwar->enemy()->getName().c_str());	
 	}
+
 
 	//draws some text
 	Broodwar->drawTextScreen(5, 5,"\x0F MegaBot v0.1.0");
@@ -184,11 +184,12 @@ void MegaBot::onSendText(std::string text) {
 }
 
 void MegaBot::onReceiveText(BWAPI::Player* player, std::string text) {
-	Broodwar->printf("on receive text");
+	Broodwar->printf("MegaBot - on receive text");
 	currentBehavior->onReceiveText(player, text);
 	
-	Broodwar->printf(">>>>> substr: %s", text.substr(0, 9).c_str());
-	if (text.substr(0, 9) == "Behavior:") {	//receives behavior communication message
+	Broodwar->printf(">>>>> substr: %s", (text.substr(max(3, int(text.size())) - 3)).c_str());
+	
+	/*if (text.substr(0, 9) == "Behavior:") {	//receives behavior communication message
 		//splits text in 2 parts and gets 2nd part: this is enemy's name
 		istringstream iss(text);
 		vector<string> tokens;
@@ -202,6 +203,28 @@ void MegaBot::onReceiveText(BWAPI::Player* player, std::string text) {
 		enemyBehaviorName = tokens[1];
 
 		Broodwar->printf(">>>>> Enemy is: %s <<<<<", enemyBehaviorName);
+		MatchData::getInstance()->registerEnemyBehaviorName(enemyBehaviorName);
+	}*/
+	//behavior message recognition: checks whether text ends with 'online!'
+	if (text.substr(max(3, int(text.size())) - 3) == string("on!")) {
+		//splits text in spaces and gets 1st part: this is enemy's name
+		istringstream iss(text);
+		vector<string> tokens;
+		copy(
+			istream_iterator<string>(iss),
+			istream_iterator<string>(),
+			back_inserter(tokens)
+		);
+
+		//the 'magic' above is from: http://stackoverflow.com/a/237280/1251716
+
+		for(int i = 0; i < tokens.size(); i++){
+			Broodwar->printf(">>> token[%d]: %s", i, tokens[i].c_str());
+		}
+
+		enemyBehaviorName = tokens[0];
+
+		Broodwar->printf(">>>>> Enemy is: %s <<<<<", enemyBehaviorName.c_str());
 		MatchData::getInstance()->registerEnemyBehaviorName(enemyBehaviorName);
 	}
 	else {

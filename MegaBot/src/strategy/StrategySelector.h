@@ -117,6 +117,18 @@ public:
 	/** Chooses strategy according to probabilities in a file and returns its name */
 	string probabilistic();
 
+	/** Chooses strategy that would have won previous match */
+	string replyLast();
+
+	/** 
+	 * For level 1, second-guesses opponent, i.e., responds to its response as if it used replyLast.
+	 * For level 2, triple-guesses, i.e., responds to a second-guess by the opponent, and so on
+	 */
+	string guessOpponent(int level);
+
+	/** Chooses strategy that would have won most frequent opponent strategy */
+	string replyMostUsed();
+
 	/** Saves the stats file. */
 	void saveStats();
 

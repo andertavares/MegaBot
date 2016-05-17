@@ -51,14 +51,13 @@ void StrategySelector::selectStrategy() {
 	//retrieve what config says about strategy
 	string strategyId = Configuration::getInstance()->strategyID;
 	
-	//in case of metagame, will choose strategy probabilistically
+	//chooses strategy probabilistically
 	if (strategyId == "probabilistic") {
 		currentStrategyId = probabilistic();
 	}
 	else {	//otherwise, use strategy explicitly described in config. 
 		currentStrategyId = strategyId;
 	}
-	//Broodwar->printf("Selected strategy is: %s", currentStrategyId); - was causing 'broodwar not initialized' error
 	return;
 	
 }

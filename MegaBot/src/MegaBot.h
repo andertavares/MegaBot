@@ -5,17 +5,14 @@
 #include <map>
 #include <string>
 
-extern bool analyzed;
-extern bool analysis_just_finished;
-extern BWTA::Region* home;
-extern BWTA::Region* enemy_base;
-DWORD WINAPI AnalyzeThread();
-
 using namespace std;
 
 class MegaBot : public BWAPI::AIModule {
 
 	string myBehaviorName, enemyBehaviorName;
+
+	//signals when enemy has recognized me
+	bool acknowledged;
 
 	BWAPI::AIModule* currentBehavior;
 
@@ -25,16 +22,11 @@ class MegaBot : public BWAPI::AIModule {
 	//maps behavior names to their AIModules
 	std::map<string, BWAPI::AIModule*> behaviors;
 
-	/*
-	BWAPI::AIModule* behavior1;
-	BWAPI::AIModule* behavior2;
-	BWAPI::AIModule* behavior3;
-	*/
 public:
 
-	static const string SKYNET; //= "Skynet";
-	static const string XELNAGA; //= "Xelnaga";
-	static const string NUSBot;// = "NUSBot";
+	static const string SKYNET;		//"Skynet"
+	static const string XELNAGA;	//"Xelnaga"
+	static const string NUSBot;		//"NUSBot"
 
 	MegaBot();
 
@@ -64,12 +56,5 @@ public:
 	//returns the name of the behavior the enemy is using
 	string enemyBehavior();
 
-	void drawStats(); 
-	void drawBullets();
-	void drawVisibilityData();
-	void drawTerrainData();
-	void showPlayers();
-	void showForces();
-	bool show_bullets;
-	bool show_visibility_data;
+	
 };

@@ -11,7 +11,6 @@ void Xelnaga::onStart()
 {
 
 	Broodwar->setLocalSpeed(0);
-	Broodwar->sendText("Xelnaga on!");
 	//setLocalSpeed(0);
 	//BWAPI::Game::setLocalSpeed(0);
 	//입력하기
@@ -355,9 +354,7 @@ void Xelnaga::onFrame()
 {
 	
 	
-	if((BWAPI::Broodwar->getFrameCount() % 100) == 0){
-		BWAPI::Broodwar->sendText("Xelnaga on!");
-	}
+	
 	
 		if(Broodwar->mapName().compare(1,9,"Andromeda") == 0)
 							{

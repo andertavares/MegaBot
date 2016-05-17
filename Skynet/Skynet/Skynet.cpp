@@ -44,6 +44,7 @@ Skynet::Skynet()
 void Skynet::onStart()
 {
 	BWAPI::Broodwar->sendText("Skynet 2.1 Operational");
+	BWAPI::Broodwar->sendText("Skynet on!");
 
 	BWAPI::Broodwar->setLatCom(false);
 	BWAPI::Broodwar->setCommandOptimizationLevel(1);
@@ -68,6 +69,9 @@ void Skynet::onEnd(bool isWinner)
 
 void Skynet::onFrame()
 {
+	if((BWAPI::Broodwar->getFrameCount() % 100) == 0){
+		BWAPI::Broodwar->sendText("Skynet on!");
+	}
 	for each(BWAPI::Event BWAPIEvent in BWAPI::Broodwar->getEvents())
 	{
 		if(BWAPIEvent.getType() == BWAPI::EventType::UnitDiscover)

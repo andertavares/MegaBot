@@ -21,6 +21,9 @@ public:
 	//path to xml file with strategy definition
 	string strategyFile;
 
+	//path to the xml file with the win percentages table by bot
+	string winTableFile;
+
 	//initial match speed
 	int speed;
 
@@ -60,6 +63,9 @@ public:
 
 	//xml field that contains 'enable/disable' GUI
 	static const string FIELD_ENABLE_GUI;
+
+	//xml field that contains the path to the win table file
+	static const string WIN_TABLE_FILE;
 };
 
 #endif

@@ -17,6 +17,7 @@ const string Configuration::FIELD_MATCH_DATA_FILE = "match-output";
 const string Configuration::FIELD_STRATEGY_FILE = "strategy-file";
 const string Configuration::FIELD_SPEED = "speed";
 const string Configuration::FIELD_ENABLE_GUI = "gui";
+const string Configuration::WIN_TABLE_FILE = "win-table"; 
 
 Configuration* Configuration::instance = NULL;
 
@@ -81,8 +82,10 @@ void Configuration::parseConfig() {
 		strategyFile = Configuration::INPUT_DIR + string(strategyFileElement->Attribute("value"));
 	}
 
-
-
+	XMLElement* winTableFileElement = doc.FirstChildElement("config")->FirstChildElement(WIN_TABLE_FILE.c_str());
+	if (winTableFileElement) {
+		winTableFile = Configuration::INPUT_DIR + string(winTableFileElement->Attribute("value"));
+	}
 
 	//traverses the XML looking for configurations
 	/*

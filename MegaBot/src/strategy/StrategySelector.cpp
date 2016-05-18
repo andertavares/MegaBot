@@ -59,7 +59,6 @@ void StrategySelector::selectStrategy() {
 		currentStrategyId = strategyId;
 	}
 	return;
-	
 }
 
 string StrategySelector::probabilistic() {

@@ -14,16 +14,6 @@ StrategySelector::StrategySelector()
 {
 	active = true;
 	/*
-    strategies.push_back(Strategy(Races::Terran, TextParserStrategy::getStrategyId()));
-	strategies.push_back(Strategy(Races::Protoss, ProtossMain::getStrategyId()));
-	strategies.push_back(Strategy(Races::Terran, OneRaxFE::getStrategyId()));
-	strategies.push_back(Strategy(Races::Terran, ThreeRaxFactory::getStrategyId()));
-	strategies.push_back(Strategy(Races::Terran, QuickFactoryMines::getStrategyId()));
-	strategies.push_back(Strategy(Races::Terran, QuickBunkerFactory::getStrategyId()));
-	strategies.push_back(Strategy(Races::Terran, MarineRush::getStrategyId()));
-	strategies.push_back(Strategy(Races::Zerg, LurkerRush::getStrategyId()));
-	strategies.push_back(Strategy(Races::Zerg, ZergMain::getStrategyId()));
-	
 	loadStats();
 	*/
 }

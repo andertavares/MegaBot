@@ -14,7 +14,6 @@ NUSBotModule::~NUSBotModule() {}
 void NUSBotModule::onStart()
 {
 	BWAPI::Broodwar->sendText("NUSBot v1.0.0.0 Online");
-	BWAPI::Broodwar->sendText("NUSBot on!");
 	BWAPI::Broodwar->setLocalSpeed(0);
 	//BWAPI::Broodwar->setFrameSkip(240);
 
@@ -89,9 +88,6 @@ void NUSBotModule::onEnd(bool isWinner)
 
 void NUSBotModule::onFrame()
 {
-	if((BWAPI::Broodwar->getFrameCount() % 100) == 0){
-		BWAPI::Broodwar->sendText("NUSBot on!");
-	}
 	if (Options::Modules::USING_UNIT_COMMAND_MGR)
 	{
 		UnitCommandManager::Instance().update();

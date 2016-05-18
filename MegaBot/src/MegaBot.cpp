@@ -14,17 +14,14 @@
 
 using namespace BWAPI;
 
-bool analyzed;
-bool analysis_just_finished;
-BWTA::Region* home;
-BWTA::Region* enemy_base;
-
 //initializes consts
 const string MegaBot::SKYNET = "Skynet";
 const string MegaBot::XELNAGA = "Xelnaga";
 const string MegaBot::NUSBot = "NUSBot";
 
-MegaBot::MegaBot(){
+MegaBot::MegaBot() 
+	: acknowledged(false) {
+	
 	//initalizes behaviors
 	behaviors.insert(make_pair(SKYNET, new Skynet()));
 	behaviors.insert(make_pair(XELNAGA, new Xelnaga()));
@@ -57,11 +54,9 @@ void MegaBot::onStart() {
 	currentBehavior = behaviors[myBehaviorName];
 	currentBehavior->onStart();
 
-	
-	
+	//overrides user input, speed and GUI set by currentBehavior
+	Broodwar->enableFlag(Flag::UserInput);
 
-  
-	//overrides speed and GUI set by currentBehavior
 	int speed = Configuration::getInstance()->speed;
 	Broodwar->printf("Setting speed to %d.", speed);
 	Broodwar->setLocalSpeed(20);
@@ -72,8 +67,6 @@ void MegaBot::onStart() {
 }
 
 void MegaBot::onEnd(bool isWinner) {
-	currentBehavior->onEnd(isWinner);
-
 	int result = MatchData::LOSS;
 	if (isWinner) result = MatchData::WIN;
 	if (Broodwar->elapsedTime() / 60 >= 80) result = MatchData::DRAW;
@@ -85,6 +78,8 @@ void MegaBot::onEnd(bool isWinner) {
 	MatchData::getInstance()->registerMatchFinish(result);
 	MatchData::getInstance()->writeSummary();
 	MatchData::getInstance()->writeDetailedResult();
+
+	currentBehavior->onEnd(isWinner);
 }
 
 void MegaBot::onFrame() {
@@ -95,118 +90,27 @@ void MegaBot::onFrame() {
 	}
 
 	currentBehavior->onFrame();
-	if((BWAPI::Broodwar->getFrameCount() % 100) == 0){
-		Broodwar->sendText("%s on!", myBehaviorName.c_str());		//sends behavior communication message
-		Broodwar->sendText("Enemy: %s", Broodwar->enemy()->getName().c_str());	
-	}
 
+	//sends behavior communication message every 200 frames
+	if(!acknowledged && (BWAPI::Broodwar->getFrameCount() % 200) == 0){
+		Broodwar->sendText("%s on!", myBehaviorName.c_str());		
+	}
 
 	//draws some text
 	Broodwar->drawTextScreen(5, 5,"\x0F MegaBot v0.1.0");
 	Broodwar->drawTextScreen(5, 15,"\x0F My behavior: %s", myBehaviorName.c_str());
 	Broodwar->drawTextScreen(5, 25,"\x0F Enemy behavior: %s", enemyBehaviorName.c_str());
-
-	/*
-	if (show_visibility_data)
-		drawVisibilityData();
-
-	if (show_bullets)
-		drawBullets();
-
-	if (Broodwar->isReplay())
-		return;
-
-	drawStats();
-	  if (analyzed && Broodwar->getFrameCount()%30==0)
-	  {
-		//order one of our workers to guard our chokepoint.
-		for(std::set<Unit*>::const_iterator i=Broodwar->self()->getUnits().begin();i!=Broodwar->self()->getUnits().end();i++)
-		{
-		  if ((*i)->getType().isWorker())
-		  {
-			//get the chokepoints linked to our home region
-			std::set<BWTA::Chokepoint*> chokepoints= home->getChokepoints();
-			double min_length=10000;
-			BWTA::Chokepoint* choke=NULL;
-
-			//iterate through all chokepoints and look for the one with the smallest gap (least width)
-			for(std::set<BWTA::Chokepoint*>::iterator c=chokepoints.begin();c!=chokepoints.end();c++)
-			{
-			  double length=(*c)->getWidth();
-			  if (length<min_length || choke==NULL)
-			  {
-				min_length=length;
-				choke=*c;
-			  }
-			}
-
-			//order the worker to move to the center of the gap
-			(*i)->rightClick(choke->getCenter());
-			break;
-		  }
-		}
-	  }
-	  if (analyzed)
-		drawTerrainData();
-
-	  if (analysis_just_finished)
-	  {
-		Broodwar->printf("Finished analyzing map.");
-		analysis_just_finished=false;
-	  }*/
 }
 
 void MegaBot::onSendText(std::string text) {
 	currentBehavior->onSendText(text);
-
-	if (text=="/show bullets") {
-		show_bullets = !show_bullets;
-	} 
-	else if (text=="/show players") {
-		showPlayers();
-	} 
-	else if (text=="/show forces")  {
-		showForces();
-	}
-	else if (text=="/show visibility") {
-		show_visibility_data=!show_visibility_data;
-	}
-	else if (text=="/analyze") {
-		if (analyzed == false) {
-			Broodwar->printf("Analyzing map... this may take a minute");
-			CreateThread(NULL, 0, (LPTHREAD_START_ROUTINE)AnalyzeThread, NULL, 0, NULL);
-		}
-	} 
-	else{
-		Broodwar->printf("You typed '%s'!",text.c_str());
-		Broodwar->sendText("%s",text.c_str());
-	}
 }
 
 void MegaBot::onReceiveText(BWAPI::Player* player, std::string text) {
-	Broodwar->printf("MegaBot - on receive text");
 	currentBehavior->onReceiveText(player, text);
 	
-	Broodwar->printf(">>>>> substr: %s", (text.substr(max(3, int(text.size())) - 3)).c_str());
-	
-	/*if (text.substr(0, 9) == "Behavior:") {	//receives behavior communication message
-		//splits text in 2 parts and gets 2nd part: this is enemy's name
-		istringstream iss(text);
-		vector<string> tokens;
-		copy(
-			istream_iterator<string>(iss),
-			istream_iterator<string>(),
-			back_inserter(tokens)
-		);
-		//the 'magic' above is from: http://stackoverflow.com/a/237280/1251716
-
-		enemyBehaviorName = tokens[1];
-
-		Broodwar->printf(">>>>> Enemy is: %s <<<<<", enemyBehaviorName);
-		MatchData::getInstance()->registerEnemyBehaviorName(enemyBehaviorName);
-	}*/
-	//behavior message recognition: checks whether text ends with 'online!'
-	if (text.substr(max(3, int(text.size())) - 3) == string("on!")) {
+	//behavior message recognition: checks whether text ends with 'on!'
+	if (enemyBehaviorName == "Unknown" && text.substr(max(3, int(text.size())) - 3) == string("on!")) {
 		//splits text in spaces and gets 1st part: this is enemy's name
 		istringstream iss(text);
 		vector<string> tokens;
@@ -215,35 +119,28 @@ void MegaBot::onReceiveText(BWAPI::Player* player, std::string text) {
 			istream_iterator<string>(),
 			back_inserter(tokens)
 		);
-
 		//the 'magic' above is from: http://stackoverflow.com/a/237280/1251716
-
-		for(int i = 0; i < tokens.size(); i++){
-			Broodwar->printf(">>> token[%d]: %s", i, tokens[i].c_str());
-		}
 
 		enemyBehaviorName = tokens[0];
 
-		Broodwar->printf(">>>>> Enemy is: %s <<<<<", enemyBehaviorName.c_str());
+		Broodwar->printf(">>>>> Enemy recognized: %s <<<<<", enemyBehaviorName.c_str());
 		MatchData::getInstance()->registerEnemyBehaviorName(enemyBehaviorName);
+
+		//sends text back to enemy to acknowledge recognition
+		Broodwar->sendText("ACKNOWLEDGED!");
 	}
-	else {
-		Broodwar->printf("%s said '%s'", player->getName().c_str(), text.c_str());
+	//recognizes that enemy has acknowledged my strategy
+	else if (text == "ACKNOWLEDGED!"){ 
+		acknowledged = true;
 	}
 }
 
 void MegaBot::onPlayerLeft(BWAPI::Player* player) {
 	currentBehavior->onPlayerLeft(player);
-	Broodwar->sendText("%s left the game.",player->getName().c_str());
 }
 
 void MegaBot::onNukeDetect(BWAPI::Position target) {
 	currentBehavior->onNukeDetect(target);
-
-  if (target!=Positions::Unknown)
-    Broodwar->printf("Nuclear Launch Detected at (%d,%d)",target.x(),target.y());
-  else
-    Broodwar->printf("Nuclear Launch Detected");
 }
 
 void MegaBot::onUnitDiscover(BWAPI::Unit* unit) {
@@ -280,7 +177,6 @@ void MegaBot::onUnitRenegade(BWAPI::Unit* unit) {
 
 void MegaBot::onSaveGame(std::string gameName) {
 	currentBehavior->onSaveGame(gameName);
-	Broodwar->printf("The game was saved to \"%s\".", gameName.c_str());
 }
 
 void MegaBot::onUnitComplete(BWAPI::Unit *unit) {
@@ -295,149 +191,6 @@ string MegaBot::enemyBehavior(){
 	return enemyBehaviorName;
 }
 
-DWORD WINAPI AnalyzeThread() {
-  BWTA::analyze();
 
-  //self start location only available if the map has base locations
-  if (BWTA::getStartLocation(BWAPI::Broodwar->self())!=NULL)  {
-    home       = BWTA::getStartLocation(BWAPI::Broodwar->self())->getRegion();
-  }
-  //enemy start location only available if Complete Map Information is enabled.
-  if (BWTA::getStartLocation(BWAPI::Broodwar->enemy())!=NULL) {
-    enemy_base = BWTA::getStartLocation(BWAPI::Broodwar->enemy())->getRegion();
-  }
-  analyzed   = true;
-  analysis_just_finished = true;
-  return 0;
-}
-
-void MegaBot::drawStats() {
-  /*std::set<Unit*> myUnits = Broodwar->self()->getUnits();
-  Broodwar->drawTextScreen(5,0,"I have %d units:",myUnits.size());
-  std::map<UnitType, int> unitTypeCounts;
-  for(std::set<Unit*>::iterator i=myUnits.begin();i!=myUnits.end();i++) {
-    if (unitTypeCounts.find((*i)->getType())==unitTypeCounts.end()) {
-      unitTypeCounts.insert(std::make_pair((*i)->getType(),0));
-    }
-    unitTypeCounts.find((*i)->getType())->second++;
-  }
-  int line=1;
-  for(std::map<UnitType,int>::iterator i=unitTypeCounts.begin();i!=unitTypeCounts.end();i++) {
-    Broodwar->drawTextScreen(5,16*line,"- %d %ss",(*i).second, (*i).first.getName().c_str());
-    line++;
-  }*/
-}
-
-void MegaBot::drawBullets() {
-  /*std::set<Bullet*> bullets = Broodwar->getBullets();
-  for(std::set<Bullet*>::iterator i=bullets.begin();i!=bullets.end();i++)
-  {
-    Position p=(*i)->getPosition();
-    double velocityX = (*i)->getVelocityX();
-    double velocityY = (*i)->getVelocityY();
-    if ((*i)->getPlayer()==Broodwar->self())
-    {
-      Broodwar->drawLineMap(p.x(),p.y(),p.x()+(int)velocityX,p.y()+(int)velocityY,Colors::Green);
-      Broodwar->drawTextMap(p.x(),p.y(),"\x07%s",(*i)->getType().getName().c_str());
-    }
-    else
-    {
-      Broodwar->drawLineMap(p.x(),p.y(),p.x()+(int)velocityX,p.y()+(int)velocityY,Colors::Red);
-      Broodwar->drawTextMap(p.x(),p.y(),"\x06%s",(*i)->getType().getName().c_str());
-    }
-  }*/
-}
-
-void MegaBot::drawVisibilityData() {
-  for(int x=0;x<Broodwar->mapWidth();x++) {
-    for(int y=0;y<Broodwar->mapHeight();y++) {
-      if (Broodwar->isExplored(x,y)) {
-        if (Broodwar->isVisible(x,y))
-          Broodwar->drawDotMap(x*32+16,y*32+16,Colors::Green);
-        else
-          Broodwar->drawDotMap(x*32+16,y*32+16,Colors::Blue);
-      }
-      else
-        Broodwar->drawDotMap(x*32+16,y*32+16,Colors::Red);
-    }
-  }
-}
-
-void MegaBot::drawTerrainData(){
-  //we will iterate through all the base locations, and draw their outlines.
-/*  for(std::set<BWTA::BaseLocation*>::const_iterator i=BWTA::getBaseLocations().begin();i!=BWTA::getBaseLocations().end();i++)
-  {
-    TilePosition p=(*i)->getTilePosition();
-    Position c=(*i)->getPosition();
-
-    //draw outline of center location
-    Broodwar->drawBox(CoordinateType::Map,p.x()*32,p.y()*32,p.x()*32+4*32,p.y()*32+3*32,Colors::Blue,false);
-
-    //draw a circle at each mineral patch
-    for(std::set<BWAPI::Unit*>::const_iterator j=(*i)->getStaticMinerals().begin();j!=(*i)->getStaticMinerals().end();j++)
-    {
-      Position q=(*j)->getInitialPosition();
-      Broodwar->drawCircle(CoordinateType::Map,q.x(),q.y(),30,Colors::Cyan,false);
-    }
-
-    //draw the outlines of vespene geysers
-    for(std::set<BWAPI::Unit*>::const_iterator j=(*i)->getGeysers().begin();j!=(*i)->getGeysers().end();j++)
-    {
-      TilePosition q=(*j)->getInitialTilePosition();
-      Broodwar->drawBox(CoordinateType::Map,q.x()*32,q.y()*32,q.x()*32+4*32,q.y()*32+2*32,Colors::Orange,false);
-    }
-
-    //if this is an island expansion, draw a yellow circle around the base location
-    if ((*i)->isIsland())
-      Broodwar->drawCircle(CoordinateType::Map,c.x(),c.y(),80,Colors::Yellow,false);
-  }
-
-  //we will iterate through all the regions and draw the polygon outline of it in green.
-  for(std::set<BWTA::Region*>::const_iterator r=BWTA::getRegions().begin();r!=BWTA::getRegions().end();r++)
-  {
-    BWTA::Polygon p=(*r)->getPolygon();
-    for(int j=0;j<(int)p.size();j++)
-    {
-      Position point1=p[j];
-      Position point2=p[(j+1) % p.size()];
-      Broodwar->drawLine(CoordinateType::Map,point1.x(),point1.y(),point2.x(),point2.y(),Colors::Green);
-    }
-  }
-
-  //we will visualize the chokepoints with red lines
-  for(std::set<BWTA::Region*>::const_iterator r=BWTA::getRegions().begin();r!=BWTA::getRegions().end();r++)
-  {
-    for(std::set<BWTA::Chokepoint*>::const_iterator c=(*r)->getChokepoints().begin();c!=(*r)->getChokepoints().end();c++)
-    {
-      Position point1=(*c)->getSides().first;
-      Position point2=(*c)->getSides().second;
-      Broodwar->drawLine(CoordinateType::Map,point1.x(),point1.y(),point2.x(),point2.y(),Colors::Red);
-    }
-  }
-  */
-}
-
-void MegaBot::showPlayers()
-{
-  /*std::set<Player*> players=Broodwar->getPlayers();
-  for(std::set<Player*>::iterator i=players.begin();i!=players.end();i++)
-  {
-    Broodwar->printf("Player [%d]: %s is in force: %s",(*i)->getID(),(*i)->getName().c_str(), (*i)->getForce()->getName().c_str());
-  }*/
-}
-
-void MegaBot::showForces()
-{
-  /*std::set<Force*> forces=Broodwar->getForces();
-  for(std::set<Force*>::iterator i=forces.begin();i!=forces.end();i++)
-  {
-    std::set<Player*> players=(*i)->getPlayers();
-    Broodwar->printf("Force %s has the following players:",(*i)->getName().c_str());
-    for(std::set<Player*>::iterator j=players.begin();j!=players.end();j++)
-    {
-      Broodwar->printf("  - Player [%d]: %s",(*j)->getID(),(*j)->getName().c_str());
-    }
-  }*/
-}
 
 

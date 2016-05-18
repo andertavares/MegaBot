@@ -415,7 +415,7 @@ bool ExampleTournamentModule::onAction(int actionType, void *parameter)
 			switch ( *(int*)parameter )
 			{
 				case Flag::CompleteMapInformation:		return false;
-				case Flag::UserInput:					return false;
+				case Flag::UserInput:					return true;	//was returning false 
 			}
 
 		case Tournament::PauseGame:

@@ -1,5 +1,8 @@
 #pragma once
 
+#include <boost\tr1\functional.hpp>
+#include <boost\tr1\memory.hpp>
+
 #include "Interface.h"
 #include <assert.h>
 

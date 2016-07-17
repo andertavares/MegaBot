@@ -52,12 +52,12 @@ bool isSpace(char caracter) {
 void MatchData::writeDetailedResult() {
     Player* enemy = Broodwar->enemy();
     string bot_name = myBehaviorName;
-    string enemy_bot = enemy->getName();
+    string enemy_name = enemy->getName();
 
     int value;
 
     tinyxml2::XMLElement* botNode;
-    tinyxml2::XMLElement* botNodeEnemy;
+    tinyxml2::XMLElement* myBotNode;
     tinyxml2::XMLElement* queryNode;
 
     const char* filename = Configuration::getInstance()->readDataFile.c_str();
@@ -65,27 +65,27 @@ void MatchData::writeDetailedResult() {
     tinyxml2::XMLDocument doc;
     tinyxml2::XMLError error = doc.LoadFile(filename);
 
-    botNode = doc.FirstChildElement(bot_name.c_str());
+    std::replace_if(enemy_name.begin(), enemy_name.end(), isSpace, '_');
+
+    botNode = doc.FirstChildElement(enemy_name.c_str());
     if (botNode == NULL) {
-        botNode = doc.NewElement(bot_name.c_str());
+        botNode = doc.NewElement(enemy_name.c_str());
         doc.InsertFirstChild(botNode);
     }
 
-    std::replace_if(enemy_bot.begin(), enemy_bot.end(), isSpace, '_');
-
-    botNodeEnemy = botNode->FirstChildElement(enemy_bot.c_str());
-    if (botNodeEnemy == NULL) {
-        botNodeEnemy = doc.NewElement(enemy_bot.c_str());
-        botNode->InsertFirstChild(botNodeEnemy);
+    myBotNode = botNode->FirstChildElement(bot_name.c_str());
+    if (myBotNode == NULL) {
+        myBotNode = doc.NewElement(bot_name.c_str());
+        botNode->InsertFirstChild(myBotNode);
     }
 
-    if (resultToString(gameResult) == "win") {
-        queryNode = botNodeEnemy->FirstChildElement("losses");
+    if (resultToString(gameResult) == "loss") {
+        queryNode = myBotNode->FirstChildElement("losses");
         const char* query_str = "losses";
         if (queryNode == NULL) {
             queryNode = doc.NewElement(query_str);
             queryNode->SetText(1);
-            botNodeEnemy->InsertFirstChild(queryNode);
+            myBotNode->InsertFirstChild(queryNode);
         }
         else {
             queryNode->QueryIntText(&value);
@@ -93,25 +93,25 @@ void MatchData::writeDetailedResult() {
         }
     }
     else if (resultToString(gameResult) == "draw") {
-        queryNode = botNodeEnemy->FirstChildElement("draws");
+        queryNode = myBotNode->FirstChildElement("draws");
         const char* query_str = "draws";
         if (queryNode == NULL) {
             queryNode = doc.NewElement(query_str);
             queryNode->SetText(1);
-            botNodeEnemy->InsertFirstChild(queryNode);
+            myBotNode->InsertFirstChild(queryNode);
         }
         else {
             queryNode->QueryIntText(&value);
             queryNode->SetText(value + 1);
         }
     }
-    else if (resultToString(gameResult) == "loss") {
-        queryNode = botNodeEnemy->FirstChildElement("wins");
+    else if (resultToString(gameResult) == "win") {
+        queryNode = myBotNode->FirstChildElement("wins");
         const char* query_str = "wins";
         if (queryNode == NULL) {
             queryNode = doc.NewElement(query_str);
             queryNode->SetText(1);
-            botNodeEnemy->InsertFirstChild(queryNode);
+            myBotNode->InsertFirstChild(queryNode);
         }
         else {
             queryNode->QueryIntText(&value);

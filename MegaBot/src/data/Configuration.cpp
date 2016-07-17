@@ -5,7 +5,8 @@
 
 //BEGIN: change these if you need to read/write in different folders
 const string Configuration::INPUT_DIR = "bwapi-data/AI/";
-const string Configuration::OUTPUT_DIR = "bwapi-data/AI/";
+const string Configuration::OUTPUT_DIR = "bwapi-data/write/";
+const string Configuration::READ_DIR = "bwapi-data/read/";
 //END: change these if you need to read/write in different folders
 
 //Unless you're programming MegaBot, don't change consts below
@@ -24,6 +25,7 @@ Configuration* Configuration::instance = NULL;
 Configuration::Configuration() {
 	//sets up default values
 	matchDataFile = OUTPUT_DIR + "output.xml";
+    readDataFile = READ_DIR + "output.xml";
 	strategyFile = INPUT_DIR + "megabot_strategy.xml";
 	strategyID = MegaBot::SKYNET;
 	speed = 0;

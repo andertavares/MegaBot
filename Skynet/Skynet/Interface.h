@@ -1,4 +1,5 @@
 #include <BWAPI.h>
+#include <boost\tr1\memory.hpp>
 
 typedef BWAPI::TilePosition TilePosition;
 typedef BWAPI::Position Position;

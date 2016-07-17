@@ -1,5 +1,6 @@
 #pragma once
-
+#include <boost\tr1\memory.hpp>
+#include <boost\tr1\functional.hpp>
 #include "Interface.h"
 
 #include "Singleton.h"

@@ -18,6 +18,8 @@ public:
 	//path to write the file with match details
 	string matchDataFile;
 
+    string readDataFile;
+
 	//path to xml file with strategy definition
 	string strategyFile;
 
@@ -42,6 +44,9 @@ public:
 
 	//Directory to write output to
 	static const string OUTPUT_DIR;
+
+    //Directory to read informations about the tournament
+    static const string READ_DIR;
 
 	//File to read configs from
 	static const string CONFIG_FILE;

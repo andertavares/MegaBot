@@ -1,6 +1,6 @@
 #include "WallTracker.h"
 
-#include <regex>
+#include <boost/regex.hpp>
 
 #include "UnitTracker.h"
 #include "BuildingPlacer.h"

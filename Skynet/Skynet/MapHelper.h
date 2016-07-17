@@ -1,6 +1,8 @@
 #pragma once
 
 #include "Interface.h"
+#include <boost\tr1\functional.hpp>
+#include <boost\tr1\memory.hpp>
 
 namespace MapHelper
 {

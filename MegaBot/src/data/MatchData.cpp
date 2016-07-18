@@ -52,18 +52,18 @@ bool isSpace(char caracter) {
 void MatchData::writeDetailedResult() {
 	using namespace tinyxml2;
 
-    Player* enemy = Broodwar->enemy();
     string bot_name = myBehaviorName;
-    string enemy_name = enemy->getName();
+
+	/* DEBUG
+	ofstream outFile;
+    outFile.open("bwapi-data/write/dbg.txt", ios::out | ios::app);
+	*/
 
     int value;
 
     XMLElement* rootNode;
     XMLElement* myBehvNode;
     XMLElement* queryNode;
-
-	//replaces spaces with underscores
-    std::replace_if(enemy_name.begin(), enemy_name.end(), isSpace, '_');
 
 	string inputFile = Configuration::getInstance()->enemyInformationInputFile();
 	string outputFile = Configuration::getInstance()->enemyInformationOutputFile();
@@ -93,7 +93,7 @@ void MatchData::writeDetailedResult() {
 			rootNode = doc.NewElement("scores");
 		}
 	}
-	
+
 	//finds information with bot node
     /*botNode = doc.FirstChildElement("results")->FirstChildElement(enemy_name.c_str());
     if (botNode == NULL) {
@@ -108,17 +108,21 @@ void MatchData::writeDetailedResult() {
     }
 
 	//queries wins, losses or draws node according to match result
-	string query_str = "wins";
+	string query_str = "";
 	if (gameResult == LOSS) {
 		query_str = "losses";
 	}
 	else if (gameResult == DRAW) {
 		query_str = "draws";
 	}
+	else if (gameResult == WIN) {
+		query_str = "wins";
+	}
 	else {
 		throw exception("Invalid game result!");
 	}
 	queryNode = myBehvNode->FirstChildElement(query_str.c_str());
+
 
 	//creates a new node with count 1 if not found or increments it otherwise
     if (queryNode == NULL) {
@@ -132,6 +136,7 @@ void MatchData::writeDetailedResult() {
     }
 
 	doc.SaveFile(outputFile.c_str());
+
 }
 
 MatchData* MatchData::getInstance() {

@@ -1,7 +1,7 @@
 <!-- put this file under <starcraft>/bwapi-data/AI or <starcraft>/bwapi-data/read if in tournament -->
 <config>
 	<strategy value="probabilistic" />
-	<strategy-file value="megabot_protoss-nash.xml" />
+	<strategy-file value="megabot_protoss-uniform.xml" />
 	<match-output value="output.xml" />
 	<speed value="0" />
 	<gui value="true" />

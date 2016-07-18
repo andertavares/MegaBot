@@ -45,7 +45,7 @@ void StrategySelector::selectStrategy() {
     if (strategyId == "probabilistic") {
         srand(time(NULL));
         float lucky = (rand() % 1000) / 1000.f;
-        float epsilon = 0.2f;
+        float epsilon = 0.1f;
         if (lucky < epsilon) {
             currentStrategyId = probabilistic();
         }
@@ -60,39 +60,39 @@ void StrategySelector::selectStrategy() {
                 tinyxml2::XMLElement* enemyNode = doc.FirstChildElement(enemy_name.c_str());
 
                 if (enemyNode != NULL) {
-                    tinyxml2::XMLElement* best_candidate = enemyNode->FirstChildElement();
+                    tinyxml2::XMLElement* candidate = enemyNode->FirstChildElement();
                     string best_name;
                     int best_score = 1;
 
-                    while (best_candidate != NULL) {
+                    while (candidate != NULL) {
                         int score = 0;
                         tinyxml2::XMLElement* queryNode;
-                        queryNode = best_candidate->FirstChildElement("wins");
+                        queryNode = candidate->FirstChildElement("wins");
                         if (queryNode != NULL) {
-                            best_candidate = best_candidate->NextSiblingElement();
+                            candidate = candidate->NextSiblingElement();
                             int query_value = 0;
-                            best_candidate->QueryIntText(&query_value);
+                            candidate->QueryIntText(&query_value);
                             score += query_value * 3;
                         }
 
-                        queryNode = best_candidate->FirstChildElement("draws");
+                        queryNode = candidate->FirstChildElement("draws");
                         if (queryNode != NULL) {
-                            best_candidate = best_candidate->NextSiblingElement();
+                            candidate = candidate->NextSiblingElement();
                             int query_value = 0;
-                            best_candidate->QueryIntText(&query_value);
+                            candidate->QueryIntText(&query_value);
                             score += query_value * 1;
                         }
 
-                        queryNode = best_candidate->FirstChildElement("losses");
+                        queryNode = candidate->FirstChildElement("losses");
                         if (queryNode != NULL) {
-                            best_candidate = best_candidate->NextSiblingElement();
+                            candidate = candidate->NextSiblingElement();
                             int query_value = 0;
-                            best_candidate->QueryIntText(&query_value);
+                            candidate->QueryIntText(&query_value);
                             score += query_value * (-1);
                         }
 
                         if (score > best_score) {
-                            best_name = best_candidate->Name();
+                            best_name = candidate->Name();
                             best_score = score;
                         }
                     }

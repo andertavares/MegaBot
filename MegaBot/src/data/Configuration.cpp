@@ -1,6 +1,9 @@
 #include "Configuration.h"
 #include "../utils/tinyxml2.h"
 #include "../MegaBot.h"
+#include <sstream>
+#include <algorithm> 
+#include <fstream>
 #include <BWAPI.h>
 
 //BEGIN: change these if you need to read/write in different folders
@@ -25,8 +28,11 @@ Configuration* Configuration::instance = NULL;
 Configuration::Configuration() {
 	//sets up default values
 	matchDataFile = OUTPUT_DIR + "output.xml";
-    readDataFile = READ_DIR + "output.xml";
+    //readDataFile = READ_DIR + "output.xml";
 	strategyFile = INPUT_DIR + "megabot_strategy.xml";
+
+	enemyInformationPrefix = "MegaBot-vs-";
+
 	strategyID = MegaBot::SKYNET;
 	speed = 0;
 	enableGUI = true;
@@ -43,6 +49,24 @@ Configuration* Configuration::getInstance() {
 Configuration::~Configuration() {
 }
 
+
+string Configuration::enemyInformationInputFile(){
+	return READ_DIR + enemyInformationPrefix + _enemyName() + ".xml";
+}
+
+string Configuration::enemyInformationOutputFile(){
+	return OUTPUT_DIR + enemyInformationPrefix + _enemyName() + ".xml";
+}
+
+bool _isSpace(char caracter) {
+    return caracter == ' ';
+}
+
+string _enemyName(){
+	string enemyName =  BWAPI::Broodwar->enemy()->getName();
+    std::replace_if(enemyName.begin(), enemyName.end(), _isSpace, '_');
+	return enemyName;
+}
 
 void Configuration::parseConfig() {
 	using namespace tinyxml2;

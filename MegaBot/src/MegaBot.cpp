@@ -69,7 +69,9 @@ void MegaBot::onStart() {
 void MegaBot::onEnd(bool isWinner) {
     int result = MatchData::LOSS;
     if (isWinner) result = MatchData::WIN;
-    if (Broodwar->elapsedTime() / 60 >= 80) result = MatchData::DRAW;
+    //if (Broodwar->elapsedTime() / 60 >= 80) result = MatchData::DRAW;
+	//tournament rules for draw are 86400 frames, but we reduce 100 to ensure counting
+	if (Broodwar->getFrameCount() >= 86300) result = MatchData::DRAW;
 
     //StrategySelector::getInstance()->addResult(win);
     //StrategySelector::getInstance()->saveStats();
@@ -97,9 +99,10 @@ void MegaBot::onFrame() {
     }
 
     //draws some text
-    Broodwar->drawTextScreen(5, 5, "\x0F MegaBot v0.1.0");
-    Broodwar->drawTextScreen(5, 15, "\x0F My behavior: %s", myBehaviorName.c_str());
-    Broodwar->drawTextScreen(5, 25, "\x0F Enemy behavior: %s", enemyBehaviorName.c_str());
+    Broodwar->drawTextScreen(5, 5, "\x0F MegaBot v0.1.1");
+    Broodwar->drawTextScreen(5, 15, "\x0F Strategy: %s", myBehaviorName.c_str());
+    //Broodwar->drawTextScreen(5, 25, "\x0F Enemy behavior: %s", enemyBehaviorName.c_str());
+	Broodwar->drawTextScreen(5, 25, "\x0F Enemy: %s", Broodwar->enemy()->getName().c_str());
 }
 
 void MegaBot::onSendText(std::string text) {

@@ -3,6 +3,8 @@
 	<strategy value="probabilistic" />
 	<strategy-file value="megabot_protoss-uniform.xml" />
 	<match-output value="output.xml" />
+	<alpha value="0.3" /> <!-- learning rate for strategy value update -->
+	<epsilon value="0.3" /> <!-- exploration coefficient -->
 	<speed value="0" />
 	<gui value="true" />
 </config>

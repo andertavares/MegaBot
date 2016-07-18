@@ -50,75 +50,88 @@ bool isSpace(char caracter) {
 }
 
 void MatchData::writeDetailedResult() {
+	using namespace tinyxml2;
+
     Player* enemy = Broodwar->enemy();
     string bot_name = myBehaviorName;
     string enemy_name = enemy->getName();
 
     int value;
 
-    tinyxml2::XMLElement* botNode;
-    tinyxml2::XMLElement* myBotNode;
-    tinyxml2::XMLElement* queryNode;
+    XMLElement* rootNode;
+    XMLElement* myBehvNode;
+    XMLElement* queryNode;
 
-    const char* filename = Configuration::getInstance()->readDataFile.c_str();
-
-    tinyxml2::XMLDocument doc;
-    tinyxml2::XMLError error = doc.LoadFile(filename);
-
+	//replaces spaces with underscores
     std::replace_if(enemy_name.begin(), enemy_name.end(), isSpace, '_');
 
-    botNode = doc.FirstChildElement(enemy_name.c_str());
+	string inputFile = Configuration::getInstance()->enemyInformationInputFile();
+	string outputFile = Configuration::getInstance()->enemyInformationOutputFile();
+
+    //const char* filename = Configuration::getInstance()->readDataFile.c_str();
+
+    XMLDocument doc;
+	XMLError result = doc.LoadFile(inputFile.c_str());
+
+	// if file was not found, ok, we create a node and fill information in it
+	if (result == XML_ERROR_FILE_NOT_FOUND){
+		rootNode = doc.NewElement("scores");
+	}
+	// if another error occurred, we're in trouble =/
+	else if (result != XML_NO_ERROR) {
+		Broodwar->printf(
+			"Error while parsing the configuration file '%s'. Error: '%s'", 
+			inputFile, 
+			doc.ErrorName()
+		);
+		return;
+	}
+
+	else { //no error, goes after root node
+		rootNode = doc.FirstChildElement("scores");
+		if (rootNode == NULL){
+			rootNode = doc.NewElement("scores");
+		}
+	}
+	
+	//finds information with bot node
+    /*botNode = doc.FirstChildElement("results")->FirstChildElement(enemy_name.c_str());
     if (botNode == NULL) {
         botNode = doc.NewElement(enemy_name.c_str());
         doc.InsertFirstChild(botNode);
+    }*/
+
+	myBehvNode = rootNode->FirstChildElement(myBehaviorName.c_str());
+    if (myBehvNode == NULL) {
+        myBehvNode = doc.NewElement(myBehaviorName.c_str());
+		rootNode->InsertFirstChild(myBehvNode);
     }
 
-    myBotNode = botNode->FirstChildElement(bot_name.c_str());
-    if (myBotNode == NULL) {
-        myBotNode = doc.NewElement(bot_name.c_str());
-        botNode->InsertFirstChild(myBotNode);
+	//queries wins, losses or draws node according to match result
+	string query_str = "wins";
+	if (gameResult == LOSS) {
+		query_str = "losses";
+	}
+	else if (gameResult == DRAW) {
+		query_str = "draws";
+	}
+	else {
+		throw exception("Invalid game result!");
+	}
+	queryNode = myBehvNode->FirstChildElement(query_str.c_str());
+
+	//creates a new node with count 1 if not found or increments it otherwise
+    if (queryNode == NULL) {
+        queryNode = doc.NewElement(query_str.c_str());
+        queryNode->SetText(1);
+        myBehvNode->InsertFirstChild(queryNode);
+    }
+    else {
+        queryNode->QueryIntText(&value);
+        queryNode->SetText(value + 1);
     }
 
-    if (resultToString(gameResult) == "loss") {
-        queryNode = myBotNode->FirstChildElement("losses");
-        const char* query_str = "losses";
-        if (queryNode == NULL) {
-            queryNode = doc.NewElement(query_str);
-            queryNode->SetText(1);
-            myBotNode->InsertFirstChild(queryNode);
-        }
-        else {
-            queryNode->QueryIntText(&value);
-            queryNode->SetText(value + 1);
-        }
-    }
-    else if (resultToString(gameResult) == "draw") {
-        queryNode = myBotNode->FirstChildElement("draws");
-        const char* query_str = "draws";
-        if (queryNode == NULL) {
-            queryNode = doc.NewElement(query_str);
-            queryNode->SetText(1);
-            myBotNode->InsertFirstChild(queryNode);
-        }
-        else {
-            queryNode->QueryIntText(&value);
-            queryNode->SetText(value + 1);
-        }
-    }
-    else if (resultToString(gameResult) == "win") {
-        queryNode = myBotNode->FirstChildElement("wins");
-        const char* query_str = "wins";
-        if (queryNode == NULL) {
-            queryNode = doc.NewElement(query_str);
-            queryNode->SetText(1);
-            myBotNode->InsertFirstChild(queryNode);
-        }
-        else {
-            queryNode->QueryIntText(&value);
-            queryNode->SetText(value + 1);
-        }
-    }
-    doc.SaveFile(Configuration::getInstance()->matchDataFile.c_str());
+	doc.SaveFile(outputFile.c_str());
 }
 
 MatchData* MatchData::getInstance() {

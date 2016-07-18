@@ -5,6 +5,13 @@
 
 using namespace std;
 
+
+// Returns enemy name with spaces replaced by underscore
+string _enemyName();
+
+// Auxiliary to indicate whether a char is a space
+bool _isSpace(char);
+
 class Configuration {
 	//the singleton instance of this class
 	static Configuration* instance;
@@ -18,7 +25,8 @@ public:
 	//path to write the file with match details
 	string matchDataFile;
 
-    string readDataFile;
+	//beginning of file name to look for information about enemy
+    string enemyInformationPrefix;
 
 	//path to xml file with strategy definition
 	string strategyFile;
@@ -38,6 +46,12 @@ public:
 	~Configuration();
 
 	void parseConfig();
+
+	// path to file to read enemy information
+	string enemyInformationInputFile();
+
+	// path to file to write enemy information
+	string enemyInformationOutputFile();
 
 	//Directory to read input from
 	static const string INPUT_DIR;

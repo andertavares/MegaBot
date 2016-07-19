@@ -50,14 +50,14 @@ bool isSpace(char caracter) {
 }
 
 void MatchData::writeDetailedResult() {
-	using namespace tinyxml2;
+    using namespace tinyxml2;
 
     string bot_name = myBehaviorName;
 
-	/* DEBUG
-	ofstream outFile;
+    /* DEBUG
+    ofstream outFile;
     outFile.open("bwapi-data/write/dbg.txt", ios::out | ios::app);
-	*/
+    */
 
     int value;
 
@@ -65,66 +65,67 @@ void MatchData::writeDetailedResult() {
     XMLElement* myBehvNode;
     XMLElement* queryNode;
 
-	string inputFile = Configuration::getInstance()->enemyInformationInputFile();
-	string outputFile = Configuration::getInstance()->enemyInformationOutputFile();
+    string inputFile = Configuration::getInstance()->enemyInformationInputFile();
+    string outputFile = Configuration::getInstance()->enemyInformationOutputFile();
 
     //const char* filename = Configuration::getInstance()->readDataFile.c_str();
 
     XMLDocument doc;
-	XMLError result = doc.LoadFile(inputFile.c_str());
+    XMLError result = doc.LoadFile(inputFile.c_str());
 
-	// if file was not found, ok, we create a node and fill information in it
-	if (result == XML_ERROR_FILE_NOT_FOUND){
-		rootNode = doc.NewElement("scores");
-	}
-	// if another error occurred, we're in trouble =/
-	else if (result != XML_NO_ERROR) {
-		Broodwar->printf(
-			"Error while parsing the configuration file '%s'. Error: '%s'", 
-			inputFile, 
-			doc.ErrorName()
-		);
-		return;
-	}
-
-	else { //no error, goes after root node
-		rootNode = doc.FirstChildElement("scores");
-		if (rootNode == NULL){
-			rootNode = doc.NewElement("scores");
-		}
-	}
-
-	//finds information with bot node
-    /*botNode = doc.FirstChildElement("results")->FirstChildElement(enemy_name.c_str());
-    if (botNode == NULL) {
-        botNode = doc.NewElement(enemy_name.c_str());
-        doc.InsertFirstChild(botNode);
-    }*/
-
-	myBehvNode = rootNode->FirstChildElement(myBehaviorName.c_str());
-    if (myBehvNode == NULL) {
-        myBehvNode = doc.NewElement(myBehaviorName.c_str());
-		rootNode->InsertFirstChild(myBehvNode);
+    // if file was not found, ok, we create a node and fill information in it
+    if (result == XML_ERROR_FILE_NOT_FOUND) {
+        rootNode = doc.NewElement("scores");
+        doc.InsertFirstChild(rootNode);
+    }
+    // if another error occurred, we're in trouble =/
+    else if (result != XML_NO_ERROR) {
+        Broodwar->printf(
+            "Error while parsing the configuration file '%s'. Error: '%s'",
+            inputFile,
+            doc.ErrorName()
+            );
+        return;
+    }
+    else { //no error, goes after root node
+        rootNode = doc.FirstChildElement("scores");
+        if (rootNode == NULL) {
+            rootNode = doc.NewElement("scores");
+            doc.InsertFirstChild(rootNode);
+        }
     }
 
-	//queries wins, losses or draws node according to match result
-	string query_str = "";
-	if (gameResult == LOSS) {
-		query_str = "losses";
-	}
-	else if (gameResult == DRAW) {
-		query_str = "draws";
-	}
-	else if (gameResult == WIN) {
-		query_str = "wins";
-	}
-	else {
-		throw exception("Invalid game result!");
-	}
-	queryNode = myBehvNode->FirstChildElement(query_str.c_str());
+    //finds information with bot node
+    /*botNode = doc.FirstChildElement("results")->FirstChildElement(enemy_name.c_str());
+    if (botNode == NULL) {
+    botNode = doc.NewElement(enemy_name.c_str());
+    doc.InsertFirstChild(botNode);
+    }*/
+
+    myBehvNode = rootNode->FirstChildElement(myBehaviorName.c_str());
+    if (myBehvNode == NULL) {
+        myBehvNode = doc.NewElement(myBehaviorName.c_str());
+        rootNode->InsertFirstChild(myBehvNode);
+    }
+
+    //queries wins, losses or draws node according to match result
+    string query_str = "";
+    if (gameResult == LOSS) {
+        query_str = "losses";
+    }
+    else if (gameResult == DRAW) {
+        query_str = "draws";
+    }
+    else if (gameResult == WIN) {
+        query_str = "wins";
+    }
+    else {
+        throw exception("Invalid game result!");
+    }
+    queryNode = myBehvNode->FirstChildElement(query_str.c_str());
 
 
-	//creates a new node with count 1 if not found or increments it otherwise
+    //creates a new node with count 1 if not found or increments it otherwise
     if (queryNode == NULL) {
         queryNode = doc.NewElement(query_str.c_str());
         queryNode->SetText(1);
@@ -135,7 +136,7 @@ void MatchData::writeDetailedResult() {
         queryNode->SetText(value + 1);
     }
 
-	doc.SaveFile(outputFile.c_str());
+    doc.SaveFile(outputFile.c_str());
 
 }
 

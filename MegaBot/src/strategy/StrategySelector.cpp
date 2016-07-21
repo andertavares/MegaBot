@@ -38,7 +38,7 @@ void StrategySelector::disable() {
 }
 
 void StrategySelector::selectStrategy() {
-	using namespace tinyxml2;
+    using namespace tinyxml2;
     //retrieve what config says about strategy
     string strategyId = Configuration::getInstance()->strategyID;
 
@@ -48,94 +48,62 @@ void StrategySelector::selectStrategy() {
         float lucky = (rand() % 1000) / 1000.f;
         float epsilon = 0.1f;
         if (lucky < epsilon) {
-			Broodwar->printf(
-				"Choosing randomly: (%.3f < %.3f)", lucky, epsilon
-			);
+            Broodwar->printf(
+                "Choosing randomly: (%.3f < %.3f)", lucky, epsilon
+                );
             currentStrategyId = probabilistic();
         }
         else {
+            //file to read is MegaBot-vs-enemy.xml
+            string inputFile = Configuration::getInstance()->enemyInformationInputFile();
 
-			//file to read is MegaBot-vs-enemy.xml
-			string file = Configuration::getInstance()->enemyInformationInputFile(); /* Configuration::READ_DIR + 
-				Configuration::getInstance()->enemyInformationPrefix +
-				Broodwar->enemy()->getName() + ".xml";*/
             tinyxml2::XMLDocument doc;
-            XMLError error = doc.LoadFile(file.c_str());
+            XMLError errorInput = doc.LoadFile(inputFile.c_str());
 
-            if (error == XMLError::XML_NO_ERROR) {
+            if (errorInput == XMLError::XML_NO_ERROR) {
                 Player* enemy = Broodwar->enemy();
                 string enemy_name = enemy->getName();
-                XMLElement* enemyNode = doc.FirstChildElement(enemy_name.c_str());
+                XMLElement* rootNode = doc.FirstChildElement("scores");
 
-                if (enemyNode != NULL) {
-                    XMLElement* candidate = enemyNode->FirstChildElement();
+                if (rootNode != NULL) {
+                    XMLElement* candidate = rootNode->FirstChildElement();
                     string best_name;
                     float best_score = -1.0f;
-					int matchCount = 0;
 
                     while (candidate != NULL) {
-                        int points = 0;
+                        float score = 0;
+                        candidate->QueryFloatText(&score);
 
-                        XMLElement* queryNode;
-                        // each victory is worth 3 points
-						queryNode = candidate->FirstChildElement("wins");
-                        if (queryNode != NULL) {
-                            candidate = candidate->NextSiblingElement();
-                            int query_value = 0;
-                            candidate->QueryIntText(&query_value);
-                            points += query_value * 3;
-							matchCount += query_value;
-                        }
+                        // best candidate has the greatest ratio: points / possiblePoints
+                        // where possiblePoints is 3*matchCount (strategy would have won all matches)
 
-						// each draw is worth 1 point
-                        queryNode = candidate->FirstChildElement("draws");
-                        if (queryNode != NULL) {
-                            candidate = candidate->NextSiblingElement();
-                            int query_value = 0;
-                            candidate->QueryIntText(&query_value);
-                            points += query_value * 1;
-							matchCount += query_value;
-                        }
-
-						// losses are worth zero points
-                        queryNode = candidate->FirstChildElement("losses");
-                        if (queryNode != NULL) {
-                            candidate = candidate->NextSiblingElement();
-                            int query_value = 0;
-                            candidate->QueryIntText(&query_value);
-                            //points += query_value * (-1);
-							matchCount += query_value;
-                        }
-
-						// best candidate has the greatest ratio: points / possiblePoints
-						// where possiblePoints is 3*matchCount (strategy would have won all matches)
-						float score = points / float(3 * matchCount);
-						if (score > best_score) {
+                        if (score > best_score) {
                             best_name = candidate->Name();
                             best_score = score;
                         }
+                        candidate = candidate->NextSiblingElement();
                     }
                     if (best_name.empty()) {
-						Broodwar->printf("Best strategy could not be determined. Choosing prob'ly");
+                        Broodwar->printf("Best strategy could not be determined. Choosing prob'ly");
                         currentStrategyId = probabilistic();
-					}
+                    }
                     else {
                         currentStrategyId = best_name;
-					}
+                    }
                 }
                 else {
-					Broodwar->printf("Enemy information not found, choosing strategy randomly");
+                    Broodwar->printf("Enemy information not found, choosing strategy randomly");
                     currentStrategyId = probabilistic();
                 }
             }
-			else { //prints error
-				Broodwar->printf(
-					"Error while parsing strategy file '%s'. Error: '%s'",
-					Configuration::getInstance()->strategyFile.c_str(),
-					doc.ErrorName()
-				);
-				currentStrategyId = probabilistic();
-			}
+            else { //prints error
+                Broodwar->printf(
+                    "Error while parsing strategy file '%s'. Error: '%s'",
+                    Configuration::getInstance()->strategyFile.c_str(),
+                    doc.ErrorName()
+                    );
+                currentStrategyId = probabilistic();
+            }
         }
     }
     else {	//otherwise, use strategy explicitly described in config. 

@@ -59,8 +59,6 @@ void MatchData::writeDetailedResult() {
     outFile.open("bwapi-data/write/dbg.txt", ios::out | ios::app);
     */
 
-    int value;
-
     XMLElement* rootNode;
     XMLElement* myBehvNode;
     XMLElement* queryNode;
@@ -71,15 +69,16 @@ void MatchData::writeDetailedResult() {
     //const char* filename = Configuration::getInstance()->readDataFile.c_str();
 
     XMLDocument doc;
-    XMLError result = doc.LoadFile(inputFile.c_str());
+    XMLError input_result = doc.LoadFile(inputFile.c_str());
+    XMLError output_result = doc.LoadFile(outputFile.c_str());
 
     // if file was not found, ok, we create a node and fill information in it
-    if (result == XML_ERROR_FILE_NOT_FOUND) {
+    if (input_result == XML_ERROR_FILE_NOT_FOUND) {
         rootNode = doc.NewElement("scores");
         doc.InsertFirstChild(rootNode);
     }
     // if another error occurred, we're in trouble =/
-    else if (result != XML_NO_ERROR) {
+    else if (input_result != XML_NO_ERROR) {
         Broodwar->printf(
             "Error while parsing the configuration file '%s'. Error: '%s'",
             inputFile,
@@ -102,42 +101,39 @@ void MatchData::writeDetailedResult() {
     doc.InsertFirstChild(botNode);
     }*/
 
-    myBehvNode = rootNode->FirstChildElement(myBehaviorName.c_str());
-    if (myBehvNode == NULL) {
-        myBehvNode = doc.NewElement(myBehaviorName.c_str());
-        rootNode->InsertFirstChild(myBehvNode);
-    }
-
+    int result_value = 0;
     //queries wins, losses or draws node according to match result
-    string query_str = "";
     if (gameResult == LOSS) {
-        query_str = "losses";
+        result_value = -1;
     }
     else if (gameResult == DRAW) {
-        query_str = "draws";
+        result_value = 0;
     }
     else if (gameResult == WIN) {
-        query_str = "wins";
+        result_value = 1;
     }
     else {
         throw exception("Invalid game result!");
     }
-    queryNode = myBehvNode->FirstChildElement(query_str.c_str());
 
+    float value;
+    float alpha = 0.2f;
+    float score = 0;
 
-    //creates a new node with count 1 if not found or increments it otherwise
-    if (queryNode == NULL) {
-        queryNode = doc.NewElement(query_str.c_str());
-        queryNode->SetText(1);
-        myBehvNode->InsertFirstChild(queryNode);
+    myBehvNode = rootNode->FirstChildElement(myBehaviorName.c_str());
+    if (myBehvNode == NULL) {
+        score = alpha*result_value;
+        myBehvNode = doc.NewElement(myBehaviorName.c_str());
+        myBehvNode->SetText(score);
+        rootNode->InsertFirstChild(myBehvNode);
     }
     else {
-        queryNode->QueryIntText(&value);
-        queryNode->SetText(value + 1);
+        myBehvNode->QueryFloatText(&value);
+        score = (1 - alpha)*value + alpha*result_value;
+        myBehvNode->SetText(value + score);
     }
 
     doc.SaveFile(outputFile.c_str());
-
 }
 
 MatchData* MatchData::getInstance() {

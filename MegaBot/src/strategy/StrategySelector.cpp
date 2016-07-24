@@ -2,6 +2,7 @@
 #include <algorithm>
 #include <sstream>
 #include <ctime>
+#include <cfloat>
 #include "StrategySelector.h"
 #include "../MegaBot.h"
 #include "../data/Configuration.h"
@@ -70,19 +71,26 @@ void StrategySelector::selectStrategy() {
                     string best_name;
                     float best_score = -1.0f;
 
+                    map<string, float> scoresMap;
+                    scoresMap[MegaBot::NUSBot] = 0;
+                    scoresMap[MegaBot::SKYNET] = 0;
+                    scoresMap[MegaBot::XELNAGA] = 0;
+
                     while (candidate != NULL) {
-                        float score = 0;
+                        float score = -FLT_MAX;
                         candidate->QueryFloatText(&score);
 
-                        // best candidate has the greatest ratio: points / possiblePoints
-                        // where possiblePoints is 3*matchCount (strategy would have won all matches)
-
-                        if (score > best_score) {
-                            best_name = candidate->Name();
-                            best_score = score;
-                        }
+                        scoresMap[candidate->Name()] = score;
                         candidate = candidate->NextSiblingElement();
                     }
+
+                    for (std::map<string, float>::iterator it = scoresMap.begin(); it != scoresMap.end(); ++it) {
+                        if (it->second > best_score) {
+                            best_name = it->first;
+                            best_score = it->second;
+                        }
+                    }
+
                     if (best_name.empty()) {
                         Broodwar->printf("Best strategy could not be determined. Choosing prob'ly");
                         currentStrategyId = probabilistic();

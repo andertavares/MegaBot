@@ -70,7 +70,6 @@ void MatchData::writeDetailedResult() {
 
     XMLDocument doc;
     XMLError input_result = doc.LoadFile(inputFile.c_str());
-    XMLError output_result = doc.LoadFile(outputFile.c_str());
 
     // if file was not found, ok, we create a node and fill information in it
     if (input_result == XML_ERROR_FILE_NOT_FOUND) {

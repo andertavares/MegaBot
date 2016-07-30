@@ -18,7 +18,7 @@ Proof-of-concept StarCraft bot to test strategy selection. Currently it incorpor
 
 
 ## Building
-- Open MegaBot/MegaBot.sln in VS 2012
+- Open MegaBot/MegaBot.v11.sln in VS 2012 (not MegaBot.sln)
 - Make sure all projects will be built with VC++2008 (v90) toolset
 - Set the configuration to 'Release'
 - Hit "build" and wait for some time...

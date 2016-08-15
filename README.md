@@ -1,6 +1,12 @@
 # MegaBot
 Proof-of-concept StarCraft bot to test strategy selection. Currently it incorporates Skynet, Xelnaga and NUSBot.
 
+Authors:
+- Anderson Rocha Tavares
+- Amanda Santos
+- Hector Azpurua
+- Luiz Chaimowicz
+
 ## Requirements to run
 - StarCraft patched to 1.16.1
 - BWAPI 3.7.5 (https://github.com/bwapi/bwapi/releases/tag/v3.7.5)

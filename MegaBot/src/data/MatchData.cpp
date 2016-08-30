@@ -116,8 +116,9 @@ void MatchData::writeDetailedResult() {
     }
 
     float oldScore;
-    float alpha = 0.2f;
-    float score = 0;
+	float score = 0;
+	float alpha = Configuration::getInstance()->alpha; //alias for easy reading
+    
 
     myBehvNode = rootNode->FirstChildElement(myBehaviorName.c_str());
     if (myBehvNode == NULL) {

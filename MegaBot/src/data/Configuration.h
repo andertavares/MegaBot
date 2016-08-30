@@ -40,6 +40,12 @@ public:
 	//enable GUI (false makes match go much faster)
 	bool enableGUI;
 
+	//learning rate for strategy value (score) updates
+	float alpha;
+	
+	//rate of exploration
+	float epsilon;
+
 	//Returns the singleton instance of this class
 	static Configuration* getInstance();
 
@@ -85,6 +91,12 @@ public:
 
 	//xml field that contains the path to the win table file
 	static const string WIN_TABLE_FILE;
+
+	//xml field that contains alpha
+	static const string FIELD_ALPHA;
+
+	//xml field that contains epsilon
+	static const string FIELD_EPSILON;
 };
 
 #endif

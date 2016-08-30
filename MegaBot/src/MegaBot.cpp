@@ -32,7 +32,7 @@ MegaBot::MegaBot()
     behaviorNames.insert(make_pair(behaviors[XELNAGA], XELNAGA));
     behaviorNames.insert(make_pair(behaviors[NUSBot], NUSBot));
 
-    Configuration::getInstance()->parseConfig();
+    //Configuration::getInstance()->parseConfig(); (moved to onStart)
 
     MatchData::getInstance()->registerEnemyBehaviorName("Unknown");
     //for (auto behv : behaviors) {
@@ -45,6 +45,7 @@ void MegaBot::onStart() {
     // Uncomment to enable complete map information
     //Broodwar->enableFlag(Flag::CompleteMapInformation);
     MatchData::getInstance()->registerMatchBegin();
+	Configuration::getInstance()->parseConfig();
 
     myBehaviorName = StrategySelector::getInstance()->getStrategy();//Configuration::getInstance()->strategyID;
 
@@ -64,6 +65,12 @@ void MegaBot::onStart() {
     bool gui = Configuration::getInstance()->enableGUI;
     Broodwar->printf("Setting GUI to %s.", gui ? "enabled" : "disabled");
     Broodwar->setGUI(gui);
+
+	Broodwar->printf(
+		"Parameters: alpha=%.2f; epsilon=%.2f.", 
+		Configuration::getInstance()->alpha, 
+		Configuration::getInstance()->epsilon
+	);
 }
 
 void MegaBot::onEnd(bool isWinner) {
@@ -94,15 +101,15 @@ void MegaBot::onFrame() {
     currentBehavior->onFrame();
 
     //sends behavior communication message every 200 frames
-    if (!acknowledged && (BWAPI::Broodwar->getFrameCount() % 200) == 0) {
+    /*if (!acknowledged && (BWAPI::Broodwar->getFrameCount() % 200) == 0) {
         Broodwar->sendText("%s on!", myBehaviorName.c_str());
-    }
+    }*/
 
     //draws some text
-    Broodwar->drawTextScreen(5, 5, "\x0F MegaBot v0.1.1");
-    Broodwar->drawTextScreen(5, 15, "\x0F Strategy: %s", myBehaviorName.c_str());
+    Broodwar->drawTextScreen(5, 20, "\x0F MegaBot v0.1.2");
+    Broodwar->drawTextScreen(5, 35, "\x0F Strategy: %s", myBehaviorName.c_str());
     //Broodwar->drawTextScreen(5, 25, "\x0F Enemy behavior: %s", enemyBehaviorName.c_str());
-	Broodwar->drawTextScreen(5, 25, "\x0F Enemy: %s", Broodwar->enemy()->getName().c_str());
+	Broodwar->drawTextScreen(5, 45, "\x0F Enemy: %s", Broodwar->enemy()->getName().c_str());
 }
 
 void MegaBot::onSendText(std::string text) {

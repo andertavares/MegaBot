@@ -118,7 +118,7 @@
 				Name="VCCLCompilerTool"
 				Optimization="2"
 				EnableIntrinsicFunctions="true"
-				AdditionalIncludeDirectories="../include;&quot;$(BWAPI_DIR)/include&quot;;..\XelNaga\AiurModule\Source;..\XelNaga\include"
+				AdditionalIncludeDirectories="../include;&quot;$(BOOST_DIR)&quot;;&quot;$(BWAPI_DIR)/include&quot;;..\XelNaga\AiurModule\Source;..\XelNaga\include;..\Skynet\Skynet;..\NUSBot\NUSBot\src\NUSBot\Source"
 				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_USRDLL;EXAMPLEAIMODULE_EXPORTS;_SECURE_SCL 0"
 				RuntimeLibrary="2"
 				EnableFunctionLevelLinking="true"
@@ -171,6 +171,50 @@
 	<References>
 	</References>
 	<Files>
+		<Filter
+			Name="data"
+			>
+			<File
+				RelativePath=".\src\data\Configuration.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\src\data\Configuration.h"
+				>
+			</File>
+			<File
+				RelativePath=".\src\data\MatchData.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\src\data\MatchData.h"
+				>
+			</File>
+		</Filter>
+		<Filter
+			Name="strategy"
+			>
+			<File
+				RelativePath=".\src\strategy\StrategySelector.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\src\strategy\StrategySelector.h"
+				>
+			</File>
+		</Filter>
+		<Filter
+			Name="utils"
+			>
+			<File
+				RelativePath=".\src\utils\tinyxml2.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\src\utils\tinyxml2.h"
+				>
+			</File>
+		</Filter>
 		<File
 			RelativePath=".\src\Dll.cpp"
 			>

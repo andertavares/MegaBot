@@ -88,7 +88,7 @@
 			Name="Release|Win32"
 			OutputDirectory="$(SolutionDir)$(ConfigurationName)"
 			IntermediateDirectory="$(ConfigurationName)"
-			ConfigurationType="2"
+			ConfigurationType="1"
 			CharacterSet="1"
 			WholeProgramOptimization="1"
 			>
@@ -127,7 +127,7 @@
 				AdditionalDependencies="$(BWAPI_DIR)/lib/BWAPI.lib $(BWAPI_DIR)/lib/BWTA.lib $(BWAPI_DIR)/lib/tinyxml.lib $(BWAPI_DIR)/lib/CGAL-vc90-mt.lib $(BWAPI_DIR)/lib/libboost_thread-vc90-mt-1_40.lib $(BWAPI_DIR)/lib/gmp-vc90-mt.lib $(BWAPI_DIR)/lib/mpfr-vc90-mt.lib"
 				LinkIncremental="1"
 				GenerateDebugInformation="true"
-				SubSystem="2"
+				SubSystem="1"
 				OptimizeReferences="2"
 				EnableCOMDATFolding="2"
 				TargetMachine="1"

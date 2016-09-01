@@ -1,0 +1,71 @@
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual C++ Express 2010
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "MegaBot", "MegaBot.vcxproj", "{2E63AE74-758A-4607-9DE4-D28E814A6E13}"
+	ProjectSection(ProjectDependencies) = postProject
+		{A0F5203C-219C-4AAC-9AC2-87AC2C2603F1} = {A0F5203C-219C-4AAC-9AC2-87AC2C2603F1}
+		{1E54F46B-2C51-4F26-ABEC-F8F8D6CD0657} = {1E54F46B-2C51-4F26-ABEC-F8F8D6CD0657}
+		{DF22496E-D8F7-4273-825A-4251FD937CB0} = {DF22496E-D8F7-4273-825A-4251FD937CB0}
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Skynet-lib", "..\Skynet\Skynet\Skynet-lib.v10.vcxproj", "{1E54F46B-2C51-4F26-ABEC-F8F8D6CD0657}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "NUSBot-lib", "..\NUSBot\NUSBot\src\NUSBot\VisualStudio\NUSBot-lib.v10.vcxproj", "{DF22496E-D8F7-4273-825A-4251FD937CB0}"
+	ProjectSection(ProjectDependencies) = postProject
+		{C48126A6-7BA5-4E30-BCEC-866592E7EEC2} = {C48126A6-7BA5-4E30-BCEC-866592E7EEC2}
+		{C91160A9-C2C2-41C9-8F76-5F29FD99477C} = {C91160A9-C2C2-41C9-8F76-5F29FD99477C}
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Xelnaga-lib", "..\XelNaga\AiurModule\XelNagaLib.v10.vcxproj", "{A0F5203C-219C-4AAC-9AC2-87AC2C2603F1}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SparCraft", "..\NUSBot\NUSBot\src\SparCraft\VisualStudio\SparCraft.v10.vcxproj", "{C91160A9-C2C2-41C9-8F76-5F29FD99477C}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "StarCraftBuildOrderSearch", "..\NUSBot\NUSBot\src\StarcraftBuildOrderSearch\VisualStudio\StarcraftBuildOrderSearch.v10.vcxproj", "{C48126A6-7BA5-4E30-BCEC-866592E7EEC2}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Competition|Win32 = Competition|Win32
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{2E63AE74-758A-4607-9DE4-D28E814A6E13}.Competition|Win32.ActiveCfg = Release|Win32
+		{2E63AE74-758A-4607-9DE4-D28E814A6E13}.Competition|Win32.Build.0 = Release|Win32
+		{2E63AE74-758A-4607-9DE4-D28E814A6E13}.Debug|Win32.ActiveCfg = Debug|Win32
+		{2E63AE74-758A-4607-9DE4-D28E814A6E13}.Debug|Win32.Build.0 = Debug|Win32
+		{2E63AE74-758A-4607-9DE4-D28E814A6E13}.Release|Win32.ActiveCfg = Release|Win32
+		{2E63AE74-758A-4607-9DE4-D28E814A6E13}.Release|Win32.Build.0 = Release|Win32
+		{1E54F46B-2C51-4F26-ABEC-F8F8D6CD0657}.Competition|Win32.ActiveCfg = Competition|Win32
+		{1E54F46B-2C51-4F26-ABEC-F8F8D6CD0657}.Competition|Win32.Build.0 = Competition|Win32
+		{1E54F46B-2C51-4F26-ABEC-F8F8D6CD0657}.Debug|Win32.ActiveCfg = Debug|Win32
+		{1E54F46B-2C51-4F26-ABEC-F8F8D6CD0657}.Debug|Win32.Build.0 = Debug|Win32
+		{1E54F46B-2C51-4F26-ABEC-F8F8D6CD0657}.Release|Win32.ActiveCfg = Release|Win32
+		{1E54F46B-2C51-4F26-ABEC-F8F8D6CD0657}.Release|Win32.Build.0 = Release|Win32
+		{DF22496E-D8F7-4273-825A-4251FD937CB0}.Competition|Win32.ActiveCfg = Release|Win32
+		{DF22496E-D8F7-4273-825A-4251FD937CB0}.Competition|Win32.Build.0 = Release|Win32
+		{DF22496E-D8F7-4273-825A-4251FD937CB0}.Debug|Win32.ActiveCfg = Debug|Win32
+		{DF22496E-D8F7-4273-825A-4251FD937CB0}.Debug|Win32.Build.0 = Debug|Win32
+		{DF22496E-D8F7-4273-825A-4251FD937CB0}.Release|Win32.ActiveCfg = Release|Win32
+		{DF22496E-D8F7-4273-825A-4251FD937CB0}.Release|Win32.Build.0 = Release|Win32
+		{A0F5203C-219C-4AAC-9AC2-87AC2C2603F1}.Competition|Win32.ActiveCfg = Release|Win32
+		{A0F5203C-219C-4AAC-9AC2-87AC2C2603F1}.Competition|Win32.Build.0 = Release|Win32
+		{A0F5203C-219C-4AAC-9AC2-87AC2C2603F1}.Debug|Win32.ActiveCfg = Debug|Win32
+		{A0F5203C-219C-4AAC-9AC2-87AC2C2603F1}.Debug|Win32.Build.0 = Debug|Win32
+		{A0F5203C-219C-4AAC-9AC2-87AC2C2603F1}.Release|Win32.ActiveCfg = Release|Win32
+		{A0F5203C-219C-4AAC-9AC2-87AC2C2603F1}.Release|Win32.Build.0 = Release|Win32
+		{C91160A9-C2C2-41C9-8F76-5F29FD99477C}.Competition|Win32.ActiveCfg = Release|Win32
+		{C91160A9-C2C2-41C9-8F76-5F29FD99477C}.Competition|Win32.Build.0 = Release|Win32
+		{C91160A9-C2C2-41C9-8F76-5F29FD99477C}.Debug|Win32.ActiveCfg = Debug|Win32
+		{C91160A9-C2C2-41C9-8F76-5F29FD99477C}.Debug|Win32.Build.0 = Debug|Win32
+		{C91160A9-C2C2-41C9-8F76-5F29FD99477C}.Release|Win32.ActiveCfg = Release|Win32
+		{C91160A9-C2C2-41C9-8F76-5F29FD99477C}.Release|Win32.Build.0 = Release|Win32
+		{C48126A6-7BA5-4E30-BCEC-866592E7EEC2}.Competition|Win32.ActiveCfg = Release|Win32
+		{C48126A6-7BA5-4E30-BCEC-866592E7EEC2}.Competition|Win32.Build.0 = Release|Win32
+		{C48126A6-7BA5-4E30-BCEC-866592E7EEC2}.Debug|Win32.ActiveCfg = Debug|Win32
+		{C48126A6-7BA5-4E30-BCEC-866592E7EEC2}.Debug|Win32.Build.0 = Debug|Win32
+		{C48126A6-7BA5-4E30-BCEC-866592E7EEC2}.Release|Win32.ActiveCfg = Release|Win32
+		{C48126A6-7BA5-4E30-BCEC-866592E7EEC2}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,157 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectName>NUSBot-lib</ProjectName>
+    <ProjectGuid>{DF22496E-D8F7-4273-825A-4251FD937CB0}</ProjectGuid>
+    <RootNamespace>AiurModule</RootNamespace>
+    <Keyword>Win32Proj</Keyword>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <CharacterSet>Unicode</CharacterSet>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <PlatformToolset>v100</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>10.0.30319.1</_ProjectFileVersion>
+    <ReferencePath Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">..\AiurModule;$(ReferencePath)</ReferencePath>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(SolutionDir)$(Configuration)\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(Configuration)\</IntDir>
+    <ReferencePath Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">..\AiurModule;$(ReferencePath)</ReferencePath>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(SolutionDir)$(Configuration)\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(Configuration)\</IntDir>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>../SparCraft/source;../Source;$(BWAPI_DIR)/include;$(BOOST_DIR);$(FREETYPE_DIR)/include/freetype2;$(FREETYPE_DIR)/include;$(SDL_IMAGE_DIR);$(SDL_DIR)/include;$(SDL_GFX_DIR);$(FTGL_DIR)/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>NOMINMAX;WIN32;_WINDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>../SparCraft/source;../Source;$(BWAPI_DIR)/include;$(BOOST_DIR);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>NOMINMAX;WIN32;_WINDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="..\Source\base\BuildingData.cpp" />
+    <ClCompile Include="..\Source\base\BuildingManager.cpp" />
+    <ClCompile Include="..\Source\base\BuildingPlacer.cpp" />
+    <ClCompile Include="..\Source\base\BuildLearner.cpp" />
+    <ClCompile Include="..\Source\base\BuildOrderGoalManager.cpp" />
+    <ClCompile Include="..\Source\base\BuildOrderQueue.cpp" />
+    <ClCompile Include="COAManager.cpp" />
+    <ClCompile Include="..\Source\CombatCommander.cpp" />
+    <ClCompile Include="..\Source\CombatSimulation.cpp" />
+    <ClCompile Include="..\Source\Common.cpp" />
+    <ClCompile Include="..\Source\micromanagement\DetectorManager.cpp" />
+    <ClCompile Include="..\Source\Dll.cpp" />
+    <ClCompile Include="..\Source\HardCodedInfo.cpp" />
+    <ClCompile Include="..\Source\InformationManager.cpp" />
+    <ClCompile Include="..\Source\IPBManager.cpp" />
+    <ClCompile Include="..\Source\Logger.cpp" />
+    <ClCompile Include="..\Source\MapGrid.cpp" />
+    <ClCompile Include="..\Source\MapTools.cpp" />
+    <ClCompile Include="..\Source\micromanagement\MeleeManager.cpp" />
+    <ClCompile Include="..\Source\micromanagement\MicroManager.cpp" />
+    <ClCompile Include="..\Source\MicroSearchManager.cpp" />
+    <ClCompile Include="..\Source\micromanagement\MicroUtil.cpp" />
+    <ClCompile Include="..\Source\NUSBotModule.cpp" />
+    <ClCompile Include="..\Source\micromanagement\ObserverManager.cpp" />
+    <ClCompile Include="..\Source\Options.cpp" />
+    <ClCompile Include="..\Source\base\ProductionManager.cpp" />
+    <ClCompile Include="..\Source\micromanagement\RangedManager.cpp" />
+    <ClCompile Include="..\Source\ReplayVisualizer.cpp" />
+    <ClCompile Include="..\Source\ScoutManager.cpp" />
+    <ClCompile Include="..\Source\Squad.cpp" />
+    <ClCompile Include="..\Source\SquadData.cpp" />
+    <ClCompile Include="..\Source\base\StarcraftBuildOrderSearchManager.cpp" />
+    <ClCompile Include="..\Source\StrategyManager.cpp" />
+    <ClCompile Include="ThreatManager.cpp" />
+    <ClCompile Include="..\Source\micromanagement\TransportManager.cpp" />
+    <ClCompile Include="..\Source\UnitCommandData.cpp" />
+    <ClCompile Include="..\Source\UnitCommandManager.cpp" />
+    <ClCompile Include="..\Source\UnitData.cpp" />
+    <ClCompile Include="..\Source\Visualizer.cpp" />
+    <ClCompile Include="..\Source\base\WorkerData.cpp" />
+    <ClCompile Include="..\Source\base\WorkerManager.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\Source\base\BuildingData.h" />
+    <ClInclude Include="..\Source\base\BuildingManager.h" />
+    <ClInclude Include="..\Source\base\BuildingPlacer.h" />
+    <ClInclude Include="..\Source\base\BuildLearner.h" />
+    <ClInclude Include="..\Source\base\BuildOrderGoalManager.h" />
+    <ClInclude Include="..\Source\base\BuildOrderQueue.h" />
+    <ClInclude Include="COAManager.h" />
+    <ClInclude Include="..\Source\CombatCommander.h" />
+    <ClInclude Include="..\Source\CombatSimulation.h" />
+    <ClInclude Include="..\Source\Common.h" />
+    <ClInclude Include="..\Source\micromanagement\DetectorManager.h" />
+    <ClInclude Include="..\Source\DistanceMap.hpp" />
+    <ClInclude Include="..\Source\EnhancedInterface.hpp" />
+    <ClInclude Include="..\Source\HardCodedInfo.h" />
+    <ClInclude Include="..\Source\InformationManager.h" />
+    <ClInclude Include="..\Source\IPBManager.h" />
+    <ClInclude Include="..\Source\Logger.h" />
+    <ClInclude Include="..\Source\MapGrid.h" />
+    <ClInclude Include="..\Source\MapTools.h" />
+    <ClInclude Include="..\Source\micromanagement\MeleeManager.h" />
+    <ClInclude Include="..\Source\base\MetaType.h" />
+    <ClInclude Include="..\Source\micromanagement\MicroManager.h" />
+    <ClInclude Include="..\Source\MicroSearchManager.h" />
+    <ClInclude Include="..\Source\micromanagement\MicroUtil.h" />
+    <ClInclude Include="..\Source\NUSBotModule.h" />
+    <ClInclude Include="..\Source\micromanagement\ObserverManager.h" />
+    <ClInclude Include="..\Source\Options.h" />
+    <ClInclude Include="..\Source\base\ProductionManager.h" />
+    <ClInclude Include="..\Source\micromanagement\RangedManager.h" />
+    <ClInclude Include="..\Source\ReplayVisualizer.h" />
+    <ClInclude Include="..\Source\ScoutManager.h" />
+    <ClInclude Include="..\Source\Squad.h" />
+    <ClInclude Include="..\Source\SquadData.h" />
+    <ClInclude Include="..\Source\SquadOrder.h" />
+    <ClInclude Include="..\Source\base\StarcraftBuildOrderSearchManager.h" />
+    <ClInclude Include="..\Source\base\StarcraftSearchData.h" />
+    <ClInclude Include="..\Source\StrategyManager.h" />
+    <ClInclude Include="ThreatManager.h" />
+    <ClInclude Include="..\Source\micromanagement\TransportManager.h" />
+    <ClInclude Include="..\Source\UnitCommandData.h" />
+    <ClInclude Include="..\Source\UnitCommandManager.h" />
+    <ClInclude Include="..\Source\UnitData.h" />
+    <ClInclude Include="..\Source\Visualizer.h" />
+    <ClInclude Include="..\Source\base\WorkerData.h" />
+    <ClInclude Include="..\Source\base\WorkerManager.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\SparCraft\VisualStudio\SparCraft.v10.vcproj" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

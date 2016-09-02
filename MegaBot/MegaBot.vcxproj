@@ -111,9 +111,6 @@
     <ClInclude Include="src\utils\tinyxml2.h" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\NUSBot\NUSBot\src\NUSBot\VisualStudio\NUSBot-lib.v10.vcxproj">
-      <Project>{df22496e-d8f7-4273-825a-4251fd937cb0}</Project>
-    </ProjectReference>
     <ProjectReference Include="..\NUSBot\NUSBot\src\NUSBot\VisualStudio\NUSBot-lib.vcxproj">
       <Project>{6c685b5e-324a-4f3c-a53c-2a800e1c7eb9}</Project>
     </ProjectReference>
@@ -122,9 +119,6 @@
     </ProjectReference>
     <ProjectReference Include="..\NUSBot\NUSBot\src\StarcraftBuildOrderSearch\VisualStudio\StarcraftBuildOrderSearch.vcxproj">
       <Project>{9f8709e3-ac4f-45f2-8105-4a99d8e2a127}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\Skynet\Skynet\Skynet-lib.v10.vcxproj">
-      <Project>{1e54f46b-2c51-4f26-abec-f8f8d6cd0657}</Project>
     </ProjectReference>
     <ProjectReference Include="..\Skynet\Skynet\Skynet-lib.vcxproj">
       <Project>{1e54f46b-2c51-4f26-abec-f8f8d6cd0657}</Project>

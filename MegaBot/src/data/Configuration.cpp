@@ -21,6 +21,9 @@ const string Configuration::FIELD_MATCH_DATA_FILE = "match-output";
 const string Configuration::FIELD_STRATEGY_FILE = "strategy-file";
 const string Configuration::FIELD_SPEED = "speed";
 const string Configuration::FIELD_ENABLE_GUI = "gui";
+const string Configuration::FIELD_ALPHA = "alpha";
+const string Configuration::FIELD_EPSILON = "epsilon";
+
 const string Configuration::WIN_TABLE_FILE = "win-table"; 
 
 Configuration* Configuration::instance = NULL;
@@ -36,6 +39,9 @@ Configuration::Configuration() {
 	strategyID = MegaBot::SKYNET;
 	speed = 0;
 	enableGUI = true;
+
+	alpha = 0.2f;
+	epsilon = 0.15f;
 }
 
 Configuration* Configuration::getInstance() {
@@ -83,34 +89,49 @@ void Configuration::parseConfig() {
 		);
 		return;
 	}
-	
-	//sets build order
-	XMLElement* strategy = doc.FirstChildElement("config")->FirstChildElement(FIELD_STRATEGY_ID.c_str());
-	if (strategy) {
-		strategyID = string(strategy->Attribute("value"));
+	XMLElement* element;
+
+	//sets strategy
+	element = doc.FirstChildElement("config")->FirstChildElement(FIELD_STRATEGY_ID.c_str());
+	if (element) {
+		strategyID = string(element->Attribute("value"));
 	}
 
 	//sets speed
-	XMLElement* speedElement = doc.FirstChildElement("config")->FirstChildElement(FIELD_SPEED.c_str());
-	if (speedElement) {
-		speedElement->QueryIntAttribute("value", &speed);
+	element = doc.FirstChildElement("config")->FirstChildElement(FIELD_SPEED.c_str());
+	if (element) {
+		element->QueryIntAttribute("value", &speed);
 	}
 
 	//sets gui
-	XMLElement* guiElement = doc.FirstChildElement("config")->FirstChildElement(FIELD_ENABLE_GUI.c_str());
-	if (guiElement) {
-		guiElement->QueryBoolAttribute("value", &enableGUI);
+	element = doc.FirstChildElement("config")->FirstChildElement(FIELD_ENABLE_GUI.c_str());
+	if (element) {
+		element->QueryBoolAttribute("value", &enableGUI);
 	}
 
 	//strategy file
-	XMLElement* strategyFileElement = doc.FirstChildElement("config")->FirstChildElement(FIELD_STRATEGY_FILE.c_str());
-	if (strategyFileElement) {
-		strategyFile = Configuration::INPUT_DIR + string(strategyFileElement->Attribute("value"));
+	element = doc.FirstChildElement("config")->FirstChildElement(FIELD_STRATEGY_FILE.c_str());
+	if (element) {
+		strategyFile = Configuration::INPUT_DIR + string(element->Attribute("value"));
 	}
 
-	XMLElement* winTableFileElement = doc.FirstChildElement("config")->FirstChildElement(WIN_TABLE_FILE.c_str());
-	if (winTableFileElement) {
-		winTableFile = Configuration::INPUT_DIR + string(winTableFileElement->Attribute("value"));
+	//victory scorechart
+	element = doc.FirstChildElement("config")->FirstChildElement(WIN_TABLE_FILE.c_str());
+	if (element) {
+		winTableFile = Configuration::INPUT_DIR + string(element->Attribute("value"));
+	}
+	
+	//alpha
+	element = doc.FirstChildElement("config")->FirstChildElement(FIELD_ALPHA.c_str());
+	if (element) {
+		element->QueryFloatAttribute("value", &alpha);
+	}
+
+	//epsilon
+	element = doc.FirstChildElement("config")->FirstChildElement(FIELD_EPSILON.c_str());
+	if (element) {
+		Broodwar->printf("reading epsilon!");
+		element->QueryFloatAttribute("value", &epsilon);
 	}
 
 	//traverses the XML looking for configurations

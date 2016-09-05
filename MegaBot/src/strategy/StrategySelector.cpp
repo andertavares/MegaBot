@@ -46,15 +46,20 @@ void StrategySelector::selectStrategy() {
     //chooses strategy probabilistically
     if (strategyId == "probabilistic") {
         srand(time(NULL));
-        float lucky = (rand() % 1000) / 1000.f;
-        float epsilon = 0.1f;
+        //float lucky = (rand() % 1000) / 1000.f;
+		double lucky = (rand() / (double)(RAND_MAX + 1));
+		double epsilon = Configuration::getInstance()->epsilon; //alias for easy reading
         if (lucky < epsilon) {
             Broodwar->printf(
                 "Choosing randomly: (%.3f < %.3f)", lucky, epsilon
-                );
+            );
             currentStrategyId = probabilistic();
         }
         else {
+			Broodwar->printf(
+                "Choosing greedily: (%.3f > %.3f)", lucky, epsilon
+            );
+
             //file to read is MegaBot-vs-enemy.xml
             string inputFile = Configuration::getInstance()->enemyInformationInputFile();
 
@@ -109,7 +114,7 @@ void StrategySelector::selectStrategy() {
                     "Error while parsing strategy file '%s'. Error: '%s'",
                     Configuration::getInstance()->strategyFile.c_str(),
                     doc.ErrorName()
-                    );
+                );
                 currentStrategyId = probabilistic();
             }
         }
@@ -136,7 +141,7 @@ string StrategySelector::probabilistic() {
             "An error has occurred while parsing strategy file '%s'. Error: '%s'",
             Configuration::getInstance()->strategyFile.c_str(),
             doc.ErrorName()
-            );
+        );
         return defaultBehavior;	//returns a default strategy
     }
 
@@ -150,7 +155,7 @@ string StrategySelector::probabilistic() {
     }
 
 
-    //openings loaded, now will select one
+    //strategies loaded, now will select one
     float sum = 0.f; //probabilities should add to 1.0, but this is to guard against abnormal cases
     map<string, float>::iterator behv;
     for (behv = behaviors.begin(); behv != behaviors.end(); ++behv) {
@@ -173,7 +178,7 @@ string StrategySelector::probabilistic() {
             Broodwar->printf(
                 "MegaBot chose: %s (random: %.3f, target: %.3f, acc: %.3f, sum: %.3f)",
                 behv->first.c_str(), random, (acc + behv->second), acc, sum
-                );
+            );
             return behv->first;
         }
         acc += behv->second;
@@ -181,7 +186,7 @@ string StrategySelector::probabilistic() {
     Broodwar->printf(
         "ERROR: behavior was not randomly selected (random: %.3f, acc: %.3f, sum: %.3f). Defaulting to: %s.",
         random, acc, sum, defaultBehavior
-        );
+    );
     return defaultBehavior;	//something went wrong, opening was not randomly selected =/
 }
 

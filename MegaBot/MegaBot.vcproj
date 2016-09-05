@@ -118,13 +118,16 @@
 				Name="VCCLCompilerTool"
 				Optimization="2"
 				EnableIntrinsicFunctions="true"
-				AdditionalIncludeDirectories="../include;&quot;$(BWAPI_DIR)/include&quot;;..\XelNaga\AiurModule\Source;..\XelNaga\include"
-				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_USRDLL;EXAMPLEAIMODULE_EXPORTS;_SECURE_SCL 0"
+				FavorSizeOrSpeed="1"
+				AdditionalIncludeDirectories="../include;&quot;$(BOOST_DIR)&quot;;&quot;$(BWAPI_DIR)/include&quot;;..\XelNaga\AiurModule\Source;..\XelNaga\include;..\Skynet\Skynet;..\NUSBot\NUSBot\src\SparCraft\source;..\NUSBot\NUSBot\src\NUSBot\Source"
+				PreprocessorDefinitions="WIN32;SKYNET_EXPORTS;NDEBUG;_WINDOWS;_USRDLL;EXAMPLEAIMODULE_EXPORTS"
 				RuntimeLibrary="2"
 				EnableFunctionLevelLinking="true"
 				UsePrecompiledHeader="0"
+				PrecompiledHeaderFile="StdAfx.h"
 				WarningLevel="3"
 				DebugInformationFormat="3"
+				CompileAs="0"
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"
@@ -137,8 +140,10 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="$(BWAPI_DIR)/lib/BWAPI.lib $(BWAPI_DIR)/lib/BWTA.lib $(BWAPI_DIR)/lib/tinyxml.lib $(BWAPI_DIR)/lib/CGAL-vc90-mt.lib $(BWAPI_DIR)/lib/libboost_thread-vc90-mt-1_40.lib $(BWAPI_DIR)/lib/gmp-vc90-mt.lib $(BWAPI_DIR)/lib/mpfr-vc90-mt.lib"
+				AdditionalDependencies="$(BWAPI_DIR)/lib/BWAPI.lib $(BWAPI_DIR)/lib/BWTA.lib $(BWAPI_DIR)/lib/tinyxml.lib $(BWAPI_DIR)/lib/CGAL-vc90-mt.lib $(BWAPI_DIR)/lib/libboost_thread-vc90-mt-1_40.lib $(BWAPI_DIR)/lib/gmp-vc90-mt.lib $(BWAPI_DIR)/lib/mpfr-vc90-mt.lib ../NUSBot/NUSBot/src/StarCraftBuildOrderSearch/VisualStudio/$(ConfigurationName)/StarCraftData.obj"
 				LinkIncremental="2"
+				AdditionalLibraryDirectories="&quot;$(BWAPI_DIR)/lib&quot;;&quot;$(BOOST_DIR)/lib&quot;"
+				IgnoreDefaultLibraryNames=""
 				GenerateDebugInformation="false"
 				SubSystem="2"
 				OptimizeReferences="2"
@@ -150,6 +155,7 @@
 			/>
 			<Tool
 				Name="VCManifestTool"
+				VerboseOutput="true"
 			/>
 			<Tool
 				Name="VCXDCMakeTool"
@@ -169,8 +175,72 @@
 		</Configuration>
 	</Configurations>
 	<References>
+		<ProjectReference
+			ReferencedProjectIdentifier="{DF22496E-D8F7-4273-825A-4251FD937CB0}"
+			RelativePathToProject="..\NUSBot\NUSBot\src\NUSBot\VisualStudio\NUSBot-lib.vcproj"
+		/>
+		<ProjectReference
+			ReferencedProjectIdentifier="{1E54F46B-2C51-4F26-ABEC-F8F8D6CD0657}"
+			RelativePathToProject="..\Skynet\Skynet\Skynet-lib.vcproj"
+		/>
+		<ProjectReference
+			ReferencedProjectIdentifier="{A0F5203C-219C-4AAC-9AC2-87AC2C2603F1}"
+			RelativePathToProject="..\XelNaga\AiurModule\XelNagaLib.vcproj"
+		/>
+		<ProjectReference
+			ReferencedProjectIdentifier="{C48126A6-7BA5-4E30-BCEC-866592E7EEC2}"
+			RelativePathToProject="..\NUSBot\NUSBot\src\StarcraftBuildOrderSearch\VisualStudio\StarcraftBuildOrderSearch.vcproj"
+		/>
+		<ProjectReference
+			ReferencedProjectIdentifier="{C91160A9-C2C2-41C9-8F76-5F29FD99477C}"
+			RelativePathToProject="..\NUSBot\NUSBot\src\SparCraft\VisualStudio\SparCraft.vcproj"
+		/>
 	</References>
 	<Files>
+		<Filter
+			Name="data"
+			>
+			<File
+				RelativePath=".\src\data\Configuration.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\src\data\Configuration.h"
+				>
+			</File>
+			<File
+				RelativePath=".\src\data\MatchData.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\src\data\MatchData.h"
+				>
+			</File>
+		</Filter>
+		<Filter
+			Name="strategy"
+			>
+			<File
+				RelativePath=".\src\strategy\StrategySelector.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\src\strategy\StrategySelector.h"
+				>
+			</File>
+		</Filter>
+		<Filter
+			Name="utils"
+			>
+			<File
+				RelativePath=".\src\utils\tinyxml2.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\src\utils\tinyxml2.h"
+				>
+			</File>
+		</Filter>
 		<File
 			RelativePath=".\src\Dll.cpp"
 			>

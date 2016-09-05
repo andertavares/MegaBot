@@ -115,9 +115,10 @@ void MatchData::writeDetailedResult() {
         throw exception("Invalid game result!");
     }
 
-    float value;
-    float alpha = 0.2f;
-    float score = 0;
+    float oldScore;
+	float score = 0;
+	float alpha = Configuration::getInstance()->alpha; //alias for easy reading
+    
 
     myBehvNode = rootNode->FirstChildElement(myBehaviorName.c_str());
     if (myBehvNode == NULL) {
@@ -127,9 +128,10 @@ void MatchData::writeDetailedResult() {
         rootNode->InsertFirstChild(myBehvNode);
     }
     else {
-        myBehvNode->QueryFloatText(&value);
-        score = (1 - alpha)*value + alpha*result_value;
-        myBehvNode->SetText(value + score);
+        myBehvNode->QueryFloatText(&oldScore);
+        score = (1 - alpha)*oldScore + alpha*result_value;
+        //myBehvNode->SetText(value + score); //BUGFIX: it should set only the value!
+		myBehvNode->SetText(score);
     }
 
     doc.SaveFile(outputFile.c_str());

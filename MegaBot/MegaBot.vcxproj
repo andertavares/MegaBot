@@ -125,7 +125,6 @@
     </ProjectReference>
     <ProjectReference Include="..\XelNaga\AiurModule\XelNagaLib.vcxproj">
       <Project>{a0f5203c-219c-4aac-9ac2-87ac2c2603f1}</Project>
-      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

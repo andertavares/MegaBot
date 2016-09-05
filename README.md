@@ -16,8 +16,7 @@ Authors:
 - Visual C++2008 with SP 1 (dowload link: http://download.microsoft.com/download/E/8/E/E8EEB394-7F42-4963-A2D8-29559B738298/VS2008ExpressWithSP1ENUX1504728.iso)
 - Visual C++2010 (download link: http://download.microsoft.com/download/1/D/9/1D9A6C0E-FC89-43EE-9658-B9F0E3A76983/vc_web.exe)
 - Visual Studio 2012 (download link: https://www.microsoft.com/en-us/download/details.aspx?id=34673)
-- Boost 1.60.0 (https://sourceforge.net/projects/boost/files/boost-binaries/1.60.0/). There are many versions,  boost_1_60_0-msvc-9.0-32.exe is recommended;
--- NOTE: if you download boost from link above, it is possible that instead of a BOOST\_DIR/lib directory you get something like BOOST\_DIR/lib32-msvc-9.0. In this case, rename lib32-msvc-9.0 to lib (BOOST_DIR is the directory where your Boost is located). Otherwise, you'll get a link error.
+- Boost 1.60.0 (https://sourceforge.net/projects/boost/files/boost-binaries/1.60.0/boost_1_60_0-msvc-9.0-32.exe/download). This link goes directly to 32 bit, VC++2008 compatible version of Boost and should work. If, for some reason, you need another version, look into: https://sourceforge.net/projects/boost/files/boost-binaries/1.60.0/
 
 ## Instructions
 ### Environment setup

@@ -1,6 +1,7 @@
 #ifndef __LOGGING_H__
 #define __LOGGING_H__
 
+#include <stdarg.h>
 #include <BWAPI.h>
 #include "../data/Configuration.h"
 

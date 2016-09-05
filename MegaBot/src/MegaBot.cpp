@@ -11,6 +11,7 @@
 #include "strategy/StrategySelector.h"
 #include "data/Configuration.h"
 #include "data/MatchData.h"
+#include "utils/Logging.h"
 
 using namespace BWAPI;
 
@@ -50,6 +51,7 @@ void MegaBot::onStart() {
     myBehaviorName = StrategySelector::getInstance()->getStrategy();//Configuration::getInstance()->strategyID;
 
     Broodwar->sendText("%s on!", myBehaviorName.c_str());		//sends behavior communication message
+    Logging::getInstance()->log("%s on!", myBehaviorName.c_str());
 
     MatchData::getInstance()->registerMyBehaviorName(myBehaviorName);
     currentBehavior = behaviors[myBehaviorName];

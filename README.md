@@ -10,11 +10,8 @@ Authors:
 - Hector Azpurua
 - Luiz Chaimowicz
 
-## Run requirements and instructions
-- StarCraft patched to 1.16.1
-- BWAPI 3.7.4 (https://github.com/bwapi/bwapi/releases/tag/v3.7.4) -- it also works with BWAPI 3.7.5 (https://github.com/bwapi/bwapi/releases/tag/v3.7.5)
-(instructions are coming soon)
+## Play against MegaBot
+If you're a StarCraft player and would like to test MegaBot against your skills, please [follow these instructions](https://github.com/andertavares/MegaBot/wiki/Play-against-MegaBot)
 
 ## Build requirements and instructions
-
-Please refer to this [wiki page](https://github.com/andertavares/MegaBot/wiki/Build-instructions).
+If you're a developer and would like to build MegaBot yourself, please refer to this [wiki page](https://github.com/andertavares/MegaBot/wiki/Build-instructions).

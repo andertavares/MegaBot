@@ -63,10 +63,10 @@ public:
 	static const string INPUT_DIR;
 
 	//Directory to write output to
-	static const string OUTPUT_DIR;
+	static string OUTPUT_DIR;
 
     //Directory to read informations about the tournament
-    static const string READ_DIR;
+    static string READ_DIR;
 
 	//File to read configs from
 	static const string CONFIG_FILE;
@@ -82,6 +82,12 @@ public:
 
 	//xml field that contains the match data file
 	static const string FIELD_STRATEGY_FILE;
+
+    //xml field that contains the read directory
+    static const string FIELD_READ_DIR;
+    
+    //xml field that contains the write directory
+    static const string FIELD_WRITE_DIR;
 
 	//xml field that contains the initial match speed
 	static const string FIELD_SPEED;

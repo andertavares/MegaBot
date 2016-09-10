@@ -2,6 +2,8 @@
 <config>
 	<strategy value="probabilistic" />
 	<strategy-file value="megabot_protoss-uniform.xml" />
+	<read-dir value="bwapi-data/read/" />
+	<write-dir value="bwapi-data/write/" />
 	<match-output value="output.xml" />
 	<alpha value="0.2" /> <!-- learning rate for strategy value update -->
 	<epsilon value="0.15" /> <!-- exploration coefficient -->

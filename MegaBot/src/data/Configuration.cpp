@@ -8,8 +8,8 @@
 
 //BEGIN: change these if you need to read/write in different folders
 const string Configuration::INPUT_DIR = "bwapi-data/AI/";
-const string Configuration::OUTPUT_DIR = "bwapi-data/write/";
-const string Configuration::READ_DIR = "bwapi-data/read/";
+string Configuration::OUTPUT_DIR = "bwapi-data/write/";
+string Configuration::READ_DIR = "bwapi-data/read/";
 //END: change these if you need to read/write in different folders
 
 //Unless you're programming MegaBot, don't change consts below
@@ -19,6 +19,8 @@ const string Configuration::CONFIG_FILE = Configuration::INPUT_DIR + "megabot_co
 const string Configuration::FIELD_STRATEGY_ID = "strategy";
 const string Configuration::FIELD_MATCH_DATA_FILE = "match-output";
 const string Configuration::FIELD_STRATEGY_FILE = "strategy-file";
+const string Configuration::FIELD_READ_DIR = "read-dir";
+const string Configuration::FIELD_WRITE_DIR = "write-dir";
 const string Configuration::FIELD_SPEED = "speed";
 const string Configuration::FIELD_ENABLE_GUI = "gui";
 const string Configuration::FIELD_ALPHA = "alpha";
@@ -114,6 +116,18 @@ void Configuration::parseConfig() {
 	if (element) {
 		strategyFile = Configuration::INPUT_DIR + string(element->Attribute("value"));
 	}
+
+    //read directory
+    element = doc.FirstChildElement("config")->FirstChildElement(FIELD_READ_DIR.c_str());
+    if (element) {
+        Configuration::READ_DIR = string(element->Attribute("value"));
+    }
+
+    //write directoy
+    element = doc.FirstChildElement("config")->FirstChildElement(FIELD_WRITE_DIR.c_str());
+    if (element) {
+        Configuration::OUTPUT_DIR = string(element->Attribute("value"));
+    }
 
 	//victory scorechart
 	element = doc.FirstChildElement("config")->FirstChildElement(WIN_TABLE_FILE.c_str());

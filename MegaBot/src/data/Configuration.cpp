@@ -37,6 +37,7 @@ Configuration::Configuration() {
 	strategyFile = INPUT_DIR + "megabot_strategy.xml";
 
 	enemyInformationPrefix = "MegaBot-vs-";
+    crashInformationPrefix = "crash_MegaBot-vs-";
 
 	strategyID = MegaBot::SKYNET;
 	speed = 0;
@@ -64,6 +65,14 @@ string Configuration::enemyInformationInputFile(){
 
 string Configuration::enemyInformationOutputFile(){
 	return OUTPUT_DIR + enemyInformationPrefix + _enemyName() + ".xml";
+}
+
+string Configuration::crashInformationInputFile() {
+    return READ_DIR + crashInformationPrefix + _enemyName() + ".xml";
+}
+
+string Configuration::crashInformationOutputFile() {
+    return OUTPUT_DIR + crashInformationPrefix + _enemyName() + ".xml";
 }
 
 bool _isSpace(char caracter) {

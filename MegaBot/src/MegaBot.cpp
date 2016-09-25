@@ -57,6 +57,8 @@ void MegaBot::onStart() {
     currentBehavior = behaviors[myBehaviorName];
     currentBehavior->onStart();
 
+    MatchData::getInstance()->writeToCrashFile();
+
     //overrides user input, speed and GUI set by currentBehavior
     Broodwar->enableFlag(Flag::UserInput);
 
@@ -89,6 +91,7 @@ void MegaBot::onEnd(bool isWinner) {
     MatchData::getInstance()->registerMatchFinish(result);
     MatchData::getInstance()->writeSummary();
     MatchData::getInstance()->writeDetailedResult();
+    MatchData::getInstance()->updateCrashFile();
 
     currentBehavior->onEnd(isWinner);
 }

@@ -90,7 +90,8 @@ private:
 	string getWriteFilename();
 	void addEntry(string line);
 	int toInt(string &str);
-
+     
+    void discountCrashes();
 	void selectStrategy();
 
 	bool active;

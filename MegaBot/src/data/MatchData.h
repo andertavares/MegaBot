@@ -61,6 +61,12 @@ public:
 	/* Writes match result in a file */
 	void writeDetailedResult();
 
+    /* Writes info of a crash event in a file */
+    void writeToCrashFile();
+
+    //set the chosen strategy counter to zero
+    void updateCrashFile();
+
 	// Appends the summary of this match to the respective output file
 	void writeSummary();
 

@@ -38,8 +38,89 @@ void StrategySelector::disable() {
     active = false;
 }
 
+void StrategySelector::discountCrashes() {
+    using namespace tinyxml2;
+
+    //file to read is MegaBot-vs-enemy.xml
+    string inputFile = Configuration::getInstance()->enemyInformationInputFile();
+    string outputFile = Configuration::getInstance()->enemyInformationOutputFile();
+    string crashFile = Configuration::getInstance()->crashInformationInputFile();
+
+    tinyxml2::XMLDocument doc;
+    XMLError errorInputCrash = doc.LoadFile(crashFile.c_str());
+
+    tinyxml2::XMLDocument doc2;
+    XMLError errorInput = doc2.LoadFile(inputFile.c_str());
+
+    if (errorInputCrash == XMLError::XML_NO_ERROR) {
+        XMLElement* rootNode = doc.FirstChildElement("crashes");
+        if (rootNode != NULL) {
+            XMLElement* behavior = rootNode->FirstChildElement();
+
+            map<string, float> crashesMap;
+            crashesMap[MegaBot::NUSBot] = 0;
+            crashesMap[MegaBot::SKYNET] = 0;
+            crashesMap[MegaBot::XELNAGA] = 0;
+
+            while (behavior != NULL) {
+                float score = -FLT_MAX;
+                behavior->QueryFloatText(&score);
+                crashesMap[behavior->Name()] = score;
+                behavior = behavior->NextSiblingElement();
+            }
+            
+            if (errorInput == XMLError::XML_NO_ERROR) {
+                XMLElement* inputRootNode = doc2.FirstChildElement("scores");
+
+                if (inputRootNode != NULL) {
+                    XMLElement* input_behavior = inputRootNode->FirstChildElement();
+
+                    map<string, float> scoresMap;
+                    scoresMap[MegaBot::NUSBot] = 0;
+                    scoresMap[MegaBot::SKYNET] = 0;
+                    scoresMap[MegaBot::XELNAGA] = 0;
+
+                    while (input_behavior != NULL) {
+                        float score = -FLT_MAX;
+                        float alpha = Configuration::getInstance()->alpha;
+
+                        input_behavior->QueryFloatText(&score);
+                        if (score > 0 && input_behavior == behavior) {
+                            for (int i = crashesMap[input_behavior->Name()]; i > 0; i--)
+                                score = (1 - alpha)*score + alpha * (-1);
+                            
+                        }
+                        scoresMap[input_behavior->Name()] = score;
+                        input_behavior->SetText(score);
+                        input_behavior = input_behavior->NextSiblingElement();
+                    }
+                }
+                doc2.SaveFile(outputFile.c_str());
+            }
+            else { //prints error
+                Broodwar->printf(
+                    "Error while parsing input file '%s'. Error: '%s'",
+                    Configuration::getInstance()->enemyInformationInputFile().c_str(),
+                    doc2.ErrorName()
+                    );
+            }
+        }
+    }
+    else { //prints error
+        Broodwar->printf(
+            "Error while parsing crash file '%s'. Error: '%s'",
+            Configuration::getInstance()->crashInformationInputFile().c_str(),
+            doc.ErrorName()
+            );
+    }
+}
+
 void StrategySelector::selectStrategy() {
     using namespace tinyxml2;
+
+    //edit the input file discounting the number of crashes before reading it 
+    StrategySelector::discountCrashes();
+
     //retrieve what config says about strategy
     string strategyId = Configuration::getInstance()->strategyID;
 

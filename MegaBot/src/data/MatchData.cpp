@@ -116,9 +116,9 @@ void MatchData::writeDetailedResult() {
     }
 
     float oldScore;
-	float score = 0;
-	float alpha = Configuration::getInstance()->alpha; //alias for easy reading
-    
+    float score = 0;
+    float alpha = Configuration::getInstance()->alpha; //alias for easy reading
+
 
     myBehvNode = rootNode->FirstChildElement(myBehaviorName.c_str());
     if (myBehvNode == NULL) {
@@ -131,7 +131,7 @@ void MatchData::writeDetailedResult() {
         myBehvNode->QueryFloatText(&oldScore);
         score = (1 - alpha)*oldScore + alpha*result_value;
         //myBehvNode->SetText(value + score); //BUGFIX: it should set only the value!
-		myBehvNode->SetText(score);
+        myBehvNode->SetText(score);
     }
 
     doc.SaveFile(outputFile.c_str());
@@ -216,4 +216,91 @@ const string MatchData::currentDateTime() {
     strftime(buf, sizeof(buf), "%Y-%m-%d.%X", &tstruct);
 
     return buf;
+}
+
+void MatchData::writeToCrashFile() {
+    using namespace tinyxml2;
+
+    string bot_name = myBehaviorName;
+
+    XMLElement* rootNode;
+    XMLElement* myBehvNode;
+    XMLElement* queryNode;
+
+    string inputFile = Configuration::getInstance()->crashInformationInputFile();
+    string outputFile = Configuration::getInstance()->crashInformationOutputFile();
+
+    XMLDocument doc;
+    XMLError input_result = doc.LoadFile(inputFile.c_str());
+
+    // if file was not found, ok, we create a node and fill information in it
+    if (input_result == XML_ERROR_FILE_NOT_FOUND) {
+        rootNode = doc.NewElement("crashes");
+        doc.InsertFirstChild(rootNode);
+    }
+    // if another error occurred, we're in trouble =/
+    else if (input_result != XML_NO_ERROR) {
+        Broodwar->printf(
+            "Error while parsing the crash file '%s'. Error: '%s'",
+            inputFile,
+            doc.ErrorName()
+            );
+        return;
+    }
+    else { //no error, goes after root node
+        rootNode = doc.FirstChildElement("crashes");
+        if (rootNode == NULL) {
+            rootNode = doc.NewElement("crashes");
+            doc.InsertFirstChild(rootNode);
+        }
+    }
+
+    float oldScore;
+
+    myBehvNode = rootNode->FirstChildElement(myBehaviorName.c_str());
+    if (myBehvNode == NULL) {
+        myBehvNode = doc.NewElement(myBehaviorName.c_str());
+        myBehvNode->SetText(0);
+        rootNode->InsertFirstChild(myBehvNode);
+    }
+    else {
+        myBehvNode->QueryFloatText(&oldScore);
+        myBehvNode->SetText(oldScore + 1);
+    }
+
+    doc.SaveFile(outputFile.c_str());
+}
+
+void MatchData::updateCrashFile() {
+    using namespace tinyxml2;
+
+    string bot_name = myBehaviorName;
+
+    XMLElement* rootNode;
+    XMLElement* myBehvNode;
+
+    string outputFile = Configuration::getInstance()->crashInformationOutputFile();
+
+    XMLDocument doc;
+    XMLError input_result = doc.LoadFile(outputFile.c_str());
+
+    // if another error occurred, we're in trouble =/
+    if (input_result != XML_NO_ERROR) {
+        Broodwar->printf(
+            "Error while parsing the crash file '%s'. Error: '%s'",
+            outputFile,
+            doc.ErrorName()
+            );
+        return;
+    }
+    else { //no error, goes after root node
+        rootNode = doc.FirstChildElement("crashes");
+        if (rootNode != NULL) {
+            myBehvNode = rootNode->FirstChildElement(myBehaviorName.c_str());
+            if (myBehvNode != NULL) {
+                myBehvNode->SetText(0);
+            }
+            doc.SaveFile(outputFile.c_str());
+        }
+    }
 }

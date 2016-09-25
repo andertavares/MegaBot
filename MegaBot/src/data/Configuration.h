@@ -28,6 +28,9 @@ public:
 	//beginning of file name to look for information about enemy
     string enemyInformationPrefix;
 
+    //beginning of file name to look for information about crashes
+    string crashInformationPrefix;
+
 	//path to xml file with strategy definition
 	string strategyFile;
 
@@ -58,6 +61,12 @@ public:
 
 	// path to file to write enemy information
 	string enemyInformationOutputFile();
+
+    // path to file to read crash information
+    string crashInformationInputFile();
+
+    // path to file to write crash information
+    string crashInformationOutputFile();
 
 	//Directory to read input from
 	static const string INPUT_DIR;

@@ -56,5 +56,15 @@ public:
 	//returns the name of the behavior the enemy is using
 	string enemyBehavior();
 
+    //code for loss
+    static const int LOSS = 0;
+
+    // code for victory
+    static const int WIN = 1;
+
+    //code for draw
+    static const int DRAW = 2;
+
+    int gameResult;
 	
 };

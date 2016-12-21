@@ -11,6 +11,7 @@
 #include "strategy/StrategySelector.h"
 #include "data/Configuration.h"
 #include "data/MatchData.h"
+#include "data/GameStateInfo.h"
 #include "utils/Logging.h"
 
 using namespace BWAPI;
@@ -46,12 +47,39 @@ void MegaBot::onStart() {
     // Uncomment to enable complete map information
     //Broodwar->enableFlag(Flag::CompleteMapInformation);
     MatchData::getInstance()->registerMatchBegin();
-	Configuration::getInstance()->parseConfig();
+    Configuration::getInstance()->parseConfig();
 
-    myBehaviorName = StrategySelector::getInstance()->getStrategy();//Configuration::getInstance()->strategyID;
+    myBehaviorName = MegaBot::NUSBot;
 
     Broodwar->sendText("%s on!", myBehaviorName.c_str());		//sends behavior communication message
-    Logging::getInstance()->log("%s on!", myBehaviorName.c_str());
+    Logging::getInstance()->log("Game started with %s !", myBehaviorName.c_str());
+
+    MatchData::getInstance()->registerMyBehaviorName(myBehaviorName);
+    currentBehavior = behaviors[myBehaviorName];
+    currentBehavior->onStart();
+
+    myBehaviorName = MegaBot::SKYNET;
+
+    Broodwar->sendText("%s on!", myBehaviorName.c_str());		//sends behavior communication message
+    Logging::getInstance()->log("Game started with %s !", myBehaviorName.c_str());
+
+    MatchData::getInstance()->registerMyBehaviorName(myBehaviorName);
+    currentBehavior = behaviors[myBehaviorName];
+    currentBehavior->onStart();
+
+    myBehaviorName = MegaBot::XELNAGA;
+
+    Broodwar->sendText("%s on!", myBehaviorName.c_str());		//sends behavior communication message
+    Logging::getInstance()->log("Game started with %s !", myBehaviorName.c_str());
+
+    MatchData::getInstance()->registerMyBehaviorName(myBehaviorName);
+    currentBehavior = behaviors[myBehaviorName];
+    currentBehavior->onStart();
+
+    myBehaviorName = StrategySelector::getInstance()->getStrategy();
+
+    Broodwar->sendText("%s on!", myBehaviorName.c_str());		//sends behavior communication message
+    Logging::getInstance()->log("Game started with %s !", myBehaviorName.c_str());
 
     MatchData::getInstance()->registerMyBehaviorName(myBehaviorName);
     currentBehavior = behaviors[myBehaviorName];
@@ -64,25 +92,30 @@ void MegaBot::onStart() {
 
     int speed = Configuration::getInstance()->speed;
     Broodwar->printf("Setting speed to %d.", speed);
-    Broodwar->setLocalSpeed(20);
+    Broodwar->setLocalSpeed(0);
 
     bool gui = Configuration::getInstance()->enableGUI;
     Broodwar->printf("Setting GUI to %s.", gui ? "enabled" : "disabled");
     Broodwar->setGUI(gui);
 
-	Broodwar->printf(
-		"Parameters: alpha=%.2f; epsilon=%.2f.", 
-		Configuration::getInstance()->alpha, 
-		Configuration::getInstance()->epsilon
-	);
+    Broodwar->printf(
+        "Parameters: alpha=%.2f; epsilon=%.2f.",
+        Configuration::getInstance()->alpha,
+        Configuration::getInstance()->epsilon
+        );
 }
 
 void MegaBot::onEnd(bool isWinner) {
+    Logging::getInstance()->log("Game ended well with %s !", myBehaviorName.c_str());
     int result = MatchData::LOSS;
-    if (isWinner) result = MatchData::WIN;
+    if (isWinner) {
+        result = MatchData::WIN;
+        Logging::getInstance()->log("Winner %s.", myBehaviorName.c_str());
+    }
+
     //if (Broodwar->elapsedTime() / 60 >= 80) result = MatchData::DRAW;
-	//tournament rules for draw are 86400 frames, but we reduce 100 to ensure counting
-	if (Broodwar->getFrameCount() >= 86300) result = MatchData::DRAW;
+    //tournament rules for draw are 86400 frames, but we reduce 100 to ensure counting
+    if (Broodwar->getFrameCount() >= 86300) result = MatchData::DRAW;
 
     //StrategySelector::getInstance()->addResult(win);
     //StrategySelector::getInstance()->saveStats();
@@ -97,6 +130,84 @@ void MegaBot::onEnd(bool isWinner) {
 }
 
 void MegaBot::onFrame() {
+    int thisFrame = Broodwar->getFrameCount();
+    //Broodwar->printf("Frame count %d.", thisFrame);
+    Broodwar->drawTextScreen(5, 60, "Frame count %d.", thisFrame);
+
+    if (thisFrame % 100 == 0 && thisFrame > 0) {
+        Logging::getInstance()->log("Frame count %d.", thisFrame);
+    }
+
+    if (thisFrame % 2000 == 0 && thisFrame > 0) {
+        /*int playerBases = GameStateInfo::getInstance()->numBases(myBehaviorName.c_str(), BWAPI::Races::Protoss);
+        Broodwar->printf("Number of player's bases %d.", playerBases);
+
+        BWAPI::Race enemyRace = BWAPI::Broodwar->enemy()->getRace();
+        string enemyName = BWAPI::Broodwar->enemy()->getName().c_str();
+        int enemyBases = GameStateInfo::getInstance()->numBases(enemyName, enemyRace);
+        Broodwar->printf("Number of enemy's bases %d.", enemyBases);
+
+        int playerSmallUnits = GameStateInfo::getInstance()->terrestrialSmallUnits(myBehaviorName.c_str());
+        Broodwar->printf("Number of player's small units %d.", playerSmallUnits);
+
+        string enemyName = BWAPI::Broodwar->enemy()->getName().c_str();
+        int enemySmallUnits = GameStateInfo::getInstance()->terrestrialSmallUnits(enemyName);
+        Broodwar->printf("Number of enemy's small units %d.", enemySmallUnits);*/
+
+        Broodwar->printf("Frame count %d.", thisFrame);
+        double lucky = (rand() / (double)(RAND_MAX + 1));
+
+        if (myBehaviorName == MegaBot::SKYNET) {
+            if (lucky < 0.33) {
+                Logging::getInstance()->log("NUSBot selected!", thisFrame);
+                myBehaviorName = MegaBot::NUSBot;
+            }
+            else if (lucky < 0.66) {
+                Logging::getInstance()->log("SKYNET selected!", thisFrame);
+                myBehaviorName = MegaBot::SKYNET;
+            }
+            else {
+                Logging::getInstance()->log("Xelnaga selected!", thisFrame);
+                myBehaviorName = MegaBot::XELNAGA;
+            }
+        }
+        else if (myBehaviorName == MegaBot::NUSBot) {
+            if (lucky < 0.33) {
+                Logging::getInstance()->log("NUSBot selected!", thisFrame);
+                myBehaviorName = MegaBot::NUSBot;
+            }
+            else if (lucky < 0.66) {
+                Logging::getInstance()->log("SKYNET selected!", thisFrame);
+                myBehaviorName = MegaBot::SKYNET;
+            }
+            else {
+                Logging::getInstance()->log("Xelnaga selected!", thisFrame);
+                myBehaviorName = MegaBot::XELNAGA;
+            }
+        }
+        else if (myBehaviorName == MegaBot::XELNAGA) {
+            if (lucky < 0.33) {
+                Logging::getInstance()->log("NUSBot selected!", thisFrame);
+                myBehaviorName = MegaBot::NUSBot;
+            }
+            else if (lucky < 0.66) {
+                Logging::getInstance()->log("SKYNET selected!", thisFrame);
+                myBehaviorName = MegaBot::SKYNET;
+            }
+            else {
+                Logging::getInstance()->log("Xelnaga selected!", thisFrame);
+                myBehaviorName = MegaBot::XELNAGA;
+            }
+        }
+        MatchData::getInstance()->registerMyBehaviorName(myBehaviorName);
+
+        Broodwar->sendText("%s on!", myBehaviorName.c_str());		//sends behavior communication message
+        Logging::getInstance()->log("%s on!", myBehaviorName.c_str());
+
+        MatchData::getInstance()->registerMyBehaviorName(myBehaviorName);
+        currentBehavior = behaviors[myBehaviorName];
+        currentBehavior->onFrame();
+    }
 
     if (Broodwar->elapsedTime() / 60 >= 81) {	//leave stalled game
         Broodwar->leaveGame();
@@ -107,14 +218,14 @@ void MegaBot::onFrame() {
 
     //sends behavior communication message every 200 frames
     /*if (!acknowledged && (BWAPI::Broodwar->getFrameCount() % 200) == 0) {
-        Broodwar->sendText("%s on!", myBehaviorName.c_str());
+    Broodwar->sendText("%s on!", myBehaviorName.c_str());
     }*/
 
     //draws some text
     Broodwar->drawTextScreen(5, 20, "\x0F MegaBot v0.1.2");
     Broodwar->drawTextScreen(5, 35, "\x0F Strategy: %s", myBehaviorName.c_str());
     //Broodwar->drawTextScreen(5, 25, "\x0F Enemy behavior: %s", enemyBehaviorName.c_str());
-	Broodwar->drawTextScreen(5, 45, "\x0F Enemy: %s", Broodwar->enemy()->getName().c_str());
+    Broodwar->drawTextScreen(5, 45, "\x0F Enemy: %s", Broodwar->enemy()->getName().c_str());
 }
 
 void MegaBot::onSendText(std::string text) {
@@ -205,7 +316,4 @@ string MegaBot::myBehavior() {
 string MegaBot::enemyBehavior() {
     return enemyBehaviorName;
 }
-
-
-
 

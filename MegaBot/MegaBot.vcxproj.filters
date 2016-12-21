@@ -19,6 +19,9 @@
     <ClCompile Include="src\strategy\StrategySelector.cpp">
       <Filter>strategy</Filter>
     </ClCompile>
+    <ClCompile Include="src\data\GameStateInfo.cpp">
+      <Filter>data</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="main">
@@ -49,6 +52,9 @@
     </ClInclude>
     <ClInclude Include="src\strategy\StrategySelector.h">
       <Filter>strategy</Filter>
+    </ClInclude>
+    <ClInclude Include="src\data\GameStateInfo.h">
+      <Filter>data</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

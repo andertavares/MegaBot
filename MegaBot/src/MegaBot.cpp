@@ -138,7 +138,7 @@ void MegaBot::onFrame() {
         Logging::getInstance()->log("Frame count %d.", thisFrame);
     }
 
-    if ((thisFrame % 2000 == 0 && thisFrame > 0)) {
+    if (thisFrame % 2000 == 0 && thisFrame > 0) {
         /*int playerBases = GameStateInfo::getInstance()->numBases(myBehaviorName.c_str(), BWAPI::Races::Protoss);
         Broodwar->printf("Number of player's bases %d.", playerBases);
 

@@ -4,6 +4,7 @@
 #include <windows.h>
 #include <map>
 #include <string>
+#include "utils/Logging.h"
 
 using namespace std;
 
@@ -15,6 +16,8 @@ class MegaBot : public BWAPI::AIModule {
 	bool acknowledged;
 
 	BWAPI::AIModule* currentBehavior;
+
+	Logging* logger;
 
 	//maps the behaviors to their respective names
 	std::map<BWAPI::AIModule*, string> behaviorNames;

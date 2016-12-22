@@ -51,9 +51,18 @@ void MegaBot::onStart() {
     MatchData::getInstance()->registerMatchBegin();
     Configuration::getInstance()->parseConfig();
 
-    myBehaviorName = MegaBot::NUSBot;
+    //myBehaviorName = MegaBot::NUSBot;
 
    // Broodwar->sendText("%s on!", myBehaviorName.c_str());		//sends behavior communication message
+	map<string, BWAPI::AIModule*>::iterator behv;
+	for(behv = behaviors.begin(); behv != behaviors.end(); behv++){
+		logger->log("Initializing %s !", behaviorNames[(*behv).second]);
+		(*behv).second->onStart();
+		//MatchData::getInstance()->registerMyBehaviorName(myBehaviorName);
+		//currentBehavior = behaviors[myBehaviorName];
+		//currentBehavior->onStart();
+	}
+	/*
     logger->log("Initializing %s !", myBehaviorName.c_str());
 
     MatchData::getInstance()->registerMyBehaviorName(myBehaviorName);
@@ -77,7 +86,7 @@ void MegaBot::onStart() {
     MatchData::getInstance()->registerMyBehaviorName(myBehaviorName);
     currentBehavior = behaviors[myBehaviorName];
     currentBehavior->onStart();
-
+	*/
     myBehaviorName = StrategySelector::getInstance()->getStrategy();
 
     //Broodwar->sendText("%s on!", myBehaviorName.c_str());		//sends behavior communication message

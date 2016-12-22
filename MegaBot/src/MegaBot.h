@@ -22,6 +22,9 @@ class MegaBot : public BWAPI::AIModule {
 	//maps behavior names to their AIModules
 	std::map<string, BWAPI::AIModule*> behaviors;
 
+	//performs 'handshake': handles acknowledgement of enemy
+	void handshake(string text);
+
 public:
 
 	static const string SKYNET;		//"Skynet"

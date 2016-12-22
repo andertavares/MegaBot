@@ -34,6 +34,15 @@
     <ClCompile Include="src\utils\asprintf\vasprintf-msvc.c">
       <Filter>utils\asprintf</Filter>
     </ClCompile>
+    <ClCompile Include="src\managers\SpottedObject.cpp">
+      <Filter>managers</Filter>
+    </ClCompile>
+    <ClCompile Include="src\evaluators\MilitaryEvaluator.cpp">
+      <Filter>evaluators</Filter>
+    </ClCompile>
+    <ClCompile Include="src\managers\ExplorationManager.cpp">
+      <Filter>managers</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="main">
@@ -50,6 +59,12 @@
     </Filter>
     <Filter Include="utils\asprintf">
       <UniqueIdentifier>{e97afd95-be5a-4501-91cf-38fe612f2766}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="managers">
+      <UniqueIdentifier>{b0a60027-ac65-4c40-94b8-9b98a139d117}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="evaluators">
+      <UniqueIdentifier>{15ab5b8c-4f8c-433d-b6f3-0adfb120c30e}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -76,6 +91,15 @@
     </ClInclude>
     <ClInclude Include="src\utils\asprintf\asprintf.h">
       <Filter>utils\asprintf</Filter>
+    </ClInclude>
+    <ClInclude Include="src\managers\SpottedObject.h">
+      <Filter>managers</Filter>
+    </ClInclude>
+    <ClInclude Include="src\evaluators\MilitaryEvaluator.h">
+      <Filter>evaluators</Filter>
+    </ClInclude>
+    <ClInclude Include="src\managers\ExplorationManager.h">
+      <Filter>managers</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

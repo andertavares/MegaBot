@@ -30,66 +30,35 @@ MegaBot::MegaBot()
     behaviors.insert(make_pair(NUSBot, new NUSBotModule()));
 
     //initializes reverse map
-    behaviorNames.insert(make_pair(behaviors[SKYNET], SKYNET));
-    behaviorNames.insert(make_pair(behaviors[XELNAGA], XELNAGA));
-    behaviorNames.insert(make_pair(behaviors[NUSBot], NUSBot));
+	 map<string, BWAPI::AIModule*>::iterator behv;
+	for(behv = behaviors.begin(); behv != behaviors.end(); behv++){
+    	behaviorNames.insert(make_pair((*behv).second, (*behv).first));
+    }
 
 	logger = Logging::getInstance();
 
     //Configuration::getInstance()->parseConfig(); (moved to onStart)
 
     MatchData::getInstance()->registerEnemyBehaviorName("Unknown");
-    //for (auto behv : behaviors) {
-    //	behaviorNames.insert(make_pair(behv.second, behv.first));
-    //}
+   
     enemyBehaviorName = "Unknown";
 }
 
 void MegaBot::onStart() {
     // Uncomment to enable complete map information
     //Broodwar->enableFlag(Flag::CompleteMapInformation);
+
     MatchData::getInstance()->registerMatchBegin();
     Configuration::getInstance()->parseConfig();
 
     //myBehaviorName = MegaBot::NUSBot;
 
-   // Broodwar->sendText("%s on!", myBehaviorName.c_str());		//sends behavior communication message
 	map<string, BWAPI::AIModule*>::iterator behv;
 	for(behv = behaviors.begin(); behv != behaviors.end(); behv++){
-		logger->log("Initializing %s !", behaviorNames[(*behv).second]);
+		logger->log("Initializing %s !", behaviorNames[(*behv).second].c_str());
 		(*behv).second->onStart();
-		//MatchData::getInstance()->registerMyBehaviorName(myBehaviorName);
-		//currentBehavior = behaviors[myBehaviorName];
-		//currentBehavior->onStart();
 	}
-	/*
-    logger->log("Initializing %s !", myBehaviorName.c_str());
-
-    MatchData::getInstance()->registerMyBehaviorName(myBehaviorName);
-    currentBehavior = behaviors[myBehaviorName];
-    currentBehavior->onStart();
-
-    myBehaviorName = MegaBot::SKYNET;
-
-    //Broodwar->sendText("%s on!", myBehaviorName.c_str());		//sends behavior communication message
-    logger->log("Initializing %s !", myBehaviorName.c_str());
-
-
-    MatchData::getInstance()->registerMyBehaviorName(myBehaviorName);
-    currentBehavior = behaviors[myBehaviorName];
-    currentBehavior->onStart();
-
-    myBehaviorName = MegaBot::XELNAGA;
-
-
-    //Broodwar->sendText("%s on!", myBehaviorName.c_str());		//sends behavior communication message
-    logger->log("Initializing %s !", myBehaviorName.c_str());
-
-
-    MatchData::getInstance()->registerMyBehaviorName(myBehaviorName);
-    currentBehavior = behaviors[myBehaviorName];
-    currentBehavior->onStart();
-	*/
+	
     myBehaviorName = StrategySelector::getInstance()->getStrategy();
 
     //Broodwar->sendText("%s on!", myBehaviorName.c_str());		//sends behavior communication message
@@ -124,7 +93,7 @@ void MegaBot::onEnd(bool isWinner) {
     int result = MatchData::LOSS;
     if (isWinner) {
         result = MatchData::WIN;
-        logger->log("I won! Winner behavior: %s.", myBehaviorName.c_str());
+        logger->log("Victory! Winner behavior: %s.", myBehaviorName.c_str());
     }
 	
 
@@ -132,10 +101,10 @@ void MegaBot::onEnd(bool isWinner) {
     //tournament rules for draw are 86400 frames, but we reduce 100 to ensure counting
     if (Broodwar->getFrameCount() >= 86300) {
 		result = MatchData::DRAW;
-		logger->log("I drawed. Finishing behavior: %s.", myBehaviorName.c_str());
+		logger->log("Draw. Finishing behavior: %s.", myBehaviorName.c_str());
 	}
 	else {
-		logger->log("I lost :( Finishing behavior: %s.", myBehaviorName.c_str());
+		logger->log("Defeat :( Finishing behavior: %s.", myBehaviorName.c_str());
 	}
 
     //StrategySelector::getInstance()->addResult(win);

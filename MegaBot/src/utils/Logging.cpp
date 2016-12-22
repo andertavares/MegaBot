@@ -15,7 +15,7 @@ Logging* Logging::getInstance() {
 }
 
 Logging::Logging(){
-	filename = Configuration::OUTPUT_DIR + "MegaBot-vs-" + _enemyName() + ".log";
+	filename = Configuration::OUTPUT_DIR + "log_MegaBot-vs-" + _enemyName() + ".log";
 }
 
 void Logging::log(const char * msg, ...) {
@@ -27,7 +27,6 @@ void Logging::log(const char * msg, ...) {
 	int result = vasprintf(&formatted, msg, args); //credits: http://asprintf.insanecoding.org/
 	va_end(args);
 
-	//vfprintf(file_ptr, msg, args);
 	Broodwar->printf(formatted);
 	fprintf(file_ptr, "[%d] %s%s", Broodwar->getFrameCount(), formatted, "\n");    
     fclose(file_ptr);

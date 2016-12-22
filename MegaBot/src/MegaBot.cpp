@@ -136,6 +136,7 @@ void MegaBot::onEnd(bool isWinner) {
     MatchData::getInstance()->updateCrashFile();
 
     currentBehavior->onEnd(isWinner);
+	logger->log("Finished.");
 }
 
 void MegaBot::onFrame() {

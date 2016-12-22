@@ -2,12 +2,16 @@
 #define __MATCHDATA_H__
 
 #include <string>
+#include "../utils/Logging.h"
 
 using namespace std;
 
 class MatchData {
 	//singleton instance of this class
 	static MatchData* instance;
+
+	//instance of logger object
+	Logging* logger;
 
 	//stores the behavior used in this match
 	string myBehaviorName;

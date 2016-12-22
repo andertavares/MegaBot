@@ -4,6 +4,7 @@
 #include <windows.h>
 #include <map>
 #include <string>
+#include "utils/Logging.h"
 
 using namespace std;
 
@@ -16,11 +17,16 @@ class MegaBot : public BWAPI::AIModule {
 
 	BWAPI::AIModule* currentBehavior;
 
+	Logging* logger;
+
 	//maps the behaviors to their respective names
 	std::map<BWAPI::AIModule*, string> behaviorNames;
 
 	//maps behavior names to their AIModules
 	std::map<string, BWAPI::AIModule*> behaviors;
+
+	//performs 'handshake': handles acknowledgement of enemy
+	void handshake(string text);
 
 public:
 
@@ -56,5 +62,15 @@ public:
 	//returns the name of the behavior the enemy is using
 	string enemyBehavior();
 
+    //code for loss
+    static const int LOSS = 0;
+
+    // code for victory
+    static const int WIN = 1;
+
+    //code for draw
+    static const int DRAW = 2;
+
+    int gameResult;
 	
 };

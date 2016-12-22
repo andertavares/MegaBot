@@ -102,6 +102,10 @@
     <ClCompile Include="src\Dll.cpp" />
     <ClCompile Include="src\MegaBot.cpp" />
     <ClCompile Include="src\strategy\StrategySelector.cpp" />
+    <ClCompile Include="src\utils\asprintf\asprintf.c" />
+    <ClCompile Include="src\utils\asprintf\test.c" />
+    <ClCompile Include="src\utils\asprintf\vasprintf-msvc.c" />
+    <ClCompile Include="src\utils\Logging.cpp" />
     <ClCompile Include="src\utils\tinyxml2.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -110,6 +114,8 @@
     <ClInclude Include="src\data\MatchData.h" />
     <ClInclude Include="src\MegaBot.h" />
     <ClInclude Include="src\strategy\StrategySelector.h" />
+    <ClInclude Include="src\utils\asprintf\asprintf.h" />
+    <ClInclude Include="src\utils\Logging.h" />
     <ClInclude Include="src\utils\tinyxml2.h" />
   </ItemGroup>
   <ItemGroup>

@@ -147,7 +147,8 @@ void MegaBot::onFrame() {
        logger->log("Frame count %d.", thisFrame);
     }
 
-    if (thisFrame % 2000 == 0 && thisFrame > 0) {
+    if (thisFrame % 2000 == 0 && thisFrame > 0) {  //behavior switch
+
         /*int playerBases = GameStateInfo::getInstance()->numBases(myBehaviorName.c_str(), BWAPI::Races::Protoss);
         Broodwar->printf("Number of player's bases %d.", playerBases);
 
@@ -163,59 +164,24 @@ void MegaBot::onFrame() {
         int enemySmallUnits = GameStateInfo::getInstance()->terrestrialSmallUnits(enemyName);
         Broodwar->printf("Number of enemy's small units %d.", enemySmallUnits);*/
 
+		string oldBehaviorName = myBehaviorName;
 		logger->log("Frame count %d.", thisFrame);
         double lucky = (rand() / (double)(RAND_MAX + 1));
-
-        //if (myBehaviorName == MegaBot::SKYNET) {
-            if (lucky < 0.33) {
-                logger->log("NUSBot selected!", thisFrame);
-                myBehaviorName = MegaBot::NUSBot;
-            }
-            else if (lucky < 0.66) {
-                logger->log("SKYNET selected!", thisFrame);
-                myBehaviorName = MegaBot::SKYNET;
-            }
-            else {
-                logger->log("Xelnaga selected!", thisFrame);
-                myBehaviorName = MegaBot::XELNAGA;
-            }
-       // }
-        /*else if (myBehaviorName == MegaBot::NUSBot) {
-            if (lucky < 0.33) {
-                logger->log("NUSBot selected!", thisFrame);
-                myBehaviorName = MegaBot::NUSBot;
-            }
-            else if (lucky < 0.66) {
-                logger->log("SKYNET selected!", thisFrame);
-                myBehaviorName = MegaBot::SKYNET;
-            }
-            else {
-                logger->log("Xelnaga selected!", thisFrame);
-                myBehaviorName = MegaBot::XELNAGA;
-            }
-        }
-        else if (myBehaviorName == MegaBot::XELNAGA) {
-            if (lucky < 0.33) {
-                logger->log("NUSBot selected!", thisFrame);
-                myBehaviorName = MegaBot::NUSBot;
-            }
-            else if (lucky < 0.66) {
-                logger->log("SKYNET selected!", thisFrame);
-                myBehaviorName = MegaBot::SKYNET;
-            }
-            else {
-                logger->log("Xelnaga selected!", thisFrame);
-                myBehaviorName = MegaBot::XELNAGA;
-            }
-        }*/
         
-		logger->log("%s on!", myBehaviorName.c_str());	
+        if (lucky < 0.33) {
+            myBehaviorName = MegaBot::NUSBot;
+        }
+        else if (lucky < 0.66) {
+            myBehaviorName = MegaBot::SKYNET;
+        }
+        else {
+            myBehaviorName = MegaBot::XELNAGA;
+        }
+		logger->log("Switching: %s -> %s", oldBehaviorName, myBehaviorName);
 		MatchData::getInstance()->registerMyBehaviorName(myBehaviorName);
-
-        //Broodwar->sendText("%s on!", myBehaviorName.c_str());		//sends behavior communication message
-        //MatchData::getInstance()->registerMyBehaviorName(myBehaviorName);
         currentBehavior = behaviors[myBehaviorName];
         currentBehavior->onFrame();
+		logger->log("%s on!", myBehaviorName.c_str());	
     }
 
     if (Broodwar->elapsedTime() / 60 >= 81) {	//leave stalled game

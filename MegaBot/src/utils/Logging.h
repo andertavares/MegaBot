@@ -21,9 +21,4 @@ protected:
     Logging();
 };
 
-//Auxiliary "surrogate" to asprintf-like behavior
-string _format_vargs(string const& format, ...);
-
-
-
 #endif

@@ -177,7 +177,7 @@ void MegaBot::onFrame() {
         else {
             myBehaviorName = MegaBot::XELNAGA;
         }
-		logger->log("Switching: %s -> %s", oldBehaviorName, myBehaviorName);
+		logger->log("Switching: %s -> %s", oldBehaviorName.c_str(), myBehaviorName.c_str());
 		MatchData::getInstance()->registerMyBehaviorName(myBehaviorName);
         currentBehavior = behaviors[myBehaviorName];
         currentBehavior->onFrame();
@@ -193,7 +193,7 @@ void MegaBot::onFrame() {
 
     //sends behavior communication message every 200 frames
     /*if (!acknowledged && (BWAPI::Broodwar->getFrameCount() % 200) == 0) {
-    Broodwar->sendText("%s on!", myBehaviorName.c_str());
+		Broodwar->sendText("%s on!", myBehaviorName.c_str());
     }*/
 
     //draws some text
@@ -278,7 +278,7 @@ void MegaBot::handshake(string text){
             istream_iterator<string>(iss),
             istream_iterator<string>(),
             back_inserter(tokens)
-            );
+        );
         //the 'magic' above is from: http://stackoverflow.com/a/237280/1251716
 
         enemyBehaviorName = tokens[0];

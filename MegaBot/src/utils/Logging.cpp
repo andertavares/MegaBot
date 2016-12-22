@@ -29,11 +29,8 @@ void Logging::log(const char * msg, ...) {
 
 	//vfprintf(file_ptr, msg, args);
 	Broodwar->printf(formatted);
-	fprintf(file_ptr, "%s%s", formatted, "\n");    
+	fprintf(file_ptr, "[%d] %s%s", Broodwar->getFrameCount(), formatted, "\n");    
     fclose(file_ptr);
 
 	free(formatted);
 }
-
-
-

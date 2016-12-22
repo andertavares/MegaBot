@@ -6,6 +6,7 @@
 #include <algorithm> 
 
 #include "../utils/tinyxml2.h"
+#include "../utils/Logging.h"
 
 #include "Configuration.h"
 
@@ -14,13 +15,19 @@ using namespace std;
 
 MatchData* MatchData::instance = NULL;
 
-MatchData::MatchData() {}
+MatchData::MatchData() {
+	logger = Logging::getInstance();
+}
 
 
 MatchData::~MatchData() {}
 
 void MatchData::registerMatchBegin() {
     startTime = currentDateTime();
+	logger->log("Match started at: %s", startTime.c_str());
+	logger->log("Map is: %s", Broodwar->mapFileName().c_str());
+	logger->log("Enemy is: %s", Broodwar->enemy()->getName().c_str() );
+
 }
 
 void MatchData::registerMatchFinish(int result) {
@@ -32,6 +39,8 @@ void MatchData::registerMatchFinish(int result) {
     //registers scores of both players
     Player* me = Broodwar->self();
     Player* enemy = Broodwar->enemy();
+
+	logger->log("Match finished at %s", currentDateTime().c_str());
 }
 
 void MatchData::registerMyBehaviorName(string name) {
@@ -78,11 +87,18 @@ void MatchData::writeDetailedResult() {
     }
     // if another error occurred, we're in trouble =/
     else if (input_result != XML_NO_ERROR) {
-        Broodwar->printf(
+		
+        /*Broodwar->printf(
             "Error while parsing the configuration file '%s'. Error: '%s'",
             inputFile,
             doc.ErrorName()
-            );
+        );*/
+		logger->log(
+            "Error while parsing the configuration file '%s'. Error: '%s'",
+            inputFile,
+            doc.ErrorName()
+        );
+		
         return;
     }
     else { //no error, goes after root node
@@ -112,6 +128,7 @@ void MatchData::writeDetailedResult() {
         result_value = 1;
     }
     else {
+		logger->log("Invalid game result! %s", gameResult);
         throw exception("Invalid game result!");
     }
 
@@ -130,7 +147,6 @@ void MatchData::writeDetailedResult() {
     else {
         myBehvNode->QueryFloatText(&oldScore);
         score = (1 - alpha)*oldScore + alpha*result_value;
-        //myBehvNode->SetText(value + score); //BUGFIX: it should set only the value!
         myBehvNode->SetText(score);
     }
 
@@ -156,7 +172,8 @@ string MatchData::resultToString(int result) {
         return "draw";
 
     default:
-        Broodwar->printf("Invalid game result %d!", result);
+        //Broodwar->printf("Invalid game result %d!", result);
+		logger->log("Invalid game result %d!", result);
         return "invalid";
     }
 }
@@ -197,12 +214,13 @@ void MatchData::writeSummary() {
     ofstream outFile;
     outFile.open(filename.c_str(), ios::out | ios::app);
     if (!outFile) {
-        Broodwar->printf("Error writing to stats file!\n");
+		logger->log("Error writing to stats file!\n");
     }
     else {
         outFile << ss.str();
         outFile.close();
     }
+	logger->log(ss.str().c_str());
 }
 
 const string MatchData::currentDateTime() {
@@ -240,11 +258,11 @@ void MatchData::writeToCrashFile() {
     }
     // if another error occurred, we're in trouble =/
     else if (input_result != XML_NO_ERROR) {
-        Broodwar->printf(
+		logger->log(
             "Error while parsing the crash file '%s'. Error: '%s'",
             inputFile,
             doc.ErrorName()
-            );
+        );
         return;
     }
     else { //no error, goes after root node
@@ -284,13 +302,13 @@ void MatchData::updateCrashFile() {
     XMLDocument doc;
     XMLError input_result = doc.LoadFile(outputFile.c_str());
 
-    // if another error occurred, we're in trouble =/
+    // if another error occurr, we're in trouble =/
     if (input_result != XML_NO_ERROR) {
-        Broodwar->printf(
+		logger->log(
             "Error while parsing the crash file '%s'. Error: '%s'",
             outputFile,
             doc.ErrorName()
-            );
+        );
         return;
     }
     else { //no error, goes after root node

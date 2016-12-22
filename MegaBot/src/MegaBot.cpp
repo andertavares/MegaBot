@@ -123,13 +123,13 @@ void MegaBot::onEnd(bool isWinner) {
 void MegaBot::onFrame() {
     int thisFrame = Broodwar->getFrameCount();
     //Broodwar->printf("Frame count %d.", thisFrame);
-    Broodwar->drawTextScreen(5, 60, "Frame count %d.", thisFrame);
+    
 
     if (thisFrame % 100 == 0 && thisFrame > 0) {
        logger->log("Frame count %d.", thisFrame);
     }
 
-    if (thisFrame % 2000 == 0 && thisFrame > 0) {  //behavior switch
+    if (thisFrame % 5000 == 0 && thisFrame > 0) {  //behavior switch
         /*int playerBases = GameStateInfo::getInstance()->numBases(myBehaviorName.c_str(), BWAPI::Races::Protoss);
         Broodwar->printf("Number of player's bases %d.", playerBases);
 
@@ -178,10 +178,12 @@ void MegaBot::onFrame() {
     }*/
 
     //draws some text
-    Broodwar->drawTextScreen(5, 20, "\x0F MegaBot v1.0.2");
-    Broodwar->drawTextScreen(5, 35, "\x0F Strategy: %s", myBehaviorName.c_str());
+    Broodwar->drawTextScreen(240, 20, "\x0F MegaBot v1.0.2");
+    Broodwar->drawTextScreen(240, 35, "\x0F Strategy: %s", myBehaviorName.c_str());
     //Broodwar->drawTextScreen(5, 25, "\x0F Enemy behavior: %s", enemyBehaviorName.c_str());
-    Broodwar->drawTextScreen(5, 45, "\x0F Enemy: %s", Broodwar->enemy()->getName().c_str());
+    Broodwar->drawTextScreen(240, 45, "\x0F Enemy: %s", Broodwar->enemy()->getName().c_str());
+	Broodwar->drawTextScreen(240, 60, "Frame count %d.", thisFrame);
+	Broodwar->drawTextScreen(240, 75, "Seconds: %d.", Broodwar->elapsedTime());
 }
 
 void MegaBot::onSendText(std::string text) {

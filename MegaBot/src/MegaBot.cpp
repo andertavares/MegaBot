@@ -74,14 +74,17 @@ void MegaBot::onStart() {
     //Broodwar->sendText("%s on!", myBehaviorName.c_str());		//sends behavior communication message
     logger->log("Initializing %s !", myBehaviorName.c_str());
 
+
     MatchData::getInstance()->registerMyBehaviorName(myBehaviorName);
     currentBehavior = behaviors[myBehaviorName];
     currentBehavior->onStart();
 
     myBehaviorName = MegaBot::XELNAGA;
 
+
     //Broodwar->sendText("%s on!", myBehaviorName.c_str());		//sends behavior communication message
     logger->log("Initializing %s !", myBehaviorName.c_str());
+
 
     MatchData::getInstance()->registerMyBehaviorName(myBehaviorName);
     currentBehavior = behaviors[myBehaviorName];
@@ -158,7 +161,6 @@ void MegaBot::onFrame() {
     }
 
     if (thisFrame % 2000 == 0 && thisFrame > 0) {  //behavior switch
-
         /*int playerBases = GameStateInfo::getInstance()->numBases(myBehaviorName.c_str(), BWAPI::Races::Protoss);
         Broodwar->printf("Number of player's bases %d.", playerBases);
 

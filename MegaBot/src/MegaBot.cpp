@@ -47,6 +47,7 @@ MegaBot::MegaBot()
 void MegaBot::onStart() {
     // Uncomment to enable complete map information
     //Broodwar->enableFlag(Flag::CompleteMapInformation);
+
     MatchData::getInstance()->registerMatchBegin();
     Configuration::getInstance()->parseConfig();
 
@@ -54,7 +55,7 @@ void MegaBot::onStart() {
 
 	map<string, BWAPI::AIModule*>::iterator behv;
 	for(behv = behaviors.begin(); behv != behaviors.end(); behv++){
-		logger->log("Initializing %s !", behaviorNames[(*behv).second]);
+		logger->log("Initializing %s !", behaviorNames[(*behv).second].c_str());
 		(*behv).second->onStart();
 	}
 	
@@ -92,7 +93,7 @@ void MegaBot::onEnd(bool isWinner) {
     int result = MatchData::LOSS;
     if (isWinner) {
         result = MatchData::WIN;
-        logger->log("I won! Winner behavior: %s.", myBehaviorName.c_str());
+        logger->log("Victory! Winner behavior: %s.", myBehaviorName.c_str());
     }
 	
 
@@ -100,10 +101,10 @@ void MegaBot::onEnd(bool isWinner) {
     //tournament rules for draw are 86400 frames, but we reduce 100 to ensure counting
     if (Broodwar->getFrameCount() >= 86300) {
 		result = MatchData::DRAW;
-		logger->log("I drawed. Finishing behavior: %s.", myBehaviorName.c_str());
+		logger->log("Draw. Finishing behavior: %s.", myBehaviorName.c_str());
 	}
 	else {
-		logger->log("I lost :( Finishing behavior: %s.", myBehaviorName.c_str());
+		logger->log("Defeat :( Finishing behavior: %s.", myBehaviorName.c_str());
 	}
 
     //StrategySelector::getInstance()->addResult(win);

@@ -7,12 +7,14 @@
 #include "../MegaBot.h"
 #include "../data/Configuration.h"
 #include "../utils/tinyxml2.h"
-
+#include "../utils/Logging.h"
 
 
 StrategySelector* StrategySelector::instance = NULL;
 
 StrategySelector::StrategySelector() {
+    logger = Logging::getInstance();
+
     active = true;
     /*
     loadStats();
@@ -204,6 +206,26 @@ void StrategySelector::selectStrategy() {
         currentStrategyId = strategyId;
     }
     return;
+}
+
+void StrategySelector::method1() {
+    string myBehaviorName = "method1";
+    if (!oldBehaviorName.empty()) {
+        logger->log("Switching: %s -> %s", oldBehaviorName.c_str(), myBehaviorName.c_str());
+    }
+    /* things happen here */
+
+    oldBehaviorName = myBehaviorName;
+}
+
+void StrategySelector::method2() {
+    string myBehaviorName = "method2";
+    if (!oldBehaviorName.empty()) {
+        logger->log("Switching: %s -> %s", oldBehaviorName.c_str(), myBehaviorName.c_str());
+    }
+    /* things happen here */
+
+    oldBehaviorName = myBehaviorName;
 }
 
 string StrategySelector::probabilistic() {

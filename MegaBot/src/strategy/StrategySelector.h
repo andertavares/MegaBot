@@ -2,6 +2,7 @@
 #define __STRATEGYSELECTOR_H__
 
 #include <BWAPI.h>
+#include "../utils/Logging.h"
 
 using namespace BWAPI;
 using namespace std;
@@ -84,6 +85,9 @@ private:
 	static StrategySelector* instance;
 	StrategySelector();
 
+    Logging* logger;
+    string oldBehaviorName;
+
 	string currentStrategyId;
 	
 	string getFilename();
@@ -117,6 +121,10 @@ public:
 
 	/** Chooses strategy according to probabilities in a file and returns its name */
 	string probabilistic();
+
+    void method1();
+
+    void method2();
 
 	/** Chooses strategy that would have won previous match */
 	string replyLast();

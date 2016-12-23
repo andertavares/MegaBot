@@ -145,7 +145,7 @@ void MegaBot::onFrame() {
         int enemySmallUnits = GameStateInfo::getInstance()->terrestrialSmallUnits(enemyName);
         Broodwar->printf("Number of enemy's small units %d.", enemySmallUnits);*/
 
-		string oldBehaviorName = myBehaviorName;
+        string oldBehaviorName = myBehaviorName;
 		logger->log("Frame count %d.", thisFrame);
         double lucky = (rand() / (double)(RAND_MAX + 1));
         

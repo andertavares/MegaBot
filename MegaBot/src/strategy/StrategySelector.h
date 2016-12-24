@@ -3,10 +3,13 @@
 
 #include <BWAPI.h>
 #include "../utils/Logging.h"
+#include "Xelnaga.h"
+#include "Skynet.h"
+#include "NUSBotModule.h"
 
 using namespace BWAPI;
 using namespace std;
-
+/*
 struct StrategyStats {
     string mapHash;
     string mapName;
@@ -59,100 +62,54 @@ struct Strategy {
         strategyId = mId;
     }
 };
-
-/** When a game is started a strategy is selected depending on the map and, if known,
-* the opponent race. After each game the result is stored to a statistics file
-* (bwapi-data/AI/Strategies_MetaBot.csv). Strategies that previously have been
-* successful have a higher probability of being selected, but all strategies have
-* at least 15% chance of being used.
-*
-* Author: Johan Hagelback (johan.hagelback@gmail.com)
 */
+
 class StrategySelector {
 
-private:
-    vector<Strategy> strategies;
-    vector<StrategyStats> stats;
+private:   
 
-    static StrategySelector* instance;
-    StrategySelector();
 
-    string oldBehaviorName;
+protected:
+	//name of behavior in previous frame
+    //string oldBehaviorName;
 
-    string currentStrategyId;
+	//name of current behavior
+	//string strategyName;
+    //string currentStrategy;
 
-    string getFilename();
-    string getWriteFilename();
-    void addEntry(string line);
-    int toInt(string &str);
+	BWAPI::AIModule* currentStrategy;
 
-    void discountCrashes();
-    void selectStrategy();
+	//maps the behaviors to their respective names
+    std::map<BWAPI::AIModule*, string> strategyNames;
 
-    bool active;
+    //maps behavior names to their AIModules
+    std::map<string, BWAPI::AIModule*> portfolio;
+
 
 public:
 
-    string myBehaviorName;
-
-    BWAPI::AIModule* currentBehavior;
-
-    //maps the behaviors to their respective names
-    std::map<BWAPI::AIModule*, string> behaviorNames;
-
-    //maps behavior names to their AIModules
-    std::map<string, BWAPI::AIModule*> behaviors;
-
-    Logging* logger;
-
-    /** Returns the instance of the class. */
-    static StrategySelector* getInstance();
-
-    /** Destructor */
+	StrategySelector();
     ~StrategySelector();
 
-    /** Returns the name of the selected strategy for this game. */
-    string getStrategy();
+	static const string SKYNET;		//"Skynet"
+	static const string XELNAGA;	//"Xelnaga"
+	static const string NUSBot;		//"NUSBot"
 
-    virtual void OnFrame();
+	//returns the active behavior
+    BWAPI::AIModule* getCurrentStrategy();
 
-    /** Loads the stats file. */
-    void loadStats();
+	//returns active behavior name
+	string getCurrentStrategyName();
+
+	//acts every frame (may switch strategy or not)
+    virtual void onFrame();
+
+	//initializes data structures
+	virtual void onStart();
 
     /** Prints debug info to the screen. */
     void printInfo();
 
-    /** Adds the result after a game is finished. */
-    void addResult(int win);
-
-    /** Chooses strategy according to probabilities in a file and returns its name */
-    string probabilistic();
-
-    /** Chooses strategy that would have won previous match */
-    string replyLast();
-
-    /**
-    * For level 1, second-guesses opponent, i.e., responds to its response as if it used replyLast.
-    * For level 2, triple-guesses, i.e., responds to a second-guess by the opponent, and so on
-    */
-    string guessOpponent(int level);
-
-    /** Chooses strategy that would have won most frequent opponent strategy */
-    string replyMostUsed();
-
-    /** Saves the stats file. */
-    void saveStats();
-
-    /** Enable strategy updates. */
-    void enable();
-
-    /** Disable strategy updates. */
-    void disable();
-};
-
-class Method1 : public StrategySelector {
-public:
-    void OnFrame();
 };
 
 #endif

@@ -5,17 +5,21 @@
 #include <map>
 #include <string>
 #include "utils/Logging.h"
+#include "strategy/StrategySelector.h"
 
 using namespace std;
 
 class MegaBot : public BWAPI::AIModule {
 
-	string myBehaviorName, enemyBehaviorName;
+	//string myBehaviorName, enemyBehaviorName;
+	string enemyBehaviorName;
 
 	//signals when enemy has recognized me
 	bool acknowledged;
 
-	BWAPI::AIModule* currentBehavior;
+	BWAPI::AIModule* currentStrategy;
+
+	StrategySelector* metaStrategy;
 
 	Logging* logger;
 
@@ -29,10 +33,6 @@ class MegaBot : public BWAPI::AIModule {
 	void handshake(string text);
 
 public:
-
-	static const string SKYNET;		//"Skynet"
-	static const string XELNAGA;	//"Xelnaga"
-	static const string NUSBot;		//"NUSBot"
 
 	MegaBot();
 
@@ -55,9 +55,6 @@ public:
 	virtual void onUnitComplete(BWAPI::Unit *unit);
 
 	//below: not part of BWAPI::AIModule
-
-	//returns the name of the behavior i'm using
-	string myBehavior();
 
 	//returns the name of the behavior the enemy is using
 	string enemyBehavior();

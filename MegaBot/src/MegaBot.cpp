@@ -91,11 +91,6 @@ void MegaBot::onStart() {
 void MegaBot::onEnd(bool isWinner) {
     logger->log("Game ended well with %s !", myBehaviorName.c_str());
     int result = MatchData::LOSS;
-    if (isWinner) {
-        result = MatchData::WIN;
-        logger->log("Victory! Winner behavior: %s.", myBehaviorName.c_str());
-    }
-	
 
     //if (Broodwar->elapsedTime() / 60 >= 80) result = MatchData::DRAW;
     //tournament rules for draw are 86400 frames, but we reduce 100 to ensure counting
@@ -103,6 +98,10 @@ void MegaBot::onEnd(bool isWinner) {
 		result = MatchData::DRAW;
 		logger->log("Draw. Finishing behavior: %s.", myBehaviorName.c_str());
 	}
+	else if (isWinner) {
+        result = MatchData::WIN;
+        logger->log("Victory! Winner behavior: %s.", myBehaviorName.c_str());
+    }
 	else {
 		logger->log("Defeat :( Finishing behavior: %s.", myBehaviorName.c_str());
 	}

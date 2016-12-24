@@ -194,6 +194,7 @@ void MatchData::writeSummary() {
     ss << myBehaviorName << ";";
     //ss << StrategySelector::getInstance()->getStrategyID() << ";";
     ss << Broodwar->enemy()->getRace().getName() << ";";
+	ss << Broodwar->enemy()->getName() << ";";
     ss << enemyBehaviorName << ";";
     ss << Broodwar->mapFileName() << ";";
     if (gameResult == WIN) ss << "Won";
@@ -206,7 +207,10 @@ void MatchData::writeSummary() {
     ss << Broodwar->enemy()->getUnitScore() << ";";
     ss << Broodwar->enemy()->getBuildingScore() << ";";
     ss << Broodwar->enemy()->getKillScore();
-    ss << "\n";
+
+	logger->log(ss.str().c_str());
+
+	ss << "\n";	//adds newline to write in summary file (logger doesn't need it)
 
     //Save the file
     string filename = getSummaryFilename();
@@ -214,13 +218,13 @@ void MatchData::writeSummary() {
     ofstream outFile;
     outFile.open(filename.c_str(), ios::out | ios::app);
     if (!outFile) {
-		logger->log("Error writing to stats file!\n");
+		logger->log("Error writing to stats file!");
     }
     else {
         outFile << ss.str();
         outFile.close();
     }
-	logger->log(ss.str().c_str());
+	
 }
 
 const string MatchData::currentDateTime() {

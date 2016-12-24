@@ -77,7 +77,7 @@ void MatchData::writeDetailedResult() {
 
     //const char* filename = Configuration::getInstance()->readDataFile.c_str();
 
-    XMLDocument doc;
+    tinyxml2::XMLDocument doc;
     XMLError input_result = doc.LoadFile(inputFile.c_str());
 
     // if file was not found, ok, we create a node and fill information in it
@@ -248,7 +248,7 @@ void MatchData::writeToCrashFile() {
     string inputFile = Configuration::getInstance()->crashInformationInputFile();
     string outputFile = Configuration::getInstance()->crashInformationOutputFile();
 
-    XMLDocument doc;
+    tinyxml2::XMLDocument doc;
     XMLError input_result = doc.LoadFile(inputFile.c_str());
 
     // if file was not found, ok, we create a node and fill information in it
@@ -299,7 +299,7 @@ void MatchData::updateCrashFile() {
 
     string outputFile = Configuration::getInstance()->crashInformationOutputFile();
 
-    XMLDocument doc;
+    tinyxml2::XMLDocument doc;
     XMLError input_result = doc.LoadFile(outputFile.c_str());
 
     // if another error occurr, we're in trouble =/

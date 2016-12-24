@@ -102,10 +102,10 @@ public:
 	string getCurrentStrategyName();
 
 	//acts every frame (may switch strategy or not)
-    virtual void onFrame();
+	virtual void onFrame() {}
 
 	//initializes data structures
-	virtual void onStart();
+	virtual void onStart() {}
 
     /** Prints debug info to the screen. */
     void printInfo();

@@ -43,6 +43,15 @@
     <ClCompile Include="src\managers\ExplorationManager.cpp">
       <Filter>managers</Filter>
     </ClCompile>
+    <ClCompile Include="src\strategy\EpsilonGreedy.cpp">
+      <Filter>strategy</Filter>
+    </ClCompile>
+    <ClCompile Include="src\strategy\MetaStrategyFactory.cpp">
+      <Filter>strategy</Filter>
+    </ClCompile>
+    <ClCompile Include="src\strategy\Probabilistic.cpp">
+      <Filter>strategy</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="main">
@@ -100,6 +109,15 @@
     </ClInclude>
     <ClInclude Include="src\managers\ExplorationManager.h">
       <Filter>managers</Filter>
+    </ClInclude>
+    <ClInclude Include="src\strategy\EpsilonGreedy.h">
+      <Filter>strategy</Filter>
+    </ClInclude>
+    <ClInclude Include="src\strategy\MetaStrategyFactory.h">
+      <Filter>strategy</Filter>
+    </ClInclude>
+    <ClInclude Include="src\strategy\Probabilistic.h">
+      <Filter>strategy</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

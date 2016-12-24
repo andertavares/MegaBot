@@ -11,6 +11,8 @@ StrategySelector* MetaStrategyFactory::getMetaStrategy(){
     //retrieve what config says about strategy
     string strategyId = Configuration::getInstance()->strategyID;
 
+	Logging::getInstance()->log("Meta strategy: %s", strategyId.c_str());
+
     if (strategyId == "epsilon-greedy") {
         return new EpsilonGreedy();
     }

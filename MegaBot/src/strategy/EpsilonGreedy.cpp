@@ -34,7 +34,7 @@ void EpsilonGreedy::onStart() {
 		Logging::getInstance()->log(
             "Choosing randomly: (%.3f < %.3f)", lucky, epsilon
         );
-        currentStrategy = probabilistic();
+		currentStrategy = randomUniform();
     }
     else {
         Logging::getInstance()->log(

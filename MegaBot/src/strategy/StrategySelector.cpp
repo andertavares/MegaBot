@@ -3,6 +3,7 @@
 #include <sstream>
 #include <ctime>
 #include <cfloat>
+#include "BWAPI.h"
 #include "StrategySelector.h"
 #include "Xelnaga.h"
 #include "Skynet.h"
@@ -37,6 +38,15 @@ StrategySelector::StrategySelector() {
 StrategySelector::~StrategySelector() {
 	
 }
+
+BWAPI::AIModule* StrategySelector::getCurrentStrategy(){
+	return currentStrategy;
+}
+
+std::string StrategySelector::getCurrentStrategyName(){
+	return strategyNames[currentStrategy];
+}
+
 
 /*
 void Method1::OnFrame() {

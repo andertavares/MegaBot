@@ -40,7 +40,7 @@ Configuration::Configuration() {
 	enemyInformationPrefix = "MegaBot-vs-";
     crashInformationPrefix = "crash_MegaBot-vs-";
 
-	strategyID = MegaBot::SKYNET;
+	strategyID = "epsilon-greedy"; //MegaBot::SKYNET;
 	speed = 0;
 	enableGUI = true;
 

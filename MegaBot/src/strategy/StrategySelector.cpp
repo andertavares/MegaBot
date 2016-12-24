@@ -7,12 +7,15 @@
 #include "../MegaBot.h"
 #include "../data/Configuration.h"
 #include "../utils/tinyxml2.h"
-
+#include "../utils/Logging.h"
+#include "../data/MatchData.h"
 
 
 StrategySelector* StrategySelector::instance = NULL;
 
 StrategySelector::StrategySelector() {
+    logger = Logging::getInstance();
+
     active = true;
     /*
     loadStats();
@@ -68,7 +71,7 @@ void StrategySelector::discountCrashes() {
                 crashesMap[behavior->Name()] = score;
                 behavior = behavior->NextSiblingElement();
             }
-            
+
             if (errorInput == XMLError::XML_NO_ERROR) {
                 XMLElement* inputRootNode = doc2.FirstChildElement("scores");
 
@@ -88,7 +91,7 @@ void StrategySelector::discountCrashes() {
                         if (score > 0 && input_behavior == behavior) {
                             for (int i = crashesMap[input_behavior->Name()]; i > 0; i--)
                                 score = (1 - alpha)*score + alpha * (-1);
-                            
+
                         }
                         scoresMap[input_behavior->Name()] = score;
                         input_behavior->SetText(score);
@@ -125,21 +128,21 @@ void StrategySelector::selectStrategy() {
     string strategyId = Configuration::getInstance()->strategyID;
 
     //chooses strategy probabilistically
-    if (strategyId == "probabilistic") {
+    if (strategyId == "epsilon-greedy") {
         srand(time(NULL));
         //float lucky = (rand() % 1000) / 1000.f;
-		double lucky = (rand() / (double)(RAND_MAX + 1));
-		double epsilon = Configuration::getInstance()->epsilon; //alias for easy reading
+        double lucky = (rand() / (double)(RAND_MAX + 1));
+        double epsilon = Configuration::getInstance()->epsilon; //alias for easy reading
         if (lucky < epsilon) {
             Broodwar->printf(
                 "Choosing randomly: (%.3f < %.3f)", lucky, epsilon
-            );
+                );
             currentStrategyId = probabilistic();
         }
         else {
-			Broodwar->printf(
+            Broodwar->printf(
                 "Choosing greedily: (%.3f > %.3f)", lucky, epsilon
-            );
+                );
 
             //file to read is MegaBot-vs-enemy.xml
             string inputFile = Configuration::getInstance()->enemyInformationInputFile();
@@ -195,7 +198,7 @@ void StrategySelector::selectStrategy() {
                     "Error while parsing strategy file '%s'. Error: '%s'",
                     Configuration::getInstance()->strategyFile.c_str(),
                     doc.ErrorName()
-                );
+                    );
                 currentStrategyId = probabilistic();
             }
         }
@@ -222,7 +225,7 @@ string StrategySelector::probabilistic() {
             "An error has occurred while parsing strategy file '%s'. Error: '%s'",
             Configuration::getInstance()->strategyFile.c_str(),
             doc.ErrorName()
-        );
+            );
         return defaultBehavior;	//returns a default strategy
     }
 
@@ -259,7 +262,7 @@ string StrategySelector::probabilistic() {
             Broodwar->printf(
                 "MegaBot chose: %s (random: %.3f, target: %.3f, acc: %.3f, sum: %.3f)",
                 behv->first.c_str(), random, (acc + behv->second), acc, sum
-            );
+                );
             return behv->first;
         }
         acc += behv->second;
@@ -267,13 +270,103 @@ string StrategySelector::probabilistic() {
     Broodwar->printf(
         "ERROR: behavior was not randomly selected (random: %.3f, acc: %.3f, sum: %.3f). Defaulting to: %s.",
         random, acc, sum, defaultBehavior
-    );
+        );
     return defaultBehavior;	//something went wrong, opening was not randomly selected =/
 }
 
 string StrategySelector::getStrategy() {
     selectStrategy();
     return currentStrategyId;
+}
+
+void StrategySelector::OnFrame() {
+    int thisFrame = Broodwar->getFrameCount();
+    myBehaviorName = StrategySelector::getInstance()->getStrategy();
+
+    MatchData::getInstance()->registerMyBehaviorName(myBehaviorName);
+    currentBehavior = behaviors[myBehaviorName];
+    currentBehavior->onFrame();
+    logger->log("%s on!", myBehaviorName.c_str());
+
+    if (Broodwar->elapsedTime() / 60 >= 81) {	//leave stalled game
+        Broodwar->leaveGame();
+        return;
+    }
+
+    currentBehavior->onFrame();
+
+    //draws some text
+    Broodwar->drawTextScreen(240, 20, "\x0F MegaBot v1.0.2");
+    Broodwar->drawTextScreen(240, 35, "\x0F Strategy: %s", myBehaviorName.c_str());
+    //Broodwar->drawTextScreen(5, 25, "\x0F Enemy behavior: %s", enemyBehaviorName.c_str());
+    Broodwar->drawTextScreen(240, 45, "\x0F Enemy: %s", Broodwar->enemy()->getName().c_str());
+    Broodwar->drawTextScreen(240, 60, "Frame count %d.", thisFrame);
+    Broodwar->drawTextScreen(240, 75, "Seconds: %d.", Broodwar->elapsedTime());
+}
+
+void Method1::OnFrame() {
+    int thisFrame = Broodwar->getFrameCount();
+    //Broodwar->printf("Frame count %d.", thisFrame);
+
+    if (thisFrame % 100 == 0 && thisFrame > 0) {
+        logger->log("Frame count %d.", thisFrame);
+    }
+
+    if (thisFrame % 5000 == 0 && thisFrame > 0) {  //behavior switch
+        /*int playerBases = GameStateInfo::getInstance()->numBases(myBehaviorName.c_str(), BWAPI::Races::Protoss);
+        Broodwar->printf("Number of player's bases %d.", playerBases);
+
+        BWAPI::Race enemyRace = BWAPI::Broodwar->enemy()->getRace();
+        string enemyName = BWAPI::Broodwar->enemy()->getName().c_str();
+        int enemyBases = GameStateInfo::getInstance()->numBases(enemyName, enemyRace);
+        Broodwar->printf("Number of enemy's bases %d.", enemyBases);
+
+        int playerSmallUnits = GameStateInfo::getInstance()->terrestrialSmallUnits(myBehaviorName.c_str());
+        Broodwar->printf("Number of player's small units %d.", playerSmallUnits);
+
+        string enemyName = BWAPI::Broodwar->enemy()->getName().c_str();
+        int enemySmallUnits = GameStateInfo::getInstance()->terrestrialSmallUnits(enemyName);
+        Broodwar->printf("Number of enemy's small units %d.", enemySmallUnits);*/
+
+        string oldBehaviorName = myBehaviorName;
+        logger->log("Frame count %d.", thisFrame);
+        double lucky = (rand() / (double)(RAND_MAX + 1));
+
+        if (lucky < 0.33) {
+            myBehaviorName = MegaBot::NUSBot;
+        }
+        else if (lucky < 0.66) {
+            myBehaviorName = MegaBot::SKYNET;
+        }
+        else {
+            myBehaviorName = MegaBot::XELNAGA;
+        }
+        logger->log("Switching: %s -> %s", oldBehaviorName.c_str(), myBehaviorName.c_str());
+        MatchData::getInstance()->registerMyBehaviorName(myBehaviorName);
+        currentBehavior = behaviors[myBehaviorName];
+        currentBehavior->onFrame();
+        logger->log("%s on!", myBehaviorName.c_str());
+    }
+
+    if (Broodwar->elapsedTime() / 60 >= 81) {	//leave stalled game
+        Broodwar->leaveGame();
+        return;
+    }
+
+    currentBehavior->onFrame();
+
+    //sends behavior communication message every 200 frames
+    /*if (!acknowledged && (BWAPI::Broodwar->getFrameCount() % 200) == 0) {
+    Broodwar->sendText("%s on!", myBehaviorName.c_str());
+    }*/
+
+    //draws some text
+    Broodwar->drawTextScreen(240, 20, "\x0F MegaBot v1.0.2");
+    Broodwar->drawTextScreen(240, 35, "\x0F Strategy: %s", myBehaviorName.c_str());
+    //Broodwar->drawTextScreen(5, 25, "\x0F Enemy behavior: %s", enemyBehaviorName.c_str());
+    Broodwar->drawTextScreen(240, 45, "\x0F Enemy: %s", Broodwar->enemy()->getName().c_str());
+    Broodwar->drawTextScreen(240, 60, "Frame count %d.", thisFrame);
+    Broodwar->drawTextScreen(240, 75, "Seconds: %d.", Broodwar->elapsedTime());
 }
 
 void StrategySelector::printInfo() {

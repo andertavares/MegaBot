@@ -120,70 +120,14 @@ void MegaBot::onEnd(bool isWinner) {
 }
 
 void MegaBot::onFrame() {
-    int thisFrame = Broodwar->getFrameCount();
-    //Broodwar->printf("Frame count %d.", thisFrame);
-    
-
-    if (thisFrame % 100 == 0 && thisFrame > 0) {
-       logger->log("Frame count %d.", thisFrame);
+    string strategyId = Configuration::getInstance()->strategyID;
+    if (strategyId == "epsilon-greedy") {
+        StrategySelector::getInstance()->OnFrame();
     }
-
-    if (thisFrame % 5000 == 0 && thisFrame > 0) {  //behavior switch
-        /*int playerBases = GameStateInfo::getInstance()->numBases(myBehaviorName.c_str(), BWAPI::Races::Protoss);
-        Broodwar->printf("Number of player's bases %d.", playerBases);
-
-        BWAPI::Race enemyRace = BWAPI::Broodwar->enemy()->getRace();
-        string enemyName = BWAPI::Broodwar->enemy()->getName().c_str();
-        int enemyBases = GameStateInfo::getInstance()->numBases(enemyName, enemyRace);
-        Broodwar->printf("Number of enemy's bases %d.", enemyBases);
-
-        int playerSmallUnits = GameStateInfo::getInstance()->terrestrialSmallUnits(myBehaviorName.c_str());
-        Broodwar->printf("Number of player's small units %d.", playerSmallUnits);
-
-        string enemyName = BWAPI::Broodwar->enemy()->getName().c_str();
-        int enemySmallUnits = GameStateInfo::getInstance()->terrestrialSmallUnits(enemyName);
-        Broodwar->printf("Number of enemy's small units %d.", enemySmallUnits);*/
-
-		string oldBehaviorName = myBehaviorName;
-		logger->log("Frame count %d.", thisFrame);
-        double lucky = (rand() / (double)(RAND_MAX + 1));
-        
-        if (lucky < 0.33) {
-            myBehaviorName = MegaBot::NUSBot;
+    else if (strategyId == "fixed-intervals") {
+        Method1::getInstance()->OnFrame();
         }
-        else if (lucky < 0.66) {
-            myBehaviorName = MegaBot::SKYNET;
         }
-        else {
-            myBehaviorName = MegaBot::XELNAGA;
-        }
-		logger->log("Switching: %s -> %s", oldBehaviorName.c_str(), myBehaviorName.c_str());
-		MatchData::getInstance()->registerMyBehaviorName(myBehaviorName);
-        currentBehavior = behaviors[myBehaviorName];
-        currentBehavior->onFrame();
-		logger->log("%s on!", myBehaviorName.c_str());	
-    }
-
-    if (Broodwar->elapsedTime() / 60 >= 81) {	//leave stalled game
-        Broodwar->leaveGame();
-        return;
-    }
-
-    currentBehavior->onFrame();
-
-    //sends behavior communication message every 200 frames
-    /*if (!acknowledged && (BWAPI::Broodwar->getFrameCount() % 200) == 0) {
-		Broodwar->sendText("%s on!", myBehaviorName.c_str());
-    }*/
-
-    //draws some text
-    Broodwar->drawTextScreen(240, 20, "\x0F MegaBot v1.0.2");
-    Broodwar->drawTextScreen(240, 35, "\x0F Strategy: %s", myBehaviorName.c_str());
-    //Broodwar->drawTextScreen(5, 25, "\x0F Enemy behavior: %s", enemyBehaviorName.c_str());
-    Broodwar->drawTextScreen(240, 45, "\x0F Enemy: %s", Broodwar->enemy()->getName().c_str());
-	Broodwar->drawTextScreen(240, 60, "Frame count %d.", thisFrame);
-	Broodwar->drawTextScreen(240, 75, "Seconds: %d.", Broodwar->elapsedTime());
-}
 
 void MegaBot::onSendText(std::string text) {
     currentBehavior->onSendText(text);

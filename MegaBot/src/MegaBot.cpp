@@ -38,17 +38,18 @@ void MegaBot::onStart() {
 	metaStrategy = MetaStrategyFactory::getMetaStrategy();
 	metaStrategy->onStart();
 	
+	currentStrategy = metaStrategy->getCurrentStrategy();
 
     //Broodwar->sendText("%s on!", myBehaviorName.c_str());		//sends behavior communication message
 	logger->log("Game started with %s !", metaStrategy->getCurrentStrategyName().c_str());
 
     MatchData::getInstance()->registerMyBehaviorName(metaStrategy->getCurrentStrategyName());
-	currentStrategy = metaStrategy->getCurrentStrategy();
+	
     //currentBehavior->onStart();
 
     MatchData::getInstance()->writeToCrashFile();
 
-    //overrides user input, speed and GUI set by currentBehavior
+    //sets user input, speed and GUI 
     Broodwar->enableFlag(Flag::UserInput);
 
     int speed = Configuration::getInstance()->speed;
@@ -58,15 +59,14 @@ void MegaBot::onStart() {
     bool gui = Configuration::getInstance()->enableGUI;
 	logger->log("Setting GUI to %s.", gui ? "enabled" : "disabled");
     Broodwar->setGUI(gui);
-
-
 }
 
 void MegaBot::onEnd(bool isWinner) {
 	string strategyName = metaStrategy->getCurrentStrategyName();
 
-    logger->log("Game ended well with %s !", strategyName.c_str());
-    int result = MatchData::LOSS;
+    logger->log("Game ended well with %s.", strategyName.c_str());
+    
+	int result;
 
     //if (Broodwar->elapsedTime() / 60 >= 80) result = MatchData::DRAW;
     //tournament rules for draw are 86400 frames, but we reduce 100 to ensure counting
@@ -79,6 +79,7 @@ void MegaBot::onEnd(bool isWinner) {
         logger->log("Victory! Winner behavior: %s.", strategyName.c_str());
     }
 	else {
+		result = MatchData::LOSS;
 		logger->log("Defeat :( Finishing behavior: %s.", strategyName.c_str());
 	}
 
@@ -108,8 +109,10 @@ void MegaBot::onFrame() {
         return;
     }
 
-	metaStrategy->onFrame();
+	metaStrategy->onFrame();	//might switch strategy so I update currentStrategy below
+
 	currentStrategy = metaStrategy->getCurrentStrategy();
+	currentStrategy->onFrame();
 
 	 //draws some text
     Broodwar->drawTextScreen(240, 20, "\x0F MegaBot v1.0.2");

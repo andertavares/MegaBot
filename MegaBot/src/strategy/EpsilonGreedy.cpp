@@ -95,10 +95,12 @@ void EpsilonGreedy::onStart() {
                 "Error while parsing strategy file '%s'. Error: '%s'",
                 Configuration::getInstance()->strategyFile.c_str(),
                 doc.ErrorName()
-                );
+            );
             currentStrategy = randomUniform();
         }
 	}
+	Logging::getInstance()->log("%s: onStart() - executed in EpsilonGreedy::onStart", getCurrentStrategyName().c_str());
+	currentStrategy->onStart();
 }
 
 void EpsilonGreedy::onFrame() {

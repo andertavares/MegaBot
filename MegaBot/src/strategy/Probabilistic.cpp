@@ -1,9 +1,9 @@
 #include "Probabilistic.h"
 #include "BWAPI.h"
+#include "../utils/Logging.h"
 #include "../utils/tinyxml2.h"
 
-Probabilistic::Probabilistic(void)
-{
+Probabilistic::Probabilistic(void) : StrategySelector() {
 }
 
 
@@ -15,7 +15,14 @@ Probabilistic::~Probabilistic(void)
  * Performs a weighted selection of strategy based on probabilities defined in config. file
  */
 void Probabilistic::onStart() {
-    using namespace tinyxml2;
+	currentStrategy = selectStrategy();
+	Logging::getInstance()->log("%s: onStart() - executed in Probabilistic::onStart", getCurrentStrategyName().c_str());
+	currentStrategy->onStart();
+	
+}
+
+BWAPI::AIModule* Probabilistic::selectStrategy() {
+	using namespace tinyxml2;
 
     string defaultBehavior = StrategySelector::SKYNET;	//in case something go wrong
 
@@ -31,8 +38,7 @@ void Probabilistic::onStart() {
             Configuration::getInstance()->strategyFile.c_str(),
             doc.ErrorName()
             );
-		currentStrategy = portfolio[defaultBehavior];
-		return;
+		return portfolio[defaultBehavior];
     }
 
     XMLElement* behaviorEntry = doc.FirstChildElement("strategy")->FirstChildElement("behavior");
@@ -69,8 +75,8 @@ void Probabilistic::onStart() {
                 "MegaBot chose: %s (random: %.3f, target: %.3f, acc: %.3f, sum: %.3f)",
                 behv->first.c_str(), random, (acc + behv->second), acc, sum
             );
-			currentStrategy = portfolio[behv->first];
-            return; // behv->first;
+			//currentStrategy = portfolio[behv->first];
+            return portfolio[behv->first]; // behv->first;
         }
         acc += behv->second;
     }
@@ -78,7 +84,7 @@ void Probabilistic::onStart() {
         "ERROR: behavior was not randomly selected (random: %.3f, acc: %.3f, sum: %.3f). Defaulting to: %s.",
         random, acc, sum, defaultBehavior
     );
-	currentStrategy = portfolio[defaultBehavior];
-    return; // defaultBehavior;	//something went wrong, opening was not randomly selected =/
+	//currentStrategy = portfolio[defaultBehavior];
+    return  portfolio[defaultBehavior]; // defaultBehavior;	//something went wrong, opening was not randomly selected =/
 }
 

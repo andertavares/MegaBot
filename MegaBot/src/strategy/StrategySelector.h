@@ -104,8 +104,8 @@ public:
 	//acts every frame (may switch strategy or not)
 	virtual void onFrame() {}
 
-	//initializes data structures
-	virtual void onStart() {}
+	//initializes the portfolio of behaviors
+	virtual void onStart();
 
     /** Prints debug info to the screen. */
     void printInfo();

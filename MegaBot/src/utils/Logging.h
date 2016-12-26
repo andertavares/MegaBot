@@ -12,10 +12,10 @@
 
 class Logging {
 	//uses WINAPI functions to retrieve an error message
-	void logWinError(LPTSTR lpszFunction);
+	void logWindowsError(LPTSTR lpszFunction);
 
 	//sets the log filename to the specified number
-	void setLogFileNumber(string prefix, int number);
+	//void setLogFileNumber(string prefix, int number);
 
 public:
     ~Logging() { }

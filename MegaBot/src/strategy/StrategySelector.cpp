@@ -29,9 +29,10 @@ StrategySelector::StrategySelector() {
     portfolio.insert(make_pair(NUSBot, new NUSBotModule()));
 
     //initializes reverse map
-	 map<string, BWAPI::AIModule*>::iterator behv;
+	map<string, BWAPI::AIModule*>::iterator behv;
 	for(behv = portfolio.begin(); behv != portfolio.end(); behv++){
 		strategyNames.insert(make_pair((*behv).second, (*behv).first));
+		Logging::getInstance()->log("Added %s to reverse map", (*behv).first.c_str() );
     }
 }
 
@@ -45,6 +46,15 @@ BWAPI::AIModule* StrategySelector::getCurrentStrategy(){
 
 std::string StrategySelector::getCurrentStrategyName(){
 	return strategyNames[currentStrategy];
+}
+
+void StrategySelector::onStart() {
+	map<string, BWAPI::AIModule*>::iterator behv;
+
+	for(behv = portfolio.begin(); behv != portfolio.end(); behv++){
+		Logging::getInstance()->log("%s: onStart()", (*behv).first.c_str());
+		(*behv).second->onStart();
+	}
 }
 
 

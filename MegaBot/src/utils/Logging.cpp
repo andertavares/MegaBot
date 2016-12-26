@@ -34,9 +34,6 @@ Logging::Logging(){
 	DWORD dwError = 0;
 	string pattern = pathPrefix + "*.log";
 
-	//StringCchCopy(szDir, MAX_PATH, (TCHAR*) pathPrefix.c_str());
-	//StringCchCopy(szDir, MAX_PATH, (TCHAR*) "log_MegaBot");
-	//StringCchCat(szDir, MAX_PATH, TEXT("*.log"));
 	log("Looking for pattern  %s", pattern.c_str());
 
 	hFind = FindFirstFileA(pattern.c_str(), &ffd);
@@ -52,13 +49,12 @@ Logging::Logging(){
 		}
 		else {
 			log("Error while looking for pattern %s. ERRNO: %d", pattern.c_str(), dwError);
-			logWinError(TEXT("FindFirstFileA"));
+			logWindowsError(TEXT("FindFirstFileA"));
 			log("Logging to default file: %s", filename.c_str());
 			return;
 		}
 	} 
    
-	
 	// count files in the directory
 	do {
 		logCount++;
@@ -73,7 +69,7 @@ Logging::Logging(){
 	filename = pathPrefix + string(fileNumber) + ".log";
 	
 }
-
+/*
 void Logging::setLogFileNumber(string prefix, int number) {
 	//pad with zeroes to the right
 	char fileNumber[5];
@@ -82,7 +78,7 @@ void Logging::setLogFileNumber(string prefix, int number) {
 	log("Gonna write log to %s%s.log", prefix.c_str(), fileNumber);
 	filename = prefix + string(fileNumber) + ".log";
 }
-
+*/
 
 void Logging::log(const char * msg, ...) {
     file_ptr = fopen(filename.c_str(), "a");
@@ -100,7 +96,7 @@ void Logging::log(const char * msg, ...) {
 	free(formatted);
 }
 
-void Logging::logWinError(LPTSTR lpszFunction) { 
+void Logging::logWindowsError(LPTSTR lpszFunction) { 
     // Retrieve the system error message for the last-error code
 
     LPVOID lpMsgBuf;

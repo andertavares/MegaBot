@@ -22,6 +22,7 @@ const string StrategySelector::XELNAGA = "Xelnaga";
 const string StrategySelector::NUSBot = "NUSBot";
 
 StrategySelector::StrategySelector() {
+	name = "none";
 
 	//initalizes behaviors
     portfolio.insert(make_pair(SKYNET, new Skynet()));
@@ -57,6 +58,9 @@ void StrategySelector::onStart() {
 	}
 }
 
+string StrategySelector::getName(){
+	return name;
+}
 
 /*
 void Method1::OnFrame() {

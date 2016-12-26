@@ -79,6 +79,9 @@ protected:
 
 	BWAPI::AIModule* currentStrategy;
 
+	//the name of this meta strategy
+	string name;
+
 	//maps the behaviors to their respective names
     std::map<BWAPI::AIModule*, string> strategyNames;
 
@@ -94,6 +97,9 @@ public:
 	static const string SKYNET;		//"Skynet"
 	static const string XELNAGA;	//"Xelnaga"
 	static const string NUSBot;		//"NUSBot"
+
+	//returns the meta strategy name
+	string getName();
 
 	//returns the active behavior
     BWAPI::AIModule* getCurrentStrategy();

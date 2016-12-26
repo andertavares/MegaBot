@@ -14,6 +14,8 @@
 #include "data/MatchData.h"
 #include "data/GameStateInfo.h"
 #include "utils/Logging.h"
+#include <cstdlib>
+#include <ctime>
 
 using namespace BWAPI;
 
@@ -25,6 +27,8 @@ MegaBot::MegaBot() : acknowledged(false) {
 
     MatchData::getInstance()->registerEnemyBehaviorName("Unknown");
     enemyBehaviorName = "Unknown";
+
+	srand (static_cast <unsigned> (time(0)));
 }
 
 void MegaBot::onStart() {
@@ -116,12 +120,13 @@ void MegaBot::onFrame() {
 
 	 //draws some text
     Broodwar->drawTextScreen(240, 20, "\x0F MegaBot v1.0.2");
+	Broodwar->drawTextScreen(240, 35, "\x0F Meta strategy: %s", metaStrategy->getName().c_str());
 	//Broodwar->drawTextScreen(240, 35, "\x0F Meta-Strategy: %s", metaStrategy->getCurrentStrategyName().c_str());
-	Broodwar->drawTextScreen(240, 35, "\x0F Strategy: %s", metaStrategy->getCurrentStrategyName().c_str());
+	Broodwar->drawTextScreen(240, 50, "\x0F Strategy: %s", metaStrategy->getCurrentStrategyName().c_str());
     //Broodwar->drawTextScreen(5, 25, "\x0F Enemy behavior: %s", enemyBehaviorName.c_str());
-    Broodwar->drawTextScreen(240, 45, "\x0F Enemy: %s", Broodwar->enemy()->getName().c_str());
-	Broodwar->drawTextScreen(240, 60, "Frame count %d.", Broodwar->getFrameCount());
-    Broodwar->drawTextScreen(240, 75, "Seconds: %d.", Broodwar->elapsedTime());
+    Broodwar->drawTextScreen(240, 65, "\x0F Enemy: %s", Broodwar->enemy()->getName().c_str());
+	Broodwar->drawTextScreen(240, 80, "Frame count %d.", Broodwar->getFrameCount());
+    Broodwar->drawTextScreen(240, 95, "Seconds: %d.", Broodwar->elapsedTime());
 }
 
 void MegaBot::onSendText(std::string text) {

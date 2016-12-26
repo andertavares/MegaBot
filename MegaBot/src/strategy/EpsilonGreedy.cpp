@@ -8,6 +8,7 @@ using namespace tinyxml2;
 using namespace BWAPI;
 
 EpsilonGreedy::EpsilonGreedy(void) : StrategySelector() {
+	name = "Epsilon greedy";
 }
 
 

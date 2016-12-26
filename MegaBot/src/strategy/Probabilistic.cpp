@@ -4,6 +4,7 @@
 #include "../utils/tinyxml2.h"
 
 Probabilistic::Probabilistic(void) : StrategySelector() {
+	name = "Probabilistic";
 }
 
 
@@ -64,8 +65,9 @@ BWAPI::AIModule* Probabilistic::selectStrategy() {
     sum += behv.second;
     }*/
 
-    //generates a pseudo-random number between 0 and sum
-    float random = static_cast <float> (rand()) / (static_cast <float> (RAND_MAX / sum));
+    //generates a pseudo-random number between 0 and sum - http://stackoverflow.com/a/686373
+	float random = static_cast <float> (rand()) / (static_cast <float> (RAND_MAX / sum));
+	//(rand() * sum) / float(RAND_MAX); 
 
     //traverses the list until we find an opening that matches the random number
     float acc = 0;

@@ -8,7 +8,7 @@
 #include "Xelnaga.h"
 #include "Skynet.h"
 #include "NUSBotModule.h"
-#include "strategy/StrategySelector.h"
+#include "strategy/MetaStrategy.h"
 #include "strategy/MetaStrategyFactory.h"
 #include "data/Configuration.h"
 #include "data/MatchData.h"
@@ -87,8 +87,8 @@ void MegaBot::onEnd(bool isWinner) {
 		logger->log("Defeat :( Finishing behavior: %s.", strategyName.c_str());
 	}
 
-    //StrategySelector::getInstance()->addResult(win);
-    //StrategySelector::getInstance()->saveStats();
+    //MetaStrategy::getInstance()->addResult(win);
+    //MetaStrategy::getInstance()->saveStats();
     //Statistics::getInstance()->saveResult(win);
 
     MatchData::getInstance()->registerMatchFinish(result);
@@ -103,7 +103,7 @@ void MegaBot::onEnd(bool isWinner) {
 void MegaBot::onFrame() {
     /*string strategyId = Configuration::getInstance()->strategyID;
     if (strategyId == "epsilon-greedy") {
-        StrategySelector::getInstance()->OnFrame();
+        MetaStrategy::getInstance()->OnFrame();
     }
     else if (strategyId == "fixed-intervals") {
         Method1::getInstance()->OnFrame();

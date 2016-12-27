@@ -16,9 +16,6 @@
     <ClCompile Include="src\utils\tinyxml2.cpp">
       <Filter>utils</Filter>
     </ClCompile>
-    <ClCompile Include="src\strategy\StrategySelector.cpp">
-      <Filter>strategy</Filter>
-    </ClCompile>
     <ClCompile Include="src\data\GameStateInfo.cpp">
       <Filter>data</Filter>
     </ClCompile>
@@ -53,6 +50,9 @@
       <Filter>strategy</Filter>
     </ClCompile>
     <ClCompile Include="src\strategy\RandomSwitch.cpp">
+      <Filter>strategy</Filter>
+    </ClCompile>
+    <ClCompile Include="src\strategy\MetaStrategy.cpp">
       <Filter>strategy</Filter>
     </ClCompile>
   </ItemGroup>
@@ -92,9 +92,6 @@
     <ClInclude Include="src\utils\tinyxml2.h">
       <Filter>utils</Filter>
     </ClInclude>
-    <ClInclude Include="src\strategy\StrategySelector.h">
-      <Filter>strategy</Filter>
-    </ClInclude>
     <ClInclude Include="src\data\GameStateInfo.h">
       <Filter>data</Filter>
     </ClInclude>
@@ -123,6 +120,9 @@
       <Filter>strategy</Filter>
     </ClInclude>
     <ClInclude Include="src\strategy\RandomSwitch.h">
+      <Filter>strategy</Filter>
+    </ClInclude>
+    <ClInclude Include="src\strategy\MetaStrategy.h">
       <Filter>strategy</Filter>
     </ClInclude>
   </ItemGroup>

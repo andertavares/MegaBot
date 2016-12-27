@@ -1,8 +1,8 @@
 #include "RandomSwitch.h"
 #include "../data/MatchData.h"
 
-RandomSwitch::RandomSwitch(void) : StrategySelector() {
-	name = "Cyclical Switch";
+RandomSwitch::RandomSwitch(void) : MetaStrategy() {
+	name = "Random Switch";
 }
 
 
@@ -10,7 +10,7 @@ RandomSwitch::~RandomSwitch(void) {
 }
 
 void RandomSwitch::onStart(){
-	StrategySelector::onStart();
+	MetaStrategy::onStart();
 
 	//selects one behavior probabilistically
 	currentStrategy = randomUniform();
@@ -48,13 +48,13 @@ void RandomSwitch::onFrame(){
         /*double lucky = (rand() / (double)(RAND_MAX + 1));
 
         if (lucky < 0.33) {
-			myBehaviorName = StrategySelector::NUSBot;
+			myBehaviorName = MetaStrategy::NUSBot;
         }
         else if (lucky < 0.66) {
-            myBehaviorName = StrategySelector::SKYNET;
+            myBehaviorName = MetaStrategy::SKYNET;
         }
         else {
-            myBehaviorName = StrategySelector::XELNAGA;
+            myBehaviorName = MetaStrategy::XELNAGA;
         }*/
 
 		currentStrategy = randomUniform();

@@ -1,6 +1,6 @@
 #pragma once
-#include "StrategySelector.h"
-class RandomSwitch : public StrategySelector {
+#include "MetaStrategy.h"
+class RandomSwitch : public MetaStrategy {
 public:
 	RandomSwitch(void);
 	~RandomSwitch(void);

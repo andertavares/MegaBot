@@ -1,5 +1,5 @@
 #pragma once
-#include "StrategySelector.h"
+#include "MetaStrategy.h"
 
 class MetaStrategyFactory {
 	MetaStrategyFactory(void);
@@ -7,6 +7,6 @@ class MetaStrategyFactory {
 
 public:
 	//retrieves a meta-strategy defined in configuration file
-	static StrategySelector* getMetaStrategy();
+	static MetaStrategy* getMetaStrategy();
 };
 

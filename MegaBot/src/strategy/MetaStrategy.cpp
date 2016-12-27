@@ -4,7 +4,7 @@
 #include <ctime>
 #include <cfloat>
 #include "BWAPI.h"
-#include "StrategySelector.h"
+#include "MetaStrategy.h"
 #include "Xelnaga.h"
 #include "Skynet.h"
 #include "NUSBotModule.h"
@@ -19,11 +19,11 @@
 
 
 //initializes consts
-const string StrategySelector::SKYNET = "Skynet";
-const string StrategySelector::XELNAGA = "Xelnaga";
-const string StrategySelector::NUSBot = "NUSBot";
+const string MetaStrategy::SKYNET = "Skynet";
+const string MetaStrategy::XELNAGA = "Xelnaga";
+const string MetaStrategy::NUSBot = "NUSBot";
 
-StrategySelector::StrategySelector() : rng(std::time(0)) {
+MetaStrategy::MetaStrategy() : rng(std::time(0)) {
 	name = "none";
 
 	//initalizes behaviors
@@ -41,19 +41,19 @@ StrategySelector::StrategySelector() : rng(std::time(0)) {
 	
 }
 
-StrategySelector::~StrategySelector() {
+MetaStrategy::~MetaStrategy() {
 	
 }
 
-BWAPI::AIModule* StrategySelector::getCurrentStrategy(){
+BWAPI::AIModule* MetaStrategy::getCurrentStrategy(){
 	return currentStrategy;
 }
 
-std::string StrategySelector::getCurrentStrategyName(){
+std::string MetaStrategy::getCurrentStrategyName(){
 	return strategyNames[currentStrategy];
 }
 
-void StrategySelector::onStart() {
+void MetaStrategy::onStart() {
 	map<string, BWAPI::AIModule*>::iterator behv;
 
 	for(behv = portfolio.begin(); behv != portfolio.end(); behv++){
@@ -62,11 +62,11 @@ void StrategySelector::onStart() {
 	}
 }
 
-string StrategySelector::getName(){
+string MetaStrategy::getName(){
 	return name;
 }
 
-void StrategySelector::forceStrategy(string strategyName){
+void MetaStrategy::forceStrategy(string strategyName){
 
 	Logging::getInstance()->log("Forced strategy switch to '%s'", strategyName.c_str());
 	string oldStrategyName = getCurrentStrategyName();
@@ -116,7 +116,7 @@ void StrategySelector::forceStrategy(string strategyName){
 
 }
 
-AIModule* StrategySelector::randomUniform() {
+AIModule* MetaStrategy::randomUniform() {
 	Logging::getInstance()->log("Random uniform strategy selection...");
 	boost::random::uniform_int_distribution<> unifInt(0, portfolio.size() - 1);
 	int index = unifInt(rng);
@@ -163,13 +163,13 @@ void Method1::OnFrame() {
         double lucky = (rand() / (double)(RAND_MAX + 1));
 
         if (lucky < 0.33) {
-			myBehaviorName = StrategySelector::NUSBot;
+			myBehaviorName = MetaStrategy::NUSBot;
         }
         else if (lucky < 0.66) {
-            myBehaviorName = StrategySelector::SKYNET;
+            myBehaviorName = MetaStrategy::SKYNET;
         }
         else {
-            myBehaviorName = StrategySelector::XELNAGA;
+            myBehaviorName = MetaStrategy::XELNAGA;
         }
         Logging::getInstance()->log("Switching: %s -> %s", oldBehaviorName.c_str(), myBehaviorName.c_str());
         MatchData::getInstance()->registerMyBehaviorName(myBehaviorName);
@@ -191,13 +191,13 @@ void Method1::OnFrame() {
 */
 
 /*
-void StrategySelector::printInfo() {
+void MetaStrategy::printInfo() {
     Broodwar->drawTextScreen(180, 5, "\x0F%s", currentStrategyId.c_str());
 }
 */
 
 /*
-void StrategySelector::loadStats() {
+void MetaStrategy::loadStats() {
     string filename = getFilename();
 
     ifstream inFile;
@@ -224,7 +224,7 @@ void StrategySelector::loadStats() {
 */
 
 /*
-void StrategySelector::addEntry(string line) {
+void MetaStrategy::addEntry(string line) {
     if (line == "") return;
 
     StrategyStats s = StrategyStats();
@@ -281,7 +281,7 @@ void StrategySelector::addEntry(string line) {
 */
 
 /*
-int StrategySelector::toInt(string &str) {
+int MetaStrategy::toInt(string &str) {
     stringstream ss(str);
     int n;
     ss >> n;
@@ -290,7 +290,7 @@ int StrategySelector::toInt(string &str) {
 */
 
 /*
-string StrategySelector::getFilename() {
+string MetaStrategy::getFilename() {
     stringstream ss;
     ss << Configuration::INPUT_DIR; // "bwapi-data\\AI\\";
     //ss << "bwapi-data\\read\\"; //Tournament persistent storage version
@@ -302,7 +302,7 @@ string StrategySelector::getFilename() {
 
 
 /*
-string StrategySelector::getWriteFilename() {
+string MetaStrategy::getWriteFilename() {
     stringstream ss;
     ss << Configuration::OUTPUT_DIR;	// "bwapi-data\\AI\\";
     //ss << "bwapi-data\\write\\"; //Tournament persistent storage version
@@ -313,7 +313,7 @@ string StrategySelector::getWriteFilename() {
 */
 
 /*
-void StrategySelector::addResult(int win) {
+void MetaStrategy::addResult(int win) {
     if (!active) return;
 
     string opponentRace = Broodwar->enemy()->getRace().getName();
@@ -345,7 +345,7 @@ void StrategySelector::addResult(int win) {
 */
 
 /*
-void StrategySelector::saveStats() {
+void MetaStrategy::saveStats() {
     if (!active) return;
 
     //Fill entries in stats file for combinations that have

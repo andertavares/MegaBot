@@ -1,9 +1,9 @@
 #pragma once
-#include "strategyselector.h"
+#include "MetaStrategy.h"
 #include "BWAPI.h"
 
 class Probabilistic :
-	public StrategySelector
+	public MetaStrategy
 {
 public:
 	Probabilistic(void);

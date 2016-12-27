@@ -1,7 +1,7 @@
 #pragma once
-#include "strategyselector.h"
+#include "MetaStrategy.h"
 #include "BWAPI.h"
-class EpsilonGreedy : public StrategySelector {
+class EpsilonGreedy : public MetaStrategy {
 
 	/** Counts the number of crashes to reduce score during strategy selection */
 	void discountCrashes();

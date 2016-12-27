@@ -4,12 +4,12 @@
 #include <boost/random/uniform_real_distribution.hpp>
 #include "../utils/tinyxml2.h"
 #include "../utils/Logging.h"
-#include "StrategySelector.h"
+#include "MetaStrategy.h"
 
 using namespace tinyxml2;
 using namespace BWAPI;
 
-EpsilonGreedy::EpsilonGreedy(void) : StrategySelector() {
+EpsilonGreedy::EpsilonGreedy(void) : MetaStrategy() {
 	name = "Epsilon-greedy";
 	srand(time(NULL));
 }
@@ -65,9 +65,9 @@ void EpsilonGreedy::onStart() {
                 float best_score = -1.0f;
 
                 map<string, float> scoresMap;
-				scoresMap[StrategySelector::NUSBot] = 0;
-                scoresMap[StrategySelector::SKYNET] = 0;
-                scoresMap[StrategySelector::XELNAGA] = 0;
+				scoresMap[MetaStrategy::NUSBot] = 0;
+                scoresMap[MetaStrategy::SKYNET] = 0;
+                scoresMap[MetaStrategy::XELNAGA] = 0;
 
                 while (candidate != NULL) {
                     float score = -FLT_MAX;
@@ -118,7 +118,7 @@ void EpsilonGreedy::onFrame() {
 
 	/*
 	int thisFrame = Broodwar->getFrameCount();
-    myBehaviorName = StrategySelector::getInstance()->getStrategy();
+    myBehaviorName = MetaStrategy::getInstance()->getStrategy();
 
     MatchData::getInstance()->registerMyBehaviorName(myBehaviorName);
     currentBehavior = behaviors[myBehaviorName];
@@ -162,9 +162,9 @@ void EpsilonGreedy::discountCrashes() {
             XMLElement* behavior = rootNode->FirstChildElement();
 
             map<string, float> crashesMap;
-            crashesMap[StrategySelector::NUSBot] = 0;
-            crashesMap[StrategySelector::SKYNET] = 0;
-            crashesMap[StrategySelector::XELNAGA] = 0;
+            crashesMap[MetaStrategy::NUSBot] = 0;
+            crashesMap[MetaStrategy::SKYNET] = 0;
+            crashesMap[MetaStrategy::XELNAGA] = 0;
 
             while (behavior != NULL) {
                 float score = -FLT_MAX;
@@ -180,9 +180,9 @@ void EpsilonGreedy::discountCrashes() {
                     XMLElement* input_behavior = inputRootNode->FirstChildElement();
 
                     map<string, float> scoresMap;
-                    scoresMap[StrategySelector::NUSBot] = 0;
-                    scoresMap[StrategySelector::SKYNET] = 0;
-                    scoresMap[StrategySelector::XELNAGA] = 0;
+                    scoresMap[MetaStrategy::NUSBot] = 0;
+                    scoresMap[MetaStrategy::SKYNET] = 0;
+                    scoresMap[MetaStrategy::XELNAGA] = 0;
 
                     while (input_behavior != NULL) {
                         float score = -FLT_MAX;

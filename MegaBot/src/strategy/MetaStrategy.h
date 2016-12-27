@@ -1,5 +1,5 @@
-#ifndef __STRATEGYSELECTOR_H__
-#define __STRATEGYSELECTOR_H__
+#ifndef __MetaStrategy_H__
+#define __MetaStrategy_H__
 
 #include <BWAPI.h>
 #include "../utils/Logging.h"
@@ -64,7 +64,7 @@ struct Strategy {
 };
 */
 
-class StrategySelector {
+class MetaStrategy {
 
 private:   
 
@@ -96,8 +96,8 @@ protected:
 
 public:
 
-	StrategySelector();
-    ~StrategySelector();
+	MetaStrategy();
+    ~MetaStrategy();
 
 	static const string SKYNET;		//"Skynet"
 	static const string XELNAGA;	//"Xelnaga"

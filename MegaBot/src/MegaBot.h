@@ -5,7 +5,7 @@
 #include <map>
 #include <string>
 #include "utils/Logging.h"
-#include "strategy/StrategySelector.h"
+#include "strategy/MetaStrategy.h"
 
 using namespace std;
 
@@ -19,7 +19,7 @@ class MegaBot : public BWAPI::AIModule {
 
 	BWAPI::AIModule* currentStrategy;
 
-	StrategySelector* metaStrategy;
+	MetaStrategy* metaStrategy;
 
 	Logging* logger;
 

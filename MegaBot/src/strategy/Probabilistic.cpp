@@ -5,7 +5,7 @@
 #include "../utils/Logging.h"
 #include "../utils/tinyxml2.h"
 
-Probabilistic::Probabilistic(void) : StrategySelector() {
+Probabilistic::Probabilistic(void) : MetaStrategy() {
 	name = "Probabilistic";
 }
 
@@ -27,7 +27,7 @@ void Probabilistic::onStart() {
 BWAPI::AIModule* Probabilistic::selectStrategy() {
 	using namespace tinyxml2;
 
-    string defaultBehavior = StrategySelector::SKYNET;	//in case something go wrong
+    string defaultBehavior = MetaStrategy::SKYNET;	//in case something go wrong
 
     //parses strategy file
     map<string, float> behaviors;

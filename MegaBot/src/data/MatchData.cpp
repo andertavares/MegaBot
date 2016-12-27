@@ -192,7 +192,7 @@ void MatchData::writeSummary() {
     stringstream ss;
     ss << Broodwar->self()->getRace().getName() << ";";
     ss << myBehaviorName << ";";
-    //ss << StrategySelector::getInstance()->getStrategyID() << ";";
+    //ss << MetaStrategy::getInstance()->getStrategyID() << ";";
     ss << Broodwar->enemy()->getRace().getName() << ";";
 	ss << Broodwar->enemy()->getName() << ";";
     ss << enemyBehaviorName << ";";

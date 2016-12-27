@@ -4,23 +4,27 @@
 #include "StrategySelector.h"
 #include "EpsilonGreedy.h"
 #include "Probabilistic.h"
+#include "CyclicalSwitch.h"
 
 StrategySelector* MetaStrategyFactory::getMetaStrategy(){
 	using namespace tinyxml2;
 
     //retrieve what config says about strategy
-    string strategyId = Configuration::getInstance()->strategyID;
+    string metaStrategyName = Configuration::getInstance()->strategyID;
 
-	Logging::getInstance()->log("Meta strategy: %s", strategyId.c_str());
+	Logging::getInstance()->log("Meta strategy: %s", metaStrategyName.c_str());
 
-    if (strategyId == "epsilon-greedy") {
+    if (metaStrategyName == "epsilon-greedy") {
         return new EpsilonGreedy();
     }
-	else if (strategyId == "probabilistic") {
+	else if (metaStrategyName == "probabilistic") {
 		return new Probabilistic();
 	}
+	else if (metaStrategyName == "cyclical") {
+		return new CyclicalSwitch();
+	}
     else {	//otherwise, logs an error because meta-strategy was not found 
-		Logging::getInstance()->log("Error: unrecognized meta-strategy '%s'. Defaulting to EpsilonGreedy!", strategyId.c_str());
+		Logging::getInstance()->log("Error: unrecognized meta-strategy '%s'. Defaulting to EpsilonGreedy!", metaStrategyName.c_str());
     }
 	return new EpsilonGreedy();	//failsafe default...
 }

@@ -76,6 +76,8 @@ protected:
 	//name of current behavior
 	//string strategyName;
     //string currentStrategy;
+	boost::mt19937 rng; //();	//mersenne twister random number generator
+	//boost::random::uniform_int_distribution<> unifInt; //(0, portfolio.size()); //uniform integer distribution
 
 	BWAPI::AIModule* currentStrategy;
 
@@ -87,6 +89,9 @@ protected:
 
     //maps behavior names to their AIModules
     std::map<string, BWAPI::AIModule*> portfolio;
+
+	/** Returns a strategy uniformly at random */
+	BWAPI::AIModule* randomUniform(); 
 
 
 public:
@@ -101,7 +106,7 @@ public:
 	//returns the meta strategy name
 	string getName();
 
-	//returns the active behavior
+	//returns the active strategy
     BWAPI::AIModule* getCurrentStrategy();
 
 	//returns active behavior name
@@ -112,6 +117,9 @@ public:
 
 	//initializes the portfolio of behaviors
 	virtual void onStart();
+
+	//forces the adoption of a strategy
+	virtual void forceStrategy(string strategyName);
 
     /** Prints debug info to the screen. */
     void printInfo();

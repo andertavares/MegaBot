@@ -142,23 +142,6 @@ void EpsilonGreedy::onFrame() {
 	*/
 }
 
-AIModule* EpsilonGreedy::randomUniform() {
-	Logging::getInstance()->log("Choosing strategy at random...");
-
-	boost::mt19937 gen(std::time(NULL));
-	boost::random::uniform_int_distribution<> dist(0, portfolio.size());
-	int index = dist(gen);
-
-	//code partly from: http://stackoverflow.com/a/158865
-	map<string,AIModule*>::iterator iter = portfolio.begin();
-	std::advance(iter, index);
-
-	//just testing the randomness of the generator below :P
-	//Logging::getInstance()->log("Random sequence: %d %d %d %d %d", dist(gen), dist(gen), dist(gen), dist(gen), dist(gen));
-
-	return (*iter).second;
-}
-
 void EpsilonGreedy::discountCrashes() {
     using namespace tinyxml2;
 

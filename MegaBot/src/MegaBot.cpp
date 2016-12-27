@@ -130,6 +130,14 @@ void MegaBot::onFrame() {
 }
 
 void MegaBot::onSendText(std::string text) {
+	//tests for some commands:
+	
+	//logger->log("substr(0,6) of text is %s", text.substr(0, 6).c_str());
+	if (text.substr(0, 6) == "switch"){
+		logger->log("Will attempt a strategy switch to %s", text.substr(7, text.size()).c_str());
+		metaStrategy->forceStrategy(text.substr(7, text.size()));
+	}
+
     currentStrategy->onSendText(text);
 }
 

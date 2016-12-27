@@ -14,6 +14,8 @@
 #include "../utils/Logging.h"
 #include "../data/MatchData.h"
 #include "EpsilonGreedy.h"
+#include <boost/random/mersenne_twister.hpp>
+#include <boost/random/uniform_real_distribution.hpp>
 
 
 //initializes consts
@@ -21,7 +23,7 @@ const string StrategySelector::SKYNET = "Skynet";
 const string StrategySelector::XELNAGA = "Xelnaga";
 const string StrategySelector::NUSBot = "NUSBot";
 
-StrategySelector::StrategySelector() {
+StrategySelector::StrategySelector() : rng(std::time(0)) {
 	name = "none";
 
 	//initalizes behaviors
@@ -33,8 +35,10 @@ StrategySelector::StrategySelector() {
 	map<string, BWAPI::AIModule*>::iterator behv;
 	for(behv = portfolio.begin(); behv != portfolio.end(); behv++){
 		strategyNames.insert(make_pair((*behv).second, (*behv).first));
-		Logging::getInstance()->log("Added %s to reverse map", (*behv).first.c_str() );
+		//Logging::getInstance()->log("Added %s to reverse map", (*behv).first.c_str() );
     }
+
+	
 }
 
 StrategySelector::~StrategySelector() {
@@ -60,6 +64,72 @@ void StrategySelector::onStart() {
 
 string StrategySelector::getName(){
 	return name;
+}
+
+void StrategySelector::forceStrategy(string strategyName){
+
+	Logging::getInstance()->log("Forced strategy switch to '%s'", strategyName.c_str());
+	string oldStrategyName = getCurrentStrategyName();
+
+	if (strategyName == "random"){
+		currentStrategy = randomUniform();
+	}
+	else if ( portfolio.find(strategyName) != portfolio.end() ){ //found strategyName in map
+		currentStrategy = portfolio[strategyName];
+	}
+	else { //strategyName not found in map
+		Logging::getInstance()->log(
+			"Attempted to switch to invalid strategy '%s'. Will not switch.",
+			strategyName.c_str()
+		);
+		return;
+	}
+		
+		
+		/*{
+		try {
+			currentStrategy = portfolio.at(strategyName);
+			//exclusions.at("the");
+		}
+		catch(std::out_of_range e) {
+			Logging::getInstance()->log(
+				"Attempted to switch to invalid strategy '%s'. Will not switch.",
+				strategyName.c_str()
+			);
+			return;
+		}
+	}*/
+
+	//undoes switches in case of some error:
+	if (currentStrategy == NULL){
+		Logging::getInstance()->log(
+			"Attempted to switch to invalid strategy '%s'. Reverting switch...",
+			strategyName.c_str()
+		);
+		currentStrategy = portfolio[oldStrategyName];
+		return;
+	}
+
+	Logging::getInstance()->log(
+		"Switching %s -> %s", oldStrategyName.c_str(), getCurrentStrategyName().c_str()
+	);
+
+}
+
+AIModule* StrategySelector::randomUniform() {
+	Logging::getInstance()->log("Random uniform strategy selection...");
+	boost::random::uniform_int_distribution<> unifInt(0, portfolio.size());
+	int index = unifInt(rng);
+
+	//code partly from: http://stackoverflow.com/a/158865
+	map<string,AIModule*>::iterator iter = portfolio.begin();
+	std::advance(iter, index);
+
+	//just testing the randomness of the generator below :P
+	//Logging::getInstance()->log("Random sequence: %d %d %d %d %d", dist(gen), dist(gen), dist(gen), dist(gen), dist(gen));
+
+	//Logging::getInstance()->log("Selected: %s", (*iter).first.c_str());
+	return (*iter).second;
 }
 
 /*

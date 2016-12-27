@@ -52,6 +52,9 @@
     <ClCompile Include="src\strategy\Probabilistic.cpp">
       <Filter>strategy</Filter>
     </ClCompile>
+    <ClCompile Include="src\strategy\CyclicalSwitch.cpp">
+      <Filter>strategy</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="main">
@@ -117,6 +120,9 @@
       <Filter>strategy</Filter>
     </ClInclude>
     <ClInclude Include="src\strategy\Probabilistic.h">
+      <Filter>strategy</Filter>
+    </ClInclude>
+    <ClInclude Include="src\strategy\CyclicalSwitch.h">
       <Filter>strategy</Filter>
     </ClInclude>
   </ItemGroup>

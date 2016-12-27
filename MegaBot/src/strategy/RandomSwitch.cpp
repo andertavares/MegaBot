@@ -1,15 +1,15 @@
-#include "CyclicalSwitch.h"
+#include "RandomSwitch.h"
 #include "../data/MatchData.h"
 
-CyclicalSwitch::CyclicalSwitch(void) : StrategySelector() {
+RandomSwitch::RandomSwitch(void) : StrategySelector() {
 	name = "Cyclical Switch";
 }
 
 
-CyclicalSwitch::~CyclicalSwitch(void) {
+RandomSwitch::~RandomSwitch(void) {
 }
 
-void CyclicalSwitch::onStart(){
+void RandomSwitch::onStart(){
 	StrategySelector::onStart();
 
 	//selects one behavior probabilistically
@@ -18,8 +18,14 @@ void CyclicalSwitch::onStart(){
 
 }
 
-void CyclicalSwitch::onFrame(){
+void RandomSwitch::onFrame(){
 	int thisFrame = Broodwar->getFrameCount();
+
+	//just prints 'Alive...' so that we know things are ok
+	if (thisFrame % 100 == 0 && thisFrame > 0) {
+		Logging::getInstance()->log("Alive...", thisFrame);
+    }
+
 	if (thisFrame % 5000 == 0 && thisFrame > 0) {  //behavior switch
         /*int playerBases = GameStateInfo::getInstance()->numBases(myBehaviorName.c_str(), BWAPI::Races::Protoss);
         Logging::getInstance()->log("Number of player's bases %d.", playerBases);

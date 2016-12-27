@@ -4,7 +4,7 @@
 #include "StrategySelector.h"
 #include "EpsilonGreedy.h"
 #include "Probabilistic.h"
-#include "CyclicalSwitch.h"
+#include "RandomSwitch.h"
 
 StrategySelector* MetaStrategyFactory::getMetaStrategy(){
 	using namespace tinyxml2;
@@ -21,7 +21,7 @@ StrategySelector* MetaStrategyFactory::getMetaStrategy(){
 		return new Probabilistic();
 	}
 	else if (metaStrategyName == "cyclical") {
-		return new CyclicalSwitch();
+		return new RandomSwitch();
 	}
     else {	//otherwise, logs an error because meta-strategy was not found 
 		Logging::getInstance()->log("Error: unrecognized meta-strategy '%s'. Defaulting to EpsilonGreedy!", metaStrategyName.c_str());

@@ -1,9 +1,9 @@
 #pragma once
 #include "StrategySelector.h"
-class CyclicalSwitch : public StrategySelector {
+class RandomSwitch : public StrategySelector {
 public:
-	CyclicalSwitch(void);
-	~CyclicalSwitch(void);
+	RandomSwitch(void);
+	~RandomSwitch(void);
 
 	//acts every frame 
 	virtual void onFrame();

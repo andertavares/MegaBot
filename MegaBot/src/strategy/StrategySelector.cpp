@@ -118,7 +118,7 @@ void StrategySelector::forceStrategy(string strategyName){
 
 AIModule* StrategySelector::randomUniform() {
 	Logging::getInstance()->log("Random uniform strategy selection...");
-	boost::random::uniform_int_distribution<> unifInt(0, portfolio.size());
+	boost::random::uniform_int_distribution<> unifInt(0, portfolio.size() - 1);
 	int index = unifInt(rng);
 
 	//code partly from: http://stackoverflow.com/a/158865
@@ -127,8 +127,8 @@ AIModule* StrategySelector::randomUniform() {
 
 	//just testing the randomness of the generator below :P
 	//Logging::getInstance()->log("Random sequence: %d %d %d %d %d", dist(gen), dist(gen), dist(gen), dist(gen), dist(gen));
-
-	//Logging::getInstance()->log("Selected: %s", (*iter).first.c_str());
+	Logging::getInstance()->log("Random index: %d", index);
+	Logging::getInstance()->log("Selected: %s", (*iter).first.c_str());
 	return (*iter).second;
 }
 

@@ -1,5 +1,7 @@
 #include "EpsilonGreedy.h"
 #include <BWAPI.h>
+#include <boost/random/mersenne_twister.hpp>
+#include <boost/random/uniform_real_distribution.hpp>
 #include "../utils/tinyxml2.h"
 #include "../utils/Logging.h"
 #include "StrategySelector.h"
@@ -8,7 +10,8 @@ using namespace tinyxml2;
 using namespace BWAPI;
 
 EpsilonGreedy::EpsilonGreedy(void) : StrategySelector() {
-	name = "Epsilon greedy";
+	name = "Epsilon-greedy";
+	srand(time(NULL));
 }
 
 
@@ -20,7 +23,8 @@ EpsilonGreedy::~EpsilonGreedy(void) {
  */ 
 void EpsilonGreedy::onStart() {
 
-	srand(time(NULL));
+	boost::random::mt19937 gen(static_cast<unsigned int>(std::time(0)));
+    boost::random::uniform_real_distribution<> dist(0.0, 1.0);
 
 	Logging::getInstance()->log(
         "EpsilonGreedy parameters: alpha=%.2f; epsilon=%.2f.",
@@ -29,18 +33,20 @@ void EpsilonGreedy::onStart() {
     );
 
     //float lucky = (rand() % 1000) / 1000.f;
-    double lucky = (rand() / (double)(RAND_MAX + 1));
+    double lucky =  dist(gen); //(rand() / (double)(RAND_MAX + 1));
     double epsilon = Configuration::getInstance()->epsilon; //alias for easy reading
     if (lucky < epsilon) {
 		Logging::getInstance()->log(
             "Choosing randomly: (%.3f < %.3f)", lucky, epsilon
         );
+		name += " - random choice";
 		currentStrategy = randomUniform();
     }
     else {
         Logging::getInstance()->log(
             "Choosing greedily: (%.3f > %.3f)", lucky, epsilon
         );
+		name += " - greedy choice";
 
         //file to read is MegaBot-vs-enemy.xml
         string inputFile = Configuration::getInstance()->enemyInformationInputFile();
@@ -80,6 +86,7 @@ void EpsilonGreedy::onStart() {
 
                 if (best_name.empty()) {
                     Logging::getInstance()->log("Best strategy could not be determined. Choosing randomly");
+					name += " failed. Best score not found";
 					currentStrategy = randomUniform();
                 }
                 else {
@@ -88,15 +95,17 @@ void EpsilonGreedy::onStart() {
             }
             else {
                 Logging::getInstance()->log("Enemy information not found, choosing strategy randomly");
+				name += " failed. Enemy info not found";
                 currentStrategy = randomUniform();
             }
         }
         else { //prints error
             Logging::getInstance()->log(
-                "Error while parsing strategy file '%s'. Error: '%s'",
-                Configuration::getInstance()->strategyFile.c_str(),
+                "Error while parsing scores file '%s': '%s'. Choosing randomly.",
+                inputFile.c_str(),
                 doc.ErrorName()
             );
+			name += " failed. File not found?";
             currentStrategy = randomUniform();
         }
 	}
@@ -134,9 +143,18 @@ void EpsilonGreedy::onFrame() {
 }
 
 AIModule* EpsilonGreedy::randomUniform() {
-	//code from: http://stackoverflow.com/a/158865/1251716
+	Logging::getInstance()->log("Choosing strategy at random...");
+
+	boost::mt19937 gen(std::time(NULL));
+	boost::random::uniform_int_distribution<> dist(0, portfolio.size());
+	int index = dist(gen);
+
+	//code partly from: http://stackoverflow.com/a/158865
 	map<string,AIModule*>::iterator iter = portfolio.begin();
-	std::advance(iter, rand() % portfolio.size());
+	std::advance(iter, index);
+
+	//just testing the randomness of the generator below :P
+	//Logging::getInstance()->log("Random sequence: %d %d %d %d %d", dist(gen), dist(gen), dist(gen), dist(gen), dist(gen));
 
 	return (*iter).second;
 }

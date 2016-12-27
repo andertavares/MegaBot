@@ -40,7 +40,7 @@ BWAPI::AIModule* Probabilistic::selectStrategy() {
             "An error has occurred while parsing strategy file '%s'. Error: '%s'",
             Configuration::getInstance()->strategyFile.c_str(),
             doc.ErrorName()
-            );
+        );
 		return portfolio[defaultBehavior];
     }
 

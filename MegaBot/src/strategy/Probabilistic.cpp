@@ -1,5 +1,7 @@
 #include "Probabilistic.h"
 #include "BWAPI.h"
+#include <boost/random/mersenne_twister.hpp>
+#include <boost/random/uniform_real_distribution.hpp>
 #include "../utils/Logging.h"
 #include "../utils/tinyxml2.h"
 
@@ -64,18 +66,21 @@ BWAPI::AIModule* Probabilistic::selectStrategy() {
     for (auto behv : behaviors) {
     sum += behv.second;
     }*/
+	
+	boost::random::mt19937 gen(static_cast<unsigned int>(std::time(0)));
+    boost::random::uniform_real_distribution<> dist(0.0, sum);
 
     //generates a pseudo-random number between 0 and sum - http://stackoverflow.com/a/686373
-	float random = static_cast <float> (rand()) / (static_cast <float> (RAND_MAX / sum));
+	double lucky = dist(gen);// static_cast <float> (rand()) / (static_cast <float> (RAND_MAX / sum));
 	//(rand() * sum) / float(RAND_MAX); 
 
     //traverses the list until we find an opening that matches the random number
     float acc = 0;
     for (behv = behaviors.begin(); behv != behaviors.end(); ++behv) {//for (auto opening : behaviors) {
-        if (random < acc + behv->second) {	//found!
+        if (lucky < acc + behv->second) {	//found!
             Logging::getInstance()->log(
                 "MegaBot chose: %s (random: %.3f, target: %.3f, acc: %.3f, sum: %.3f)",
-                behv->first.c_str(), random, (acc + behv->second), acc, sum
+                behv->first.c_str(), lucky, (acc + behv->second), acc, sum
             );
 			//currentStrategy = portfolio[behv->first];
             return portfolio[behv->first]; // behv->first;
@@ -84,7 +89,7 @@ BWAPI::AIModule* Probabilistic::selectStrategy() {
     }
     Logging::getInstance()->log(
         "ERROR: behavior was not randomly selected (random: %.3f, acc: %.3f, sum: %.3f). Defaulting to: %s.",
-        random, acc, sum, defaultBehavior
+        lucky, acc, sum, defaultBehavior
     );
 	//currentStrategy = portfolio[defaultBehavior];
     return  portfolio[defaultBehavior]; // defaultBehavior;	//something went wrong, opening was not randomly selected =/

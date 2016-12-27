@@ -28,7 +28,7 @@ MegaBot::MegaBot() : acknowledged(false) {
     MatchData::getInstance()->registerEnemyBehaviorName("Unknown");
     enemyBehaviorName = "Unknown";
 
-	srand (static_cast <unsigned> (time(0)));
+	//srand (static_cast <unsigned> (time(0)));
 }
 
 void MegaBot::onStart() {

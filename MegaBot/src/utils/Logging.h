@@ -5,8 +5,18 @@
 #include <BWAPI.h>
 #include <boost\format.hpp>
 #include "../data/Configuration.h"
+#include <windows.h>
+#include <tchar.h> 
+#include <stdio.h>
+#include <strsafe.h>
 
 class Logging {
+	//uses WINAPI functions to retrieve an error message
+	void logWindowsError(LPTSTR lpszFunction);
+
+	//sets the log filename to the specified number
+	//void setLogFileNumber(string prefix, int number);
+
 public:
     ~Logging() { }
 

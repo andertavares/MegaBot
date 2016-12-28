@@ -11,3 +11,12 @@
 /TournamentModule/Release
 /TournamentModule/TournamentModule.vcproj.VMSC-dev.programmer.user
 /Skynet/Skynet/Release
+/MegaBot/lib/Xelnaga-lib.lib
+*.obj
+*.idb
+/Skynet/Skynet/Debug/*.tlog
+/Skynet/Skynet/Debug/*.log
+*.pdb
+*.tlog
+/XelNaga/AiurModule/Debug/*.log
+*.lastbuildstate

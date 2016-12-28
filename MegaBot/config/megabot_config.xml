@@ -1,12 +1,12 @@
 <!-- put this file under <starcraft>/bwapi-data/AI -->
 <config>
-	<strategy value="probabilistic" />
-	<strategy-file value="megabot_protoss-uniform.xml" />
+	<strategy value="epsilon-greedy" />	<!-- possible values: probabilistic, epsilon-greedy and cyclical -->
+	<strategy-file value="megabot_protoss-uniform.xml" /> <!-- probabilities for Probabilistic strategy selection -->
 	<read-dir value="bwapi-data/read/" />
 	<write-dir value="bwapi-data/write/" />
 	<match-output value="output.xml" />
-	<alpha value="0.2" /> <!-- learning rate for strategy value update -->
-	<epsilon value="0.15" /> <!-- exploration coefficient -->
+	<alpha value="0.2" /> <!-- learning rate for strategy value update on epsilon-greedy -->
+	<epsilon value="0.15" /> <!-- exploration coefficient  on epsilon-greedy  -->
 	<speed value="0" />
 	<gui value="true" />
 </config>

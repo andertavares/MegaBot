@@ -1,5 +1,6 @@
 #include "Configuration.h"
 #include "../utils/tinyxml2.h"
+#include "../utils/Logging.h"
 #include "../MegaBot.h"
 #include <sstream>
 #include <algorithm> 
@@ -39,7 +40,7 @@ Configuration::Configuration() {
 	enemyInformationPrefix = "MegaBot-vs-";
     crashInformationPrefix = "crash_MegaBot-vs-";
 
-	strategyID = MegaBot::SKYNET;
+	strategyID = "epsilon-greedy"; //MegaBot::SKYNET;
 	speed = 0;
 	enableGUI = true;
 
@@ -93,13 +94,14 @@ void Configuration::parseConfig() {
 	int result = doc.LoadFile(CONFIG_FILE.c_str());
 
 	if (result != XML_NO_ERROR) {
-		Broodwar->printf(
+		Logging::getInstance()->log(
 			"An error has occurred while parsing the configuration file '%s'. Error: '%s'", 
 			CONFIG_FILE.c_str(), 
 			doc.ErrorName()
 		);
 		return;
 	}
+	Logging::getInstance()->log("Config file '%s' found. Parsing...", CONFIG_FILE.c_str());
 	XMLElement* element;
 
 	//sets strategy

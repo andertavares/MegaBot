@@ -7,7 +7,7 @@
 #include <BWAPI/UnitType.h>
 
 #include "Configuration.h"
-#include "../strategy/StrategySelector.h"
+#include "../strategy/MetaStrategy.h"
 
 using namespace std;
 

@@ -77,7 +77,7 @@ void MatchData::writeDetailedResult() {
 
     //const char* filename = Configuration::getInstance()->readDataFile.c_str();
 
-    XMLDocument doc;
+    tinyxml2::XMLDocument doc;
     XMLError input_result = doc.LoadFile(inputFile.c_str());
 
     // if file was not found, ok, we create a node and fill information in it
@@ -192,8 +192,9 @@ void MatchData::writeSummary() {
     stringstream ss;
     ss << Broodwar->self()->getRace().getName() << ";";
     ss << myBehaviorName << ";";
-    //ss << StrategySelector::getInstance()->getStrategyID() << ";";
+    //ss << MetaStrategy::getInstance()->getStrategyID() << ";";
     ss << Broodwar->enemy()->getRace().getName() << ";";
+	ss << Broodwar->enemy()->getName() << ";";
     ss << enemyBehaviorName << ";";
     ss << Broodwar->mapFileName() << ";";
     if (gameResult == WIN) ss << "Won";
@@ -206,7 +207,10 @@ void MatchData::writeSummary() {
     ss << Broodwar->enemy()->getUnitScore() << ";";
     ss << Broodwar->enemy()->getBuildingScore() << ";";
     ss << Broodwar->enemy()->getKillScore();
-    ss << "\n";
+
+	logger->log(ss.str().c_str());
+
+	ss << "\n";	//adds newline to write in summary file (logger doesn't need it)
 
     //Save the file
     string filename = getSummaryFilename();
@@ -214,13 +218,13 @@ void MatchData::writeSummary() {
     ofstream outFile;
     outFile.open(filename.c_str(), ios::out | ios::app);
     if (!outFile) {
-		logger->log("Error writing to stats file!\n");
+		logger->log("Error writing to stats file!");
     }
     else {
         outFile << ss.str();
         outFile.close();
     }
-	logger->log(ss.str().c_str());
+	
 }
 
 const string MatchData::currentDateTime() {
@@ -248,7 +252,7 @@ void MatchData::writeToCrashFile() {
     string inputFile = Configuration::getInstance()->crashInformationInputFile();
     string outputFile = Configuration::getInstance()->crashInformationOutputFile();
 
-    XMLDocument doc;
+    tinyxml2::XMLDocument doc;
     XMLError input_result = doc.LoadFile(inputFile.c_str());
 
     // if file was not found, ok, we create a node and fill information in it
@@ -299,7 +303,7 @@ void MatchData::updateCrashFile() {
 
     string outputFile = Configuration::getInstance()->crashInformationOutputFile();
 
-    XMLDocument doc;
+    tinyxml2::XMLDocument doc;
     XMLError input_result = doc.LoadFile(outputFile.c_str());
 
     // if another error occurr, we're in trouble =/

@@ -16,9 +16,6 @@
     <ClCompile Include="src\utils\tinyxml2.cpp">
       <Filter>utils</Filter>
     </ClCompile>
-    <ClCompile Include="src\strategy\StrategySelector.cpp">
-      <Filter>strategy</Filter>
-    </ClCompile>
     <ClCompile Include="src\data\GameStateInfo.cpp">
       <Filter>data</Filter>
     </ClCompile>
@@ -33,6 +30,30 @@
     </ClCompile>
     <ClCompile Include="src\utils\asprintf\vasprintf-msvc.c">
       <Filter>utils\asprintf</Filter>
+    </ClCompile>
+    <ClCompile Include="src\managers\SpottedObject.cpp">
+      <Filter>managers</Filter>
+    </ClCompile>
+    <ClCompile Include="src\evaluators\MilitaryEvaluator.cpp">
+      <Filter>evaluators</Filter>
+    </ClCompile>
+    <ClCompile Include="src\managers\ExplorationManager.cpp">
+      <Filter>managers</Filter>
+    </ClCompile>
+    <ClCompile Include="src\strategy\EpsilonGreedy.cpp">
+      <Filter>strategy</Filter>
+    </ClCompile>
+    <ClCompile Include="src\strategy\MetaStrategyFactory.cpp">
+      <Filter>strategy</Filter>
+    </ClCompile>
+    <ClCompile Include="src\strategy\Probabilistic.cpp">
+      <Filter>strategy</Filter>
+    </ClCompile>
+    <ClCompile Include="src\strategy\RandomSwitch.cpp">
+      <Filter>strategy</Filter>
+    </ClCompile>
+    <ClCompile Include="src\strategy\MetaStrategy.cpp">
+      <Filter>strategy</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -51,6 +72,12 @@
     <Filter Include="utils\asprintf">
       <UniqueIdentifier>{e97afd95-be5a-4501-91cf-38fe612f2766}</UniqueIdentifier>
     </Filter>
+    <Filter Include="managers">
+      <UniqueIdentifier>{b0a60027-ac65-4c40-94b8-9b98a139d117}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="evaluators">
+      <UniqueIdentifier>{15ab5b8c-4f8c-433d-b6f3-0adfb120c30e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\MegaBot.h">
@@ -65,9 +92,6 @@
     <ClInclude Include="src\utils\tinyxml2.h">
       <Filter>utils</Filter>
     </ClInclude>
-    <ClInclude Include="src\strategy\StrategySelector.h">
-      <Filter>strategy</Filter>
-    </ClInclude>
     <ClInclude Include="src\data\GameStateInfo.h">
       <Filter>data</Filter>
     </ClInclude>
@@ -76,6 +100,30 @@
     </ClInclude>
     <ClInclude Include="src\utils\asprintf\asprintf.h">
       <Filter>utils\asprintf</Filter>
+    </ClInclude>
+    <ClInclude Include="src\managers\SpottedObject.h">
+      <Filter>managers</Filter>
+    </ClInclude>
+    <ClInclude Include="src\evaluators\MilitaryEvaluator.h">
+      <Filter>evaluators</Filter>
+    </ClInclude>
+    <ClInclude Include="src\managers\ExplorationManager.h">
+      <Filter>managers</Filter>
+    </ClInclude>
+    <ClInclude Include="src\strategy\EpsilonGreedy.h">
+      <Filter>strategy</Filter>
+    </ClInclude>
+    <ClInclude Include="src\strategy\MetaStrategyFactory.h">
+      <Filter>strategy</Filter>
+    </ClInclude>
+    <ClInclude Include="src\strategy\Probabilistic.h">
+      <Filter>strategy</Filter>
+    </ClInclude>
+    <ClInclude Include="src\strategy\RandomSwitch.h">
+      <Filter>strategy</Filter>
+    </ClInclude>
+    <ClInclude Include="src\strategy\MetaStrategy.h">
+      <Filter>strategy</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

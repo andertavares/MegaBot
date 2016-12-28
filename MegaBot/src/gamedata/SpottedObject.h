@@ -18,6 +18,7 @@ private:
     Position position;
     TilePosition tilePosition;
     int unitID;
+	int lastSeenFrame;
 
 public:
     /** Creates an object from a unit reference. */
@@ -34,6 +35,9 @@ public:
 
     /** Returns the position of the spotted unit. */
     Position getPosition();
+
+	/** Returns the frame in which object was seen for last time*/
+	int getLastSeenFrame();
 
     /** Returns the tileposition of the spotted unit. */
     TilePosition getTilePosition();

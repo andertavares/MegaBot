@@ -22,6 +22,9 @@ class MatchData {
 	//start and finishing timestamps, stored as strings
 	string startTime, endTime; 
 
+	/** adopted metastrategy */
+	string metaStrategyName;
+
 	// game duration in frames
 	int frameCount;
 
@@ -42,19 +45,26 @@ public:
 	
 	~MatchData();
 
-	//returns the singleton instance of this class
+	/** Returns the singleton instance of this class */
 	static MatchData* getInstance();
 
-	//gets current timestamp and registers it as start time of the match
+	/** Gets current timestamp and registers it as start time of the match*/
 	void registerMatchBegin();
 
-	//Returns the path to the output file containing the summary of matches
+	/** Returns the path to the output file containing the summary of matches*/
 	string getSummaryFilename();
 
-	/* 
+
+	/** 
 	 * Registers match result, end time and score data
 	 */
 	void registerMatchFinish(int result);
+
+	/** Registers the chosen meta strategy */
+	void registerMetaStrategy(string name);
+
+	/** Returns the name of the registered meta strategy */
+	string getMetaStrategyName();
 
 	// registers my behavior used in this match
 	void registerMyBehaviorName(string name);

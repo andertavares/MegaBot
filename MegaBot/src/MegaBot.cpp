@@ -14,6 +14,7 @@
 #include "data/MatchData.h"
 #include "data/GameStateInfo.h"
 #include "utils/Logging.h"
+#include "gamedata/GameStateManager.h"
 #include <cstdlib>
 #include <ctime>
 
@@ -38,10 +39,12 @@ void MegaBot::onStart() {
     MatchData::getInstance()->registerMatchBegin();
     Configuration::getInstance()->parseConfig();
 
-	//initializes meta strategy (strategy selector)
+	//initializes and registers meta strategy (strategy selector)
 	metaStrategy = MetaStrategyFactory::getMetaStrategy();
+	MatchData::getInstance()->registerMetaStrategy(metaStrategy->getName());
 	metaStrategy->onStart();
-	
+
+	//retrieves strategy to begin match
 	currentStrategy = metaStrategy->getCurrentStrategy();
 
     //Broodwar->sendText("%s on!", myBehaviorName.c_str());		//sends behavior communication message
@@ -52,6 +55,9 @@ void MegaBot::onStart() {
     //currentBehavior->onStart();
 
     MatchData::getInstance()->writeToCrashFile();
+
+	//initializes game state manager
+	GameStateManager::getInstance();
 
     //sets user input, speed and GUI 
     Broodwar->enableFlag(Flag::UserInput);
@@ -118,12 +124,12 @@ void MegaBot::onFrame() {
 	currentStrategy = metaStrategy->getCurrentStrategy();
 	currentStrategy->onFrame();
 
-	 //draws some text
+	GameStateManager::getInstance()->onFrame();
+
+	//draws some text
     Broodwar->drawTextScreen(240, 20, "\x0F MegaBot v1.0.2");
 	Broodwar->drawTextScreen(240, 35, "\x0F Meta strategy: %s", metaStrategy->getName().c_str());
-	//Broodwar->drawTextScreen(240, 35, "\x0F Meta-Strategy: %s", metaStrategy->getCurrentStrategyName().c_str());
 	Broodwar->drawTextScreen(240, 50, "\x0F Strategy: %s", metaStrategy->getCurrentStrategyName().c_str());
-    //Broodwar->drawTextScreen(5, 25, "\x0F Enemy behavior: %s", enemyBehaviorName.c_str());
     Broodwar->drawTextScreen(240, 65, "\x0F Enemy: %s", Broodwar->enemy()->getName().c_str());
 	Broodwar->drawTextScreen(240, 80, "Frame count %d.", Broodwar->getFrameCount());
     Broodwar->drawTextScreen(240, 95, "Seconds: %d.", Broodwar->elapsedTime());

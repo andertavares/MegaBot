@@ -20,6 +20,9 @@ public:
     /** Destructor */
     ~GameStateInfo();
 
+	/** To be called every frame (although won't act every time) */
+	void onFrame();
+
     int numBases(string name, BWAPI::Race race);
     int terrestrialSmallUnits(string name);
     int terrestrialMediumUnits(string name);

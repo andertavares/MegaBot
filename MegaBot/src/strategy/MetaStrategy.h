@@ -64,6 +64,7 @@ struct Strategy {
 };
 */
 
+/** Base class for meta strategies */
 class MetaStrategy {
 
 private:   

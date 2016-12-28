@@ -6,7 +6,7 @@ class MetaStrategyFactory {
 	~MetaStrategyFactory(void);
 
 public:
-	//retrieves a meta-strategy defined in configuration file
+	/** Retrieves a meta-strategy defined in configuration file */
 	static MetaStrategy* getMetaStrategy();
 };
 

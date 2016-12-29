@@ -109,19 +109,27 @@ void MegaBot::onEnd(bool isWinner) {
 void MegaBot::onFrame() {
 
 	if(Broodwar->getFrameCount() == 0){
-		logger->log("First frame!");
+		logger->log("BEGIN: first onFrame.");
 	}
+	//just prints 'Alive...' so that we know things are ok
+	if (Broodwar->getFrameCount() % 100 == 0) {
+		Logging::getInstance()->log("Alive...");
+    }
 
 	if (Broodwar->elapsedTime() / 60 >= 81) {	//leave stalled game
-        Broodwar->leaveGame();
+		logger->log("Leaving long game (81 minutes)");
+		Broodwar->leaveGame();
         return;
     }
 
+	if(Broodwar->getFrameCount() == 0){ logger->log("first metaStrategy->onFrame()"); }
 	metaStrategy->onFrame();	//might switch strategy so I update currentStrategy below
 
+	if(Broodwar->getFrameCount() == 0){ logger->log("first strategy->onFrame()"); }
 	currentStrategy = metaStrategy->getCurrentStrategy();
 	currentStrategy->onFrame();
 
+	if(Broodwar->getFrameCount() == 0){ logger->log("first gameStateManager->onFrame()"); }
 	GameStateManager::getInstance()->onFrame();
 
 	//draws some text
@@ -131,6 +139,10 @@ void MegaBot::onFrame() {
     Broodwar->drawTextScreen(240, 65, "\x0F Enemy: %s", Broodwar->enemy()->getName().c_str());
 	Broodwar->drawTextScreen(240, 80, "Frame count %d.", Broodwar->getFrameCount());
     Broodwar->drawTextScreen(240, 95, "Seconds: %d.", Broodwar->elapsedTime());
+
+	if(Broodwar->getFrameCount() == 0){
+		logger->log("END: first onFrame.");
+	}
 }
 
 void MegaBot::onSendText(std::string text) {

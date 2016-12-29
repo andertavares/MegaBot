@@ -21,11 +21,6 @@ void RandomSwitch::onStart(){
 void RandomSwitch::onFrame(){
 	int thisFrame = Broodwar->getFrameCount();
 
-	//just prints 'Alive...' so that we know things are ok
-	if (thisFrame % 100 == 0 && thisFrame > 0) {
-		Logging::getInstance()->log("Alive...", thisFrame);
-    }
-
 	if (thisFrame % 5000 == 0 && thisFrame > 0) {  //behavior switch
         /*int playerBases = GameStateInfo::getInstance()->numBases(myBehaviorName.c_str(), BWAPI::Races::Protoss);
         Logging::getInstance()->log("Number of player's bases %d.", playerBases);

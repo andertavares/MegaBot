@@ -155,6 +155,12 @@
       <Project>{a0f5203c-219c-4aac-9ac2-87ac2c2603f1}</Project>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="config\megabot_config.xml" />
+    <None Include="config\megabot_protoss-nash.xml" />
+    <None Include="config\megabot_protoss-uniform.xml" />
+    <None Include="config\README.txt" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

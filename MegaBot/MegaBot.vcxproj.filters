@@ -90,6 +90,9 @@
     <Filter Include="managers">
       <UniqueIdentifier>{b0a60027-ac65-4c40-94b8-9b98a139d117}</UniqueIdentifier>
     </Filter>
+    <Filter Include="config">
+      <UniqueIdentifier>{57d54a49-243d-4e99-a2a2-710821f0e25d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\MegaBot.h">
@@ -146,5 +149,19 @@
     <ClInclude Include="src\gamedata\SpottedObject.h">
       <Filter>gamedata</Filter>
     </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="config\megabot_config.xml">
+      <Filter>config</Filter>
+    </None>
+    <None Include="config\megabot_protoss-nash.xml">
+      <Filter>config</Filter>
+    </None>
+    <None Include="config\megabot_protoss-uniform.xml">
+      <Filter>config</Filter>
+    </None>
+    <None Include="config\README.txt">
+      <Filter>config</Filter>
+    </None>
   </ItemGroup>
 </Project>

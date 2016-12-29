@@ -7,6 +7,9 @@ using namespace BWAPI;
 BWAPI::Player* GameState::enemy = NULL;
 string GameState::mapName = "unknown";
 */
+
+map<int, SpottedObject> GameState::persistentEnemyObjects;
+
 GameState::GameState(void) {
 	/*
 	enemy = Broodwar->enemy();
@@ -26,10 +29,19 @@ GameState::GameState(void) {
 	set<BWAPI::Unit*> enemyUnits = Broodwar->enemy()->getUnits();
 	set<BWAPI::Unit*>::iterator it;
 	
-	//for (auto &unit : Broodwar->enemy()->getUnits()){
+	//for (BWAPI::Unit* unit : Broodwar->enemy()->getUnits()){
 	for(it = enemyUnits.begin(); it != enemyUnits.end(); it++){
 		//if (unit->isVisible()){
-			enemyObjects.push_back(SpottedObject(*it));
+		currentEnemyObjects[(*it)->getID()].update(*it); //hope default constructor and init goes ok SpottedObject(*it);
+		persistentEnemyObjects[(*it)->getID()].update(*it);
+		
+		//checks if object already exists in persistent map, updates it if needed
+		/*if(persistentEnemyObjects.find((*it)->getID()) != persistentEnemyObjects.end()){
+			//found, update
+			persistentEnemyObjects[(*it)->getID()].update(*it);
+		}*/
+
+
 			//addSpottedUnit(unit);
 		//}
 	}
@@ -37,9 +49,9 @@ GameState::GameState(void) {
 	//adds all my units as spotted objects
 	set<BWAPI::Unit*> myUnits = Broodwar->self()->getUnits();
 	//set<BWAPI::Unit*>::iterator it;
-	//for (auto &unit : Broodwar->self()->getUnits()){
+	//for (BWAPI::Unit* unit : Broodwar->self()->getUnits()){
 	for(it = myUnits.begin(); it != myUnits.end(); it++){
-		myObjects.push_back(SpottedObject(*it));
+		currentMyObjects[(*it)->getID()].update(*it); // SpottedObject(*it);
 	}
 	
 	//populates score data

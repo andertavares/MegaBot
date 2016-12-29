@@ -31,9 +31,6 @@
     <ClCompile Include="src\utils\asprintf\vasprintf-msvc.c">
       <Filter>utils\asprintf</Filter>
     </ClCompile>
-    <ClCompile Include="src\managers\SpottedObject.cpp">
-      <Filter>managers</Filter>
-    </ClCompile>
     <ClCompile Include="src\evaluators\MilitaryEvaluator.cpp">
       <Filter>evaluators</Filter>
     </ClCompile>
@@ -115,9 +112,6 @@
     </ClInclude>
     <ClInclude Include="src\utils\asprintf\asprintf.h">
       <Filter>utils\asprintf</Filter>
-    </ClInclude>
-    <ClInclude Include="src\managers\SpottedObject.h">
-      <Filter>managers</Filter>
     </ClInclude>
     <ClInclude Include="src\evaluators\MilitaryEvaluator.h">
       <Filter>evaluators</Filter>

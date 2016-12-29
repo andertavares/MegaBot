@@ -19,8 +19,14 @@ class GameState {
 	/** current frame */
 	int frame;
 
-	vector<SpottedObject> enemyObjects;
-	vector<SpottedObject> myObjects;
+	/** Enemy 'units' even in fog of war */
+	static map<int, SpottedObject> persistentEnemyObjects;
+
+	/** Enemy 'units' within visual range */
+	map<int, SpottedObject> currentEnemyObjects;
+
+	/** My 'units' */
+	map<int, SpottedObject> currentMyObjects;
 
 	//resources
 	int currentMinerals, currentGas;

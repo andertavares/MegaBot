@@ -3,6 +3,14 @@
 
 //using namespace BWAPI;
 
+SpottedObject::SpottedObject(){
+	type = BWAPI::UnitTypes::None;
+	position = BWAPI::Positions::None;
+	tilePosition = BWAPI::TilePositions::None;
+	unitID = -1;
+	lastSeenFrame = -1;
+}
+
 SpottedObject::SpottedObject(BWAPI::Unit* mUnit) {
     type = mUnit->getType();
     position = mUnit->getPosition();
@@ -13,14 +21,14 @@ SpottedObject::SpottedObject(BWAPI::Unit* mUnit) {
 
 void SpottedObject::update(BWAPI::Unit* mUnit) {
 
-    if (unitID != mUnit->getID()) {
+    if (unitID != -1 && unitID != mUnit->getID()) { //we allow updating when unitID is -1 because now it will have valid values
         Logging::getInstance()->log(
 			"Warning, attempted updating units with diff IDs (expected=%d, received=%d). Ignoring...", 
 			unitID, mUnit->getID()
 		);
         return;
     }
-
+	unitID = mUnit->getID();	//necessary when unitID was initialized with -1
     type = mUnit->getType();
     position = mUnit->getPosition();
     tilePosition = mUnit->getTilePosition();

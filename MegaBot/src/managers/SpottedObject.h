@@ -20,6 +20,9 @@ private:
     int unitID;
 
 public:
+	/** Default constructor, creates 'empty' SpottedObject */
+	SpottedObject();
+
     /** Creates an object from a unit reference. */
     SpottedObject(BWAPI::Unit* mUnit);
 

@@ -21,6 +21,9 @@ private:
 	int lastSeenFrame;
 
 public:
+	/** Default constructor, initializes 'invalid' values */
+	SpottedObject();
+
     /** Creates an object from a unit reference. */
     SpottedObject(BWAPI::Unit* mUnit);
 

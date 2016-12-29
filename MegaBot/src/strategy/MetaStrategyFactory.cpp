@@ -10,7 +10,7 @@ MetaStrategy* MetaStrategyFactory::getMetaStrategy(){
 	using namespace tinyxml2;
 
     //retrieve what config says about strategy
-    string metaStrategyName = Configuration::getInstance()->strategyID;
+	string metaStrategyName = Configuration::getInstance()->metaStrategyID;
 
 	Logging::getInstance()->log("Meta strategy: %s", metaStrategyName.c_str());
 
@@ -20,7 +20,7 @@ MetaStrategy* MetaStrategyFactory::getMetaStrategy(){
 	else if (metaStrategyName == "probabilistic") {
 		return new Probabilistic();
 	}
-	else if (metaStrategyName == "cyclical") {
+	else if (metaStrategyName == "random-switch") {
 		return new RandomSwitch();
 	}
     else {	//otherwise, logs an error because meta-strategy was not found 

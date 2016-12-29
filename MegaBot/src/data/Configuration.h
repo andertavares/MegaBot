@@ -19,37 +19,37 @@ class Configuration {
 	Configuration();
 
 public:
-	//identifies the strategy the bot will use
-	string strategyID;
+	/** identifies the bot's meta-strategy */
+	string metaStrategyID;
 
-	//path to write the file with match details
+	/** path to write the file with match details */
 	string matchDataFile;
 
-	//beginning of file name to look for information about enemy
+	/** beginning of file name to look for information about enemy */
     string enemyInformationPrefix;
 
-    //beginning of file name to look for information about crashes
+    /** beginning of file name to look for information about crashes */
     string crashInformationPrefix;
 
-	//path to xml file with strategy definition
+	/** path to xml file with strategy definition */
 	string strategyFile;
 
-	//path to the xml file with the win percentages table by bot
+	/** path to the xml file with the win percentages table by bot */
 	string winTableFile;
 
-	//initial match speed
+	/** initial match speed */
 	int speed;
 
-	//enable GUI (false makes match go much faster)
+	/** enable GUI (false makes match go much faster) */
 	bool enableGUI;
 
-	//learning rate for strategy value (score) updates
+	/** learning rate for score updates (epsilon-greedy meta-strategy) */
 	float alpha;
 	
-	//rate of exploration
+	/** rate of exploration for epsilon-greedy */
 	float epsilon;
 
-	//Returns the singleton instance of this class
+	/** Returns the singleton instance of this class */
 	static Configuration* getInstance();
 
 	~Configuration();
@@ -83,8 +83,8 @@ public:
 	//directory that stores openings (build orders)
 	static const string OPENINGS_DIR;
 
-	//xml field that contains the build order ID
-	static const string FIELD_STRATEGY_ID;
+	//xml field that contains the meta-strategy ID
+	static const string FIELD_META_STRATEGY_ID;
 
 	//xml field that contains the match data file
 	static const string FIELD_MATCH_DATA_FILE;

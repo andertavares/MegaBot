@@ -100,20 +100,18 @@ void MegaBot::onEnd(bool isWinner) {
     MatchData::getInstance()->registerMatchFinish(result);
     MatchData::getInstance()->writeSummary();
     MatchData::getInstance()->writeDetailedResult();
-    MatchData::getInstance()->updateCrashFile();
+    MatchData::getInstance()->updateCrashFile();	//TODO: valid only for epsilon-greedy!
 
 	currentStrategy->onEnd(isWinner);
 	logger->log("Finished.");
 }
 
 void MegaBot::onFrame() {
-    /*string strategyId = Configuration::getInstance()->strategyID;
-    if (strategyId == "epsilon-greedy") {
-        MetaStrategy::getInstance()->OnFrame();
-    }
-    else if (strategyId == "fixed-intervals") {
-        Method1::getInstance()->OnFrame();
-        }*/
+
+	if(Broodwar->getFrameCount() == 0){
+		logger->log("First frame!");
+	}
+
 	if (Broodwar->elapsedTime() / 60 >= 81) {	//leave stalled game
         Broodwar->leaveGame();
         return;
@@ -143,8 +141,9 @@ void MegaBot::onSendText(std::string text) {
 		logger->log("Will attempt a strategy switch to %s", text.substr(7, text.size()).c_str());
 		metaStrategy->forceStrategy(text.substr(7, text.size()));
 	}
-
-    currentStrategy->onSendText(text);
+	else {
+		currentStrategy->onSendText(text);
+	}
 }
 
 void MegaBot::onReceiveText(BWAPI::Player* player, std::string text) {

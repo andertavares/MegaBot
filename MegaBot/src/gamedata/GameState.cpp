@@ -23,16 +23,23 @@ GameState::GameState(void) {
 	currentGas = Broodwar->self()->gas();
 
 	//adds all enemy units as spotted objects
-	for (auto &unit : Broodwar->enemy()->getUnits()){
+	set<BWAPI::Unit*> enemyUnits = Broodwar->enemy()->getUnits();
+	set<BWAPI::Unit*>::iterator it;
+	
+	//for (auto &unit : Broodwar->enemy()->getUnits()){
+	for(it = enemyUnits.begin(); it != enemyUnits.end(); it++){
 		//if (unit->isVisible()){
-			enemyObjects.push_back(SpottedObject(unit));
+			enemyObjects.push_back(SpottedObject(*it));
 			//addSpottedUnit(unit);
 		//}
 	}
 
 	//adds all my units as spotted objects
-	for (auto &unit : Broodwar->self()->getUnits()){
-		myObjects.push_back(SpottedObject(unit));
+	set<BWAPI::Unit*> myUnits = Broodwar->self()->getUnits();
+	//set<BWAPI::Unit*>::iterator it;
+	//for (auto &unit : Broodwar->self()->getUnits()){
+	for(it = myUnits.begin(); it != myUnits.end(); it++){
+		myObjects.push_back(SpottedObject(*it));
 	}
 	
 	//populates score data

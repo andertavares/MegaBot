@@ -105,6 +105,7 @@
     <ClCompile Include="src\gamedata\GameStateManager.cpp" />
     <ClCompile Include="src\gamedata\SpottedObject.cpp" />
     <ClCompile Include="src\managers\ExplorationManager.cpp" />
+    <ClCompile Include="src\managers\SpottedObject.cpp" />
     <ClCompile Include="src\MegaBot.cpp" />
     <ClCompile Include="src\strategy\EpsilonGreedy.cpp" />
     <ClCompile Include="src\strategy\MetaStrategy.cpp" />
@@ -126,6 +127,7 @@
     <ClInclude Include="src\gamedata\GameStateManager.h" />
     <ClInclude Include="src\gamedata\SpottedObject.h" />
     <ClInclude Include="src\managers\ExplorationManager.h" />
+    <ClInclude Include="src\managers\SpottedObject.h" />
     <ClInclude Include="src\MegaBot.h" />
     <ClInclude Include="src\strategy\EpsilonGreedy.h" />
     <ClInclude Include="src\strategy\MetaStrategy.h" />

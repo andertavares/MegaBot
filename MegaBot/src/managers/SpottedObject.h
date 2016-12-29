@@ -3,7 +3,7 @@
 
 #include <BWAPI.h>
 
-//using namespace BWAPI;
+using namespace BWAPI;
 using namespace std;
 
 /** The SpottedObject class is a help class for the ExplorationManager. It contains all details about a spotted
@@ -14,11 +14,10 @@ using namespace std;
 class SpottedObject {
 
 private:
-    BWAPI::UnitType type;
-    BWAPI::Position position;
-    BWAPI::TilePosition tilePosition;
+    UnitType type;
+    Position position;
+    TilePosition tilePosition;
     int unitID;
-	int lastSeenFrame;
 
 public:
     /** Creates an object from a unit reference. */
@@ -31,16 +30,13 @@ public:
     int getUnitID();
 
     /** Returns the type of the spotted unit. */
-    BWAPI::UnitType getType();
+    UnitType getType();
 
     /** Returns the position of the spotted unit. */
-    BWAPI::Position getPosition();
-
-	/** Returns the frame in which object was seen for last time*/
-	int getLastSeenFrame();
+    Position getPosition();
 
     /** Returns the tileposition of the spotted unit. */
-    BWAPI::TilePosition getTilePosition();
+    TilePosition getTilePosition();
 };
 
 

@@ -5,7 +5,7 @@
 #include "SpottedObject.h"
 
 using namespace std;
-using namespace BWAPI;
+//using namespace BWAPI;
 
 /** Stores relevant information of a game state */
 class GameState {

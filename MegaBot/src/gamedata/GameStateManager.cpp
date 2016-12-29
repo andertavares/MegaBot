@@ -5,7 +5,7 @@
 
 GameStateManager* GameStateManager::instance = NULL;
 
-GameStateManager::GameStateManager(void) {
+GameStateManager::GameStateManager(void) : frequency(500) {
 
 }
 

@@ -48,5 +48,8 @@ class GameState {
 public:
 	GameState(void);
 	~GameState(void);
+
+	/** Removes unit from persistentEnemyObjects */
+	static void unitDestroyed(BWAPI::Unit* unit);
 };
 

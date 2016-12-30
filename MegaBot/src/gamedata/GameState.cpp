@@ -68,3 +68,11 @@ GameState::GameState(void) {
 GameState::~GameState(void) {
 	
 }
+
+void GameState::unitDestroyed(BWAPI::Unit* unit){
+	Logging::getInstance()->log(
+		"Removing unit %s w/ ID=%d from persistentEnemyObjects",
+		unit->getType().getName().c_str(), unit->getID()
+	);
+	persistentEnemyObjects.erase(unit->getID());
+}

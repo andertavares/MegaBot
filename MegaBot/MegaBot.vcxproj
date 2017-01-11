@@ -111,6 +111,7 @@
     <ClCompile Include="src\strategy\MetaStrategyFactory.cpp" />
     <ClCompile Include="src\strategy\Probabilistic.cpp" />
     <ClCompile Include="src\strategy\RandomSwitch.cpp" />
+    <ClCompile Include="src\strategy\SingleChoice.cpp" />
     <ClCompile Include="src\utils\asprintf\asprintf.c" />
     <ClCompile Include="src\utils\asprintf\test.c" />
     <ClCompile Include="src\utils\asprintf\vasprintf-msvc.c" />
@@ -132,6 +133,7 @@
     <ClInclude Include="src\strategy\MetaStrategyFactory.h" />
     <ClInclude Include="src\strategy\Probabilistic.h" />
     <ClInclude Include="src\strategy\RandomSwitch.h" />
+    <ClInclude Include="src\strategy\SingleChoice.h" />
     <ClInclude Include="src\utils\asprintf\asprintf.h" />
     <ClInclude Include="src\utils\Logging.h" />
     <ClInclude Include="src\utils\tinyxml2.h" />

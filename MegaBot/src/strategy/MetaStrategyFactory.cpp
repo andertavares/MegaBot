@@ -5,6 +5,7 @@
 #include "EpsilonGreedy.h"
 #include "Probabilistic.h"
 #include "RandomSwitch.h"
+#include "SingleChoice.h"
 
 MetaStrategy* MetaStrategyFactory::getMetaStrategy(){
 	using namespace tinyxml2;
@@ -23,9 +24,11 @@ MetaStrategy* MetaStrategyFactory::getMetaStrategy(){
 	else if (metaStrategyName == "random-switch") {
 		return new RandomSwitch();
 	}
-    else {	//otherwise, logs an error because meta-strategy was not found 
-		Logging::getInstance()->log("Error: unrecognized meta-strategy '%s'. Defaulting to EpsilonGreedy!", metaStrategyName.c_str());
+	
+    else {	//otherwise, go to Single Choice using 'metaStrategyName' as the chosen behavior
+		Logging::getInstance()->log("Using SingleChoice with strategy: %s", metaStrategyName.c_str());
+		return new SingleChoice(metaStrategyName);
     }
-	return new EpsilonGreedy();	//failsafe default...
+	//return new EpsilonGreedy();	//failsafe default...
 }
 

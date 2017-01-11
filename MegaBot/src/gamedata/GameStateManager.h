@@ -13,6 +13,12 @@ class GameStateManager {
 	/** How frequently should I save game states? */
 	int frequency;
 
+	/** Records the game state of this frame */
+	void recordState();
+
+	/** Path to file where state information will be written */
+	string stateDumpFile;
+
 public:
 	
 	/** Returns the instance of this singleton */
@@ -21,11 +27,13 @@ public:
 	/** To be called every frame */
 	void onFrame();
 
-	/** Records the game state of this frame */
-	void recordState();
+	
 
 	/** Sets the interval between saving two states */
 	void setFrequency(int freq);
+
+	/** Takes into account that a unit has been destroyed */
+	void unitDestroyed(BWAPI::Unit* unit);
 
 	~GameStateManager(void);
 };

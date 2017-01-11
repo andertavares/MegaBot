@@ -202,7 +202,6 @@ void MegaBot::onUnitDestroy(BWAPI::Unit* unit) {
 
 	if (unit->getPlayer()->getID() == Broodwar->enemy()->getID())	{
 		GameState::unitDestroyed(unit);
-		//ExplorationManager::getInstance()->unitDestroyed(unit);
 	}
 
     currentStrategy->onUnitDestroy(unit);

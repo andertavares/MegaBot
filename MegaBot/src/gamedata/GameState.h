@@ -49,6 +49,9 @@ public:
 	GameState(void);
 	~GameState(void);
 
+	/** Returns a map unitID -> SpottedObject with observed enemy units */
+	static map<int, SpottedObject>& getSpottedEnemyUnits();
+
 	/** Removes unit from persistentEnemyObjects */
 	static void unitDestroyed(BWAPI::Unit* unit);
 };

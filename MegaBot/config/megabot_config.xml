@@ -1,7 +1,9 @@
 <!-- put this file under <starcraft>/bwapi-data/AI -->
 <config>
-	<meta-strategy value="epsilon-greedy" />	<!-- possible values: probabilistic, epsilon-greedy and random-switch -->
-	<strategy-file value="megabot_protoss-uniform.xml" /> <!-- probabilities for Probabilistic strategy selection -->
+  <!-- possible values: probabilistic, epsilon-greedy, random-switch, Xelnaga, Skynet, NUSBot -->
+  <meta-strategy value="epsilon-greedy" />
+
+  <strategy-file value="megabot_protoss-uniform.xml" /> <!-- probabilities for Probabilistic strategy selection -->
 	<read-dir value="bwapi-data/read/" />
 	<write-dir value="bwapi-data/write/" />
 	<match-output value="output.xml" />

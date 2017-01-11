@@ -76,3 +76,7 @@ void GameState::unitDestroyed(BWAPI::Unit* unit){
 	);
 	persistentEnemyObjects.erase(unit->getID());
 }
+
+map<int, SpottedObject>& GameState::getSpottedEnemyUnits(){
+	return persistentEnemyObjects;
+}

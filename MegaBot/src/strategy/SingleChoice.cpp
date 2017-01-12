@@ -3,6 +3,7 @@
 
 SingleChoice::SingleChoice(string choice) {
 	
+	name = "SingleChoice(" + choice + ")";
 	
 	if (portfolio.find(choice) == portfolio.end()) { //choice not found 
 		Logging::getInstance()->log(

@@ -64,6 +64,9 @@
     <ClCompile Include="src\strategy\SingleChoice.cpp">
       <Filter>strategy</Filter>
     </ClCompile>
+    <ClCompile Include="src\utils\FileCounter.cpp">
+      <Filter>utils</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="main">
@@ -148,6 +151,9 @@
     </ClInclude>
     <ClInclude Include="src\strategy\SingleChoice.h">
       <Filter>strategy</Filter>
+    </ClInclude>
+    <ClInclude Include="src\utils\FileCounter.h">
+      <Filter>utils</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

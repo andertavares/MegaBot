@@ -115,6 +115,7 @@
     <ClCompile Include="src\utils\asprintf\asprintf.c" />
     <ClCompile Include="src\utils\asprintf\test.c" />
     <ClCompile Include="src\utils\asprintf\vasprintf-msvc.c" />
+    <ClCompile Include="src\utils\FileCounter.cpp" />
     <ClCompile Include="src\utils\Logging.cpp" />
     <ClCompile Include="src\utils\tinyxml2.cpp" />
   </ItemGroup>
@@ -135,6 +136,7 @@
     <ClInclude Include="src\strategy\RandomSwitch.h" />
     <ClInclude Include="src\strategy\SingleChoice.h" />
     <ClInclude Include="src\utils\asprintf\asprintf.h" />
+    <ClInclude Include="src\utils\FileCounter.h" />
     <ClInclude Include="src\utils\Logging.h" />
     <ClInclude Include="src\utils\tinyxml2.h" />
   </ItemGroup>

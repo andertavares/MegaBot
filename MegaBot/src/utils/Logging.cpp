@@ -8,6 +8,7 @@
 #include <tchar.h> 
 #include <stdio.h>
 #include <strsafe.h>
+#include "FileCounter.h"
 
 using namespace std;
 using namespace BWAPI;
@@ -24,49 +25,32 @@ Logging::Logging() : logLevel(Logging::INFO){
 	 * Defaults to log_default-MegaBot-vs-enemy.log if some problem happens
 	 */
 
-	int logCount = 0;
+	//int logCount = 0;
 	string pathPrefix =  Configuration::OUTPUT_DIR + "log_MegaBot-vs-" + _enemyName();
 	filename = Configuration::OUTPUT_DIR + "log_default-MegaBot-vs-" + _enemyName() + ".log";	//default filename
 
-	//code to glob files - https://msdn.microsoft.com/en-us/library/windows/desktop/aa365200(v=vs.85).aspx
-	WIN32_FIND_DATAA ffd;
-	HANDLE hFind = INVALID_HANDLE_VALUE;
-	DWORD dwError = 0;
-	string pattern = pathPrefix + "*.log";
-
-	log("Looking for pattern  %s", pattern.c_str());
-
-	hFind = FindFirstFileA(pattern.c_str(), &ffd);
-
-	//test error number for invalid_handle: 
-	// 0 might be pattern not found; 2 is file not found, which are OK -> go create first file
-	if (INVALID_HANDLE_VALUE == hFind) 	{
-		
-		dwError = GetLastError();
-		if(dwError == ERROR_SUCCESS || dwError == ERROR_FILE_NOT_FOUND){
-			log("It seems that pattern was not found, will create first file.");
-			logCount = -1; //adjusts logCount because it's gonna be incremented below, even when there is no file
-		}
-		else {
-			log("Error while looking for pattern %s. ERRNO: %d", pattern.c_str(), dwError);
-			logWindowsError(TEXT("FindFirstFileA"));
-			log("Logging to default file: %s", filename.c_str());
-			return;
-		}
-	} 
-   
-	// count files in the directory
-	do {
-		logCount++;
-	}
-	while (FindNextFileA(hFind, &ffd) != 0);
-
-	//pad with zeroes to the right up to 6 digits
-	char fileNumber[7];
-	sprintf_s(fileNumber, sizeof(fileNumber), "%06d", logCount + 1);	//new file's gonna have incremented digit
+	string writePattern = pathPrefix + "*.log";
+	string readPattern = Configuration::READ_DIR + "log_MegaBot-vs-" + _enemyName() + "*.log";
 	
-	log("Gonna write log to %s%s.log", pathPrefix.c_str(), fileNumber);
-	filename = pathPrefix + string(fileNumber) + ".log";
+	try {
+		//since files may exist both in read and write dirs, look in both and gets the highest number
+		int logCount = max(FileCounter::countFiles(writePattern), FileCounter::countFiles(readPattern));
+
+		//pad with zeroes to the right up to 6 digits
+		char fileNumber[7];
+		sprintf_s(fileNumber, sizeof(fileNumber), "%06d", logCount + 1);	//new file's gonna have incremented digit
+	
+		log("Gonna write log to %s%s.log", pathPrefix.c_str(), fileNumber);
+		filename = pathPrefix + string(fileNumber) + ".log";
+	}
+	catch (ios_base::failure e){
+		//this used to happen with ERRNO 183, because we were using a wrong function to look for files
+		log("An error occurred while looking for pre-existing log files... Logging to default file: %s", filename.c_str());
+		logWindowsError(TEXT("FileCounter::countFiles"));
+		return;
+	}
+
+	
 	
 }
 /*

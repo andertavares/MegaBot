@@ -37,7 +37,7 @@ void GameStateManager::onFrame(){
 	for(uit = enemyUnits.begin(); uit != enemyUnits.end(); uit++){
 		//updates only if I can see unit or CompleteMapInformation is enabled
 		if((*uit)->isVisible() || BWAPI::Broodwar->isFlagEnabled(BWAPI::Flag::CompleteMapInformation)){
-			//code below works even if SpottedObject is not present at the map (a default one is created)
+			//code below works even if SpottedObject is not present at the map (a default one is created then updated)
 			spottedEnemies[(*uit)->getID()].update(*uit); 
 		}
 	}

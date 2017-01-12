@@ -3,15 +3,25 @@
 #include "GameState.h"
 #include "../data/Configuration.h"
 #include "../utils/Logging.h"
+#include "../utils/FileCounter.h"
 
 GameStateManager* GameStateManager::instance = NULL;
 
 GameStateManager::GameStateManager(void) : frequency(500) {
-	//TODO write files with increasing number, just like logging
-	stateDumpFile = Configuration::OUTPUT_DIR + 
+	//counts number of previous state dump files
+	string prefix = Configuration::OUTPUT_DIR + 
 		"states_MegaBot-vs-" + 
 		BWAPI::Broodwar->enemy()->getName();
 
+	string pattern = prefix + "*.dat";
+
+	int dumpFileCount = FileCounter::countFiles(pattern);
+
+	//will use file with incremented counter, up to 7 digits
+	char fileNumber[7];
+	sprintf_s(fileNumber, sizeof(fileNumber), "%06d", dumpFileCount + 1);	//new file's gonna have incremented digit
+	Logging::getInstance()->log("Gonna dump state files to log to %s%s.dat", prefix.c_str(), fileNumber);
+	stateDumpFile = prefix + string(fileNumber) + ".dat";
 }
 
 

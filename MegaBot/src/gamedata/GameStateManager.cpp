@@ -28,54 +28,38 @@ GameStateManager* GameStateManager::getInstance(){
 
 void GameStateManager::onFrame(){
 	
-	//draws information of observed units
+	//updates spottedEnemies with currently seen enemies:
 	map<int, SpottedObject>& spottedEnemies = GameState::getSpottedEnemyUnits();
-	map<int, SpottedObject>::iterator it; 
+	//adds all enemy units as spotted objects
+	set<BWAPI::Unit*> enemyUnits = BWAPI::Broodwar->enemy()->getUnits();
+	set<BWAPI::Unit*>::iterator uit;
 	
-	BWAPI::Broodwar->printf("I spotted %d enemies", spottedEnemies.size());
+	for(uit = enemyUnits.begin(); uit != enemyUnits.end(); uit++){
+		//updates only if I can see unit or CompleteMapInformation is enabled
+		if((*uit)->isVisible() || BWAPI::Broodwar->isFlagEnabled(BWAPI::Flag::CompleteMapInformation)){
+			//code below works even if SpottedObject is not present at the map (a default one is created)
+			spottedEnemies[(*uit)->getID()].update(*uit); 
+		}
+	}
+	
+	//draws information of observed units
+
+	//Logging::getInstance()->log("[%d] I spotted %d enemies", BWAPI::Broodwar->getFrameCount(), spottedEnemies.size());
 
 	//for (auto enemyUnit : spottedEnemies) {
+	map<int, SpottedObject>::iterator it; 
 	for(it = spottedEnemies.begin(); it != spottedEnemies.end(); it++){
-		//if (enemyBldg-> isActive()){
 		SpottedObject& enemyUnit = (*it).second;
-
-		int x1 = enemyUnit.getTilePosition().x() * 32;
-		int y1 = enemyUnit.getTilePosition().y() * 32;
-		int x2 = x1 + enemyUnit.getType().dimensionLeft() + enemyUnit.getType().dimensionRight();
-		int y2 = y1 + enemyUnit.getType().dimensionUp() + enemyUnit.getType().dimensionDown();
-		
-		
-		BWAPI::Broodwar->drawBoxMap(x1, y1, x2, y2, BWAPI::Colors::Red, false);
-		BWAPI::Broodwar->drawTextMap(
-			x1 + enemyUnit.getType().dimensionRight(), 
-			y1 + enemyUnit.getType().dimensionDown(), 
-			enemyUnit.getType().c_str()
-		);
-		//}
+		enemyUnit.draw();
+		//enemyUnit.second.draw();
 	}
-
-	/*
-	for (auto enemyUnit : enemyUnits) {
-		//if (enemyBldg-> isActive()){
-		int x1 = enemyUnit->getTilePosition().x * 32;
-		int y1 = enemyUnit->getTilePosition().y * 32;
-		int x2 = x1 + enemyUnit->getType().dimensionRight() * 2;
-		int y2 = y1 + enemyUnit->getType().dimensionDown() * 2;
-
-		Broodwar->drawBoxMap(x1, y1, x2, y2, Colors::Orange, false);
-		Broodwar->drawTextMap(x1 + enemyUnit->getType().dimensionRight(), y1 + enemyUnit->getType().dimensionDown(), UnitString::shortName(enemyUnit->getType()).c_str());
-		//}
-	}
-	*/
 	
-	//skips first frame as well as the interval configured in frequency
+	//only record game state on the required frequency, skips 1st frame as well
 	int thisFrame = BWAPI::Broodwar->getFrameCount();
 	
-	if(thisFrame % frequency != 0 || thisFrame == 0){
-		return;
-	}
-
-	recordState();
+	if(thisFrame % frequency == 0 && thisFrame != 0){
+		recordState();
+	}	
 }
 
 void GameStateManager::recordState(){

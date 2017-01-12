@@ -172,6 +172,7 @@ void MegaBot::onNukeDetect(BWAPI::Position target) {
 }
 
 void MegaBot::onUnitDiscover(BWAPI::Unit* unit) {
+	GameState::onUnitDiscover(unit);
     currentStrategy->onUnitDiscover(unit);
 }
 
@@ -180,6 +181,7 @@ void MegaBot::onUnitEvade(BWAPI::Unit* unit) {
 }
 
 void MegaBot::onUnitShow(BWAPI::Unit* unit) {
+	GameState::onUnitShow(unit);
     currentStrategy->onUnitShow(unit);
 }
 
@@ -188,6 +190,7 @@ void MegaBot::onUnitHide(BWAPI::Unit* unit) {
 }
 
 void MegaBot::onUnitCreate(BWAPI::Unit* unit) {
+	GameState::onUnitCreate(unit);
     currentStrategy->onUnitCreate(unit);
 }
 
@@ -201,7 +204,7 @@ void MegaBot::onUnitDestroy(BWAPI::Unit* unit) {
 	);
 
 	if (unit->getPlayer()->getID() == Broodwar->enemy()->getID())	{
-		GameState::unitDestroyed(unit);
+		GameState::onUnitDestroy(unit);
 	}
 
     currentStrategy->onUnitDestroy(unit);

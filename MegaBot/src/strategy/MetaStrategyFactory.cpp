@@ -8,7 +8,7 @@
 #include "SingleChoice.h"
 
 MetaStrategy* MetaStrategyFactory::getMetaStrategy(){
-	using namespace tinyxml2;
+	//using namespace tinyxml2;
 
     //retrieve what config says about strategy
 	string metaStrategyName = Configuration::getInstance()->metaStrategyID;

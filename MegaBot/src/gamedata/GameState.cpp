@@ -31,19 +31,13 @@ GameState::GameState(void) {
 	
 	//for (BWAPI::Unit* unit : Broodwar->enemy()->getUnits()){
 	for(it = enemyUnits.begin(); it != enemyUnits.end(); it++){
-		//if (unit->isVisible()){
-		currentEnemyObjects[(*it)->getID()].update(*it); //hope default constructor and init goes ok SpottedObject(*it);
-		persistentEnemyObjects[(*it)->getID()].update(*it);
-		
-		//checks if object already exists in persistent map, updates it if needed
-		/*if(persistentEnemyObjects.find((*it)->getID()) != persistentEnemyObjects.end()){
-			//found, update
-			persistentEnemyObjects[(*it)->getID()].update(*it);
-		}*/
-
-
-			//addSpottedUnit(unit);
-		//}
+		//updates only if I can see unit or CompleteMapInformation is enabled
+		if((*it)->isVisible() || BWAPI::Broodwar->isFlagEnabled(BWAPI::Flag::CompleteMapInformation)){
+			//code below works even if SpottedObject is not present at the map (a default one is created)
+			currentEnemyObjects[(*it)->getID()].update(*it); 
+			//persistentEnemyObjects[(*it)->getID()].update(*it); //this one is updated in GameStateManager::onFrame
+		}
+	
 	}
 
 	//adds all my units as spotted objects
@@ -69,12 +63,79 @@ GameState::~GameState(void) {
 	
 }
 
-void GameState::unitDestroyed(BWAPI::Unit* unit){
+void GameState::onUnitDiscover(BWAPI::Unit* unit) {
+	//creates or updates information about enemy unit
+	if(unit->getPlayer()->getID() == BWAPI::Broodwar->enemy()->getID()){
+		Logging::getInstance()->log(
+			"Discovered %s at %d, %d", unit->getType().c_str(), unit->getPosition().x(), unit->getPosition().y()
+		);
+		persistentEnemyObjects[unit->getID()].update(unit);
+	}
+}
+
+void GameState::onUnitEvade(BWAPI::Unit* unit) {
+    //currentStrategy->onUnitEvade(unit);
+}
+
+void GameState::onUnitShow(BWAPI::Unit* unit) {
+	//creates or updates information about enemy unit
+	if(unit->getPlayer()->getID() == BWAPI::Broodwar->enemy()->getID()){
+		Logging::getInstance()->log(
+			"Shown %s at %d, %d", unit->getType().c_str(), unit->getPosition().x(), unit->getPosition().y()
+		);
+		persistentEnemyObjects[unit->getID()].update(unit);
+	}
+}
+
+void GameState::onUnitHide(BWAPI::Unit* unit) {
+    //currentStrategy->onUnitHide(unit);
+}
+
+void GameState::onUnitCreate(BWAPI::Unit* unit){
+	//creates or updates information about enemy unit
+	if(unit->getPlayer()->getID() == BWAPI::Broodwar->enemy()->getID()){
+		Logging::getInstance()->log(
+			"Created %s at %d, %d", unit->getType().c_str(), unit->getPosition().x(), unit->getPosition().y()
+		);
+
+		persistentEnemyObjects[unit->getID()].update(unit);
+	}
+	
+}
+
+void GameState::onUnitDestroy(BWAPI::Unit* unit){
 	Logging::getInstance()->log(
 		"Removing unit %s w/ ID=%d from persistentEnemyObjects",
 		unit->getType().getName().c_str(), unit->getID()
 	);
+
 	persistentEnemyObjects.erase(unit->getID());
+}
+
+void GameState::onUnitMorph(BWAPI::Unit* unit) {
+	//updates information of enemy unit that morphed
+    if(unit->getPlayer()->getID() == BWAPI::Broodwar->enemy()->getID()){
+		Logging::getInstance()->log(
+			"Morphed %s at %d, %d", unit->getType().c_str(), unit->getPosition().x(), unit->getPosition().y()
+		);
+
+		persistentEnemyObjects[unit->getID()].update(unit);
+	}
+}
+
+void GameState::onUnitRenegade(BWAPI::Unit* unit) {
+	Logging::getInstance()->log(
+		"Renegaded %s at %d, %d", unit->getType().c_str(), unit->getPosition().x(), unit->getPosition().y()
+	);
+
+	if(unit->getPlayer()->getID() == BWAPI::Broodwar->enemy()->getID()){
+		//enemy has got control of an unit, update it
+		persistentEnemyObjects[unit->getID()].update(unit);
+	}
+	else if(unit->getPlayer()->getID() == BWAPI::Broodwar->self()->getID()) {
+		//I took control of an unit, erase it from enemy units
+		persistentEnemyObjects.erase(unit->getID());
+	}
 }
 
 map<int, SpottedObject>& GameState::getSpottedEnemyUnits(){

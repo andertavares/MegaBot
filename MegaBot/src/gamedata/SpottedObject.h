@@ -14,15 +14,26 @@ using namespace std;
 class SpottedObject {
 
 private:
-    BWAPI::UnitType type;
-    BWAPI::Position position;
-    BWAPI::TilePosition tilePosition;
+    BWAPI::UnitType* type;
+
+    /** x coordinate, in pixels */
+	int x;
+
+	/** y coordinate, in pixels */
+	int y;
+
+	/** Stores the unit type name */
+	string typeName;
+
     int unitID;
 	int lastSeenFrame;
 
 public:
 	/** Default constructor, initializes 'invalid' values */
 	SpottedObject();
+
+	/** Draws a box around the spotted object is believed to be */
+	void draw();
 
     /** Creates an object from a unit reference. */
     SpottedObject(BWAPI::Unit* mUnit);
@@ -36,14 +47,14 @@ public:
     /** Returns the type of the spotted unit. */
     BWAPI::UnitType getType();
 
-    /** Returns the position of the spotted unit. */
-    BWAPI::Position getPosition();
+    /** Returns the x coordinate, in pixels, where the unit is believed to be. */
+    int getX();
+
+	/** Returns the y coordinate, in pixels, where the unit is believed to be. */
+	int getY();
 
 	/** Returns the frame in which object was seen for last time*/
 	int getLastSeenFrame();
-
-    /** Returns the tileposition of the spotted unit. */
-    BWAPI::TilePosition getTilePosition();
 };
 
 

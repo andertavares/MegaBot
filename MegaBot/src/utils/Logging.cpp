@@ -17,7 +17,7 @@ Logging* Logging::getInstance() {
     return instance;
 }
 
-Logging::Logging(){
+Logging::Logging() : logLevel(Logging::INFO){
 	/* 
 	 * Defines the log filename. Attempts to go for log_MegaBot-vs-enemy(X+1).log 
 	 * where X is the number of last existing file (padded with up to 6 zeros to left).

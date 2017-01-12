@@ -52,7 +52,26 @@ public:
 	/** Returns a map unitID -> SpottedObject with observed enemy units */
 	static map<int, SpottedObject>& getSpottedEnemyUnits();
 
+	/** Adds unit into persistentEnemyObjects */
+	static void onUnitCreate(BWAPI::Unit* unit);
+
 	/** Removes unit from persistentEnemyObjects */
-	static void unitDestroyed(BWAPI::Unit* unit);
+	static void onUnitDestroy(BWAPI::Unit* unit);
+
+	/** Adds unit into persistentEnemyObjects */
+	static void onUnitDiscover(BWAPI::Unit* unit);
+
+	static void onUnitEvade(BWAPI::Unit* unit);
+
+	/** Adds unit into persistentEnemyObjects */
+	static void onUnitShow(BWAPI::Unit* unit);
+
+	static void onUnitHide(BWAPI::Unit* unit);
+
+	/** Updates unit info on persistentEnemyObjects */
+	static void onUnitMorph(BWAPI::Unit* unit);
+
+	/** Adds unit into persistentEnemyObjects if enemy got it, or remove if I got it */
+	static void onUnitRenegade(BWAPI::Unit* unit);
 };
 

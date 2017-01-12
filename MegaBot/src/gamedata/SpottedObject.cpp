@@ -4,23 +4,24 @@
 //using namespace BWAPI;
 
 SpottedObject::SpottedObject(){
-	type = BWAPI::UnitTypes::None;
-	position = BWAPI::Positions::None;
-	tilePosition = BWAPI::TilePositions::None;
+	type = NULL; //BWAPI::UnitTypes::None;
+	x = y = -1 ; //BWAPI::Positions::None;
 	unitID = -1;
 	lastSeenFrame = -1;
 }
 
 SpottedObject::SpottedObject(BWAPI::Unit* mUnit) {
-    type = mUnit->getType();
-    position = mUnit->getPosition();
-    tilePosition = mUnit->getTilePosition();
+	type = new BWAPI::UnitType(mUnit->getType());
+	x = mUnit->getPosition().x();	//x and y coords refer to the center of the unit
+	y = mUnit->getPosition().y();
+	//position = new BWAPI::Position(mUnit->getPosition());
+	//tilePosition = new BWAPI::TilePosition(mUnit->getTilePosition());
     unitID = mUnit->getID();
 	lastSeenFrame = BWAPI::Broodwar->getFrameCount();
 }
 
 void SpottedObject::update(BWAPI::Unit* mUnit) {
-
+	
     if (unitID != -1 && unitID != mUnit->getID()) { //we allow updating when unitID is -1 because now it will have valid values
         Logging::getInstance()->log(
 			"Warning, attempted updating units with diff IDs (expected=%d, received=%d). Ignoring...", 
@@ -29,9 +30,11 @@ void SpottedObject::update(BWAPI::Unit* mUnit) {
         return;
     }
 	unitID = mUnit->getID();	//necessary when unitID was initialized with -1
-    type = mUnit->getType();
-    position = mUnit->getPosition();
-    tilePosition = mUnit->getTilePosition();
+	typeName = mUnit->getType().getName();
+	x = mUnit->getPosition().x();
+	y = mUnit->getPosition().y();
+    //position = mUnit->getPosition();
+    //tilePosition = mUnit->getTilePosition();
 	lastSeenFrame = BWAPI::Broodwar->getFrameCount();
 }
 
@@ -40,20 +43,50 @@ int SpottedObject::getUnitID() {
 }
 
 BWAPI::UnitType SpottedObject::getType() {
-    return type;
+	return BWAPI::UnitTypes::getUnitType(typeName);
 }
 
-BWAPI::Position SpottedObject::getPosition() {
-    return position;
+int SpottedObject::getX(){
+	return x;
 }
+
+int SpottedObject::getY(){
+	return y;
+}
+
 
 int SpottedObject::getLastSeenFrame(){
 	return lastSeenFrame;
 }
 
-BWAPI::TilePosition SpottedObject::getTilePosition() {
-    return tilePosition;
-}
+void SpottedObject::draw(){
 
+	BWAPI::UnitType myType = getType();
+	/*
+	Logging::getInstance()->log(
+		"[%d] Drawing %s at %d,%d / tile: (%d,%d)", 
+		BWAPI::Broodwar->getFrameCount(),
+		myType.getName().c_str(), 
+		x, y, x / 32, y / 32
+	);
+	*/
+	int x1 = x - myType.dimensionLeft();
+	int y1 = y - myType.dimensionUp();
+	int x2 = x + myType.dimensionRight();// - myType.dimensionLeft();
+	int y2 = y + myType.dimensionDown();// -  myType.dimensionUp();
+
+	
+	/*	
+	Logging::getInstance()->log(
+		"Rect coords: (%d,%d), (%d,%d)", x1, y1, x2, y2
+	);
+	*/
+
+	BWAPI::Broodwar->drawBoxMap(x1, y1, x2, y2, BWAPI::Colors::Red, false);
+	BWAPI::Broodwar->drawTextMap(
+		x1, y,
+		myType.c_str()
+	);
+}
 
 

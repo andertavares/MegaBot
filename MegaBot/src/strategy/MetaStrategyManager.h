@@ -5,8 +5,13 @@ class MetaStrategyManager {
 	MetaStrategyManager(void);
 	~MetaStrategyManager(void);
 
+	/** The active meta-strategy */
+	static MetaStrategy* activeMetaStrategy;
+
 public:
-	/** Retrieves a meta-strategy defined in configuration file */
+	/** Returns the active meta-strategy or 
+	  * creates one via definition in configuration file 
+	  */
 	static MetaStrategy* getMetaStrategy();
 };
 

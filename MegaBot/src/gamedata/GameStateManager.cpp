@@ -1,6 +1,8 @@
 #include "GameStateManager.h"
 #include <BWAPI.h>
+#include <fstream>
 #include "GameState.h"
+#include "../strategy/MetaStrategyManager.h"
 #include "../data/Configuration.h"
 #include "../utils/Logging.h"
 #include "../utils/FileCounter.h"
@@ -22,6 +24,17 @@ GameStateManager::GameStateManager(void) : frequency(500) {
 	sprintf_s(fileNumber, sizeof(fileNumber), "%06d", dumpFileCount + 1);	//new file's gonna have incremented digit
 	Logging::getInstance()->log("Gonna dump state files to log to %s%s.dat", prefix.c_str(), fileNumber);
 	stateDumpFile = prefix + string(fileNumber) + ".dat";
+
+	//creates header in .dat file
+	ofstream dumpFile;
+	dumpFile.open(stateDumpFile.c_str(), ios::out | ios::app);
+	if (!dumpFile) {
+		Logging::getInstance()->log("Error writing to dump file '%s'!", stateDumpFile.c_str());
+    }
+    else {
+		dumpFile << "#map,enemy,frame,own-units,enemy-units,current-strat" << "\n";
+		dumpFile.close();
+    }
 }
 
 
@@ -73,6 +86,8 @@ void GameStateManager::onFrame(){
 }
 
 void GameStateManager::recordState(){
+	using namespace BWAPI;
+
 	int thisFrame = BWAPI::Broodwar->getFrameCount();
 
 	if ( gameStates.find(thisFrame) != gameStates.end() ){
@@ -82,8 +97,25 @@ void GameStateManager::recordState(){
 		);
 		return;
 	}
-	
+
 	Logging::getInstance()->log("Recording game state.");
 	gameStates.insert(make_pair(thisFrame, GameState()));
+
+	//dumps current state to file:
+	ofstream df;	//df stants for dump file
+	df.open(stateDumpFile.c_str(), ios::out | ios::app);
+	if (!df) {
+		Logging::getInstance()->log("Error opening dump file '%s'!", stateDumpFile.c_str());
+    }
+    else {
+		//map,enemy,frame,own-units,enemy-units,current-strat;
+		df  << Broodwar->mapFileName() << ","
+			<< Broodwar->enemy()->getName() << ","
+			<< Broodwar->getFrameCount() << ","
+			<< Broodwar->self()->getUnits().size() << ","
+			<< GameState::getSpottedEnemyUnits().size() << ","
+			<< MetaStrategyManager::getMetaStrategy()->getCurrentStrategyName() << "\n";
+		df.close();
+    }
 	
 }

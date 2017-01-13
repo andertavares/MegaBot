@@ -98,7 +98,7 @@ public:
     const std::string debugString() const
     {
         std::stringstream ss;
-        ss << moveString() << ": (" << (int)unit() << "," << (int)player() << "," << (int)type() << "," << (int)index() << ")  " << "(" << pos().x() << "," << pos().y()   << ")";
+        ss << moveString() << ": (" << (int)unit() << "," << (int)player() << "," << (int)type() << "," << (int)index() << ")  " << "(" << pos().x << "," << pos().y   << ")";
         return ss.str();
     }
 };

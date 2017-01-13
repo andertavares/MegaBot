@@ -54,7 +54,7 @@ void MapTools::setBWAPIMapData()
 			{
 				for (int j=0; j<4; ++j)
 				{
-					if (BWAPI::Broodwar->isWalkable(c*4 + i, r*4 + j))
+					if (BWAPI::Broodwar->isAccessible(c*4 + i, r*4 + j))
 					{
 						clear = true;
 						break;
@@ -86,7 +86,7 @@ void MapTools::update()
 	if (nextExp != BWAPI::TilePositions::None)
 	{
 		BWAPI::Position exp = BWAPI::Position(getNextExpansion());
-		if (Options::Debug::DRAW_NUSBOT_DEBUG) BWAPI::Broodwar->drawBoxMap(exp.x(), exp.y(), exp.x()+4*32, exp.y()+3*32, BWAPI::Colors::Green, true);
+		if (Options::Debug::DRAW_NUSBOT_DEBUG) BWAPI::Broodwar->drawBoxMap(exp.x, exp.y, exp.x+4*32, exp.y+3*32, BWAPI::Colors::Green, true);
 	}
 
 	// draws distance map to screen
@@ -96,7 +96,7 @@ void MapTools::update()
 		{
 			BWAPI::Position p(x*32, y*32);
 
-			if (Options::Debug::DRAW_NUSBOT_DEBUG) BWAPI::Broodwar->drawTextMap(p.x(), p.y(), "%d", getMyBaseDistance(p));
+			if (Options::Debug::DRAW_NUSBOT_DEBUG) BWAPI::Broodwar->drawTextMap(p.x, p.y, "%d", getMyBaseDistance(p));
 		}
 	}*/
 
@@ -111,8 +111,8 @@ void MapTools::update()
 				c = BWAPI::Colors::Green;
 			}
 
-			if (Options::Debug::DRAW_NUSBOT_DEBUG) BWAPI::Broodwar->drawCircleMap(unit->getPosition().x(), unit->getPosition().y(), 3, c);
-			//if (Options::Debug::DRAW_NUSBOT_DEBUG) BWAPI::Broodwar->drawTextMap(unit->getPosition().x(), unit->getPosition().y(), "%s", unit->getType().getName().c_str());
+			if (Options::Debug::DRAW_NUSBOT_DEBUG) BWAPI::Broodwar->drawCircleMap(unit->getPosition().x, unit->getPosition().y, 3, c);
+			//if (Options::Debug::DRAW_NUSBOT_DEBUG) BWAPI::Broodwar->drawTextMap(unit->getPosition().x, unit->getPosition().y, "%s", unit->getType().getName().c_str());
 		}
 	}
 
@@ -166,7 +166,7 @@ int MapTools::getGroundDistance(BWAPI::Position origin, BWAPI::Position destinat
 // computes walk distance from Position P to all other points on the map
 void MapTools::computeDistance(DistanceMap & dmap, const BWAPI::Position p)
 {
-	search(dmap, p.y() / 32, p.x() / 32);
+	search(dmap, p.y / 32, p.x / 32);
 }
 
 // does the dynamic programming search
@@ -310,8 +310,8 @@ BWAPI::TilePosition MapTools::getNextExpansion()
 			BWAPI::TilePosition tile = base->getTilePosition();
 
 			// the rectangle for this base location
-			int x1 = tile.x() * 32;
-			int y1 = tile.y() * 32;
+			int x1 = tile.x * 32;
+			int y1 = tile.y * 32;
 			int x2 = x1 + BWAPI::UnitTypes::Protoss_Nexus.tileWidth() * 32;
 			int y2 = y1 + BWAPI::UnitTypes::Protoss_Nexus.tileHeight() * 32;
 
@@ -376,7 +376,7 @@ void MapTools::parseMap()
 	for (int j=0; j<BWAPI::Broodwar->mapHeight()*4; j++) {
 		for (int i=0; i<BWAPI::Broodwar->mapWidth()*4; i++) {
 
-			if (BWAPI::Broodwar->isWalkable(i,j)) {
+			if (BWAPI::Broodwar->isAccessible(i,j)) {
 				mapFile << "0";
 			} else {
 				mapFile << "1";

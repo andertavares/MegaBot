@@ -37,7 +37,7 @@ namespace BWAPI
       int researchTime() const;
 
       /** Returns the amount of energy used each time this tech type is used. */
-      int energyUsed() const;
+      int energyCost() const;
 
       /** Returns the type of unit that researches this tech type. If this tech type is available for free
        * (does not need to be researched), then this method will return UnitTypes::None. */

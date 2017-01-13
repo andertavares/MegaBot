@@ -540,8 +540,8 @@ void WorkerData::drawDepotDebugInfo()
 {
 	BOOST_FOREACH(BWAPI::Unit * depot, depots)
 	{
-		int x = depot->getPosition().x() - 64;
-		int y = depot->getPosition().y() - 32;
+		int x = depot->getPosition().x - 64;
+		int y = depot->getPosition().y - 32;
 
 		if (Options::Debug::DRAW_NUSBOT_DEBUG) BWAPI::Broodwar->drawBoxMap(x-2, y-1, x+75, y+14, BWAPI::Colors::Black, true);
 		if (Options::Debug::DRAW_NUSBOT_DEBUG) BWAPI::Broodwar->drawTextMap(x, y, "\x04 Workers: %d", getNumAssignedWorkers(depot));
@@ -552,8 +552,8 @@ void WorkerData::drawDepotDebugInfo()
         {
             BWAPI::Unit * mineral = minerals[m];
 
-            int x = mineral->getPosition().x();
-		    int y = mineral->getPosition().y();
+            int x = mineral->getPosition().x;
+		    int y = mineral->getPosition().y;
 
             if (workersOnMineralPatch.find(mineral) != workersOnMineralPatch.end())
             {

@@ -656,8 +656,8 @@ GameState SearchExperiment::getSymmetricState( std::vector<std::string> & unitTy
         for (int u(0); u<numUnits[i]; ++u)
 	    {
             Position r((rand.nextInt() % (2*xLimit)) - xLimit, (rand.nextInt() % (2*yLimit)) - yLimit);
-            Position u1(mid.x() + r.x(), mid.y() + r.y());
-            Position u2(mid.x() - r.x(), mid.y() - r.y());
+            Position u1(mid.x + r.x, mid.y + r.y);
+            Position u2(mid.x - r.x, mid.y - r.y);
 
             state.addUnit(type, Players::Player_One, u1);
             state.addUnit(type, Players::Player_Two, u2);
@@ -686,8 +686,8 @@ void SearchExperiment::addSeparatedState(  std::vector<std::string> & unitTypes,
         for (int u(0); u<numUnits[i]; ++u)
 	    {
             Position r((rand.nextInt() % (2*xLimit)) - xLimit, (rand.nextInt() % (2*yLimit)) - yLimit);
-            Position u1(cx1 + r.x(), cy1 + r.y());
-            Position u2(cx2 - r.x(), cy2 - r.y());
+            Position u1(cx1 + r.x, cy1 + r.y);
+            Position u2(cx2 - r.x, cy2 - r.y);
 
             state.addUnit(type, Players::Player_One, u1);
             state.addUnit(type, Players::Player_Two, u2);
@@ -910,7 +910,7 @@ void SearchExperiment::printStateUnits(std::ofstream & results, GameState & stat
             Unit & unit(state.getUnit(p,u));
             Position pos(unit.currentPosition(state.getTime()));
                         
-            ss << " | " << unit.name() << " " << (int)unit.player() << " " << unit.currentHP() << " " << pos.x() << " " << pos.y();
+            ss << " | " << unit.name() << " " << (int)unit.player() << " " << unit.currentHP() << " " << pos.x << " " << pos.y;
         }
     }
     results << ss.str();

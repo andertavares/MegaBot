@@ -24,7 +24,7 @@ class Map
 
 	const Position getWalkPosition(const Position & pixelPosition) const
 	{
-		return Position(pixelPosition.x() / 8, pixelPosition.y() / 8);
+		return Position(pixelPosition.x / 8, pixelPosition.y / 8);
 	}
 
     void resetVectors()
@@ -66,7 +66,7 @@ public:
 		{
 			for (size_t y(0); y<_walkTileHeight; ++y)
 			{
-				setMapData(x, y, game->isWalkable(x, y));
+				setMapData(x, y, game->isAccessible(x, y));
 			}
 		}
 	}
@@ -101,21 +101,21 @@ public:
 		return _buildTileHeight;
 	}
 
-	const bool isWalkable(const SparCraft::Position & pixelPosition) const
+	const bool isAccessible(const SparCraft::Position & pixelPosition) const
 	{
 		const Position & wp(getWalkPosition(pixelPosition));
 
-		return	isWalkable(wp.x(), wp.y());
+		return	isAccessible(wp.x, wp.y);
 	}
     
     const bool isFlyable(const SparCraft::Position & pixelPosition) const
 	{
 		const Position & wp(getWalkPosition(pixelPosition));
 
-		return isFlyable(wp.x(), wp.y());
+		return isFlyable(wp.x, wp.y);
 	}
 
-	const bool isWalkable(const size_t & walkTileX, const size_t & walkTileY) const
+	const bool isAccessible(const size_t & walkTileX, const size_t & walkTileY) const
 	{
 		return	walkTileX >= 0 && walkTileX < (PositionType)getWalkTileWidth() && 
 				walkTileY >= 0 && walkTileY < (PositionType)getWalkTileHeight() &&
@@ -158,7 +158,7 @@ public:
 
 	const bool canBuildHere(BWAPI::TilePosition pos)
 	{
-		return _unitData[pos.x()][pos.y()] && _buildingData[pos.x()][pos.y()];
+		return _unitData[pos.x][pos.y] && _buildingData[pos.x][pos.y];
 	}
 
 	void setBuildingData(BWAPI::Game * game)
@@ -178,8 +178,8 @@ public:
 	{
 		if (unit->getType().isBuilding())
 		{
-			int tx = unit->getPosition().x() / TILE_SIZE;
-			int ty = unit->getPosition().y() / TILE_SIZE;
+			int tx = unit->getPosition().x / TILE_SIZE;
+			int ty = unit->getPosition().y / TILE_SIZE;
 			int sx = unit->getType().tileWidth(); 
 			int sy = unit->getType().tileHeight();
 			for(int x = tx; x < tx + sx && x < (int)getBuildTileWidth(); ++x)
@@ -192,10 +192,10 @@ public:
 		}
 		else
 		{
-			int startX = (unit->getPosition().x() - unit->getType().dimensionLeft()) / TILE_SIZE;
-			int endX   = (unit->getPosition().x() + unit->getType().dimensionRight() + TILE_SIZE - 1) / TILE_SIZE; // Division - round up
-			int startY = (unit->getPosition().y() - unit->getType().dimensionUp()) / TILE_SIZE;
-			int endY   = (unit->getPosition().y() + unit->getType().dimensionDown() + TILE_SIZE - 1) / TILE_SIZE;
+			int startX = (unit->getPosition().x - unit->getType().dimensionLeft()) / TILE_SIZE;
+			int endX   = (unit->getPosition().x + unit->getType().dimensionRight() + TILE_SIZE - 1) / TILE_SIZE; // Division - round up
+			int startY = (unit->getPosition().y - unit->getType().dimensionUp()) / TILE_SIZE;
+			int endY   = (unit->getPosition().y + unit->getType().dimensionDown() + TILE_SIZE - 1) / TILE_SIZE;
 			for (int x = startX; x < endX && x < (int)getBuildTileWidth(); ++x)
 			{
 				for (int y = startY; y < endY && y < (int)getBuildTileHeight(); ++y)
@@ -213,7 +213,7 @@ public:
 		{
 			for (size_t y(0); y<getWalkTileHeight(); ++y)
 			{
-				if (!isWalkable(x, y))
+				if (!isAccessible(x, y))
 				{
 					data[y*getWalkTileWidth() + x] = 0xffffffff;
 				}
@@ -236,7 +236,7 @@ public:
 		{
 			for (size_t x(0); x<getWalkTileWidth(); ++x)
 			{
-				fout << (isWalkable(x, y) ? 1 : 0);
+				fout << (isAccessible(x, y) ? 1 : 0);
 			}
 
 			fout << "\n";

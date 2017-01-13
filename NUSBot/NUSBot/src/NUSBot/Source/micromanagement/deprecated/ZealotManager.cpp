@@ -25,13 +25,13 @@ void ZealotManager::executeMicro(const UnitVector & targets, BWAPI::Position reg
 	// for each zealot
 	BOOST_FOREACH(BWAPI::Unit * zealot, zealots)
 	{
-		if (DRAW_UALBERTABOT_DEBUG) BWAPI::Broodwar->drawLineMap(zealot->getPosition().x(), zealot->getPosition().y(), 
-			zealot->getTargetPosition().x(), zealot->getTargetPosition().y(), BWAPI::Colors::White);
+		if (DRAW_UALBERTABOT_DEBUG) BWAPI::Broodwar->drawLineMap(zealot->getPosition().x, zealot->getPosition().y, 
+			zealot->getTargetPosition().x, zealot->getTargetPosition().y, BWAPI::Colors::White);
 
 		// regroup if we have to regroup and we're not near an enemy
 		if (order.type == order.Attack && regroup != BWAPI::Position(0,0))// && unitNearEnemy(zealot))
 		{
-			if (DRAW_UALBERTABOT_DEBUG) BWAPI::Broodwar->drawCircleMap(zealot->getPosition().x(), zealot->getPosition().y(), 3, BWAPI::Colors::Orange, true);
+			if (DRAW_UALBERTABOT_DEBUG) BWAPI::Broodwar->drawCircleMap(zealot->getPosition().x, zealot->getPosition().y, 3, BWAPI::Colors::Orange, true);
 
 			// if the zealot is outside the regroup area
 			if (zealot->getDistance(regroup) > 100)
@@ -85,7 +85,7 @@ BWAPI::Unit * ZealotManager::getTarget(BWAPI::Unit * zealot, UnitVector & target
 	{
 		int priority = getAttackPriority(unit);
 
-		if (DRAW_UALBERTABOT_DEBUG) BWAPI::Broodwar->drawTextMap(unit->getPosition().x(), unit->getPosition().y(), "%d", priority);
+		if (DRAW_UALBERTABOT_DEBUG) BWAPI::Broodwar->drawTextMap(unit->getPosition().x, unit->getPosition().y, "%d", priority);
 
 		int distance = zealot->getDistance(unit);
 

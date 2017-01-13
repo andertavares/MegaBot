@@ -216,10 +216,10 @@ void GameState::generateMoves(MoveArray & moves, const IDType & playerIndex) con
                 }
 
                 // the final destination position of the unit
-                Position dest = unit.pos() + Position(moveDistance*dir.x(), moveDistance*dir.y());
+                Position dest = unit.pos() + Position(moveDistance*dir.x, moveDistance*dir.y);
 
                 // if that poisition on the map is walkable
-                if (isWalkable(dest) || (unit.type().isFlyer() && isFlyable(dest)))
+                if (isAccessible(dest) || (unit.type().isFlyer() && isFlyable(dest)))
 				{
                     // add the move to the MoveArray
 					moves.add(UnitAction(unitIndex, playerIndex, UnitActionTypes::MOVE, d, dest));
@@ -354,11 +354,11 @@ Unit & GameState::getUnitByID(const IDType & player, const IDType & unitID)
 	return getUnit(0,0);
 }
 
-const bool GameState::isWalkable(const Position & pos) const
+const bool GameState::isAccessible(const Position & pos) const
 {
 	if (_map)
 	{
-		return _map->isWalkable(pos);
+		return _map->isAccessible(pos);
 	}
 
 	// if there is no map, then return true
@@ -834,10 +834,10 @@ void GameState::setMap(Map * map)
         {
             const Position & pos(getUnit(p, u).pos());
 
-            if (!isWalkable(pos))
+            if (!isAccessible(pos))
             {
                 std::stringstream ss;
-                ss << "Unit initial position on non-walkable map tile: " << getUnit(p, u).name() << " (" << pos.x() << "," << pos.y() << ")";
+                ss << "Unit initial position on non-walkable map tile: " << getUnit(p, u).name() << " (" << pos.x << "," << pos.y << ")";
                 System::FatalError(ss.str());
             }
         }
@@ -984,7 +984,7 @@ void GameState::print(int indent) const
 			const Unit & unit(getUnit(p, u));
 
 			TABS(indent);
-			fprintf(stderr, "  P%d %5d %5d    (%3d, %3d)     %s\n", unit.player(), unit.currentHP(), unit.firstTimeFree(), unit.x(), unit.y(), unit.name().c_str());
+			fprintf(stderr, "  P%d %5d %5d    (%3d, %3d)     %s\n", unit.player(), unit.currentHP(), unit.firstTimeFree(), unit.x, unit.y, unit.name().c_str());
 		}
 	}
 	fprintf(stderr, "\n\n");

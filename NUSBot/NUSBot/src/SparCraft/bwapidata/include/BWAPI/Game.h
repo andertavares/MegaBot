@@ -182,7 +182,7 @@ namespace BWAPI
        * coordinates (different from build tile coordinates). Note that this just uses the static map data.
        * You will also need to make sure no ground units are on the coresponding build tile to see if its
        * currently walkable. To do this, see unitsOnTile. */
-      virtual bool isWalkable(int walkX, int walkY) = 0;
+      virtual bool isAccessible(int walkX, int walkY) = 0;
 
       /** Returns the ground height of the given build tile. 0 = normal, 1 = high ground.  2 = very high ground. */
       virtual int  getGroundHeight(int tileX, int tileY) = 0;

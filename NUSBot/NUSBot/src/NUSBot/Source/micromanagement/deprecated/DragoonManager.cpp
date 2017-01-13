@@ -21,13 +21,13 @@ void DragoonManager::executeMicro(const UnitVector & targets, BWAPI::Position re
 	// for each zealot
 	BOOST_FOREACH(BWAPI::Unit * dragoon, dragoons)
 	{
-		if (DRAW_UALBERTABOT_DEBUG) BWAPI::Broodwar->drawLineMap(dragoon->getPosition().x(), dragoon->getPosition().y(), 
-			dragoon->getTargetPosition().x(), dragoon->getTargetPosition().y(), BWAPI::Colors::White);
+		if (DRAW_UALBERTABOT_DEBUG) BWAPI::Broodwar->drawLineMap(dragoon->getPosition().x, dragoon->getPosition().y, 
+			dragoon->getTargetPosition().x, dragoon->getTargetPosition().y, BWAPI::Colors::White);
 
 		// regroup if we have to regroup and we're not near an enemy
 		if (order.type == order.Attack && regroup != BWAPI::Position(0,0))// && !unitNearEnemy(dragoon))
 		{
-			if (DRAW_UALBERTABOT_DEBUG) BWAPI::Broodwar->drawCircleMap(dragoon->getPosition().x(), dragoon->getPosition().y(), 3, BWAPI::Colors::Orange, true);
+			if (DRAW_UALBERTABOT_DEBUG) BWAPI::Broodwar->drawCircleMap(dragoon->getPosition().x, dragoon->getPosition().y, 3, BWAPI::Colors::Orange, true);
 
 			// if the zealot is outside the regroup area
 			if (dragoon->getDistance(regroup) > 100)

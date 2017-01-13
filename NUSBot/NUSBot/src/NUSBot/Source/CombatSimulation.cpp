@@ -14,7 +14,7 @@ void CombatSimulation::setCombatUnits(const BWAPI::Position & center, const int 
 {
 	SparCraft::GameState s;
 
-	BWAPI::Broodwar->drawCircleMap(center.x(), center.y(), 10, BWAPI::Colors::Red, true);
+	BWAPI::Broodwar->drawCircleMap(center.x, center.y, 10, BWAPI::Colors::Red, true);
 
 	std::vector<BWAPI::Unit *> ourCombatUnits;
 	std::vector<UnitInfo> enemyCombatUnits;
@@ -157,7 +157,7 @@ void CombatSimulation::logState(const SparCraft::GameState & state)
 		{
 			const SparCraft::Unit & unit(state.getUnit(p, u));
 
-			log << "Unit " << u << ": " << unit.name() << " [HP=" << unit.currentHP() << ", X=" << unit.x() << ", Y=" << unit.y() << "]\n";
+			log << "Unit " << u << ": " << unit.name() << " [HP=" << unit.currentHP() << ", X=" << unit.x << ", Y=" << unit.y << "]\n";
 		}
 	}
 

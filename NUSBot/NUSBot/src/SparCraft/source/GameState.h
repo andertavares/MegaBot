@@ -106,7 +106,7 @@ public:
     // map-related functions
     void                    setMap(Map * map);
     Map *                   getMap()                                                                const;
-    const bool              isWalkable(const Position & pos)                                        const;
+    const bool              isAccessible(const Position & pos)                                        const;
     const bool              isFlyable(const Position & pos)                                         const;
 
     // hashing functions

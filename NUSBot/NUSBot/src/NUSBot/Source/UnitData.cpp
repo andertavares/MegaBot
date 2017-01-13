@@ -81,7 +81,7 @@ const bool UnitData::badUnitInfo(const UnitInfo & ui) const
 	}
 
 	// If the unit is a building and we can currently see its position and it is not there
-	if(ui.type.isBuilding() && BWAPI::Broodwar->isVisible(ui.lastPosition.x()/32, ui.lastPosition.y()/32) && !ui.unit->isVisible())
+	if(ui.type.isBuilding() && BWAPI::Broodwar->isVisible(ui.lastPosition.x/32, ui.lastPosition.y/32) && !ui.unit->isVisible())
 	{
 		return true;
 	}

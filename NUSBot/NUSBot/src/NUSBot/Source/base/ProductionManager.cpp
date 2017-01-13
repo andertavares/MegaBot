@@ -277,9 +277,9 @@ void ProductionManager::predictWorkerMovement(const Building & b)
 	}
 	
 	// draw a box where the building will be placed
-	int x1 = predictedTilePosition.x() * 32;
+	int x1 = predictedTilePosition.x * 32;
 	int x2 = x1 + (b.type.tileWidth()) * 32;
-	int y1 = predictedTilePosition.y() * 32;
+	int y1 = predictedTilePosition.y * 32;
 	int y2 = y1 + (b.type.tileHeight()) * 32;
 	if (Options::Debug::DRAW_NUSBOT_DEBUG) BWAPI::Broodwar->drawBoxMap(x1, y1, x2, y2, BWAPI::Colors::Blue, false);
 

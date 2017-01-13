@@ -50,8 +50,8 @@ void RangedManager::executeMicro(const UnitVector & targets)
 
 		if (Options::Debug::DRAW_NUSBOT_DEBUG) 
 		{
-			BWAPI::Broodwar->drawLineMap(rangedUnit->getPosition().x(), rangedUnit->getPosition().y(), 
-				rangedUnit->getTargetPosition().x(), rangedUnit->getTargetPosition().y(), Options::Debug::COLOR_LINE_TARGET);
+			BWAPI::Broodwar->drawLineMap(rangedUnit->getPosition().x, rangedUnit->getPosition().y, 
+				rangedUnit->getTargetPosition().x, rangedUnit->getTargetPosition().y, Options::Debug::COLOR_LINE_TARGET);
 		}
 	}
 }
@@ -91,7 +91,7 @@ void RangedManager::kiteTarget(BWAPI::Unit * rangedUnit, BWAPI::Unit * target)
 
 	if (rangedUnit->isSelected())
 	{
-		BWAPI::Broodwar->drawCircleMap(rangedUnit->getPosition().x(), rangedUnit->getPosition().y(), 
+		BWAPI::Broodwar->drawCircleMap(rangedUnit->getPosition().x, rangedUnit->getPosition().y, 
 			(int)range, BWAPI::Colors::Cyan);
 	}
 
@@ -100,8 +100,8 @@ void RangedManager::kiteTarget(BWAPI::Unit * rangedUnit, BWAPI::Unit * target)
 	{
 		BWAPI::Position fleePosition(rangedUnit->getPosition() - target->getPosition() + rangedUnit->getPosition());
 
-		BWAPI::Broodwar->drawLineMap(rangedUnit->getPosition().x(), rangedUnit->getPosition().y(), 
-			fleePosition.x(), fleePosition.y(), BWAPI::Colors::Cyan);
+		BWAPI::Broodwar->drawLineMap(rangedUnit->getPosition().x, rangedUnit->getPosition().y, 
+			fleePosition.x, fleePosition.y, BWAPI::Colors::Cyan);
 
 		smartMove(rangedUnit, fleePosition);
 	}

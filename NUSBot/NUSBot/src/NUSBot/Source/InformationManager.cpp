@@ -388,7 +388,7 @@ void InformationManager::getNearbyForce(std::vector<UnitInfo> & unitInfo, BWAPI:
 
 bool InformationManager::nearbyForceHasCloaked(BWAPI::Position p, BWAPI::Player * player, int radius) 
 {
-	if (Options::Debug::DRAW_NUSBOT_DEBUG) BWAPI::Broodwar->drawCircleMap(p.x(), p.y(), radius, BWAPI::Colors::Red);
+	if (Options::Debug::DRAW_NUSBOT_DEBUG) BWAPI::Broodwar->drawCircleMap(p.x, p.y, radius, BWAPI::Colors::Red);
 
 	FOR_EACH_UIMAP_CONST(iter, getUnitData(player).getUnits())
 	{

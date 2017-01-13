@@ -16,13 +16,13 @@ namespace BWAPI
   {
     public:
       TechTypeInternal() {valid = false;}
-      void set(const char* name, int mineralPrice, int gasPrice, int researchTime, int energyUsed, UnitType whatResearches, Race race, WeaponType weapon, UnitType whatUses1, UnitType whatUses2=UnitTypes::None, UnitType whatUses3=UnitTypes::None, UnitType whatUses4=UnitTypes::None, UnitType whatUses5=UnitTypes::None, UnitType whatUses6=UnitTypes::None)
+      void set(const char* name, int mineralPrice, int gasPrice, int researchTime, int energyCost, UnitType whatResearches, Race race, WeaponType weapon, UnitType whatUses1, UnitType whatUses2=UnitTypes::None, UnitType whatUses3=UnitTypes::None, UnitType whatUses4=UnitTypes::None, UnitType whatUses5=UnitTypes::None, UnitType whatUses6=UnitTypes::None)
       {
         this->name           = name;
         this->mineralPrice   = mineralPrice;
         this->gasPrice       = gasPrice;
         this->researchTime   = researchTime;
-        this->energyUsed     = energyUsed;
+        this->energyCost     = energyCost;
         this->whatResearches = whatResearches;
         this->race           = race;
         this->weapon         = weapon;
@@ -50,7 +50,7 @@ namespace BWAPI
       int mineralPrice;
       int gasPrice;
       int researchTime;
-      int energyUsed;
+      int energyCost;
       UnitType whatResearches;
       Race race;
       WeaponType weapon;
@@ -240,9 +240,9 @@ namespace BWAPI
   {
     return techTypeData[this->id].researchTime;
   }
-  int TechType::energyUsed() const
+  int TechType::energyCost() const
   {
-    return techTypeData[this->id].energyUsed;
+    return techTypeData[this->id].energyCost;
   }
   UnitType TechType::whatResearches() const
   {

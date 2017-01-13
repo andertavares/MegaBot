@@ -37,7 +37,7 @@ struct double2
 
 	double2() {}
 	double2(double x, double y) : x(x), y(y) {}
-	double2(const BWAPI::Position & p) : x(p.x()), y(p.y()) {}
+	double2(const BWAPI::Position & p) : x(p.x), y(p.y) {}
 
 	operator BWAPI::Position()				const { return BWAPI::Position(static_cast<int>(x),static_cast<int>(y)); }
 

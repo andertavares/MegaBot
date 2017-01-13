@@ -28,14 +28,14 @@ void SparCraftManager::update()
         // for each unit that we control, do some book keeping
         BOOST_FOREACH (BWAPI::Unit * unit, BWAPI::Broodwar->self()->getUnits())
         {
-            BWAPI::Broodwar->drawTextMap(unit->getPosition().x()-20, unit->getPosition().y()-12, "%d", unit->getID());
+            BWAPI::Broodwar->drawTextMap(unit->getPosition().x-20, unit->getPosition().y-12, "%d", unit->getID());
 
             // if it is a combat unit
             if (isCombatUnit(unit))
             {
                 if (Options::Debug::DRAW_NUSBOT_DEBUG && unit->getTarget())
                 {
-                    BWAPI::Broodwar->drawLineMap(unit->getPosition().x()-2, unit->getPosition().y()-2, 	unit->getTarget()->getPosition().x(), unit->getTarget()->getPosition().y(), BWAPI::Colors::White);
+                    BWAPI::Broodwar->drawLineMap(unit->getPosition().x-2, unit->getPosition().y-2, 	unit->getTarget()->getPosition().x, unit->getTarget()->getPosition().y, BWAPI::Colors::White);
                 }
             }
         }
@@ -116,22 +116,22 @@ void SparCraftManager::performSparCraft()
 
     BOOST_FOREACH(BWAPI::Unit * unit, BWAPI::Broodwar->enemy()->getUnits())
     {
-        BWAPI::Broodwar->drawTextMap(unit->getPosition().x(), unit->getPosition().y(), "%d", unit->getGroundWeaponCooldown());
+        BWAPI::Broodwar->drawTextMap(unit->getPosition().x, unit->getPosition().y, "%d", unit->getGroundWeaponCooldown());
     }
 
     // draw our units
     for (size_t u(0); u<currentState.numUnits(Search::Players::Player_One); ++u)
     {
         SparCraft::Unit & unit = currentState.getUnit(Search::Players::Player_One, u);
-        BWAPI::Broodwar->drawCircleMap(unit.x(), unit.y(), 5, BWAPI::Colors::Green);
-        BWAPI::Broodwar->drawCircleMap(unit.x(), unit.y(), unit.range(), BWAPI::Colors::Grey);
+        BWAPI::Broodwar->drawCircleMap(unit.x, unit.y, 5, BWAPI::Colors::Green);
+        BWAPI::Broodwar->drawCircleMap(unit.x, unit.y, unit.range(), BWAPI::Colors::Grey);
 
         std::pair<int, int> cooldown = getUnitCooldown(BWAPI::Broodwar->getUnit(unit.ID()), unit);
 
         BWAPI::Unit * realUnit = getUnit(unit);
 
-        BWAPI::Broodwar->drawTextMap(unit.x(), unit.y(), "%d (%d %d %d)", unit.ID(), cooldown.first-currentFrame, cooldown.second-currentFrame, BWAPI::Broodwar->getUnit(unit.ID())->getGroundWeaponCooldown());
-        BWAPI::Broodwar->drawLineMap(unit.x(), unit.y(), realUnit->getPosition().x(), realUnit->getPosition().y(), BWAPI::Colors::Purple);
+        BWAPI::Broodwar->drawTextMap(unit.x, unit.y, "%d (%d %d %d)", unit.ID(), cooldown.first-currentFrame, cooldown.second-currentFrame, BWAPI::Broodwar->getUnit(unit.ID())->getGroundWeaponCooldown());
+        BWAPI::Broodwar->drawLineMap(unit.x, unit.y, realUnit->getPosition().x, realUnit->getPosition().y, BWAPI::Colors::Purple);
     }
 
     // TODO: Check why zealots aren't being given commands
@@ -141,7 +141,7 @@ void SparCraftManager::performSparCraft()
     {
         SparCraft::Unit & unit = currentState.getUnit(Search::Players::Player_Two, u);
         drawUnitHP(BWAPI::Broodwar->getUnit(unit.ID()));
-        //BWAPI::Broodwar->drawCircleMap(unit.x(), unit.y(), 5, BWAPI::Colors::Red);
+        //BWAPI::Broodwar->drawCircleMap(unit.x, unit.y, 5, BWAPI::Colors::Red);
     }
 
     // draw our moves if we are the player to move
@@ -165,7 +165,7 @@ void SparCraftManager::performSparCraft()
 
             // the unit for which the move is to be performed
             SparCraft::Unit & unit = currentState.getUnit(Search::Players::Player_One, move.unit());
-            BWAPI::Broodwar->drawCircleMap(unit.x(), unit.y(), 5, BWAPI::Colors::Red);
+            BWAPI::Broodwar->drawCircleMap(unit.x, unit.y, 5, BWAPI::Colors::Red);
 
             // draw the move this unit should do
             drawUnitMove(currentState, unit, move);
@@ -186,7 +186,7 @@ void SparCraftManager::doUnitMove(SparCraft::GameState & currentState, SparCraft
 
     if (move._moveType == SparCraft::MoveTypes::ATTACK)
     {
-        BWAPI::Broodwar->drawTextMap(unit.x()+5, unit.y()+5, "A");
+        BWAPI::Broodwar->drawTextMap(unit.x+5, unit.y+5, "A");
 
         SparCraft::Unit & enemyUnit(currentState.getUnit(enemyPlayer, move._moveIndex));
 
@@ -194,12 +194,12 @@ void SparCraftManager::doUnitMove(SparCraft::GameState & currentState, SparCraft
     }
     else if (move._moveType == SparCraft::MoveTypes::MOVE)
     {
-        BWAPI::Broodwar->drawTextMap(unit.x()+5, unit.y()+5, "M");
+        BWAPI::Broodwar->drawTextMap(unit.x+5, unit.y+5, "M");
 
         SparCraft::Position pos(Search::Constants::Move_Dir[move._moveIndex][0], Search::Constants::Move_Dir[move._moveIndex][1]);
-        SparCraft::Position dest(unit.x() + (pos.x() * 4*Search::Constants::Move_Distance), unit.y() + (pos.y() * 4*Search::Constants::Move_Distance));
+        SparCraft::Position dest(unit.x + (pos.x * 4*Search::Constants::Move_Distance), unit.y + (pos.y * 4*Search::Constants::Move_Distance));
 
-        UnitCommandManager::Instance().smartMove(u, BWAPI::Position(dest.x(), dest.y()));
+        UnitCommandManager::Instance().smartMove(u, BWAPI::Position(dest.x, dest.y));
     }
     else if (move._moveType == SparCraft::MoveTypes::RELOAD)
     {
@@ -214,8 +214,8 @@ void SparCraftManager::drawAttackDebug()
 
     BOOST_FOREACH(BWAPI::Unit * unit, BWAPI::Broodwar->self()->getUnits())
     {
-        int x = unit->getPosition().x();
-        int y = unit->getPosition().y() + 9;
+        int x = unit->getPosition().x;
+        int y = unit->getPosition().y + 9;
 
         BWAPI::Broodwar->drawTextMap(x, y, "%s isAttacking", unit->isAttacking() ? trueFix : falseFix);
         BWAPI::Broodwar->drawTextMap(x, y+10, "%s isAttackFrame", unit->isAttackFrame() ? trueFix : falseFix);
@@ -231,14 +231,14 @@ void SparCraftManager::drawUnitMove(SparCraft::GameState & currentState, SparCra
     {
         SparCraft::Unit & enemyUnit(currentState.getUnit(enemyPlayer,move._moveIndex));
 
-        BWAPI::Broodwar->drawLineMap(unit.x(), unit.y(), enemyUnit.x(), enemyUnit.y(), BWAPI::Colors::Cyan);
+        BWAPI::Broodwar->drawLineMap(unit.x, unit.y, enemyUnit.x, enemyUnit.y, BWAPI::Colors::Cyan);
     }
     else if (move._moveType == SparCraft::MoveTypes::MOVE)
     {
         SparCraft::Position pos(Search::Constants::Move_Dir[move._moveIndex][0], Search::Constants::Move_Dir[move._moveIndex][1]);
-        SparCraft::Position dest(unit.x() + (pos.x() * 32), unit.y() + (pos.y() * 32));
+        SparCraft::Position dest(unit.x + (pos.x * 32), unit.y + (pos.y * 32));
 
-        BWAPI::Broodwar->drawLineMap(unit.x(), unit.y(), dest.x(), dest.y(), BWAPI::Colors::Yellow);
+        BWAPI::Broodwar->drawLineMap(unit.x, unit.y, dest.x, dest.y, BWAPI::Colors::Yellow);
     }
 }
 
@@ -254,8 +254,8 @@ void SparCraftManager::drawUnitCooldown(BWAPI::Unit * unit)
     int cw = w - (int)(w * percCooldown);
     int ch = h;
 
-    int x1 = unit->getPosition().x() - w/2;
-    int y1 = unit->getPosition().y() - 16;
+    int x1 = unit->getPosition().x - w/2;
+    int y1 = unit->getPosition().y - 16;
 
     BWAPI::Broodwar->drawBoxMap(x1, y1, x1 + w, y1 + h, BWAPI::Colors::Grey, true);
     BWAPI::Broodwar->drawBoxMap(x1, y1, x1 + cw, y1 + ch, BWAPI::Colors::Red, true);
@@ -273,8 +273,8 @@ void SparCraftManager::drawUnitHP(BWAPI::Unit * unit)
     int cw = (int)(w * percHP);
     int ch = h;
 
-    int x1 = unit->getPosition().x() - w/2;
-    int y1 = unit->getPosition().y() - 12;
+    int x1 = unit->getPosition().x - w/2;
+    int y1 = unit->getPosition().y - 12;
 
     BWAPI::Broodwar->drawBoxMap(x1, y1, x1 + w, y1 + h, BWAPI::Colors::Grey, true);
     BWAPI::Broodwar->drawBoxMap(x1, y1, x1 + cw, y1 + ch, BWAPI::Colors::Green, true);

@@ -252,8 +252,8 @@ const std::pair<int, int> CombatData::getUnitCooldown(BWAPI::Unit * unit, MicroS
 
 void CombatData::drawDebugPlate(BWAPI::Unit * unit, char * string)
 {
-	BWAPI::Broodwar->drawBoxMap(unit->getPosition().x()-15, unit->getPosition().y()-10, unit->getPosition().x() + 10, unit->getPosition().y(), BWAPI::Colors::Black, true);
-	BWAPI::Broodwar->drawTextMap(unit->getPosition().x()-15, unit->getPosition().y()-10, string);
+	BWAPI::Broodwar->drawBoxMap(unit->getPosition().x-15, unit->getPosition().y-10, unit->getPosition().x + 10, unit->getPosition().y, BWAPI::Colors::Black, true);
+	BWAPI::Broodwar->drawTextMap(unit->getPosition().x-15, unit->getPosition().y-10, string);
 }
 
 void CombatData::waitCommand(BWAPI::Unit * unit)

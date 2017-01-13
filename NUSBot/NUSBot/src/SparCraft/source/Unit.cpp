@@ -40,7 +40,7 @@ Unit::Unit(const BWAPI::UnitType unitType, const Position & pos, const IDType & 
 /*Unit::Unit(BWAPI::Unit * unit, BWAPI::Game * game, const IDType & playerID, const TimeType & gameTime)
     : _unitType             (unit->getType() == BWAPI::UnitTypes::Terran_Medic ? BWAPI::UnitTypes::Terran_Marine : unit->getType())
     , _range                (unit->getType().groundWeapon().maxRange() + 32)
-    , _position             (Position(unit->getPosition().x(), unit->getPosition().y()))
+    , _position             (Position(unit->getPosition().x, unit->getPosition().y))
     , _unitID               ((IDType)unit->getID())
     , _playerID             (playerID)
     , _currentHP            ((HealthType)(unit->getHitPoints() + unit->getShields()))
@@ -49,7 +49,7 @@ Unit::Unit(const BWAPI::UnitType unitType, const Position & pos, const IDType & 
     , _timeCanAttack        ((TimeType)(game->getFrameCount() + unit->getGroundWeaponCooldown() + unit->getAirWeaponCooldown()))
     , _previousActionTime   (gameTime)
     , _prevCurrentPosTime   (0)
-    , _previousPosition     (Position(unit->getPosition().x(), unit->getPosition().y()))
+    , _previousPosition     (Position(unit->getPosition().x, unit->getPosition().y))
 {
 }*/
 
@@ -259,7 +259,7 @@ void Unit::move(const UnitAction & move, const TimeType & gameTime)
     updateAttackActionTime(std::max(nextAttackActionTime(), nextMoveActionTime()));
 
     // update the position
-    //_position.addPosition(dist * dir.x(), dist * dir.y());
+    //_position.addPosition(dist * dir.x, dist * dir.y);
     _position.moveTo(move.pos());
 
     setPreviousAction(move, gameTime);
@@ -444,12 +444,12 @@ const Position & Unit::pos() const
 
 const PositionType Unit::x() const 
 { 
-    return _position.x(); 
+    return _position.x; 
 }
 
 const PositionType Unit::y() const 
 { 
-    return _position.y(); 
+    return _position.y; 
 }
 
 const PositionType Unit::range() const 
@@ -589,7 +589,7 @@ const HashType Unit::calculateHash(const size_t & hashNum, const TimeType & game
 {
     Position currentPos = currentPosition(gameTime);
 
-    return	  Hash::values[hashNum].positionHash(_playerID, currentPos.x(), currentPos.y()) 
+    return	  Hash::values[hashNum].positionHash(_playerID, currentPos.x, currentPos.y) 
             ^ Hash::values[hashNum].getAttackHash(_playerID, nextAttackActionTime() - gameTime) 
             ^ Hash::values[hashNum].getMoveHash(_playerID, nextMoveActionTime() - gameTime)
             ^ Hash::values[hashNum].getCurrentHPHash(_playerID, currentHP())
@@ -599,13 +599,13 @@ const HashType Unit::calculateHash(const size_t & hashNum, const TimeType & game
 // calculates the hash of this unit based on a given game time, and prints debug info
 void Unit::debugHash(const size_t & hashNum, const TimeType & gameTime) const
 {
-    std::cout << " Pos   " << Hash::values[hashNum].positionHash(_playerID, position().x(), position().y());
+    std::cout << " Pos   " << Hash::values[hashNum].positionHash(_playerID, position().x, position().y);
     std::cout << " Att   " << Hash::values[hashNum].getAttackHash(_playerID, nextAttackActionTime() - gameTime);
     std::cout << " Mov   " << Hash::values[hashNum].getMoveHash(_playerID, nextMoveActionTime() - gameTime);
     std::cout << " HP    " << Hash::values[hashNum].getCurrentHPHash(_playerID, currentHP());
     std::cout << " Typ   " << Hash::values[hashNum].getUnitTypeHash(_playerID, typeID()) << "\n";;
 
-    HashType hash = Hash::values[hashNum].positionHash(_playerID, position().x(), position().y()); std::cout << hash << "\n";
+    HashType hash = Hash::values[hashNum].positionHash(_playerID, position().x, position().y); std::cout << hash << "\n";
     hash ^= Hash::values[hashNum].getAttackHash(_playerID, nextAttackActionTime() - gameTime) ; std::cout << hash << "\n";
     hash ^= Hash::values[hashNum].getMoveHash(_playerID, nextMoveActionTime() - gameTime); std::cout << hash << "\n";
     hash ^= Hash::values[hashNum].getCurrentHPHash(_playerID, currentHP()); std::cout << hash << "\n";
@@ -620,13 +620,13 @@ const std::string Unit::debugString() const
     ss << "Unit ID:             " << (int)ID()                                      << "\n";
     ss << "Player:              " << (int)player()                                  << "\n";
     ss << "Range:               " << range()                                        << "\n";
-    ss << "Position:            " << "(" << _position.x() << "," << _position.y()   << ")\n";
+    ss << "Position:            " << "(" << _position.x << "," << _position.y   << ")\n";
     ss << "Current HP:          " << currentHP()                                    << "\n";
     ss << "Next Move Time:      " << nextMoveActionTime()                           << "\n";
     ss << "Next Attack Time:    " << nextAttackActionTime()                         << "\n";
     ss << "Previous Action:     " << previousAction().debugString()                 << "\n";
     ss << "Previous Pos Time:   " << _prevCurrentPosTime                            << "\n";
-    ss << "Previous Pos:        " << "(" << _prevCurrentPos.x() << "," << _prevCurrentPos.y()   << ")\n";
+    ss << "Previous Pos:        " << "(" << _prevCurrentPos.x << "," << _prevCurrentPos.y   << ")\n";
 
     return ss.str();
 }

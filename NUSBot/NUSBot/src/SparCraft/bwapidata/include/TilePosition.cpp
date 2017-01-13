@@ -27,27 +27,27 @@ namespace BWAPI
   }
   //---------------------------------------------- CONSTRUCTOR -----------------------------------------------
   TilePosition::TilePosition(const Position& position)
-      : _x(position.x() / TILE_SIZE)
-      , _y(position.y() / TILE_SIZE)
+      : _x(position.x / TILE_SIZE)
+      , _y(position.y / TILE_SIZE)
   {
   }
   //---------------------------------------------- OPERATOR == -----------------------------------------------
   bool TilePosition::operator == (const TilePosition& TilePosition) const
   {
-    return this->x() == TilePosition.x() &&
-           this->y() == TilePosition.y();
+    return this->x() == TilePosition.x &&
+           this->y() == TilePosition.y;
   }
   //---------------------------------------------- OPERATOR != -----------------------------------------------
   bool TilePosition::operator != (const TilePosition& TilePosition) const
   {
-    return this->x() != TilePosition.x() ||
-           this->y() != TilePosition.y();
+    return this->x() != TilePosition.x ||
+           this->y() != TilePosition.y;
   }
   //---------------------------------------------- OPERATOR < ------------------------------------------------
   bool TilePosition::operator < (const TilePosition& TilePosition) const
   {
-    return this->x() < TilePosition.x() ||
-           (this->x() == TilePosition.x() && this->y() < TilePosition.y());
+    return this->x() < TilePosition.x ||
+           (this->x() == TilePosition.x && this->y() < TilePosition.y);
   }
   //---------------------------------------------- IS VALID --------------------------------------------------
   bool TilePosition::isValid() const
@@ -57,12 +57,12 @@ namespace BWAPI
   //----------------------------------------------------------------------------------------------------------
   TilePosition TilePosition::operator+(const TilePosition& position) const
   {
-    return TilePosition(this->x() + position.x(), this->y() + position.y());
+    return TilePosition(this->x() + position.x, this->y() + position.y);
   }
   //----------------------------------------------------------------------------------------------------------
   TilePosition TilePosition::operator-(const TilePosition& position) const
   {
-    return TilePosition(this->x() - position.x(), this->y() - position.y());
+    return TilePosition(this->x() - position.x, this->y() - position.y);
   }
   //-------------------------------------------- MAKE VALID --------------------------------------------------
   TilePosition& TilePosition::makeValid()
@@ -80,15 +80,15 @@ namespace BWAPI
   //----------------------------------------------------------------------------------------------------------
   TilePosition& TilePosition::operator+=(const TilePosition& position)
   {
-    this->x() += position.x();
-    this->y() += position.y();
+    this->x() += position.x;
+    this->y() += position.y;
     return *this;
   }
   //----------------------------------------------------------------------------------------------------------
   TilePosition& TilePosition::operator-=(const TilePosition& position)
   {
-    this->x() -= position.x();
-    this->y() -= position.y();
+    this->x() -= position.x;
+    this->y() -= position.y;
     return *this;
   }
   //----------------------------------------------------------------------------------------------------------

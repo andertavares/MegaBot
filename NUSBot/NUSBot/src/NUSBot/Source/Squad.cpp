@@ -28,7 +28,7 @@ void Squad::update()
 		BWAPI::Unit * closest = unitClosestToEnemy();
 		if (closest && (BWAPI::Broodwar->getFrameCount() % 24 == 0))
 		{
-			//BWAPI::Broodwar->setScreenPosition(closest->getPosition().x() - 320, closest->getPosition().y() - 200);
+			//BWAPI::Broodwar->setScreenPosition(closest->getPosition().x - 320, closest->getPosition().y - 200);
 		}
 	}
 
@@ -40,7 +40,7 @@ void Squad::update()
 		const BWAPI::Position regroupPosition(calcRegroupPosition());
 		BWAPI::Broodwar->drawTextScreen(200, 150, "REGROUP");
 
-		BWAPI::Broodwar->drawCircleMap(regroupPosition.x(), regroupPosition.y(), 30, BWAPI::Colors::Purple, true);
+		BWAPI::Broodwar->drawCircleMap(regroupPosition.x, regroupPosition.y, 30, BWAPI::Colors::Purple, true);
 
 		meleeManager.regroup(regroupPosition);
 		rangedManager.regroup(regroupPosition);
@@ -89,8 +89,8 @@ void Squad::setNearEnemyUnits()
 	nearEnemy.clear();
 	BOOST_FOREACH(BWAPI::Unit * unit, units)
 	{
-		int x = unit->getPosition().x();
-		int y = unit->getPosition().y();
+		int x = unit->getPosition().x;
+		int y = unit->getPosition().y;
 
 		int left = unit->getType().dimensionLeft();
 		int right = unit->getType().dimensionRight();
@@ -236,7 +236,7 @@ BWAPI::Position Squad::calcCenter()
 	{
 		accum += unit->getPosition();
 	}
-	return BWAPI::Position(accum.x() / units.size(), accum.y() / units.size());
+	return BWAPI::Position(accum.x / units.size(), accum.y / units.size());
 }
 
 BWAPI::Position Squad::calcRegroupPosition()

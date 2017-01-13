@@ -114,7 +114,7 @@ void WorkerManager::handleCombatWorkers()
 	{
 		if (workerData.getWorkerJob(worker) == WorkerData::Combat)
 		{
-			BWAPI::Broodwar->drawCircleMap(worker->getPosition().x(), worker->getPosition().y(), 4, BWAPI::Colors::Yellow, true);
+			BWAPI::Broodwar->drawCircleMap(worker->getPosition().x, worker->getPosition().y, 4, BWAPI::Colors::Yellow, true);
 			BWAPI::Unit * target = getClosestEnemyUnit(worker);
 
 			if (target)
@@ -590,14 +590,14 @@ void WorkerManager::drawResourceDebugInfo() {
 
 		BWAPI::Position pos = worker->getTargetPosition();
 
-		if (Options::Debug::DRAW_NUSBOT_DEBUG) BWAPI::Broodwar->drawTextMap(worker->getPosition().x(), worker->getPosition().y() - 5, "\x07%c", job);
+		if (Options::Debug::DRAW_NUSBOT_DEBUG) BWAPI::Broodwar->drawTextMap(worker->getPosition().x, worker->getPosition().y - 5, "\x07%c", job);
 
-		if (Options::Debug::DRAW_NUSBOT_DEBUG) BWAPI::Broodwar->drawLineMap(worker->getPosition().x(), worker->getPosition().y(), pos.x(), pos.y(), BWAPI::Colors::Cyan);
+		if (Options::Debug::DRAW_NUSBOT_DEBUG) BWAPI::Broodwar->drawLineMap(worker->getPosition().x, worker->getPosition().y, pos.x, pos.y, BWAPI::Colors::Cyan);
 
 		BWAPI::Unit * depot = workerData.getWorkerDepot(worker);
 		if (depot)
 		{
-			if (Options::Debug::DRAW_NUSBOT_DEBUG) BWAPI::Broodwar->drawLineMap(worker->getPosition().x(), worker->getPosition().y(), depot->getPosition().x(), depot->getPosition().y(), BWAPI::Colors::Orange);
+			if (Options::Debug::DRAW_NUSBOT_DEBUG) BWAPI::Broodwar->drawLineMap(worker->getPosition().x, worker->getPosition().y, depot->getPosition().x, depot->getPosition().y, BWAPI::Colors::Orange);
 		}
 	}
 }

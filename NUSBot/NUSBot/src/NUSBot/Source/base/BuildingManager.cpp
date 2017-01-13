@@ -384,7 +384,7 @@ bool BuildingManager::isBuildingPositionExplored(const Building & b) const
 	{
 		for (int y=0; y<b.type.tileHeight(); ++y)
 		{
-			if (!BWAPI::Broodwar->isExplored(tile.x() + x, tile.y() + y))
+			if (!BWAPI::Broodwar->isExplored(tile.x + x, tile.y + y))
 			{
 				return false;
 			}
@@ -413,7 +413,7 @@ void BuildingManager::drawBuildingInformation(int x, int y) {
 
 	BOOST_FOREACH (BWAPI::Unit * unit, BWAPI::Broodwar->self()->getUnits())
 	{
-		if (Options::Debug::DRAW_NUSBOT_DEBUG) BWAPI::Broodwar->drawTextMap(unit->getPosition().x(), unit->getPosition().y()+5, "\x07%d", unit->getID()); 
+		if (Options::Debug::DRAW_NUSBOT_DEBUG) BWAPI::Broodwar->drawTextMap(unit->getPosition().x, unit->getPosition().y+5, "\x07%d", unit->getID()); 
 	}
 
 	if (Options::Debug::DRAW_NUSBOT_DEBUG) BWAPI::Broodwar->drawTextScreen(x, y, "\x04 Building Information:");
@@ -437,14 +437,14 @@ void BuildingManager::drawBuildingInformation(int x, int y) {
 		Building & b = buildingData.getNextBuilding(ConstructionData::Assigned);
 
 		if (Options::Debug::DRAW_NUSBOT_DEBUG) BWAPI::Broodwar->drawTextScreen(x, y+40+((yspace)*10), "\x03 %s %d", b.type.getName().c_str(), b.builderUnit->getID());
-		if (Options::Debug::DRAW_NUSBOT_DEBUG) BWAPI::Broodwar->drawTextScreen(x+150, y+40+((yspace++)*10), "\x03 A %c (%d,%d)", getBuildingWorkerCode(b), b.finalPosition.x(), b.finalPosition.y());
+		if (Options::Debug::DRAW_NUSBOT_DEBUG) BWAPI::Broodwar->drawTextScreen(x+150, y+40+((yspace++)*10), "\x03 A %c (%d,%d)", getBuildingWorkerCode(b), b.finalPosition.x, b.finalPosition.y);
 
-		int x1 = b.finalPosition.x()*32;
-		int y1 = b.finalPosition.y()*32;
-		int x2 = (b.finalPosition.x() + b.type.tileWidth())*32;
-		int y2 = (b.finalPosition.y() + b.type.tileHeight())*32;
+		int x1 = b.finalPosition.x*32;
+		int y1 = b.finalPosition.y*32;
+		int x2 = (b.finalPosition.x + b.type.tileWidth())*32;
+		int y2 = (b.finalPosition.y + b.type.tileHeight())*32;
 
-		if (Options::Debug::DRAW_NUSBOT_DEBUG) BWAPI::Broodwar->drawLineMap(b.builderUnit->getPosition().x(), b.builderUnit->getPosition().y(), (x1+x2)/2, (y1+y2)/2, BWAPI::Colors::Orange);
+		if (Options::Debug::DRAW_NUSBOT_DEBUG) BWAPI::Broodwar->drawLineMap(b.builderUnit->getPosition().x, b.builderUnit->getPosition().y, (x1+x2)/2, (y1+y2)/2, BWAPI::Colors::Orange);
 		if (Options::Debug::DRAW_NUSBOT_DEBUG) BWAPI::Broodwar->drawBoxMap(x1, y1, x2, y2, BWAPI::Colors::Red, false);
 	}
 

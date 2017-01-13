@@ -176,8 +176,8 @@ public:
 
 	void mouseEvent(BWAPI::MouseButton m)
 	{
-		int mouseMapX = BWAPI::Broodwar->getMousePosition().x() + BWAPI::Broodwar->getScreenPosition().x();
-		int mouseMapY = BWAPI::Broodwar->getMousePosition().y() + BWAPI::Broodwar->getScreenPosition().y();
+		int mouseMapX = BWAPI::Broodwar->getMousePosition().x + BWAPI::Broodwar->getScreenPosition().x;
+		int mouseMapY = BWAPI::Broodwar->getMousePosition().y + BWAPI::Broodwar->getScreenPosition().y;
 
 		if (m == BWAPI::M_RIGHT)
 		{
@@ -262,11 +262,11 @@ public:
 			xx = x + (col%cols) * 22;
 			yy = y + (col/cols) * 26;
 
-			BWAPI::Broodwar->drawCircleMap(unit->getPosition().x(), unit->getPosition().y(), unit->getType().dimensionLeft(), BWAPI::Colors::Green, false);
+			BWAPI::Broodwar->drawCircleMap(unit->getPosition().x, unit->getPosition().y, unit->getType().dimensionLeft(), BWAPI::Colors::Green, false);
 			
 			if (unit->getType().isBuilding())
 			{
-				BWAPI::Broodwar->drawLineMap(unit->getPosition().x(), unit->getPosition().y(), unit->getRallyPosition().x(), unit->getRallyPosition().y(), BWAPI::Colors::White);
+				BWAPI::Broodwar->drawLineMap(unit->getPosition().x, unit->getPosition().y, unit->getRallyPosition().x, unit->getRallyPosition().y, BWAPI::Colors::White);
 			}
 
 			

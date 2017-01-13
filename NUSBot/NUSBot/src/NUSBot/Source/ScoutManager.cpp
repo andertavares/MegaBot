@@ -81,8 +81,8 @@ void ScoutManager::moveScouts()
 				{
 					// move to the enemy region
 					smartMove(workerScout, enemyBaseLocation->getPosition());
-					BWAPI::Broodwar->drawLineMap(workerScout->getPosition().x(), workerScout->getPosition().y(), 
-						enemyBaseLocation->getPosition().x(), enemyBaseLocation->getPosition().y(),
+					BWAPI::Broodwar->drawLineMap(workerScout->getPosition().x, workerScout->getPosition().y, 
+						enemyBaseLocation->getPosition().x, enemyBaseLocation->getPosition().y,
 						BWAPI::Colors::Yellow);
 				}
 				
@@ -91,11 +91,11 @@ void ScoutManager::moveScouts()
 			else
 			{
 				BWAPI::Position fleeTo = calcFleePosition(groundThreats, NULL);
-				if (Options::Debug::DRAW_NUSBOT_DEBUG) BWAPI::Broodwar->drawCircleMap(fleeTo.x(), fleeTo.y(), 10, BWAPI::Colors::Red);
+				if (Options::Debug::DRAW_NUSBOT_DEBUG) BWAPI::Broodwar->drawCircleMap(fleeTo.x, fleeTo.y, 10, BWAPI::Colors::Red);
 
 				BOOST_FOREACH (BWAPI::Unit * unit, BWAPI::Broodwar->getUnitsInRadius(fleeTo, 10))
 				{
-					if (Options::Debug::DRAW_NUSBOT_DEBUG) BWAPI::Broodwar->drawCircleMap(unit->getPosition().x(), unit->getPosition().y(), 5, BWAPI::Colors::Cyan, true);
+					if (Options::Debug::DRAW_NUSBOT_DEBUG) BWAPI::Broodwar->drawCircleMap(unit->getPosition().x, unit->getPosition().y, 5, BWAPI::Colors::Cyan, true);
 				}
 
 				smartMove(workerScout, fleeTo);
@@ -178,7 +178,7 @@ BWAPI::Position ScoutManager::calcFleePosition(const std::vector<GroundThreat> &
 		// draw the debug vector
 		//if (drawDebugVectors) 
 		//{
-			if (Options::Debug::DRAW_NUSBOT_DEBUG) BWAPI::Broodwar->drawLineMap(workerScout->getPosition().x(), workerScout->getPosition().y(), test.x(), test.y(), BWAPI::Colors::Cyan);
+			if (Options::Debug::DRAW_NUSBOT_DEBUG) BWAPI::Broodwar->drawLineMap(workerScout->getPosition().x, workerScout->getPosition().y, test.x, test.y, BWAPI::Colors::Cyan);
 		//}
 
 		// if the position is able to be walked on, break out of the loop
@@ -200,7 +200,7 @@ BWAPI::Position ScoutManager::calcFleePosition(const std::vector<GroundThreat> &
 	BWAPI::Position fleeTo(workerScout->getPosition() + newFleeVector * 24);
 	
 	
-	if (Options::Debug::DRAW_NUSBOT_DEBUG) BWAPI::Broodwar->drawLineMap(workerScout->getPosition().x(), workerScout->getPosition().y(), fleeTo.x(), fleeTo.y(), BWAPI::Colors::Orange);
+	if (Options::Debug::DRAW_NUSBOT_DEBUG) BWAPI::Broodwar->drawLineMap(workerScout->getPosition().x, workerScout->getPosition().y, fleeTo.x, fleeTo.y, BWAPI::Colors::Orange);
 	
 
 	return fleeTo;
@@ -246,10 +246,10 @@ bool ScoutManager::isValidFleePosition(BWAPI::Position pos)
 {
 
 	// get x and y from the position
-	int x(pos.x()), y(pos.y());
+	int x(pos.x), y(pos.y);
 
 	// walkable tiles exist every 8 pixels
-	bool good = BWAPI::Broodwar->isWalkable(x/8, y/8);
+	bool good = BWAPI::Broodwar->isAccessible(x/8, y/8);
 	
 	// if it's not walkable throw it out
 	if (!good) return false;
@@ -270,7 +270,7 @@ bool ScoutManager::isValidFleePosition(BWAPI::Position pos)
 	BWTA::BaseLocation * enemyLocation = InformationManager::Instance().getMainBaseLocation(BWAPI::Broodwar->enemy());
 
 	BWAPI::Unit * geyser = getEnemyGeyser();
-	if (Options::Debug::DRAW_NUSBOT_DEBUG) BWAPI::Broodwar->drawCircleMap(geyser->getPosition().x(), geyser->getPosition().y(), geyserDist, BWAPI::Colors::Red);
+	if (Options::Debug::DRAW_NUSBOT_DEBUG) BWAPI::Broodwar->drawCircleMap(geyser->getPosition().x, geyser->getPosition().y, geyserDist, BWAPI::Colors::Red);
 
 	if (geyser->getDistance(pos) < geyserDist)
 	{
@@ -308,7 +308,7 @@ void ScoutManager::fillGroundThreats(std::vector<GroundThreat> & threats, BWAPI:
 	{
 		// if they're not within the radius of caring, who cares?
 		const BWAPI::Position delta(e->getPosition() - target);
-		if(delta.x() * delta.x() + delta.y() * delta.y() > radiusSq)
+		if(delta.x * delta.x + delta.y * delta.y > radiusSq)
 		{
 			continue;
 		}
@@ -405,7 +405,7 @@ bool ScoutManager::immediateThreat()
 		if (unit->getType().isWorker() && unit->isAttacking())
 		{
 			enemyAttackingWorkers.push_back(unit);
-			if (Options::Debug::DRAW_NUSBOT_DEBUG) BWAPI::Broodwar->drawCircleMap(unit->getPosition().x(), unit->getPosition().y(), 5, BWAPI::Colors::Yellow);
+			if (Options::Debug::DRAW_NUSBOT_DEBUG) BWAPI::Broodwar->drawCircleMap(unit->getPosition().x, unit->getPosition().y, 5, BWAPI::Colors::Yellow);
 		}
 	}
 	

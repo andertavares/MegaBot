@@ -17,7 +17,7 @@ BWAPI::Position MicroManager::calcCenter() const
 	{
 		accum += unit->getPosition();
 	}
-	return BWAPI::Position(accum.x() / units.size(), accum.y() / units.size());
+	return BWAPI::Position(accum.x / units.size(), accum.y / units.size());
 }
 
 void MicroManager::execute(const SquadOrder & inputOrder)
@@ -103,7 +103,7 @@ void MicroManager::regroup(const BWAPI::Position & regroupPosition) const
 		if (unit->getDistance(regroupPosition) > 100)
 		{
 			// regroup it
-			BWAPI::Broodwar->drawCircleMap(unit->getPosition().x(), unit->getPosition().y(), 20, BWAPI::Colors::Yellow);
+			BWAPI::Broodwar->drawCircleMap(unit->getPosition().x, unit->getPosition().y, 20, BWAPI::Colors::Yellow);
 			smartMove(unit, regroupPosition);
 		}
 		else
@@ -131,10 +131,10 @@ bool MicroManager::unitNearEnemy(BWAPI::Unit * unit)
 bool MicroManager::checkPositionWalkable(BWAPI::Position pos) {
 
 	// get x and y from the position
-	int x(pos.x()), y(pos.y());
+	int x(pos.x), y(pos.y);
 
 	// walkable tiles exist every 8 pixels
-	bool good = BWAPI::Broodwar->isWalkable(x/8, y/8);
+	bool good = BWAPI::Broodwar->isAccessible(x/8, y/8);
 	
 	// if it's not walkable throw it out
 	if (!good) return false;
@@ -177,8 +177,8 @@ void MicroManager::smartAttackUnit(BWAPI::Unit * attacker, BWAPI::Unit * target)
 	// if nothing prevents it, attack the target
 	attacker->attack(target);
 
-	if (Options::Debug::DRAW_NUSBOT_DEBUG) BWAPI::Broodwar->drawLineMap(	attacker->getPosition().x(), attacker->getPosition().y(),
-									target->getPosition().x(), target->getPosition().y(),
+	if (Options::Debug::DRAW_NUSBOT_DEBUG) BWAPI::Broodwar->drawLineMap(	attacker->getPosition().x, attacker->getPosition().y,
+									target->getPosition().x, target->getPosition().y,
 									BWAPI::Colors::Red );
 
 }
@@ -205,8 +205,8 @@ void MicroManager::smartAttackMove(BWAPI::Unit * attacker, BWAPI::Position targe
 	// if nothing prevents it, attack the target
 	attacker->attack(targetPosition);
 
-	if (Options::Debug::DRAW_NUSBOT_DEBUG) BWAPI::Broodwar->drawLineMap(	attacker->getPosition().x(), attacker->getPosition().y(),
-									targetPosition.x(), targetPosition.y(),
+	if (Options::Debug::DRAW_NUSBOT_DEBUG) BWAPI::Broodwar->drawLineMap(	attacker->getPosition().x, attacker->getPosition().y,
+									targetPosition.x, targetPosition.y,
 									BWAPI::Colors::Orange );
 }
 
@@ -235,7 +235,7 @@ void MicroManager::smartMove(BWAPI::Unit * attacker, BWAPI::Position targetPosit
 	{
 		if (attacker->isSelected())
 		{
-			BWAPI::Broodwar->printf("Previous Command Frame=%d Pos=(%d, %d)", attacker->getLastCommandFrame(), currentCommand.getTargetPosition().x(), currentCommand.getTargetPosition().y());
+			BWAPI::Broodwar->printf("Previous Command Frame=%d Pos=(%d, %d)", attacker->getLastCommandFrame(), currentCommand.getTargetPosition().x, currentCommand.getTargetPosition().y);
 		}
 		return;
 	}
@@ -245,8 +245,8 @@ void MicroManager::smartMove(BWAPI::Unit * attacker, BWAPI::Position targetPosit
 
 	if (Options::Debug::DRAW_NUSBOT_DEBUG) 
 	{
-		BWAPI::Broodwar->drawLineMap(attacker->getPosition().x(), attacker->getPosition().y(),
-									 targetPosition.x(), targetPosition.y(), BWAPI::Colors::Orange);
+		BWAPI::Broodwar->drawLineMap(attacker->getPosition().x, attacker->getPosition().y,
+									 targetPosition.x, targetPosition.y, BWAPI::Colors::Orange);
 	}
 }
 
@@ -278,6 +278,6 @@ bool MicroManager::unitNearChokepoint(BWAPI::Unit * unit) const
 void MicroManager::drawOrderText() {
 
 	BOOST_FOREACH (BWAPI::Unit * unit, units) {
-		if (Options::Debug::DRAW_NUSBOT_DEBUG) BWAPI::Broodwar->drawTextMap(unit->getPosition().x(), unit->getPosition().y(), "%s", order.getStatus().c_str());
+		if (Options::Debug::DRAW_NUSBOT_DEBUG) BWAPI::Broodwar->drawTextMap(unit->getPosition().x, unit->getPosition().y, "%s", order.getStatus().c_str());
 	}
 }

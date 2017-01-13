@@ -454,18 +454,18 @@ void Display::RenderInformation()
 						const Position			pos(1000+170*p, 40+barHeight*u);
 						const BWAPI::UnitType	type(unit.type());
 				
-						const int				x0(pos.x());
-						const int				x1(pos.x() + 150);
-						const int				y0(pos.y());
-						const int				y1(pos.y() + 15);
+						const int				x0(pos.x);
+						const int				x1(pos.x + 150);
+						const int				y0(pos.y);
+						const int				y1(pos.y + 15);
 				
 						// draw the unit HP box
 						double	percHP = (double)unit.currentHP() / (double)unit.maxHP();
 						int		w = 150;
 						int		h = barHeight;
 						int		cw = (int)(w * percHP);
-						int		xx = pos.x() - w/2;
-						int		yy = pos.y() - h - (y1-y0)/2;
+						int		xx = pos.x - w/2;
+						int		yy = pos.y - h - (y1-y0)/2;
 
 						if (unit.isAlive())
 						{
@@ -583,19 +583,19 @@ void Display::RenderUnit(const Unit & unit)
 
 	const Position			pos(unit.currentPosition(state.getTime()));
 	const BWAPI::UnitType	type(unit.type());
-	const int				tx(textureSizes[type.getID()].x()/2);
-	const int				ty(textureSizes[type.getID()].y()/2);
+	const int				tx(textureSizes[type.getID()].x/2);
+	const int				ty(textureSizes[type.getID()].y/2);
 				
 	// unit box will be a square due to having square textures
-	const int				x0(pos.x() - type.dimensionUp());
-	const int				x1(pos.x() + type.dimensionDown());
-	const int				y0(pos.y() - type.dimensionUp());
-	const int				y1(pos.y() + type.dimensionDown());
+	const int				x0(pos.x - type.dimensionUp());
+	const int				x1(pos.x + type.dimensionDown());
+	const int				y0(pos.y - type.dimensionUp());
+	const int				y1(pos.y + type.dimensionDown());
 
-	const int				tx0(pos.x() - tx);
-	const int				tx1(pos.x() + tx);
-	const int				ty0(pos.y() - ty);
-	const int				ty1(pos.y() + ty);
+	const int				tx0(pos.x - tx);
+	const int				tx1(pos.x + tx);
+	const int				ty0(pos.y - ty);
+	const int				ty1(pos.y + ty);
 
 
 	// if the unit can move right now draw its move
@@ -607,8 +607,8 @@ void Display::RenderUnit(const Unit & unit)
 		{
 			glColor4f(1, 1, 1, 0.75);
 			glBegin(GL_LINES);
-				glVertex2i(pos.x(), pos.y());
-				glVertex2i(unit.pos().x(), unit.pos().y());
+				glVertex2i(pos.x, pos.y);
+				glVertex2i(unit.pos().x, unit.pos().y);
 			glEnd( );
 		}
 		else if (move.type() == UnitActionTypes::ATTACK)
@@ -618,16 +618,16 @@ void Display::RenderUnit(const Unit & unit)
 
 			glColor4f(factionColors[unit.player()].x, factionColors[unit.player()].y, factionColors[unit.player()].z, 0.75);
 			glBegin(GL_LINES);
-				glVertex2i(pos.x(), pos.y());
-				glVertex2i(targetPos.x(), targetPos.y());
+				glVertex2i(pos.x, pos.y);
+				glVertex2i(targetPos.x, targetPos.y);
 			glEnd( );
 
 			/*glColor4f(1.0, 0.0, 0.0, 0.25);
 			glBegin(GL_QUADS);
-				glVertex2i(targetPos.x()-type.dimensionUp(),targetPos.y()-type.dimensionUp());
-				glVertex2i(targetPos.x()-type.dimensionUp(),targetPos.y()+type.dimensionUp());
-				glVertex2i(targetPos.x()+type.dimensionUp(),targetPos.y()+type.dimensionUp());
-				glVertex2i(targetPos.x()+type.dimensionUp(),targetPos.y()-type.dimensionUp());
+				glVertex2i(targetPos.x-type.dimensionUp(),targetPos.y-type.dimensionUp());
+				glVertex2i(targetPos.x-type.dimensionUp(),targetPos.y+type.dimensionUp());
+				glVertex2i(targetPos.x+type.dimensionUp(),targetPos.y+type.dimensionUp());
+				glVertex2i(targetPos.x+type.dimensionUp(),targetPos.y-type.dimensionUp());
 			glEnd();*/
 		}
 		else if (move.type() == UnitActionTypes::HEAL)
@@ -637,16 +637,16 @@ void Display::RenderUnit(const Unit & unit)
 
 			glColor4f(factionColors[unit.player()].x, factionColors[unit.player()].y, factionColors[unit.player()].z, 0.75);
 			glBegin(GL_LINES);
-				glVertex2i(pos.x(), pos.y());
-				glVertex2i(targetPos.x(), targetPos.y());
+				glVertex2i(pos.x, pos.y);
+				glVertex2i(targetPos.x, targetPos.y);
 			glEnd( );
 
 			/*glColor4f(0.0, 1.0, 0.0, 0.25);
 			glBegin(GL_QUADS);
-				glVertex2i(targetPos.x()-type.dimensionUp(),targetPos.y()-type.dimensionUp());
-				glVertex2i(targetPos.x()-type.dimensionUp(),targetPos.y()+type.dimensionUp());
-				glVertex2i(targetPos.x()+type.dimensionUp(),targetPos.y()+type.dimensionUp());
-				glVertex2i(targetPos.x()+type.dimensionUp(),targetPos.y()-type.dimensionUp());
+				glVertex2i(targetPos.x-type.dimensionUp(),targetPos.y-type.dimensionUp());
+				glVertex2i(targetPos.x-type.dimensionUp(),targetPos.y+type.dimensionUp());
+				glVertex2i(targetPos.x+type.dimensionUp(),targetPos.y+type.dimensionUp());
+				glVertex2i(targetPos.x+type.dimensionUp(),targetPos.y-type.dimensionUp());
 			glEnd();*/
 		}
 	}
@@ -671,8 +671,8 @@ void Display::RenderUnit(const Unit & unit)
 	// draw the unit HP box
 	double	percHP = (double)unit.currentHP() / (double)unit.maxHP();
 	int		cw = (int)((x1-x0) * percHP);
-	int		xx = pos.x() - (x1-x0)/2;
-	int		yy = pos.y() - healthBoxHeight - (y1-y0)/2 - 5;
+	int		xx = pos.x - (x1-x0)/2;
+	int		yy = pos.y - healthBoxHeight - (y1-y0)/2 - 5;
 
 	glColor4f(factionColors[unit.player()].x, factionColors[unit.player()].y, factionColors[unit.player()].z, 0.75);
 	glBegin(GL_QUADS);
@@ -687,8 +687,8 @@ void Display::RenderUnit(const Unit & unit)
 	{
 		double	percEnergy = (double)unit.currentEnergy() / (double)Constants::Starting_Energy;
 		cw = (int)((x1-x0) * percEnergy);
-		xx = pos.x() - (x1-x0)/2;
-		yy = pos.y() - healthBoxHeight*2 - (y1-y0)/2 - 5;
+		xx = pos.x - (x1-x0)/2;
+		yy = pos.y - healthBoxHeight*2 - (y1-y0)/2 - 5;
 
 		glColor4f(0.0, 1.0, 0.0, 0.75);
 		glBegin(GL_QUADS);
@@ -702,7 +702,7 @@ void Display::RenderUnit(const Unit & unit)
 	// draw attack radius
 	glColor4f(0.2f, 0.2f, 0.2f, 0.25);
 	int radius = unit.canHeal() ? unit.healRange() : unit.range();
-	//DrawCircle((float)pos.x(), (float)pos.y(), (float)radius, 60);
+	//DrawCircle((float)pos.x, (float)pos.y, (float)radius, 60);
 }
 
 void Display::DrawText(const int & x, const int & y, const int & size, const std::string & text)

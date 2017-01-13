@@ -57,8 +57,8 @@ void Player_AttackWeakest::getMoves(GameState & state, const MoveArray & moves, 
 			}
 			else if (move.type() == UnitActionTypes::MOVE)
 			{
-				Position ourDest				(ourUnit.x() + Constants::Move_Dir[move._moveIndex][0], 
-												 ourUnit.y() + Constants::Move_Dir[move._moveIndex][1]);
+				Position ourDest				(ourUnit.x + Constants::Move_Dir[move._moveIndex][0], 
+												 ourUnit.y + Constants::Move_Dir[move._moveIndex][1]);
 				size_t dist						(closestUnit.getDistanceSqToPosition(ourDest, state.getTime()));
 
 				if (dist < closestMoveDist)

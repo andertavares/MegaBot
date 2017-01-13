@@ -113,11 +113,11 @@ void NUSBotModule::onFrame()
 	{
 		BOOST_FOREACH (BWAPI::Unit * unit, BWAPI::Broodwar->getAllUnits())
 		{
-			BWAPI::Broodwar->drawTextMap(unit->getPosition().x(), unit->getPosition().y(), "   %d", unit->getPlayer()->getID());
+			BWAPI::Broodwar->drawTextMap(unit->getPosition().x, unit->getPosition().y, "   %d", unit->getPlayer()->getID());
 
 			if (unit->isSelected())
 			{
-				BWAPI::Broodwar->drawCircleMap(unit->getPosition().x(), unit->getPosition().y(), 1000, BWAPI::Colors::Red);
+				BWAPI::Broodwar->drawCircleMap(unit->getPosition().x, unit->getPosition().y, 1000, BWAPI::Colors::Red);
 			}
 		}
 	}

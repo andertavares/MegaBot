@@ -48,8 +48,8 @@ void IPBManager::drawDebugInterface()
 	if (Options::Debug::DRAW_NUSBOT_DEBUG)
 	{
 		BWAPI::Broodwar->drawTextScreen(20, 20, "Frame: %7d\nTime: %4dm %3ds", BWAPI::Broodwar->getFrameCount(), BWAPI::Broodwar->getFrameCount()/(24*60), (BWAPI::Broodwar->getFrameCount()/24)%60);
-		int mouseX = BWAPI::Broodwar->getMousePosition().x() + BWAPI::Broodwar->getScreenPosition().x();
-		int mouseY = BWAPI::Broodwar->getMousePosition().y() + BWAPI::Broodwar->getScreenPosition().y();
+		int mouseX = BWAPI::Broodwar->getMousePosition().x + BWAPI::Broodwar->getScreenPosition().x;
+		int mouseY = BWAPI::Broodwar->getMousePosition().y + BWAPI::Broodwar->getScreenPosition().y;
 		BWAPI::Broodwar->drawTextMap(mouseX + 20, mouseY, " %d %d", mouseX, mouseY);
 	}
 }
@@ -277,8 +277,8 @@ bool IPBManager::isValidUnit(BWAPI::Unit * unit)
 		&& unit->getHitPoints() > 0 
 		&& unit->exists() 
 		&& unit->getType() != BWAPI::UnitTypes::Unknown 
-		&& unit->getPosition().x() != BWAPI::Positions::Unknown.x() 
-		&& unit->getPosition().y() != BWAPI::Positions::Unknown.y()) 
+		&& unit->getPosition().x != BWAPI::Positions::Unknown.x 
+		&& unit->getPosition().y != BWAPI::Positions::Unknown.y) 
 	{
 		return true;
 	}

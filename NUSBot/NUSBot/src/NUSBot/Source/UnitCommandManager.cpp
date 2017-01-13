@@ -146,8 +146,8 @@ bool UnitCommandManager::canIssueStopCommand(BWAPI::Unit * unit)
 
 void UnitCommandManager::drawDebugPlate(BWAPI::Unit * unit, char * string)
 {
-	BWAPI::Broodwar->drawBoxMap(unit->getPosition().x()-15, unit->getPosition().y()-10, unit->getPosition().x() + 10, unit->getPosition().y(), BWAPI::Colors::Black, true);
-	BWAPI::Broodwar->drawTextMap(unit->getPosition().x()-15, unit->getPosition().y()-10, string);
+	BWAPI::Broodwar->drawBoxMap(unit->getPosition().x-15, unit->getPosition().y-10, unit->getPosition().x + 10, unit->getPosition().y, BWAPI::Colors::Black, true);
+	BWAPI::Broodwar->drawTextMap(unit->getPosition().x-15, unit->getPosition().y-10, string);
 }
 
 void UnitCommandManager::drawCommandStatus(BWAPI::Unit * unit)
@@ -156,10 +156,10 @@ void UnitCommandManager::drawCommandStatus(BWAPI::Unit * unit)
 	int width = type.dimensionRight();
 	int height = type.dimensionDown()/6;
 
-	int x1 = unit->getPosition().x() - width;
-	int x2 = unit->getPosition().y() + width;
-	int y1 = unit->getPosition().y() - height;
-	int y2 = unit->getPosition().y() + height;
+	int x1 = unit->getPosition().x - width;
+	int x2 = unit->getPosition().y + width;
+	int y1 = unit->getPosition().y - height;
+	int y2 = unit->getPosition().y + height;
 }
 
 void UnitCommandManager::waitCommand(BWAPI::Unit * unit)
@@ -193,7 +193,7 @@ void UnitCommandManager::smartAttackUnit(BWAPI::Unit * attacker, BWAPI::Unit * t
 
 	//if (Options::Debug::DRAW_NUSBOT_DEBUG) 
 	//{
-		BWAPI::Broodwar->drawLineMap(attacker->getPosition().x()+3, attacker->getPosition().y()+3, target->getPosition().x()+3, target->getPosition().y()+3, BWAPI::Colors::Red );
+		BWAPI::Broodwar->drawLineMap(attacker->getPosition().x+3, attacker->getPosition().y+3, target->getPosition().x+3, target->getPosition().y+3, BWAPI::Colors::Red );
 	//}
 }
 
@@ -210,6 +210,6 @@ void UnitCommandManager::smartMove(BWAPI::Unit * attacker, BWAPI::Position targe
 
 	//if (Options::Debug::DRAW_NUSBOT_DEBUG) 
 	////{
-		BWAPI::Broodwar->drawLineMap(attacker->getPosition().x(), attacker->getPosition().y(), targetPosition.x(), targetPosition.y(), BWAPI::Colors::Orange);
+		BWAPI::Broodwar->drawLineMap(attacker->getPosition().x, attacker->getPosition().y, targetPosition.x, targetPosition.y, BWAPI::Colors::Orange);
 	//}
 }

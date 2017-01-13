@@ -68,7 +68,7 @@ namespace BWAPI
 
     //tile data
     int getGroundHeight[256][256];
-    bool isWalkable[1024][1024]; 
+    bool isAccessible[1024][1024]; 
     bool isBuildable[256][256];
     bool isVisible[256][256];
     bool isExplored[256][256];

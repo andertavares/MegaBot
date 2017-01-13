@@ -39,8 +39,8 @@ void BuildingPlacer::computeResourceBox()
 
 	BOOST_FOREACH(BWAPI::Unit * unit, unitsAroundNexus)
 	{
-		int x = unit->getPosition().x();
-		int y = unit->getPosition().y();
+		int x = unit->getPosition().x;
+		int y = unit->getPosition().y;
 
 		int left = x - unit->getType().dimensionLeft();
 		int right = x + unit->getType().dimensionRight() + 1;
@@ -71,9 +71,9 @@ bool BuildingPlacer::canBuildHere(BWAPI::TilePosition position, const Building &
 	}
 
 	// check the reserve map
-	for(int x = position.x(); x < position.x() + b.type.tileWidth(); x++)
+	for(int x = position.x; x < position.x + b.type.tileWidth(); x++)
 	{
-		for(int y = position.y(); y < position.y() + b.type.tileHeight(); y++)
+		for(int y = position.y; y < position.y + b.type.tileHeight(); y++)
 		{
 			if (reserveMap[x][y])
 			{
@@ -115,10 +115,10 @@ bool BuildingPlacer::canBuildHereWithSpace(BWAPI::TilePosition position, const B
 	}
 
 	// define the rectangle of the building spot
-	int startx = position.x() - buildDist;
-	int starty = position.y() - buildDist;
-	int endx   = position.x() + width + buildDist;
-	int endy   = position.y() + height + buildDist;
+	int startx = position.x - buildDist;
+	int starty = position.y - buildDist;
+	int endx   = position.x + width + buildDist;
+	int endy   = position.y + height + buildDist;
 
 	if (horizontalOnly)
 	{
@@ -127,7 +127,7 @@ bool BuildingPlacer::canBuildHereWithSpace(BWAPI::TilePosition position, const B
 	}
 
 	// if this rectangle doesn't fit on the map we can't build here
-	if (startx < 0 || starty < 0 || endx > BWAPI::Broodwar->mapWidth() || endx < position.x() + width || endy > BWAPI::Broodwar->mapHeight()) 
+	if (startx < 0 || starty < 0 || endx > BWAPI::Broodwar->mapWidth() || endx < position.x + width || endy > BWAPI::Broodwar->mapHeight()) 
 	{
 		return false;
 	}
@@ -148,7 +148,7 @@ bool BuildingPlacer::canBuildHereWithSpace(BWAPI::TilePosition position, const B
 	}
 
 	// special cases for terran buildings that can land into addons?
-	if (position.x() > 3 && b.type.isFlyingBuilding())
+	if (position.x > 3 && b.type.isFlyingBuilding())
 	{
 		int startx2 = startx - 2;
 		if (startx2 < 0) 
@@ -184,8 +184,8 @@ BWAPI::TilePosition BuildingPlacer::getBuildLocationNear(const Building & b, int
 {
 	//returns a valid build location near the specified tile position.
 	//searches outward in a spiral.
-	int x      = b.desiredPosition.x();
-	int y      = b.desiredPosition.y();
+	int x      = b.desiredPosition.x;
+	int y      = b.desiredPosition.y;
 	int length = 1;
 	int j      = 0;
 	bool first = true;
@@ -289,8 +289,8 @@ bool BuildingPlacer::tileOverlapsBaseLocation(BWAPI::TilePosition tile, BWAPI::U
 	}
 
 	// dimensions of the proposed location
-	int tx1 = tile.x();
-	int ty1 = tile.y();
+	int tx1 = tile.x;
+	int ty1 = tile.y;
 	int tx2 = tx1 + type.tileWidth();
 	int ty2 = ty1 + type.tileHeight();
 
@@ -298,8 +298,8 @@ bool BuildingPlacer::tileOverlapsBaseLocation(BWAPI::TilePosition tile, BWAPI::U
 	BOOST_FOREACH (BWTA::BaseLocation * base, BWTA::getBaseLocations())
 	{
 		// dimensions of the base location
-		int bx1 = base->getTilePosition().x();
-		int by1 = base->getTilePosition().y();
+		int bx1 = base->getTilePosition().x;
+		int by1 = base->getTilePosition().y;
 		int bx2 = bx1 + BWAPI::Broodwar->self()->getRace().getCenter().tileWidth();
 		int by2 = by1 + BWAPI::Broodwar->self()->getRace().getCenter().tileHeight();
 
@@ -361,9 +361,9 @@ void BuildingPlacer::reserveTiles(BWAPI::TilePosition position, int width, int h
 {
 	int rwidth = reserveMap.size();
 	int rheight = reserveMap[0].size();
-	for(int x = position.x(); x < position.x() + width && x < rwidth; x++) 
+	for(int x = position.x; x < position.x + width && x < rwidth; x++) 
 	{
-		for(int y = position.y(); y < position.y() + height && y < rheight; y++) 
+		for(int y = position.y; y < position.y + height && y < rheight; y++) 
 		{
 			reserveMap[x][y] = true;
 		}
@@ -397,9 +397,9 @@ void BuildingPlacer::freeTiles(BWAPI::TilePosition position, int width, int heig
 	int rwidth = reserveMap.size();
 	int rheight = reserveMap[0].size();
 
-	for(int x = position.x(); x < position.x() + width && x < rwidth; x++) 
+	for(int x = position.x; x < position.x + width && x < rwidth; x++) 
 	{
-		for(int y = position.y(); y < position.y() + height && y < rheight; y++) 
+		for(int y = position.y; y < position.y + height && y < rheight; y++) 
 		{
 			reserveMap[x][y] = false;
 		}

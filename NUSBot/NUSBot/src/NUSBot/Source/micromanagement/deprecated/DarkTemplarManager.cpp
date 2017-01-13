@@ -24,13 +24,13 @@ void DarkTemplarManager::executeMicro(const UnitVector & targets, BWAPI::Positio
 	// for each darkTemplar
 	BOOST_FOREACH(BWAPI::Unit * darkTemplar, darkTemplars)
 	{
-		if (DRAW_UALBERTABOT_DEBUG) BWAPI::Broodwar->drawLineMap(darkTemplar->getPosition().x(), darkTemplar->getPosition().y(), 
-			darkTemplar->getTargetPosition().x(), darkTemplar->getTargetPosition().y(), BWAPI::Colors::White);
+		if (DRAW_UALBERTABOT_DEBUG) BWAPI::Broodwar->drawLineMap(darkTemplar->getPosition().x, darkTemplar->getPosition().y, 
+			darkTemplar->getTargetPosition().x, darkTemplar->getTargetPosition().y, BWAPI::Colors::White);
 
 		// regroup if we have to regroup and we're not near an enemy
 		if (order.type == order.Attack && regroup != BWAPI::Position(0,0) && !unitNearEnemy(darkTemplar))
 		{
-			if (DRAW_UALBERTABOT_DEBUG) BWAPI::Broodwar->drawCircleMap(darkTemplar->getPosition().x(), darkTemplar->getPosition().y(), 3, BWAPI::Colors::Orange, true);
+			if (DRAW_UALBERTABOT_DEBUG) BWAPI::Broodwar->drawCircleMap(darkTemplar->getPosition().x, darkTemplar->getPosition().y, 3, BWAPI::Colors::Orange, true);
 
 			// if the darkTemplar is outside the regroup area
 			if (darkTemplar->getDistance(regroup) > 100)

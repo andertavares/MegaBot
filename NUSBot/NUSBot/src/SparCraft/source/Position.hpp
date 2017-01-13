@@ -27,30 +27,30 @@ public:
 	}
 
     Position(const BWAPI::Position & p)
-        : _x(p.x())
-        , _y(p.y())
+        : _x(p.x)
+        , _y(p.y)
     {
 
     }
 
 	const bool operator < (const Position & rhs) const
 	{
-        return (x() < rhs.x()) || ((x() == rhs.x()) && y() < rhs.y());
+        return (x() < rhs.x) || ((x() == rhs.x) && y() < rhs.y);
 	}
 
     const bool operator == (const Position & rhs) const
     {
-        return x() == rhs.x() && y() == rhs.y();
+        return x() == rhs.x && y() == rhs.y;
     }
 
 	const Position operator + (const Position & rhs) const
 	{
-		return Position(x() + rhs.x(), y() + rhs.y());
+		return Position(x() + rhs.x, y() + rhs.y);
 	}
 
 	const Position operator - (const Position & rhs) const
 	{
-		return Position(x() - rhs.x(), y() - rhs.y());
+		return Position(x() - rhs.x, y() - rhs.y);
 	}
 
 	const Position scale(const float & f) const
@@ -66,20 +66,20 @@ public:
 
     void addPosition(const Position & rhs)
     {
-        _x += rhs.x();
-        _y += rhs.y();
+        _x += rhs.x;
+        _y += rhs.y;
     }
 
     void subtractPosition(const Position & rhs)
     {
-        _x -= rhs.x();
-        _y -= rhs.y();
+        _x -= rhs.x;
+        _y -= rhs.y;
     }
 	
 	void moveTo(const Position & pos)
 	{
-		_x = pos.x();
-		_y = pos.y();
+		_x = pos.x;
+		_y = pos.y;
 	}
 
 	void addPosition(const PositionType & x, const PositionType & y)
@@ -138,8 +138,8 @@ public:
 
     inline const PositionType getDistance(const Position & p) const	
 	{
-        PositionType dX = x() - p.x();
-        PositionType dY = y() - p.y();
+        PositionType dX = x() - p.x;
+        PositionType dY = y() - p.y;
 
         if (dX == 0)
         {
@@ -157,7 +157,7 @@ public:
 
 	inline const PositionType getDistanceSq(const Position & p) const	
 	{
-        return (x()-p.x())*(x()-p.x()) + (y()-p.y())*(y()-p.y());
+        return (x()-p.x)*(x()-p.x) + (y()-p.y)*(y()-p.y);
 	}
 
 	void print() const

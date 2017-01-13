@@ -61,10 +61,10 @@ void SquadData::drawSquadInformation(int x, int y)
 
 		if (Options::Debug::DRAW_NUSBOT_DEBUG) BWAPI::Broodwar->drawTextScreen(x, y+40+((yspace)*10), "\x03%s", order.getStatus().c_str());
 		if (Options::Debug::DRAW_NUSBOT_DEBUG) BWAPI::Broodwar->drawTextScreen(x+100, y+40+((yspace)*10), "\x03%d", units.size());
-		if (Options::Debug::DRAW_NUSBOT_DEBUG) BWAPI::Broodwar->drawTextScreen(x+150, y+40+((yspace++)*10), "\x03(%d,%d)", order.position.x(), order.position.y());
+		if (Options::Debug::DRAW_NUSBOT_DEBUG) BWAPI::Broodwar->drawTextScreen(x+150, y+40+((yspace++)*10), "\x03(%d,%d)", order.position.x, order.position.y);
 
-		if (Options::Debug::DRAW_NUSBOT_DEBUG) BWAPI::Broodwar->drawCircleMap(order.position.x(), order.position.y(), 10, BWAPI::Colors::Green, true);
-		if (Options::Debug::DRAW_NUSBOT_DEBUG) BWAPI::Broodwar->drawCircleMap(order.position.x(), order.position.y(), 400, BWAPI::Colors::Green, false);
-		if (Options::Debug::DRAW_NUSBOT_DEBUG) BWAPI::Broodwar->drawCircleMap(order.position.x(), order.position.y(), 100, BWAPI::Colors::Green, false);
+		if (Options::Debug::DRAW_NUSBOT_DEBUG) BWAPI::Broodwar->drawCircleMap(order.position.x, order.position.y, 10, BWAPI::Colors::Green, true);
+		if (Options::Debug::DRAW_NUSBOT_DEBUG) BWAPI::Broodwar->drawCircleMap(order.position.x, order.position.y, 400, BWAPI::Colors::Green, false);
+		if (Options::Debug::DRAW_NUSBOT_DEBUG) BWAPI::Broodwar->drawCircleMap(order.position.x, order.position.y, 100, BWAPI::Colors::Green, false);
 	}
 }

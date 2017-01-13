@@ -138,7 +138,7 @@ const MicroSearch::Unit ReplayVisualizer::getUnit(const UnitInfo & ui, const IDT
 {
 	BWAPI::UnitType type = ui.type;
 
-	return MicroSearch::Unit(ui.type, MicroSearch::Position(ui.lastPosition.x(), ui.lastPosition.y()), ui.unitID, playerID, ui.lastHealth, 0,
+	return MicroSearch::Unit(ui.type, MicroSearch::Position(ui.lastPosition.x, ui.lastPosition.y), ui.unitID, playerID, ui.lastHealth, 0,
 		BWAPI::Broodwar->getFrameCount(), BWAPI::Broodwar->getFrameCount());	
 }
 

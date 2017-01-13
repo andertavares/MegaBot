@@ -22,8 +22,8 @@ namespace BWAPI
   }
   //---------------------------------------------- CONSTRUCTOR -----------------------------------------------
   Position::Position(const TilePosition& position)
-      : _x(position.x()*TILE_SIZE)
-      , _y(position.y()*TILE_SIZE)
+      : _x(position.x*TILE_SIZE)
+      , _y(position.y*TILE_SIZE)
   {
   }
   //----------------------------------------------- DESTRUCTOR -----------------------------------------------
@@ -35,20 +35,20 @@ namespace BWAPI
   //---------------------------------------------- OPERATOR == -----------------------------------------------
   bool Position::operator == (const Position& position) const
   {
-    return this->x() == position.x() &&
-           this->y() == position.y();
+    return this->x() == position.x &&
+           this->y() == position.y;
   }
   //---------------------------------------------- OPERATOR != -----------------------------------------------
   bool Position::operator != (const Position& position) const
   {
-    return this->x() != position.x() ||
-           this->y() != position.y();
+    return this->x() != position.x ||
+           this->y() != position.y;
   }
   //---------------------------------------------- OPERATOR < ------------------------------------------------
   bool Position::operator  < (const Position& position) const
   {
-    return this->x() < position.x() ||
-           (this->x() == position.x() && this->y() < position.y());
+    return this->x() < position.x ||
+           (this->x() == position.x && this->y() < position.y);
   }
   //---------------------------------------------- IS VALID --------------------------------------------------
   bool Position::isValid() const
@@ -58,12 +58,12 @@ namespace BWAPI
   //----------------------------------------------------------------------------------------------------------
   Position Position::operator+(const Position& position) const
   {
-    return Position(this->x() + position.x(), this->y() + position.y());
+    return Position(this->x() + position.x, this->y() + position.y);
   }
   //----------------------------------------------------------------------------------------------------------
   Position Position::operator-(const Position& position) const
   {
-    return Position(this->x() - position.x(), this->y() - position.y());
+    return Position(this->x() - position.x, this->y() - position.y);
   }
   //-------------------------------------------- MAKE VALID --------------------------------------------------
   Position& Position::makeValid()
@@ -81,15 +81,15 @@ namespace BWAPI
   //----------------------------------------------------------------------------------------------------------
   Position& Position::operator+=(const Position& position)
   {
-    this->x() += position.x();
-    this->y() += position.y();
+    this->x() += position.x;
+    this->y() += position.y;
     return *this;
   }
   //----------------------------------------------------------------------------------------------------------
   Position& Position::operator-=(const Position& position)
   {
-    this->x() -= position.x();
-    this->y() -= position.y();
+    this->x() -= position.x;
+    this->y() -= position.y;
     return *this;
   }
   //----------------------------------------------------------------------------------------------------------
@@ -100,8 +100,8 @@ namespace BWAPI
   //----------------------------------------------------------------------------------------------------------
   double Position::getApproxDistance(const Position& position) const
   {
-    double min = abs(this->x() - position.x());
-    double max = abs(this->y() - position.y());
+    double min = abs(this->x() - position.x);
+    double max = abs(this->y() - position.y);
     if (max < min)
     {
       double temp = min;

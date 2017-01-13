@@ -76,7 +76,7 @@ Map getSampleMap()
 
     // The default map sets all tiles to walkable, with an upper-left boundary of (0,0) and a lower-right boundary of (x,y)
     // We can query whether or not a unit can walk at a given position 
-    bool canWalkHere = smallMap.isWalkable(Position(100, 30));
+    bool canWalkHere = smallMap.isAccessible(Position(100, 30));
 
     // You can also construct a Map from a BWAPI::Game object, if you are using this code from within a bot
     // Map gameMap(BWAPI::BroodWar)

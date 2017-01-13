@@ -32,8 +32,8 @@ void Display::OnStart()
 	mapPixelHeight	= mapHeight * 32;
 
 	const BWAPI::Position position(Broodwar->self()->getStartLocation());
-	cameraX			= position.x() - windowSizeX / 2;
-	cameraY			= position.y() - windowSizeY / 2;
+	cameraX			= position.x - windowSizeX / 2;
+	cameraY			= position.y - windowSizeY / 2;
 
 	SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
 	SDL_SetVideoMode(windowSizeX, windowSizeY, 32, SDL_OPENGL);
@@ -192,8 +192,8 @@ void Display::RenderTerrainAnalysis() const
 		{
 			const Position & v0(polygon[i]);
 			const Position & v1(polygon[(i+1) % polygon.size()]);
-			glVertex2i(v0.x(), v0.y());
-			glVertex2i(v1.x(), v1.y());
+			glVertex2i(v0.x, v0.y);
+			glVertex2i(v1.x, v1.y);
 		}
 	}
 
@@ -205,8 +205,8 @@ void Display::RenderTerrainAnalysis() const
 		{
 			const Position & v0(choke->getSides().first);
 			const Position & v1(choke->getSides().second);
-			glVertex2i(v0.x(), v0.y());
-			glVertex2i(v1.x(), v1.y());
+			glVertex2i(v0.x, v0.y);
+			glVertex2i(v1.x, v1.y);
 		}
 	}
 
@@ -226,10 +226,10 @@ void Display::RenderUnits() const
 	BOOST_FOREACH(Unit * unit, Broodwar->getAllUnits())
 	{
 		const UnitType type(unit->getType());
-		const int x0(unit->getPosition().x() - type.dimensionLeft());
-		const int x1(unit->getPosition().x() + type.dimensionRight());
-		const int y0(unit->getPosition().y() - type.dimensionUp());
-		const int y1(unit->getPosition().y() + type.dimensionDown());
+		const int x0(unit->getPosition().x - type.dimensionLeft());
+		const int x1(unit->getPosition().x + type.dimensionRight());
+		const int y0(unit->getPosition().y - type.dimensionUp());
+		const int y1(unit->getPosition().y + type.dimensionDown());
 
 		glColor3fv(factionColors[unit->getPlayer()->getID()]);
 		glVertex2i(x0,y0);
@@ -251,7 +251,7 @@ float3 Display::GetWalkTileColor(int x, int y) const
 
 	// Basic terrain color
 	float3 color(0.2f);
-	if(Broodwar->isWalkable(x,y))
+	if(Broodwar->isAccessible(x,y))
 	{
 		color = 0.4f + Broodwar->getGroundHeight(x,y) * 0.2f;
 		if(!Broodwar->isBuildable(pos))

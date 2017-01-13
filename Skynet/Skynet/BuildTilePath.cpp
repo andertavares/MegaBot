@@ -17,7 +17,7 @@ void BuildTilePath::drawPath()
 	for each(const TilePosition &pos in path)
 	{
 		if(previousTile != BWAPI::TilePositions::None)
-			BWAPI::Broodwar->drawLineMap(pos.x() * 32 + 16, pos.y() * 32 + 16, previousTile.x() * 32 + 16, previousTile.y() * 32 + 16, BWAPI::Colors::Yellow);
+			BWAPI::Broodwar->drawLineMap(pos.x * 32 + 16, pos.y * 32 + 16, previousTile.x * 32 + 16, previousTile.y * 32 + 16, BWAPI::Colors::Yellow);
 
 		previousTile = pos;
 	}

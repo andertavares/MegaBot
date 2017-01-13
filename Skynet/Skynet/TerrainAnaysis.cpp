@@ -38,9 +38,9 @@ public:
 
 	bool operator()(TilePosition location) const
 	{
-		for(int x = location.x()-1; x <= location.x()+1; ++x)
+		for(int x = location.x-1; x <= location.x+1; ++x)
 		{
-			for(int y = location.y()-1; y <= location.y()+1; ++y)
+			for(int y = location.y-1; y <= location.y+1; ++y)
 			{
 				TilePosition tile(x, y);
 				if(!tile.isValid() || TerrainAnaysis::Instance().getRegion(tile) != mRegion || !BuildingPlacer::Instance().isTileWalkable(tile))
@@ -81,7 +81,7 @@ void TerrainAnaysisClass::calculateWalkTileClearance()
 	{
 		for(int y = 0; y < mMapHeight; ++y)
 		{
-			if(!BWAPI::Broodwar->isWalkable(x, y))
+			if(!BWAPI::Broodwar->isAccessible(x, y))
 			{
 				mTileClearance[x][y] = 0;
 				mTileClosestObstacle[x][y] = WalkPosition(x, y);
@@ -206,7 +206,7 @@ std::pair<WalkPosition, WalkPosition> TerrainAnaysisClass::findChokePoint(WalkPo
 
 	for(;;)
 	{
-		if(x0 < 0 || y0 < 0 || x0 >= mapWidth || y0 >= mapHeight || !BWAPI::Broodwar->isWalkable(x0, y0))
+		if(x0 < 0 || y0 < 0 || x0 >= mapWidth || y0 >= mapHeight || !BWAPI::Broodwar->isAccessible(x0, y0))
 			return std::make_pair(side1, WalkPosition(x0, y0));
 
 		WalkPosition side2 = mTileClosestObstacle[x0][y0];
@@ -247,7 +247,7 @@ void TerrainAnaysisClass::calculateConnectivity()
 			if(mTileConnectivity[x][y] != 0)
 				continue;
 
-			bool walkable = BWAPI::Broodwar->isWalkable(x, y);
+			bool walkable = BWAPI::Broodwar->isAccessible(x, y);
 			int tileCount = 0;
 
 			std::set<WalkPosition> unvisitedTiles;
@@ -260,14 +260,14 @@ void TerrainAnaysisClass::calculateConnectivity()
 				++tileCount;
 				mTileConnectivity[tile->x][tile->y] = currentRegion;
 
-				if(tile->x > 0 && BWAPI::Broodwar->isWalkable(tile->x-1, tile->y) == walkable && mTileConnectivity[tile->x-1][tile->y] == 0)
+				if(tile->x > 0 && BWAPI::Broodwar->isAccessible(tile->x-1, tile->y) == walkable && mTileConnectivity[tile->x-1][tile->y] == 0)
 					unvisitedTiles.insert(WalkPosition(tile->x-1, tile->y));
-				if(tile->y > 0 && BWAPI::Broodwar->isWalkable(tile->x, tile->y-1) == walkable && mTileConnectivity[tile->x][tile->y-1] == 0)
+				if(tile->y > 0 && BWAPI::Broodwar->isAccessible(tile->x, tile->y-1) == walkable && mTileConnectivity[tile->x][tile->y-1] == 0)
 					unvisitedTiles.insert(WalkPosition(tile->x, tile->y-1));
 
-				if(tile->x < mMapWidth-1 && BWAPI::Broodwar->isWalkable(tile->x+1, tile->y) == walkable && mTileConnectivity[tile->x+1][tile->y] == 0)
+				if(tile->x < mMapWidth-1 && BWAPI::Broodwar->isAccessible(tile->x+1, tile->y) == walkable && mTileConnectivity[tile->x+1][tile->y] == 0)
 					unvisitedTiles.insert(WalkPosition(tile->x+1, tile->y));
-				if(tile->y < mMapHeight-1 && BWAPI::Broodwar->isWalkable(tile->x, tile->y+1) == walkable && mTileConnectivity[tile->x][tile->y+1] == 0)
+				if(tile->y < mMapHeight-1 && BWAPI::Broodwar->isAccessible(tile->x, tile->y+1) == walkable && mTileConnectivity[tile->x][tile->y+1] == 0)
 					unvisitedTiles.insert(WalkPosition(tile->x, tile->y+1));
 
 				unvisitedTiles.erase(tile);
@@ -514,9 +514,9 @@ public:
 
 	bool operator()(TilePosition &location)
 	{
-		for(int x = location.x(); x < location.x() + BWAPI::UnitTypes::Protoss_Nexus.tileWidth(); ++x)
+		for(int x = location.x; x < location.x + BWAPI::UnitTypes::Protoss_Nexus.tileWidth(); ++x)
 		{
-			for(int y = location.y(); y < location.y() + BWAPI::UnitTypes::Protoss_Nexus.tileHeight(); ++y)
+			for(int y = location.y; y < location.y + BWAPI::UnitTypes::Protoss_Nexus.tileHeight(); ++y)
 			{
 				if(x < 0 && y < 0 && x >= BWAPI::Broodwar->mapWidth() && y >= BWAPI::Broodwar->mapHeight())
 					return false;
@@ -532,23 +532,23 @@ public:
 			const BWAPI::UnitType &resourceType = resource->getType();
 			const TilePosition &resourceTilePosition = resource->getTilePosition();
 
-			if (resourceTilePosition.x() > location.x() - (resourceType == BWAPI::UnitTypes::Resource_Mineral_Field ? 5 : 7) &&
-				resourceTilePosition.y() > location.y() - (resourceType == BWAPI::UnitTypes::Resource_Mineral_Field ? 4 : 5) &&
-				resourceTilePosition.x() < location.x() + 7 &&
-				resourceTilePosition.y() < location.y() + 6)
+			if (resourceTilePosition.x > location.x - (resourceType == BWAPI::UnitTypes::Resource_Mineral_Field ? 5 : 7) &&
+				resourceTilePosition.y > location.y - (resourceType == BWAPI::UnitTypes::Resource_Mineral_Field ? 4 : 5) &&
+				resourceTilePosition.x < location.x + 7 &&
+				resourceTilePosition.y < location.y + 6)
 			{
 				return false;
 			}
 
 			const Position &resourcePosition = resource->getPosition();
 
-			int tx = location.x()*32+64;
-			int ty = location.y()*32+48;
+			int tx = location.x*32+64;
+			int ty = location.y*32+48;
 
-			int uLeft       = resourcePosition.x() - resourceType.dimensionLeft();
-			int uTop        = resourcePosition.y() - resourceType.dimensionUp();
-			int uRight      = resourcePosition.x() + resourceType.dimensionRight() + 1;
-			int uBottom     = resourcePosition.y() + resourceType.dimensionDown() + 1;
+			int uLeft       = resourcePosition.x - resourceType.dimensionLeft();
+			int uTop        = resourcePosition.y - resourceType.dimensionUp();
+			int uRight      = resourcePosition.x + resourceType.dimensionRight() + 1;
+			int uBottom     = resourcePosition.y + resourceType.dimensionDown() + 1;
 
 			int targLeft    = tx - BWAPI::Broodwar->self()->getRace().getCenter().dimensionLeft();
 			int targTop     = ty - BWAPI::Broodwar->self()->getRace().getCenter().dimensionUp();
@@ -619,8 +619,8 @@ void TerrainAnaysisClass::createBases()
 		bool addedToOther = false;
 		for(std::map<TilePosition, UnitGroup>::iterator it = baseToCreateToMineral.begin(); it != baseToCreateToMineral.end(); ++it)
 		{
-			int dx = abs(baseLocation.x() - it->first.x());
-			int dy = abs(baseLocation.y() - it->first.y());
+			int dx = abs(baseLocation.x - it->first.x);
+			int dy = abs(baseLocation.y - it->first.y);
 
 			if(dx <= 4 && dy <= 3)
 			{
@@ -639,7 +639,7 @@ void TerrainAnaysisClass::createBases()
 
 	for each(TilePosition base in basesToCreate)
 	{
-		Region region = mTileToRegion[base.x() * 4][base.y() * 4];
+		Region region = mTileToRegion[base.x * 4][base.y * 4];
 		if(region)
 		{
 			baseToCreateFromRegion[region].insert(base);
@@ -722,7 +722,7 @@ void TerrainAnaysisClass::createBases()
 
 	for each(TilePosition startLocation in BWAPI::Broodwar->getStartLocations())
 	{
-		baseToCreateIsStartLocation[tileToBase[startLocation.x()][startLocation.y()]] = true;
+		baseToCreateIsStartLocation[tileToBase[startLocation.x][startLocation.y]] = true;
 	}
 
 	for each(TilePosition base in basesToCreate)

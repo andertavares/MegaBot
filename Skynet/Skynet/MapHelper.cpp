@@ -9,8 +9,8 @@
 
 TilePosition MapHelper::spiralSearch(TilePosition startLocation, std::tr1::function<bool (TilePosition)> testFunction, int maxRadius)
 {
-	int x = startLocation.x();
-	int y = startLocation.y();
+	int x = startLocation.x;
+	int y = startLocation.y;
 
 	int length = 1;
 	int j      = 0;
@@ -93,14 +93,14 @@ std::set<TilePosition> MapHelper::floodFill(TilePosition start, std::tr1::functi
 		else
 			targets.erase(tile);
 
-		if(ignoreTiles.count(TilePosition(tile.x() + 1, tile.y())) == 0)
-			remainingTiles.insert(TilePosition(tile.x() + 1, tile.y()));
-		if(ignoreTiles.count(TilePosition(tile.x() - 1, tile.y())) == 0)
-			remainingTiles.insert(TilePosition(tile.x() - 1, tile.y()));
-		if(ignoreTiles.count(TilePosition(tile.x(), tile.y() + 1)) == 0)
-			remainingTiles.insert(TilePosition(tile.x(), tile.y() + 1));
-		if(ignoreTiles.count(TilePosition(tile.x(), tile.y() - 1)) == 0)
-			remainingTiles.insert(TilePosition(tile.x(), tile.y() - 1));
+		if(ignoreTiles.count(TilePosition(tile.x + 1, tile.y)) == 0)
+			remainingTiles.insert(TilePosition(tile.x + 1, tile.y));
+		if(ignoreTiles.count(TilePosition(tile.x - 1, tile.y)) == 0)
+			remainingTiles.insert(TilePosition(tile.x - 1, tile.y));
+		if(ignoreTiles.count(TilePosition(tile.x, tile.y + 1)) == 0)
+			remainingTiles.insert(TilePosition(tile.x, tile.y + 1));
+		if(ignoreTiles.count(TilePosition(tile.x, tile.y - 1)) == 0)
+			remainingTiles.insert(TilePosition(tile.x, tile.y - 1));
 	}
 
 	return targets;
@@ -164,9 +164,9 @@ std::map<WalkPosition, int> MapHelper::walkSearch(WalkPosition start, std::tr1::
 
 bool MapHelper::isAnyVisible(TilePosition location, BWAPI::UnitType type)
 {
-	for(int x = location.x(); x < location.x() + type.tileWidth(); ++x)
+	for(int x = location.x; x < location.x + type.tileWidth(); ++x)
 	{
-		for(int y = location.y(); y < location.y() + type.tileHeight(); ++y)
+		for(int y = location.y; y < location.y + type.tileHeight(); ++y)
 		{
 			if(BWAPI::Broodwar->isVisible(x, y))
 				return true;
@@ -178,9 +178,9 @@ bool MapHelper::isAnyVisible(TilePosition location, BWAPI::UnitType type)
 
 bool MapHelper::isAllVisible(TilePosition location, BWAPI::UnitType type)
 {
-	for(int x = location.x(); x < location.x() + type.tileWidth(); ++x)
+	for(int x = location.x; x < location.x + type.tileWidth(); ++x)
 	{
-		for(int y = location.y(); y < location.y() + type.tileHeight(); ++y)
+		for(int y = location.y; y < location.y + type.tileHeight(); ++y)
 		{
 			if(!BWAPI::Broodwar->isVisible(x, y))
 				return false;
@@ -192,7 +192,7 @@ bool MapHelper::isAllVisible(TilePosition location, BWAPI::UnitType type)
 
 bool MapHelper::isTileWalkable(TilePosition location)
 {
-	return isTileWalkable(location.x(), location.y());
+	return isTileWalkable(location.x, location.y);
 }
 
 bool MapHelper::isTileWalkable(int x, int y)
@@ -201,7 +201,7 @@ bool MapHelper::isTileWalkable(int x, int y)
 	{
 		for(int ny = y * 4; ny < y * 4 + 4; ++ny)
 		{
-			if(!BWAPI::Broodwar->isWalkable(nx, ny))
+			if(!BWAPI::Broodwar->isAccessible(nx, ny))
 				return false;
 		}
 	}

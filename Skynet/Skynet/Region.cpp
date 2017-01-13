@@ -33,11 +33,11 @@ void RegionClass::addChokepoint(WeakChokepoint chokepoint)
 
 void RegionClass::draw(BWAPI::Color color)
 {
-	BWAPI::Broodwar->drawCircle(BWAPI::CoordinateType::Map, mCenter.x(), mCenter.y(), 64, color);
+	BWAPI::Broodwar->drawCircle(BWAPI::CoordinateType::Map, mCenter.x, mCenter.y, 64, color);
 	for each(WeakChokepoint chokepoint in mChokepoints)
 	{
 		Chokepoint choke = chokepoint.lock();
-		BWAPI::Broodwar->drawLine(BWAPI::CoordinateType::Map, choke->getCenter().x(), choke->getCenter().y(), mCenter.x(), mCenter.y(), color);
+		BWAPI::Broodwar->drawLine(BWAPI::CoordinateType::Map, choke->getCenter().x, choke->getCenter().y, mCenter.x, mCenter.y, color);
 	}
 }
 

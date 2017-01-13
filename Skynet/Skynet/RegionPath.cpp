@@ -16,7 +16,7 @@ void RegionPath::drawPath()
 	for each(const Region &reg in path)
 	{
 		if(previousRegion)
-			BWAPI::Broodwar->drawLineMap(reg->getCenter().x(), reg->getCenter().y(), previousRegion->getCenter().x(), previousRegion->getCenter().y(), BWAPI::Colors::Purple);
+			BWAPI::Broodwar->drawLineMap(reg->getCenter().x, reg->getCenter().y, previousRegion->getCenter().x, previousRegion->getCenter().y, BWAPI::Colors::Purple);
 
 		previousRegion = reg;
 	}

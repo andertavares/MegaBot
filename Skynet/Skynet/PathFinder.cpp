@@ -33,16 +33,16 @@ BuildTilePath PathFinderClass::CreateTilePath(TilePosition start, TilePosition t
 		openTiles.pop();
 		closedTiles.insert(p);
 
-		int minx = std::max(p.x() - 1, 0);
-		int maxx = std::min(p.x() + 1, BWAPI::Broodwar->mapWidth());
-		int miny = std::max(p.y() - 1, 0);
-		int maxy = std::min(p.y() + 1, BWAPI::Broodwar->mapHeight());
+		int minx = std::max(p.x - 1, 0);
+		int maxx = std::min(p.x + 1, BWAPI::Broodwar->mapWidth());
+		int miny = std::max(p.y - 1, 0);
+		int maxy = std::min(p.y + 1, BWAPI::Broodwar->mapHeight());
 
 		for(int x = minx; x <= maxx; x++)
 		{
 			for(int y = miny; y <= maxy; y++)
 			{
-				if (x != p.x() && y != p.y() && !diaganol)
+				if (x != p.x && y != p.y && !diaganol)
 					continue;
 
 				TilePosition t(x, y);

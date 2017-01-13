@@ -18,8 +18,8 @@ public:
 	inline const std::set<Region> &getRegions() const { return mRegions; }
 	inline const std::set<Chokepoint> &getChokepoints() const { return mChokepoints; }
 
-	inline const Region &getRegion(const TilePosition &tile) const { return getRegion(tile.x()*4 ,tile.y()*4); }
-	inline const Region &getRegion(const Position &pos) const { return getRegion(pos.x()/8, pos.y()/8); }
+	inline const Region &getRegion(const TilePosition &tile) const { return getRegion(tile.x*4 ,tile.y*4); }
+	inline const Region &getRegion(const Position &pos) const { return getRegion(pos.x/8, pos.y/8); }
 	inline const Region &getRegion(const WalkPosition &tile) const { return getRegion(tile.x, tile.y); }
 	const Region &getRegion(int x, int y) const
 	{

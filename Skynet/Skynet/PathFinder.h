@@ -19,7 +19,7 @@ public:
 	int operator()(TilePosition currentTile, TilePosition previousTile, int gTotal)
 	{
 		gTotal += 10;
-		if (currentTile.x() != previousTile.x() && currentTile.y() != previousTile.y())
+		if (currentTile.x != previousTile.x && currentTile.y != previousTile.y)
 			gTotal += 4;
 
 		return gTotal;
@@ -44,8 +44,8 @@ class DefaultHValue
 public:
 	int operator()(TilePosition position, TilePosition target)
 	{
-		int dx = abs(position.x() - target.x());
-		int dy = abs(position.x() - target.y());
+		int dx = abs(position.x - target.x);
+		int dy = abs(position.x - target.y);
 		return abs(dx - dy) * 10 + std::min(dx, dy) * 14;
 	}
 };
@@ -75,7 +75,7 @@ class DefaultWalkTest
 public:
 	bool operator()(WalkPosition position)
 	{
-		return BWAPI::Broodwar->isWalkable(position.x, position.y);
+		return BWAPI::Broodwar->isAccessible(position.x, position.y);
 	}
 };
 

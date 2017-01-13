@@ -135,8 +135,8 @@ void ScoutManagerClass::update()
 #ifdef SKYNET_DRAW_DEBUG
 	for each(Base base in BaseTracker::Instance().getAllBases())
 	{
-		int x = base->getRegion()->getCenter().x();
-		int y = base->getRegion()->getCenter().y();
+		int x = base->getRegion()->getCenter().x;
+		int y = base->getRegion()->getCenter().y;
 
 		BWAPI::Broodwar->drawTextMap(x, y, "Last Type: %s", ScoutType::getName(mLastScoutType[base].underlying()).c_str());
 		BWAPI::Broodwar->drawTextMap(x, y+10, "This Type: %s", ScoutType::getName(mCurrentScoutType[base].underlying()).c_str());

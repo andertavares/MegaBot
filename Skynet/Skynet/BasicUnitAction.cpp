@@ -184,7 +184,7 @@ bool BasicUnitAction::update(const Goal &squadGoal, const UnitGroup &squadUnitGr
 		{
 			for each(BWAPI::TechType tech in mUnit->getType().abilities())
 			{
-				if(BWAPI::Broodwar->self()->hasResearched(tech) && mUnit->getEnergy() >= tech.energyUsed())
+				if(BWAPI::Broodwar->self()->hasResearched(tech) && mUnit->getEnergy() >= tech.energyCost())
 					canAttack = true;
 			}
 		}

@@ -109,7 +109,7 @@ void PylonPowerTrackerClass::addToPowerField(Unit unit)
 				break;
 			}
 
-			const TilePosition tile(pylonTile.x() + x - 8, pylonTile.y() + y - 5);
+			const TilePosition tile(pylonTile.x + x - 8, pylonTile.y + y - 5);
 
 			if(inRangeSmall)
 			{

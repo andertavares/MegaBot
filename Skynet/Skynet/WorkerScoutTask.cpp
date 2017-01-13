@@ -158,7 +158,7 @@ bool WorkerScoutTask::update()
 
 									doneSomething = true;
 #ifdef SKYNET_DRAW_DEBUG
-									BWAPI::Broodwar->drawTextMap(mUnit->getPosition().x(), mUnit->getPosition().y() - 10, "Fleeing with path");
+									BWAPI::Broodwar->drawTextMap(mUnit->getPosition().x, mUnit->getPosition().y - 10, "Fleeing with path");
 									mTilePath.drawPath();
 #endif
 									break;
@@ -186,8 +186,8 @@ bool WorkerScoutTask::update()
 
 					doneSomething = true;
 #ifdef SKYNET_DRAW_DEBUG
-					BWAPI::Broodwar->drawTextMap(mUnit->getPosition().x(), mUnit->getPosition().y() - 10, "Fleeing with vectors");
-					BWAPI::Broodwar->drawLineMap(mUnit->getPosition().x(), mUnit->getPosition().y(), (int)direction.x, (int)direction.y, BWAPI::Colors::Red);
+					BWAPI::Broodwar->drawTextMap(mUnit->getPosition().x, mUnit->getPosition().y - 10, "Fleeing with vectors");
+					BWAPI::Broodwar->drawLineMap(mUnit->getPosition().x, mUnit->getPosition().y, (int)direction.x, (int)direction.y, BWAPI::Colors::Red);
 #endif
 				}
 			}
@@ -227,7 +227,7 @@ bool WorkerScoutTask::update()
 						doneSomething = true;
 						mUnit->attack(closestUnit);
 #ifdef SKYNET_DRAW_DEBUG
-						BWAPI::Broodwar->drawTextMap(mUnit->getPosition().x(), mUnit->getPosition().y() - 10, "Attacking Unit");
+						BWAPI::Broodwar->drawTextMap(mUnit->getPosition().x, mUnit->getPosition().y - 10, "Attacking Unit");
 #endif
 					}
 				}
@@ -240,7 +240,7 @@ bool WorkerScoutTask::update()
 					doneSomething = true;
 					mUnit->move(mData->getBase()->getCenterLocation());
 #ifdef SKYNET_DRAW_DEBUG
-					BWAPI::Broodwar->drawTextMap(mUnit->getPosition().x(), mUnit->getPosition().y() - 10, "Moving Closer to base");
+					BWAPI::Broodwar->drawTextMap(mUnit->getPosition().x, mUnit->getPosition().y - 10, "Moving Closer to base");
 #endif
 				}
 			}

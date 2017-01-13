@@ -27,10 +27,10 @@ void BlockedPathManagerClass::onBegin()
 			{
 				const TilePosition &baseTile = base->getCenterBuildLocation();
 
-				isBlocking = (mineralTile.x() > baseTile.x() - 5 &&
-								   mineralTile.y() > baseTile.y() - 4 &&
-								   mineralTile.x() < baseTile.x() + 7 &&
-								   mineralTile.y() < baseTile.y() + 6);
+				isBlocking = (mineralTile.x > baseTile.x - 5 &&
+								   mineralTile.y > baseTile.y - 4 &&
+								   mineralTile.x < baseTile.x + 7 &&
+								   mineralTile.y < baseTile.y + 6);
 			}
 
 			if(!isBlocking)

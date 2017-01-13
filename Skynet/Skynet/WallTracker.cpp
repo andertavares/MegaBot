@@ -221,7 +221,7 @@ TilePosition WallTrackerClass::getWallPosition(BWAPI::UnitType type)
 			continue;
 
 		int isUsed = false;
-		for each(Unit unit in UnitTracker::Instance().getUnitsOnTile(tile.x(), tile.y()))
+		for each(Unit unit in UnitTracker::Instance().getUnitsOnTile(tile.x, tile.y))
 		{
 			if(unit->getType().isBuilding())
 				isUsed = true;
@@ -247,8 +247,8 @@ std::map<TilePosition, BWAPI::UnitType> WallTrackerClass::getWallTiles()
 	{
 		for each(TilePosition tile in wallPair.second)
 		{
-			for(int x = tile.x(); x < tile.x()+wallPair.first.tileWidth(); ++x)
-				for(int y = tile.y(); y < tile.y()+wallPair.first.tileHeight(); ++y)
+			for(int x = tile.x; x < tile.x+wallPair.first.tileWidth(); ++x)
+				for(int y = tile.y; y < tile.y+wallPair.first.tileHeight(); ++y)
 					tiles[TilePosition(x, y)] = wallPair.first;
 		}
 	}

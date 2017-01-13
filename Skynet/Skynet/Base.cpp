@@ -27,7 +27,7 @@ BaseClass::BaseClass(Region region, std::set<TilePosition> tiles, bool startLoca
 
 BaseClass::BaseClass(TilePosition position, const UnitGroup &resources, Region region, std::set<TilePosition> tiles, bool startLocation)
 	: mCenterTilePosition(position)
-	, mCenterPosition(Position(position.x()*32+64, position.y()*32+48))
+	, mCenterPosition(Position(position.x*32+64, position.y*32+48))
 	, mMinedOut(false)
 	, mRegion(region)
 	, mIsStartLocation(startLocation)
@@ -221,122 +221,122 @@ void BaseClass::onDestroy(Unit unit)
 void BaseClass::drawDebugInfo() const
 {
 	if(mPlayer != NULL)
-		BWAPI::Broodwar->drawCircle(BWAPI::CoordinateType::Map, mCenterPosition.x(), mCenterPosition.y(), 78, mPlayer->getColor(), false);
+		BWAPI::Broodwar->drawCircle(BWAPI::CoordinateType::Map, mCenterPosition.x, mCenterPosition.y, 78, mPlayer->getColor(), false);
 	else
-		BWAPI::Broodwar->drawCircle(BWAPI::CoordinateType::Map, mCenterPosition.x(), mCenterPosition.y(), 78, BWAPI::Broodwar->neutral()->getColor(), false);
+		BWAPI::Broodwar->drawCircle(BWAPI::CoordinateType::Map, mCenterPosition.x, mCenterPosition.y, 78, BWAPI::Broodwar->neutral()->getColor(), false);
 
 	bool showtitle = false;
 	int ypos = 30;
 
 	if(mIsStartLocation)
 	{
-		BWAPI::Broodwar->drawTextMap(mCenterPosition.x() + 60, mCenterPosition.y() - ypos, "Start Location");
+		BWAPI::Broodwar->drawTextMap(mCenterPosition.x + 60, mCenterPosition.y - ypos, "Start Location");
 		ypos -= 10;
 		showtitle = true;
 	}
 
 	if(!mBuildings.empty())
 	{
-		BWAPI::Broodwar->drawTextMap(mCenterPosition.x() + 60, mCenterPosition.y() - ypos, "Buildings: %u", mBuildings.size());
+		BWAPI::Broodwar->drawTextMap(mCenterPosition.x + 60, mCenterPosition.y - ypos, "Buildings: %u", mBuildings.size());
 		ypos -= 10;
 		showtitle = true;
 	}
 
 	if(mTechBuildings > 0)
 	{
-		BWAPI::Broodwar->drawTextMap(mCenterPosition.x() + 60, mCenterPosition.y() - ypos, "Number of Tech Buildings: %d", mTechBuildings);
+		BWAPI::Broodwar->drawTextMap(mCenterPosition.x + 60, mCenterPosition.y - ypos, "Number of Tech Buildings: %d", mTechBuildings);
 		ypos -= 10;
 		showtitle = true;
 	}
 
 	if(mPlayer != NULL)
 	{
-		BWAPI::Broodwar->drawTextMap(mCenterPosition.x() + 60, mCenterPosition.y() - ypos, "Owner: %s", mPlayer->getName().c_str());
+		BWAPI::Broodwar->drawTextMap(mCenterPosition.x + 60, mCenterPosition.y - ypos, "Owner: %s", mPlayer->getName().c_str());
 		ypos -= 10;
 		showtitle = true;
 	}
 
 	if(isEnemyBase())
 	{
-		BWAPI::Broodwar->drawTextMap(mCenterPosition.x() + 60, mCenterPosition.y() - ypos, "Is Enemy");
+		BWAPI::Broodwar->drawTextMap(mCenterPosition.x + 60, mCenterPosition.y - ypos, "Is Enemy");
 		ypos -= 10;
 		showtitle = true;
 	}
 
 	if(isAllyBase())
 	{
-		BWAPI::Broodwar->drawTextMap(mCenterPosition.x() + 60, mCenterPosition.y() - ypos, "Is Ally");
+		BWAPI::Broodwar->drawTextMap(mCenterPosition.x + 60, mCenterPosition.y - ypos, "Is Ally");
 		ypos -= 10;
 		showtitle = true;
 	}
 
 	if(isMyBase())
 	{
-		BWAPI::Broodwar->drawTextMap(mCenterPosition.x() + 60, mCenterPosition.y() - ypos, "Is Mine");
+		BWAPI::Broodwar->drawTextMap(mCenterPosition.x + 60, mCenterPosition.y - ypos, "Is Mine");
 		ypos -= 10;
 		showtitle = true;
 	}
 
 	if(mIsContested)
 	{
-		BWAPI::Broodwar->drawTextMap(mCenterPosition.x() + 60, mCenterPosition.y() - ypos, "Base is Contested");
+		BWAPI::Broodwar->drawTextMap(mCenterPosition.x + 60, mCenterPosition.y - ypos, "Base is Contested");
 		ypos -= 10;
 		showtitle = true;
 	}
 
 	if(mIsUnderAttack)
 	{
-		BWAPI::Broodwar->drawTextMap(mCenterPosition.x() + 60, mCenterPosition.y() - ypos, "Base is Under Attack");
+		BWAPI::Broodwar->drawTextMap(mCenterPosition.x + 60, mCenterPosition.y - ypos, "Base is Under Attack");
 		ypos -= 10;
 		showtitle = true;
 	}
 
 	if(mActive)
 	{
-		BWAPI::Broodwar->drawTextMap(mCenterPosition.x() + 60, mCenterPosition.y() - ypos, "Base is Active");
+		BWAPI::Broodwar->drawTextMap(mCenterPosition.x + 60, mCenterPosition.y - ypos, "Base is Active");
 		ypos -= 10;
 		showtitle = true;
 	}
 	else if(mActiveInFuture)
 	{
-		BWAPI::Broodwar->drawTextMap(mCenterPosition.x() + 60, mCenterPosition.y() - ypos, "Base is Active In Future");
+		BWAPI::Broodwar->drawTextMap(mCenterPosition.x + 60, mCenterPosition.y - ypos, "Base is Active In Future");
 		ypos -= 10;
 		showtitle = true;
 	}
 
 	if(mMinedOut)
 	{
-		BWAPI::Broodwar->drawTextMap(mCenterPosition.x() + 60, mCenterPosition.y() - ypos, "Base is mined out");
+		BWAPI::Broodwar->drawTextMap(mCenterPosition.x + 60, mCenterPosition.y - ypos, "Base is mined out");
 		ypos -= 10;
 		showtitle = true;
 	}
 
 	if(showtitle)
-		BWAPI::Broodwar->drawTextMap(mCenterPosition.x() + 60, mCenterPosition.y() - 40, "Base Info:");
+		BWAPI::Broodwar->drawTextMap(mCenterPosition.x + 60, mCenterPosition.y - 40, "Base Info:");
 
 	for each(Unit unit in mAllThreats)
 	{
-		BWAPI::Broodwar->drawLineMap(unit->getPosition().x(), unit->getPosition().y(), mCenterPosition.x(), mCenterPosition.y(), BWAPI::Colors::Red);
+		BWAPI::Broodwar->drawLineMap(unit->getPosition().x, unit->getPosition().y, mCenterPosition.x, mCenterPosition.y, BWAPI::Colors::Red);
 	}
 	for each(Unit building in mBuildings)
 	{
-		BWAPI::Broodwar->drawLine(BWAPI::CoordinateType::Map, building->getPosition().x(), building->getPosition().y(), mCenterPosition.x(), mCenterPosition.y(), building->getPlayer()->getColor());
+		BWAPI::Broodwar->drawLine(BWAPI::CoordinateType::Map, building->getPosition().x, building->getPosition().y, mCenterPosition.x, mCenterPosition.y, building->getPlayer()->getColor());
 	}
 
 	for each(Unit mineral in mMinerals)
 	{
-		BWAPI::Broodwar->drawCircleMap(mineral->getPosition().x(), mineral->getPosition().y(), 32, BWAPI::Colors::Blue);
-		BWAPI::Broodwar->drawLineMap(mineral->getPosition().x(), mineral->getPosition().y(), mCenterPosition.x(), mCenterPosition.y(), BWAPI::Colors::Blue);
+		BWAPI::Broodwar->drawCircleMap(mineral->getPosition().x, mineral->getPosition().y, 32, BWAPI::Colors::Blue);
+		BWAPI::Broodwar->drawLineMap(mineral->getPosition().x, mineral->getPosition().y, mCenterPosition.x, mCenterPosition.y, BWAPI::Colors::Blue);
 	}
 	for each(Unit geyser in mGeysers)
 	{
-		BWAPI::Broodwar->drawCircleMap(geyser->getPosition().x(), geyser->getPosition().y(), 32, BWAPI::Colors::Green);
-		BWAPI::Broodwar->drawLineMap(geyser->getPosition().x(), geyser->getPosition().y(), mCenterPosition.x(), mCenterPosition.y(), BWAPI::Colors::Green);
+		BWAPI::Broodwar->drawCircleMap(geyser->getPosition().x, geyser->getPosition().y, 32, BWAPI::Colors::Green);
+		BWAPI::Broodwar->drawLineMap(geyser->getPosition().x, geyser->getPosition().y, mCenterPosition.x, mCenterPosition.y, BWAPI::Colors::Green);
 	}
 	for each(Unit geyser in mRefineries)
 	{
-		BWAPI::Broodwar->drawCircleMap(geyser->getPosition().x(), geyser->getPosition().y(), 32, BWAPI::Colors::Orange);
-		BWAPI::Broodwar->drawLineMap(geyser->getPosition().x(), geyser->getPosition().y(), mCenterPosition.x(), mCenterPosition.y(), BWAPI::Colors::Green);
+		BWAPI::Broodwar->drawCircleMap(geyser->getPosition().x, geyser->getPosition().y, 32, BWAPI::Colors::Orange);
+		BWAPI::Broodwar->drawLineMap(geyser->getPosition().x, geyser->getPosition().y, mCenterPosition.x, mCenterPosition.y, BWAPI::Colors::Green);
 	}
 }
 

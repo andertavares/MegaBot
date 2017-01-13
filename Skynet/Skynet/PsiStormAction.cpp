@@ -88,7 +88,7 @@ bool PsiStormAction::update(const Goal &squadGoal, const UnitGroup &squadUnitGro
 	if(mUnit->getSpellCooldown() > BWAPI::Broodwar->getRemainingLatencyFrames())
 		return false;
 
-	if(BWAPI::Broodwar->self()->hasResearched(BWAPI::TechTypes::Psionic_Storm) && mUnit->getEnergy() >= BWAPI::TechTypes::Psionic_Storm.energyUsed())
+	if(BWAPI::Broodwar->self()->hasResearched(BWAPI::TechTypes::Psionic_Storm) && mUnit->getEnergy() >= BWAPI::TechTypes::Psionic_Storm.energyCost())
 	{
 		int numTargetting = UnitInformation::Instance().getUnitsTargetting(mUnit).size();
 

@@ -251,8 +251,8 @@ void DefenseSquadTask::updateRequirements()
 		addRequirement(reqMain);
 
 		Position goalpos = mDefenseGoal.getBase()->getCenterLocation();
-		const int x = goalpos.x();
-		const int y = goalpos.y();
+		const int x = goalpos.x;
+		const int y = goalpos.y;
 
 		BWAPI::Broodwar->drawTextMap(x, y, "canAttackGroundNeeded : %d", canAttackGroundNeeded);
 		BWAPI::Broodwar->drawTextMap(x, y+10, "canAttackAirNeeded : %d", canAttackAirNeeded);

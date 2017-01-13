@@ -40,7 +40,7 @@ void ReservedLocationClass::setTilePosition(TilePosition position)
 {
 	mTilePosition = position;
 	if(position != BWAPI::TilePositions::None)
-		mPosition = Position(position.x()*32+(mUnitType.tileWidth()*16), position.y()*32+(mUnitType.tileHeight()*16));
+		mPosition = Position(position.x*32+(mUnitType.tileWidth()*16), position.y*32+(mUnitType.tileHeight()*16));
 	else
 		mPosition = BWAPI::Positions::None;
 

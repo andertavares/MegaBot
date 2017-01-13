@@ -82,7 +82,7 @@ TilePosition UnitClass::getTilePosition()
 	const BWAPI::UnitType &type = getType();
 	const Position &pos = getPosition();
 
-	return TilePosition(Position(pos.x() - (type.tileWidth() * 16), pos.y() - (type.tileHeight() * 16)));
+	return TilePosition(Position(pos.x - (type.tileWidth() * 16), pos.y - (type.tileHeight() * 16)));
 }
 
 Position UnitClass::getPosition()
@@ -295,7 +295,7 @@ void UnitClass::drawUnitPosition()
 
 		BWAPI::Color barColour = isMorphing() ? BWAPI::Colors::Red : BWAPI::Colors::Purple;
 
-		Position bottomLeft(pos.x() - type.dimensionLeft(), pos.y() + type.dimensionDown() + barHeight - 1);
+		Position bottomLeft(pos.x - type.dimensionLeft(), pos.y + type.dimensionDown() + barHeight - 1);
 
 		DrawingHelper::Instance().drawProgressBar(bottomLeft, type.dimensionLeft()+type.dimensionRight(), barHeight, progress, barColour, player->getColor());
 	}
@@ -305,7 +305,7 @@ void UnitClass::drawUnitPosition()
 		double progress = getShield();
 		progress /= type.maxShields();
 
-		Position bottomLeft(pos.x() - type.dimensionLeft(), pos.y() - type.dimensionUp() - barHeight + 2);
+		Position bottomLeft(pos.x - type.dimensionLeft(), pos.y - type.dimensionUp() - barHeight + 2);
 
 		DrawingHelper::Instance().drawProgressBar(bottomLeft, type.dimensionLeft()+type.dimensionRight(), barHeight, progress, BWAPI::Colors::Blue, player->getColor());
 	}
@@ -315,29 +315,29 @@ void UnitClass::drawUnitPosition()
 		double progress = getHealth();
 		progress /= type.maxHitPoints();
 
-		Position bottomLeft(pos.x() - type.dimensionLeft(), pos.y() - type.dimensionUp() + 1);
+		Position bottomLeft(pos.x - type.dimensionLeft(), pos.y - type.dimensionUp() + 1);
 
 		DrawingHelper::Instance().drawProgressBar(bottomLeft, type.dimensionLeft()+type.dimensionRight(), barHeight, progress, BWAPI::Colors::Green, player->getColor());
 	}
 
-	BWAPI::Broodwar->drawBox(BWAPI::CoordinateType::Map, pos.x() - type.dimensionLeft(), pos.y() - type.dimensionUp(), pos.x() + type.dimensionRight(), pos.y() + type.dimensionDown(), player->getColor());
+	BWAPI::Broodwar->drawBox(BWAPI::CoordinateType::Map, pos.x - type.dimensionLeft(), pos.y - type.dimensionUp(), pos.x + type.dimensionRight(), pos.y + type.dimensionDown(), player->getColor());
 
-	BWAPI::Broodwar->drawTextMap(pos.x() + type.dimensionRight(), pos.y(), "%s", player->getName().c_str());
+	BWAPI::Broodwar->drawTextMap(pos.x + type.dimensionRight(), pos.y, "%s", player->getName().c_str());
 
 	AccessType access = accessibility();
-	BWAPI::Broodwar->drawTextMap(pos.x() + type.dimensionRight(), pos.y()+10, "%s", AccessType::getName(access.underlying()).c_str());
+	BWAPI::Broodwar->drawTextMap(pos.x + type.dimensionRight(), pos.y+10, "%s", AccessType::getName(access.underlying()).c_str());
 
 	int existTime = getExistTime() - BWAPI::Broodwar->getFrameCount();
 	int completeTime = getCompletedTime() - BWAPI::Broodwar->getFrameCount() - existTime;
-	BWAPI::Broodwar->drawTextMap(pos.x() + type.dimensionRight(), pos.y()+20, "%d : %d", existTime, completeTime);
+	BWAPI::Broodwar->drawTextMap(pos.x + type.dimensionRight(), pos.y+20, "%d : %d", existTime, completeTime);
 
 	if(isMorphing())
-		BWAPI::Broodwar->drawTextMap(pos.x() + type.dimensionRight(), pos.y()+30, "Morphing");
+		BWAPI::Broodwar->drawTextMap(pos.x + type.dimensionRight(), pos.y+30, "Morphing");
 	else if(isCompleted())
-		BWAPI::Broodwar->drawTextMap(pos.x() + type.dimensionRight(), pos.y()+30, "Completed");
+		BWAPI::Broodwar->drawTextMap(pos.x + type.dimensionRight(), pos.y+30, "Completed");
 
 	Position target = getTargetPosition();
-	BWAPI::Broodwar->drawLine(BWAPI::CoordinateType::Map, pos.x(), pos.y(), target.x(), target.y(), player->getColor());
+	BWAPI::Broodwar->drawLine(BWAPI::CoordinateType::Map, pos.x, pos.y, target.x, target.y, player->getColor());
 }
 
 void UnitClass::drawUnitTilePosition()
@@ -346,7 +346,7 @@ void UnitClass::drawUnitTilePosition()
 	BWAPI::UnitType type = getType();
 	Player player = getPlayer();
 
-	BWAPI::Broodwar->drawBox(BWAPI::CoordinateType::Map, tile.x()*32, tile.y()*32, (tile.x()+type.tileWidth())*32, (tile.y()+type.tileHeight())*32, player->getColor());
+	BWAPI::Broodwar->drawBox(BWAPI::CoordinateType::Map, tile.x*32, tile.y*32, (tile.x+type.tileWidth())*32, (tile.y+type.tileHeight())*32, player->getColor());
 }
 
 bool UnitClass::exists()
@@ -535,7 +535,7 @@ void UnitClass::build(TilePosition target, BWAPI::UnitType type)
 {
 	if(exists())
 	{
-		const Position targetPosition(target.x()*32+type.tileWidth()*16, target.y()*32+type.tileHeight()*16);
+		const Position targetPosition(target.x*32+type.tileWidth()*16, target.y*32+type.tileHeight()*16);
 		if(getDistance(type, targetPosition) > 48 || !MapHelper::isAllVisible(target, type))
 		{
 			move(targetPosition, 0);

@@ -16,7 +16,7 @@ void PositionPath::drawPath()
 	for each(const Position &pos in path)
 	{
 		if(previousPosition != BWAPI::Positions::None)
-			BWAPI::Broodwar->drawLineMap(pos.x(), pos.y(), previousPosition.x(), previousPosition.y(), BWAPI::Colors::Yellow);
+			BWAPI::Broodwar->drawLineMap(pos.x, pos.y, previousPosition.x, previousPosition.y, BWAPI::Colors::Yellow);
 
 		previousPosition = pos;
 	}

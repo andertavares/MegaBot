@@ -81,7 +81,7 @@ int AOEThreatClass::getRadius() const
 void AOEThreatClass::draw() const
 {
 	const Position &pos = getPosition();
-	BWAPI::Broodwar->drawCircleMap(pos.x(), pos.y(), getRadius(), BWAPI::Colors::Red);
+	BWAPI::Broodwar->drawCircleMap(pos.x, pos.y, getRadius(), BWAPI::Colors::Red);
 }
 
 Unit AOEThreatClass::getTarget() const

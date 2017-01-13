@@ -16,11 +16,11 @@ public:
 	{ }
 
 	WalkPosition(const Position &p)
-		: x(p.x() / 8), y(p.y() / 8)
+		: x(p.x / 8), y(p.y / 8)
 	{ }
 
 	WalkPosition(const TilePosition &p)
-		: x(p.x() * 4), y(p.y() * 4)
+		: x(p.x * 4), y(p.y * 4)
 	{ }
 
 	inline operator Position()

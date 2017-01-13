@@ -89,7 +89,7 @@ bool UnitHelper::hasAddon(BWAPI::UnitType type)
 
 Position UnitHelper::tileToPosition(TilePosition tile, BWAPI::UnitType type)
 {
-	return Position(tile.x()*32+(type.tileWidth()*16), tile.y()*32+(type.tileHeight()*16));
+	return Position(tile.x*32+(type.tileWidth()*16), tile.y*32+(type.tileHeight()*16));
 }
 
 bool UnitHelper::isStaticDefense(BWAPI::UnitType type)
@@ -130,15 +130,15 @@ bool UnitHelper::isArmyUnit(BWAPI::UnitType type)
 
 int UnitHelper::getDistance(const Position &pos1, const BWAPI::UnitType type1, const Position &pos2, const BWAPI::UnitType type2)
 {
-	const int uLeft       = pos1.x() - type1.dimensionLeft();
-	const int uTop        = pos1.y() - type1.dimensionUp();
-	const int uRight      = pos1.x() + type1.dimensionRight() + 1;
-	const int uBottom     = pos1.y() + type1.dimensionDown() + 1;
+	const int uLeft       = pos1.x - type1.dimensionLeft();
+	const int uTop        = pos1.y - type1.dimensionUp();
+	const int uRight      = pos1.x + type1.dimensionRight() + 1;
+	const int uBottom     = pos1.y + type1.dimensionDown() + 1;
 
-	const int targLeft    = pos2.x() - type2.dimensionLeft();
-	const int targTop     = pos2.y() - type2.dimensionUp();
-	const int targRight   = pos2.x() + type2.dimensionRight() + 1;
-	const int targBottom  = pos2.y() + type2.dimensionDown() + 1;
+	const int targLeft    = pos2.x - type2.dimensionLeft();
+	const int targTop     = pos2.y - type2.dimensionUp();
+	const int targRight   = pos2.x + type2.dimensionRight() + 1;
+	const int targBottom  = pos2.y + type2.dimensionDown() + 1;
 
 	int xDist = uLeft - targRight;
 	if(xDist < 0)
@@ -161,23 +161,23 @@ int UnitHelper::getDistance(const Position &pos1, const BWAPI::UnitType type1, c
 
 int UnitHelper::getDistance(const Position &pos1, const BWAPI::UnitType type1, const Position &pos2)
 {
-	const int uLeft       = pos1.x() - type1.dimensionLeft();
-	const int uTop        = pos1.y() - type1.dimensionUp();
-	const int uRight      = pos1.x() + type1.dimensionRight() + 1;
-	const int uBottom     = pos1.y() + type1.dimensionDown() + 1;
+	const int uLeft       = pos1.x - type1.dimensionLeft();
+	const int uTop        = pos1.y - type1.dimensionUp();
+	const int uRight      = pos1.x + type1.dimensionRight() + 1;
+	const int uBottom     = pos1.y + type1.dimensionDown() + 1;
 
-	int xDist = uLeft - (pos2.x() + 1);
+	int xDist = uLeft - (pos2.x + 1);
 	if(xDist < 0)
 	{
-		xDist = pos2.x() - uRight;
+		xDist = pos2.x - uRight;
 		if(xDist < 0)
 			xDist = 0;
 	}
 
-	int yDist = uTop - (pos2.y() + 1);
+	int yDist = uTop - (pos2.y + 1);
 	if(yDist < 0)
 	{
-		yDist = pos2.y() - uBottom;
+		yDist = pos2.y - uBottom;
 		if(yDist < 0)
 			yDist = 0;
 	}

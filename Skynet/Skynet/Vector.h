@@ -26,11 +26,11 @@ public:
 	{ }
 
 	Vector(const Position &p)
-		: x( float(p.x()) ), y( float(p.y()) )
+		: x( float(p.x) ), y( float(p.y) )
 	{ }
 
 	Vector(const TilePosition &p)
-		: x( float(p.x() * 32) ), y( float(p.y() * 32) )
+		: x( float(p.x * 32) ), y( float(p.y * 32) )
 	{ }
 
 	inline operator Position()

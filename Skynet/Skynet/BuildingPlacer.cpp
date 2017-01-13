@@ -31,23 +31,23 @@ void BuildingPlacerClass::calculateReservations()
 	for each(Base base in BaseTracker::Instance().getResourceBases())
 	{
 		// reserve the base location
-		for(int x = base->getCenterBuildLocation().x(); x < base->getCenterBuildLocation().x()+centerType.tileWidth(); ++x)
-			for(int y = base->getCenterBuildLocation().y(); y < base->getCenterBuildLocation().y()+centerType.tileHeight(); ++y)
+		for(int x = base->getCenterBuildLocation().x; x < base->getCenterBuildLocation().x+centerType.tileWidth(); ++x)
+			for(int y = base->getCenterBuildLocation().y; y < base->getCenterBuildLocation().y+centerType.tileHeight(); ++y)
 				mPermanentReserved[TilePosition(x, y)] = centerType;
 
 		// if its zerg, also reserve the area the larva hang out
 		if(BWAPI::Broodwar->self()->getRace() == BWAPI::Races::Zerg)
 		{
-			for(int x = base->getCenterBuildLocation().x() - 1; x < base->getCenterBuildLocation().x()+centerType.tileWidth()+1; ++x)
-				for(int y = base->getCenterBuildLocation().y() - 1; y < base->getCenterBuildLocation().y()+centerType.tileHeight()+1; ++y)
+			for(int x = base->getCenterBuildLocation().x - 1; x < base->getCenterBuildLocation().x+centerType.tileWidth()+1; ++x)
+				for(int y = base->getCenterBuildLocation().y - 1; y < base->getCenterBuildLocation().y+centerType.tileHeight()+1; ++y)
 					mPermanentReserved[TilePosition(x, y)] = centerType;
 		}
 
 		// and reserve the geyser space just so it doesn't get included in the resource reserved space
 		for each(Unit geyser in base->getGeysers())
 		{
-			for(int x = geyser->getTilePosition().x(); x < geyser->getTilePosition().x()+geyser->getType().tileWidth(); ++x)
-				for(int y = geyser->getTilePosition().y(); y < geyser->getTilePosition().y()+geyser->getType().tileHeight(); ++y)
+			for(int x = geyser->getTilePosition().x; x < geyser->getTilePosition().x+geyser->getType().tileWidth(); ++x)
+				for(int y = geyser->getTilePosition().y; y < geyser->getTilePosition().y+geyser->getType().tileHeight(); ++y)
 					mPermanentReserved[TilePosition(x, y)] = refineryType;
 		}
 
@@ -62,11 +62,11 @@ void BuildingPlacerClass::finaliseReservations()
 	// TODO: perhaps only in a path between the two sides
 	for each(Chokepoint choke in TerrainAnaysis::Instance().getChokepoints())
 	{
-		int minX = std::min(choke->getBuildTiles().first.x(), choke->getBuildTiles().second.x());
-		int maxX = std::max(choke->getBuildTiles().first.x(), choke->getBuildTiles().second.x());
+		int minX = std::min(choke->getBuildTiles().first.x, choke->getBuildTiles().second.x);
+		int maxX = std::max(choke->getBuildTiles().first.x, choke->getBuildTiles().second.x);
 
-		int minY = std::min(choke->getBuildTiles().first.y(), choke->getBuildTiles().second.y());
-		int maxY = std::max(choke->getBuildTiles().first.y(), choke->getBuildTiles().second.y());
+		int minY = std::min(choke->getBuildTiles().first.y, choke->getBuildTiles().second.y);
+		int maxY = std::max(choke->getBuildTiles().first.y, choke->getBuildTiles().second.y);
 
 		for(int x = minX; x <= maxX; ++x)
 			for(int y = minY; y <= maxY; ++y)
@@ -80,9 +80,9 @@ void BuildingPlacerClass::reserveResourceSpace(const UnitGroup &resources, Base 
 	for each(Unit resource in resources)
 	{
 		int distanceBetween = (resource->getPosition().getApproxDistance(base->getCenterLocation()) / 32) + 1;
-		for(int x = resource->getTilePosition().x() - int(distanceBetween); x < resource->getTilePosition().x() + int(distanceBetween) + 4; ++x)
+		for(int x = resource->getTilePosition().x - int(distanceBetween); x < resource->getTilePosition().x + int(distanceBetween) + 4; ++x)
 		{
-			for(int y = resource->getTilePosition().y() - int(distanceBetween); y < resource->getTilePosition().y() + int(distanceBetween) + 3; ++y)
+			for(int y = resource->getTilePosition().y - int(distanceBetween); y < resource->getTilePosition().y + int(distanceBetween) + 3; ++y)
 			{
 				int distanceToResource = Position(x*32+16, y*32+16).getApproxDistance(resource->getPosition()) / 32;
 				int distanceToBase = Position(x*32+16, y*32+16).getApproxDistance(base->getCenterLocation()) / 32;
@@ -111,15 +111,15 @@ void BuildingPlacerClass::update()
 
 // 	for(std::map<TilePosition, BWAPI::UnitType>::iterator it = mPermanentReserved.begin(); it != mPermanentReserved.end(); ++it)
 // 	{
-// 		BWAPI::Broodwar->drawBox(BWAPI::CoordinateType::Map, it->first.x() * 32, it->first.y() * 32, it->first.x() * 32 + 32, it->first.y() * 32 + 32, BWAPI::Colors::Red);
+// 		BWAPI::Broodwar->drawBox(BWAPI::CoordinateType::Map, it->first.x * 32, it->first.y * 32, it->first.x * 32 + 32, it->first.y * 32 + 32, BWAPI::Colors::Red);
 // 	}
 // 	for(std::map<TilePosition, int>::iterator it = mResourceReserved.begin(); it != mResourceReserved.end(); ++it)
 // 	{
-// 		BWAPI::Broodwar->drawCircle(BWAPI::CoordinateType::Map, it->first.x()*32+16, it->first.y()*32+16, 16, BWAPI::Colors::Blue);
+// 		BWAPI::Broodwar->drawCircle(BWAPI::CoordinateType::Map, it->first.x*32+16, it->first.y*32+16, 16, BWAPI::Colors::Blue);
 // 	}
 // 	for(std::map<TilePosition, ReservedLocation>::iterator it = mReservedTiles.begin(); it != mReservedTiles.end(); ++it)
 // 	{
-// 		BWAPI::Broodwar->drawBox(BWAPI::CoordinateType::Map, it->first.x() * 32, it->first.y() * 32, it->first.x() * 32 + 32, it->first.y() * 32 + 32, BWAPI::Colors::Red);
+// 		BWAPI::Broodwar->drawBox(BWAPI::CoordinateType::Map, it->first.x * 32, it->first.y * 32, it->first.x * 32 + 32, it->first.y * 32 + 32, BWAPI::Colors::Red);
 // 	}
 }
 
@@ -140,8 +140,8 @@ void BuildingPlacerClass::onDestroy(Unit unit)
 
 void BuildingPlacerClass::reserve(ReservedLocation location)
 {
-	int startx = location->getTilePosition().x();
-	int starty = location->getTilePosition().y();
+	int startx = location->getTilePosition().x;
+	int starty = location->getTilePosition().y;
 
 	int endx = startx + location->getUnitType().tileWidth();
 	int endy = starty + location->getUnitType().tileHeight();
@@ -156,8 +156,8 @@ void BuildingPlacerClass::reserve(ReservedLocation location)
 
 void BuildingPlacerClass::free(ReservedLocation location)
 {
-	int startx = location->getTilePosition().x();
-	int starty = location->getTilePosition().y();
+	int startx = location->getTilePosition().x;
+	int starty = location->getTilePosition().y;
 
 	int endx = startx + location->getUnitType().tileWidth();
 	int endy = starty + location->getUnitType().tileHeight();
@@ -319,7 +319,7 @@ bool BuildingPlacerClass::isLocationNonBlocking(TilePosition position, BWAPI::Un
 	const std::set<TilePosition> &chokeTiles = region->getChokepointTiles();
 	for each(TilePosition tile in chokeTiles)
 	{
-		if(tile.x() >= position.x() && tile.x() < position.x() + type.tileWidth() && tile.y() >= position.y() && tile.y() < position.y() + type.tileHeight())
+		if(tile.x >= position.x && tile.x < position.x + type.tileWidth() && tile.y >= position.y && tile.y < position.y + type.tileHeight())
 			return false;
 
 		targets.insert(tile);
@@ -330,8 +330,8 @@ bool BuildingPlacerClass::isLocationNonBlocking(TilePosition position, BWAPI::Un
 
 	/* Ignore the tiles we are building on as we cant path though this building */
 	std::set<TilePosition> ignoreTiles;
-	for(int x = position.x(); x < position.x() + type.tileWidth(); ++x)
-		for(int y = position.y(); y < position.y() + type.tileHeight(); ++y)
+	for(int x = position.x; x < position.x + type.tileWidth(); ++x)
+		for(int y = position.y; y < position.y + type.tileHeight(); ++y)
 			ignoreTiles.insert(TilePosition(x, y));
 
 	/* Don't block other buildings */
@@ -387,10 +387,10 @@ bool BuildingPlacerClass::isLocationNonBlocking(TilePosition position, BWAPI::Un
 // 		{
 // 			DrawBuffer::Instance().clearBuffer(BufferedCategory::BuildingPlacer);
 // 			for each(TilePosition tile in targets)
-// 				DrawBuffer::Instance().drawBufferedCircle(BWAPI::CoordinateType::Map, tile.x()*32+16, tile.y()*32+16, 16, 240, BWAPI::Colors::Red, false, BufferedCategory::BuildingPlacer);
+// 				DrawBuffer::Instance().drawBufferedCircle(BWAPI::CoordinateType::Map, tile.x*32+16, tile.y*32+16, 16, 240, BWAPI::Colors::Red, false, BufferedCategory::BuildingPlacer);
 // 
-// 			for(int x = position.x(); x < position.x() + type.tileWidth(); ++x)
-// 				for(int y = position.y(); y < position.y() + type.tileHeight(); ++y)
+// 			for(int x = position.x; x < position.x + type.tileWidth(); ++x)
+// 				for(int y = position.y; y < position.y + type.tileHeight(); ++y)
 // 					DrawBuffer::Instance().drawBufferedCircle(BWAPI::CoordinateType::Map, x*32+16, y*32+16, 16, 240, BWAPI::Colors::White, false, BufferedCategory::BuildingPlacer);
 // 		}
 
@@ -401,16 +401,16 @@ bool BuildingPlacerClass::isLocationNonBlocking(TilePosition position, BWAPI::Un
 // 	{
 // 		DrawBuffer::Instance().clearBuffer(BufferedCategory::BuildingPlacer);
 // 		for each(TilePosition tile in targets)
-// 			DrawBuffer::Instance().drawBufferedCircle(BWAPI::CoordinateType::Map, tile.x()*32+16, tile.y()*32+16, 16, 240, BWAPI::Colors::Red, false, BufferedCategory::BuildingPlacer);
+// 			DrawBuffer::Instance().drawBufferedCircle(BWAPI::CoordinateType::Map, tile.x*32+16, tile.y*32+16, 16, 240, BWAPI::Colors::Red, false, BufferedCategory::BuildingPlacer);
 // 
 // 		for each(TilePosition tile in newTargets)
-// 			DrawBuffer::Instance().drawBufferedCircle(BWAPI::CoordinateType::Map, tile.x()*32+16, tile.y()*32+16, 16, 240, BWAPI::Colors::Yellow, false, BufferedCategory::BuildingPlacer);
+// 			DrawBuffer::Instance().drawBufferedCircle(BWAPI::CoordinateType::Map, tile.x*32+16, tile.y*32+16, 16, 240, BWAPI::Colors::Yellow, false, BufferedCategory::BuildingPlacer);
 // 
-// 		for(int x = position.x(); x < position.x() + type.tileWidth(); ++x)
-// 			for(int y = position.y(); y < position.y() + type.tileHeight(); ++y)
+// 		for(int x = position.x; x < position.x + type.tileWidth(); ++x)
+// 			for(int y = position.y; y < position.y + type.tileHeight(); ++y)
 // 				DrawBuffer::Instance().drawBufferedCircle(BWAPI::CoordinateType::Map, x*32+16, y*32+16, 16, 240, BWAPI::Colors::White, false, BufferedCategory::BuildingPlacer);
 // 
-// 		DrawBuffer::Instance().drawBufferedCircle(BWAPI::CoordinateType::Map, startTile.x()*32+16, startTile.y()*32+16, 16, 240, BWAPI::Colors::Green, false, BufferedCategory::BuildingPlacer);
+// 		DrawBuffer::Instance().drawBufferedCircle(BWAPI::CoordinateType::Map, startTile.x*32+16, startTile.y*32+16, 16, 240, BWAPI::Colors::Green, false, BufferedCategory::BuildingPlacer);
 // 	}
 
 	return false;
@@ -426,9 +426,9 @@ bool BuildingPlacerClass::isLocationBuildable(TilePosition position, BWAPI::Unit
 			{
 				if(!ignoreReservations)
 				{
-					for(int x = position.x(); x < position.x() + type.tileWidth(); ++x)
+					for(int x = position.x; x < position.x + type.tileWidth(); ++x)
 					{
-						for(int y = position.y(); y < position.y() + type.tileHeight(); ++y)
+						for(int y = position.y; y < position.y + type.tileHeight(); ++y)
 						{
 							if(isReserved(x, y))
 								return false;
@@ -443,9 +443,9 @@ bool BuildingPlacerClass::isLocationBuildable(TilePosition position, BWAPI::Unit
 		return false;
 	}
 
-	for(int x = position.x(); x < position.x() + type.tileWidth(); ++x)
+	for(int x = position.x; x < position.x + type.tileWidth(); ++x)
 	{
-		for(int y = position.y(); y < position.y() + type.tileHeight(); ++y)
+		for(int y = position.y; y < position.y + type.tileHeight(); ++y)
 		{
 			if(!isTileBuildable(TilePosition(x, y), type, ignoreReservations))
 				return false;
@@ -458,10 +458,10 @@ bool BuildingPlacerClass::isLocationBuildable(TilePosition position, BWAPI::Unit
 		{
 			if(mineral->accessibility() != AccessType::Dead)
 			{
-				if (mineral->getTilePosition().x() > position.x() - 5 &&
-					mineral->getTilePosition().y() > position.y() - 4 &&
-					mineral->getTilePosition().x() < position.x() + 7 &&
-					mineral->getTilePosition().y() < position.y() + 6)
+				if (mineral->getTilePosition().x > position.x - 5 &&
+					mineral->getTilePosition().y > position.y - 4 &&
+					mineral->getTilePosition().x < position.x + 7 &&
+					mineral->getTilePosition().y < position.y + 6)
 				{
 					return false;
 				}
@@ -471,10 +471,10 @@ bool BuildingPlacerClass::isLocationBuildable(TilePosition position, BWAPI::Unit
 		{
 			if(geyser->accessibility() != AccessType::Dead)
 			{
-				if (geyser->getTilePosition().x() > position.x() - 7 &&
-					geyser->getTilePosition().y() > position.y() - 5 &&
-					geyser->getTilePosition().x() < position.x() + 7 &&
-					geyser->getTilePosition().y() < position.y() + 6)
+				if (geyser->getTilePosition().x > position.x - 7 &&
+					geyser->getTilePosition().y > position.y - 5 &&
+					geyser->getTilePosition().x < position.x + 7 &&
+					geyser->getTilePosition().y < position.y + 6)
 				{
 					return false;
 				}
@@ -521,7 +521,7 @@ bool BuildingPlacerClass::isTileBlocked(TilePosition tile, BWAPI::UnitType type,
 				return true;
 	}
 
-	for each(Unit unit in UnitTracker::Instance().getUnitsOnTile(tile.x(), tile.y()))
+	for each(Unit unit in UnitTracker::Instance().getUnitsOnTile(tile.x, tile.y))
 	{
 		if(!unit->exists())
 			continue;
@@ -538,11 +538,11 @@ bool BuildingPlacerClass::isTileBlocked(TilePosition tile, BWAPI::UnitType type,
 
 	if(BWAPI::Broodwar->self()->getRace() == BWAPI::Races::Terran && !type.isAddon())
 	{
-		if(tile.x()-1 >= 0)
-			if(isAddonBuilder(tile.x()-1, tile.y()))
+		if(tile.x-1 >= 0)
+			if(isAddonBuilder(tile.x-1, tile.y))
 				return true;
-		if(tile.x()-2 >= 0)
-			if(isAddonBuilder(tile.x()-2, tile.y()))
+		if(tile.x-2 >= 0)
+			if(isAddonBuilder(tile.x-2, tile.y))
 				return true;
 	}
 
@@ -734,8 +734,8 @@ bool BuildingPlacerClass::isAddonBuilder(int x, int y) const
 
 bool BuildingPlacerClass::isAddonBuildable(TilePosition position) const
 {
-	for(int x = position.x() + 4; x < position.x() + 6; ++x)
-		for(int y = position.y() + 1; y < position.y() + 3; ++y)
+	for(int x = position.x + 4; x < position.x + 6; ++x)
+		for(int y = position.y + 1; y < position.y + 3; ++y)
 			if(!isTileBuildable(TilePosition(x, y), BWAPI::UnitTypes::Terran_Machine_Shop))
 				return false;
 
@@ -790,10 +790,10 @@ std::pair<TilePosition, Base> BuildingPlacerClass::getExpandLocation(bool gas) c
 std::set<TilePosition> BuildingPlacerClass::getSurroundingTiles(TilePosition position, BWAPI::UnitType type, bool ignoreReservations) const
 {
 	std::set<TilePosition> tiles;
-	int y1 = position.y() + type.tileHeight();
-	int x1 = position.x() - 1;
-	int y2 = position.y() + type.tileHeight() - 1;
-	int x2 = position.x() - 1;
+	int y1 = position.y + type.tileHeight();
+	int x1 = position.x - 1;
+	int y2 = position.y + type.tileHeight() - 1;
+	int x2 = position.x - 1;
 
 	while(true)
 	{
@@ -805,7 +805,7 @@ std::set<TilePosition> BuildingPlacerClass::getSurroundingTiles(TilePosition pos
 		if(isTileWalkable(t2, ignoreReservations))
 			tiles.insert(t2);
 
-		if(x1 < position.x() + type.tileWidth())
+		if(x1 < position.x + type.tileWidth())
 			x1++;
 		else
 			y1--;
@@ -813,7 +813,7 @@ std::set<TilePosition> BuildingPlacerClass::getSurroundingTiles(TilePosition pos
 		if(y1 == y2 && x1 == x2)
 			break;
 
-		if(y2 > position.y() - 1)
+		if(y2 > position.y - 1)
 			y2--;
 		else
 			x2++;

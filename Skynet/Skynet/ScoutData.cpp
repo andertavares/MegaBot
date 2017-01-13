@@ -91,7 +91,7 @@ void ScoutDataClass::loadPositions()
 	{
 	case ScoutType::InitialBaseLocationScout:
 		{
-			mPositions.insert(Position(mBase->getCenterBuildLocation().x()*32+16, mBase->getCenterBuildLocation().y()*32+16));
+			mPositions.insert(Position(mBase->getCenterBuildLocation().x*32+16, mBase->getCenterBuildLocation().y*32+16));
 			break;
 		}
 	case ScoutType::TechSearch:
@@ -106,7 +106,7 @@ void ScoutDataClass::loadPositions()
 			for each(TilePosition tile in mBase->getTiles())
 			{
 				if(BWAPI::Broodwar->isBuildable(tile))
-					mPositions.insert(Position(tile.x()*32+16, tile.y()*32+16));
+					mPositions.insert(Position(tile.x*32+16, tile.y*32+16));
 			}
 			break;
 		}
@@ -140,6 +140,6 @@ void ScoutDataClass::drawDebug(BWAPI::Color colour)
 {
 	for each(Position position in mPositions)
 	{
-		BWAPI::Broodwar->drawCircleMap(position.x(), position.y(), 16, colour);
+		BWAPI::Broodwar->drawCircleMap(position.x, position.y, 16, colour);
 	}
 }

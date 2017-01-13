@@ -9,7 +9,7 @@
 #include "Skynet.h"
 #include "NUSBotModule.h"
 #include "strategy/MetaStrategy.h"
-#include "strategy/MetaStrategyFactory.h"
+#include "strategy/MetaStrategyManager.h"
 #include "data/Configuration.h"
 #include "data/MatchData.h"
 #include "data/GameStateInfo.h"
@@ -40,7 +40,7 @@ void MegaBot::onStart() {
     Configuration::getInstance()->parseConfig();
 
 	//initializes and registers meta strategy (strategy selector)
-	metaStrategy = MetaStrategyFactory::getMetaStrategy();
+	metaStrategy = MetaStrategyManager::getMetaStrategy();
 	MatchData::getInstance()->registerMetaStrategy(metaStrategy->getName());
 	metaStrategy->onStart();
 

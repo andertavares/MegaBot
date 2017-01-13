@@ -1,4 +1,4 @@
-#include "MetaStrategyFactory.h"
+#include "MetaStrategyManager.h"
 #include "../utils/tinyxml2.h"
 #include "../utils/Logging.h"
 #include "MetaStrategy.h"
@@ -7,7 +7,7 @@
 #include "RandomSwitch.h"
 #include "SingleChoice.h"
 
-MetaStrategy* MetaStrategyFactory::getMetaStrategy(){
+MetaStrategy* MetaStrategyManager::getMetaStrategy(){
 	//using namespace tinyxml2;
 
     //retrieve what config says about strategy

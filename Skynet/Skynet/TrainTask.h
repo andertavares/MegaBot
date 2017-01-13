@@ -38,8 +38,8 @@ public:
 	virtual int dispatchTime() const { return mRequiredSatisfyTime; }
 	virtual int startTime() const { return mRequiredSatisfyTime; }
 
-	virtual bool hasDispatched() const { return mProductionBuilding; }
-	virtual bool inProgress() const { return mProducedUnit; }
+	virtual bool hasDispatched() const { return mProductionBuilding != NULL; }
+	virtual bool inProgress() const { return mProducedUnit != NULL; }
 
 	BWAPI::UnitType getTrainType() { return mType; }
 

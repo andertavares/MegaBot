@@ -18,7 +18,7 @@ public:
 	void savePrediction(Unit unit);
 	void deletePrediction(Unit unit);
 
-	Unit onNewUnit(BWAPI::Unit* newUnit);
+	Unit onNewUnit(BWAPI::Unit newUnit);
 
 private:
 	UnitGroup mUnits;

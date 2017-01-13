@@ -6,7 +6,7 @@ AOEThreatClass::AOEThreatClass(Unit unit)
 {
 }
 
-AOEThreatClass::AOEThreatClass(BWAPI::Bullet* bullet)
+AOEThreatClass::AOEThreatClass(BWAPI::Bullet bullet)
 	: mUnit()
 	, mBullet(bullet)
 {

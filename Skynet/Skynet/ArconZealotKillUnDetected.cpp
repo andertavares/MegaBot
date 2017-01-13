@@ -9,7 +9,7 @@ using namespace SkynetBot;
 
 bool ArconZealotKillUnDetected::update(const Goal &squadGoal, const UnitGroup &squadUnitGroup)
 {
-	if(mUnit->getOrder() == BWAPI::Orders::CompletingArchonsummon)
+	if(mUnit->getOrder() == BWAPI::Orders::CompletingArchonSummon)
 		return true;
 
 	const int minDistance = 32*5;

@@ -16,11 +16,11 @@ public:
 	void pumpUnitEvents();
 	void update();
 
-	void onUnitDiscover(BWAPI::Unit* unit);
-	void onUnitDestroy(BWAPI::Unit* unit);
+	void onUnitDiscover(BWAPI::Unit unit);
+	void onUnitDestroy(BWAPI::Unit unit);
 
-	Unit getUnit(BWAPI::Unit* unit);
-	UnitGroup getUnitGroup(std::set<BWAPI::Unit*> units);
+	Unit getUnit(BWAPI::Unit unit);
+	UnitGroup getUnitGroup(BWAPI::Unitset units);
 
 	const UnitGroup &getGeysers() { return mPlayerToTypeToUnits[BWAPI::Broodwar->neutral()][BWAPI::UnitTypes::Resource_Vespene_Geyser]; }
 	const UnitGroup &getMinerals() { return mPlayerToTypeToUnits[BWAPI::Broodwar->neutral()][BWAPI::UnitTypes::Resource_Mineral_Field]; }
@@ -40,7 +40,7 @@ public:
 	void onDestroy(Unit unit);
 
 private:
-	std::map<BWAPI::Unit*, Unit> mUnits;
+	std::map<BWAPI::Unit, Unit> mUnits;
 
 	std::map<Unit, Player> mUnitToPlayer;
 	std::map<Unit, BWAPI::UnitType> mUnitToType;

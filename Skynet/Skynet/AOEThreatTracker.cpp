@@ -14,7 +14,7 @@ void AOEThreatTrackerClass::update()
 			++it;
 	}
 
-	for(std::map<BWAPI::Bullet*, AOEThreat>::iterator it = mBulletThreats.begin(); it != mBulletThreats.end();)
+	for(std::map<BWAPI::Bullet, AOEThreat>::iterator it = mBulletThreats.begin(); it != mBulletThreats.end();)
 	{
 		if(it->second->hasGone())
 			mBulletThreats.erase(it++);
@@ -41,7 +41,7 @@ void AOEThreatTrackerClass::update()
 		}
 	}
 
-	for each(BWAPI::Bullet* bullet in BWAPI::Broodwar->getBullets())
+	for each(BWAPI::Bullet bullet in BWAPI::Broodwar->getBullets())
 	{
 		const BWAPI::BulletType &type = bullet->getType();
 		if((type == BWAPI::BulletTypes::Psionic_Storm || type == BWAPI::BulletTypes::EMP_Missile) && mBulletThreats.count(bullet) == 0)

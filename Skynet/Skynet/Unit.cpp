@@ -12,7 +12,7 @@
 
 const Unit StaticUnits::nullunit;
 
-UnitClass::UnitClass(BWAPI::Unit* unit)
+UnitClass::UnitClass(BWAPI::Unit unit)
 	: mUnit(unit)
 	, mStoredPosition(BWAPI::Positions::Unknown)
 	, mStoredTargetPosition(BWAPI::Positions::None)
@@ -489,7 +489,7 @@ void UnitClass::train(BWAPI::UnitType type)
 	{
 		if(mUnit->getSecondaryOrder() == BWAPI::Orders::Train)
 		{
-			const std::list<BWAPI::UnitType> &queue = mUnit->getTrainingQueue();
+			const BWAPI::UnitType::list &queue = mUnit->getTrainingQueue();
 			if(queue.size() > 1 || (queue.size() == 1 && *queue.begin() != type))
 			{
 				cancel();
@@ -554,7 +554,7 @@ void UnitClass::build(TilePosition target, BWAPI::UnitType type)
 				return;
 		}
 
-		if(mUnit->build(target, type))
+		if (mUnit->build(type, target))
 			mLastOrderExecuteTime = BWAPI::Broodwar->getFrameCount() + BWAPI::Broodwar->getRemainingLatencyFrames();
 		else
 			move(targetPosition, 0);
@@ -858,7 +858,7 @@ void UnitClass::stop()
 	}
 }
 
-void UnitClass::promote(BWAPI::Unit* unit)
+void UnitClass::promote(BWAPI::Unit unit)
 {
 	mUnit = unit;
 	mStoredAccessType = AccessType::Full;
@@ -1250,7 +1250,7 @@ bool UnitClass::isRepairing()
 bool UnitClass::isHealing()
 {
 	if(exists())
-		return mUnit->getOrder() == BWAPI::Orders::MedicHeal1 || mUnit->getOrder() == BWAPI::Orders::MedicHeal2;
+		return mUnit->getOrder() == BWAPI::Orders::MedicHeal || mUnit->getOrder() == BWAPI::Orders::MedicHealToIdle;
 
 	return false;
 }
@@ -1300,12 +1300,12 @@ int UnitClass::getDistance(Position position, int inFramesTime)
 	return UnitHelper::getDistance(getPosition(inFramesTime), getType(), position);
 }
 
-std::list<BWAPI::UnitType> UnitClass::getTrainingQueue()
+BWAPI::UnitType::list UnitClass::getTrainingQueue()
 {
 	if(exists())
 		return mUnit->getTrainingQueue();
 
-	return std::list<BWAPI::UnitType>();
+	return BWAPI::UnitType::list();
 }
 
 int UnitClass::getEnergy()

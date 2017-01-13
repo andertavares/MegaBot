@@ -6,7 +6,7 @@ class AOEThreatClass
 {
 public:
 	AOEThreatClass(Unit unit);
-	AOEThreatClass(BWAPI::Bullet* bullet);
+	AOEThreatClass(BWAPI::Bullet bullet);
 
 	bool hasGone() const;
 
@@ -22,6 +22,6 @@ public:
 
 private:
 	Unit mUnit;
-	BWAPI::Bullet* mBullet;
+	BWAPI::Bullet mBullet;
 };
 typedef std::tr1::shared_ptr<AOEThreatClass> AOEThreat;

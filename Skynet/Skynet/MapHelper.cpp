@@ -201,7 +201,7 @@ bool MapHelper::isTileWalkable(int x, int y)
 	{
 		for(int ny = y * 4; ny < y * 4 + 4; ++ny)
 		{
-			if(!BWAPI::Broodwar->isAccessible(nx, ny))
+			if(!BWAPI::Broodwar->isWalkable(nx, ny))
 				return false;
 		}
 	}

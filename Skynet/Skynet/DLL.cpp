@@ -12,7 +12,7 @@ BOOL APIENTRY DllMain( HANDLE hModule, DWORD ul_reason_for_call, LPVOID lpReserv
 	switch (ul_reason_for_call)
 	{
 	case DLL_PROCESS_ATTACH:
-		BWAPI::BWAPI_init();
+		//BWAPI::BWAPI_init();
 		break;
 	case DLL_PROCESS_DETACH:
 		break;

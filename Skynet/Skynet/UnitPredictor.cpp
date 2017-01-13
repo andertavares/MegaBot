@@ -25,7 +25,7 @@ void UnitPredictorClass::deletePrediction(Unit unit)
 	mUnits.erase(unit);
 }
 
-Unit UnitPredictorClass::onNewUnit(BWAPI::Unit* newUnit)
+Unit UnitPredictorClass::onNewUnit(BWAPI::Unit newUnit)
 {
 	for each(Unit unit in mUnits)
 	{

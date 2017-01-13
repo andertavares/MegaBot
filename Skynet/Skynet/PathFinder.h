@@ -75,7 +75,7 @@ class DefaultWalkTest
 public:
 	bool operator()(WalkPosition position)
 	{
-		return BWAPI::Broodwar->isAccessible(position.x, position.y);
+		return BWAPI::Broodwar->isWalkable(position.x, position.y);
 	}
 };
 

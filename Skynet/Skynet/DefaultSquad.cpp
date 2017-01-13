@@ -165,7 +165,7 @@ bool DefaultSquadTask::update()
 		}
 
 		int alliesSize = 1;
-		std::map<BWAPI::Force*, int> enemyForces;
+		std::map<BWAPI::Force, int> enemyForces;
 		for each(Player player in BWAPI::Broodwar->getPlayers())
 		{
 			if(player == BWAPI::Broodwar->self())
@@ -179,7 +179,7 @@ bool DefaultSquadTask::update()
 		}
 
 		int maxEnemiesSize = 0;
-		for each(std::pair<BWAPI::Force*, int> force in enemyForces)
+		for each(std::pair<BWAPI::Force, int> force in enemyForces)
 		{
 			if(force.second > maxEnemiesSize)
 				maxEnemiesSize = force.second;

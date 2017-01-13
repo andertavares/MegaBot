@@ -81,7 +81,7 @@ void TerrainAnaysisClass::calculateWalkTileClearance()
 	{
 		for(int y = 0; y < mMapHeight; ++y)
 		{
-			if(!BWAPI::Broodwar->isAccessible(x, y))
+			if(!BWAPI::Broodwar->isWalkable(x, y))
 			{
 				mTileClearance[x][y] = 0;
 				mTileClosestObstacle[x][y] = WalkPosition(x, y);
@@ -206,7 +206,7 @@ std::pair<WalkPosition, WalkPosition> TerrainAnaysisClass::findChokePoint(WalkPo
 
 	for(;;)
 	{
-		if(x0 < 0 || y0 < 0 || x0 >= mapWidth || y0 >= mapHeight || !BWAPI::Broodwar->isAccessible(x0, y0))
+		if(x0 < 0 || y0 < 0 || x0 >= mapWidth || y0 >= mapHeight || !BWAPI::Broodwar->isWalkable(x0, y0))
 			return std::make_pair(side1, WalkPosition(x0, y0));
 
 		WalkPosition side2 = mTileClosestObstacle[x0][y0];
@@ -247,7 +247,7 @@ void TerrainAnaysisClass::calculateConnectivity()
 			if(mTileConnectivity[x][y] != 0)
 				continue;
 
-			bool walkable = BWAPI::Broodwar->isAccessible(x, y);
+			bool walkable = BWAPI::Broodwar->isWalkable(x, y);
 			int tileCount = 0;
 
 			std::set<WalkPosition> unvisitedTiles;
@@ -260,14 +260,14 @@ void TerrainAnaysisClass::calculateConnectivity()
 				++tileCount;
 				mTileConnectivity[tile->x][tile->y] = currentRegion;
 
-				if(tile->x > 0 && BWAPI::Broodwar->isAccessible(tile->x-1, tile->y) == walkable && mTileConnectivity[tile->x-1][tile->y] == 0)
+				if(tile->x > 0 && BWAPI::Broodwar->isWalkable(tile->x-1, tile->y) == walkable && mTileConnectivity[tile->x-1][tile->y] == 0)
 					unvisitedTiles.insert(WalkPosition(tile->x-1, tile->y));
-				if(tile->y > 0 && BWAPI::Broodwar->isAccessible(tile->x, tile->y-1) == walkable && mTileConnectivity[tile->x][tile->y-1] == 0)
+				if(tile->y > 0 && BWAPI::Broodwar->isWalkable(tile->x, tile->y-1) == walkable && mTileConnectivity[tile->x][tile->y-1] == 0)
 					unvisitedTiles.insert(WalkPosition(tile->x, tile->y-1));
 
-				if(tile->x < mMapWidth-1 && BWAPI::Broodwar->isAccessible(tile->x+1, tile->y) == walkable && mTileConnectivity[tile->x+1][tile->y] == 0)
+				if(tile->x < mMapWidth-1 && BWAPI::Broodwar->isWalkable(tile->x+1, tile->y) == walkable && mTileConnectivity[tile->x+1][tile->y] == 0)
 					unvisitedTiles.insert(WalkPosition(tile->x+1, tile->y));
-				if(tile->y < mMapHeight-1 && BWAPI::Broodwar->isAccessible(tile->x, tile->y+1) == walkable && mTileConnectivity[tile->x][tile->y+1] == 0)
+				if(tile->y < mMapHeight-1 && BWAPI::Broodwar->isWalkable(tile->x, tile->y+1) == walkable && mTileConnectivity[tile->x][tile->y+1] == 0)
 					unvisitedTiles.insert(WalkPosition(tile->x, tile->y+1));
 
 				unvisitedTiles.erase(tile);

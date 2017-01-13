@@ -38,7 +38,7 @@ public:
 	virtual int dispatchTime() const { return mRequiredSatisfyTime; }
 	virtual int startTime() const { return mRequiredSatisfyTime; }
 
-	virtual bool hasDispatched() const { return mUnit; }
+	virtual bool hasDispatched() const { return mUnit == NULL; }
 	virtual bool inProgress() const { return mUnit && mUnit->isResearching(); }
 
 private:

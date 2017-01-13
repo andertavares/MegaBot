@@ -20,6 +20,6 @@ public:
 private:
 	std::set<AOEThreat> mAllThreats;
 	std::map<Unit, AOEThreat> mUnitThreats;
-	std::map<BWAPI::Bullet*, AOEThreat> mBulletThreats;
+	std::map<BWAPI::Bullet, AOEThreat> mBulletThreats;
 };
 typedef Singleton<AOEThreatTrackerClass> AOEThreatTracker;

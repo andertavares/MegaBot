@@ -19,13 +19,13 @@ UnitTrackerClass::UnitTrackerClass()
 void UnitTrackerClass::pumpUnitEvents()
 {
 	mOnBeginCalled = true;
-	for(std::map<BWAPI::Unit*, Unit>::iterator it = mUnits.begin(); it != mUnits.end(); ++it)
+	for(std::map<BWAPI::Unit, Unit>::iterator it = mUnits.begin(); it != mUnits.end(); ++it)
 		onDiscover(it->second);
 }
 
-void UnitTrackerClass::onUnitDiscover(BWAPI::Unit* unit)
+void UnitTrackerClass::onUnitDiscover(BWAPI::Unit unit)
 {
-	std::map<BWAPI::Unit*, Unit>::iterator it = mUnits.find(unit);
+	std::map<BWAPI::Unit, Unit>::iterator it = mUnits.find(unit);
 	if(it != mUnits.end())
 	{
 		checkUnit(it->second);
@@ -45,9 +45,9 @@ void UnitTrackerClass::onUnitDiscover(BWAPI::Unit* unit)
 	onDiscover(newUnit);
 }
 
-void UnitTrackerClass::onUnitDestroy(BWAPI::Unit* unit)
+void UnitTrackerClass::onUnitDestroy(BWAPI::Unit unit)
 {
-	std::map<BWAPI::Unit*, Unit>::iterator it = mUnits.find(unit);
+	std::map<BWAPI::Unit, Unit>::iterator it = mUnits.find(unit);
 	if(it != mUnits.end())
 	{
 		onDestroy(it->second);
@@ -145,7 +145,7 @@ void UnitTrackerClass::update()
 	for(std::set<Unit>::iterator it = mAllUnits.begin(); it != mAllUnits.end();)
 		checkUnit(*(it++));
 
-	for(std::map<BWAPI::Unit*, Unit>::iterator it = mUnits.begin(); it != mUnits.end();)
+	for(std::map<BWAPI::Unit, Unit>::iterator it = mUnits.begin(); it != mUnits.end();)
 	{
 		if(it->second->accessibility() == AccessType::Dead)
 			mUnits.erase(it++);
@@ -154,22 +154,22 @@ void UnitTrackerClass::update()
 	}
 }
 
-Unit UnitTrackerClass::getUnit(BWAPI::Unit* unit)
+Unit UnitTrackerClass::getUnit(BWAPI::Unit unit)
 {
-	std::map<BWAPI::Unit*, Unit>::iterator it = mUnits.find(unit);
+	std::map<BWAPI::Unit, Unit>::iterator it = mUnits.find(unit);
 	if(it != mUnits.end())
 		 return it->second;
 
 	return StaticUnits::nullunit;
 }
 
-UnitGroup UnitTrackerClass::getUnitGroup(std::set<BWAPI::Unit*> units)
+UnitGroup UnitTrackerClass::getUnitGroup(BWAPI::Unitset units)
 {
 	UnitGroup returnUnits;
 
-	for each(BWAPI::Unit* unit in units)
+	for(auto unit : units)
 	{
-		std::map<BWAPI::Unit*, Unit>::iterator it = mUnits.find(unit);
+		std::map<BWAPI::Unit, Unit>::iterator it = mUnits.find(unit);
 		if(it != mUnits.end())
 			returnUnits.insert(it->second);
 	}

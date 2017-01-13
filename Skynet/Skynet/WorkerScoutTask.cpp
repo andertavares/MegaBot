@@ -148,7 +148,7 @@ bool WorkerScoutTask::update()
 							while(!mTilePath.path.empty())
 							{
 								std::list<TilePosition>::iterator currentTile = mTilePath.path.begin();
-								const Position pos(currentTile->x()*32 + 16, currentTile->y()*32 + 16);
+								const Position pos(currentTile->x*32 + 16, currentTile->y*32 + 16);
 								
 								if(pos.getApproxDistance(mUnit->getPosition()) <= 64)
 									mTilePath.path.erase(currentTile);

@@ -41,7 +41,7 @@ typedef SafeEnum<AccessTypeDef> AccessType;
 class UnitClass : public std::tr1::enable_shared_from_this<UnitClass>
 {
 public:
-	UnitClass(BWAPI::Unit* unit);
+	UnitClass(BWAPI::Unit unit);
 	UnitClass(Position pos, BWAPI::UnitType type, int completeTime);
 
 	void onDestroy();
@@ -148,7 +148,7 @@ public:
 	bool isBeingRepaired();
 
 	int getEnergy();
-	std::list<BWAPI::UnitType> getTrainingQueue();
+	BWAPI::UnitType::list getTrainingQueue();
 
 	int getDistance(BWAPI::UnitType targType, Position position);
 	int getDistance(Unit unit);
@@ -183,7 +183,7 @@ public:
 	void useTech(BWAPI::TechType tech, Unit target);
 
 	//Prediction
-	void promote(BWAPI::Unit* unit);
+	void promote(BWAPI::Unit unit);
 	void setBuildTime(int time);
 	void setPosition(Position position);
 
@@ -191,7 +191,7 @@ public:
 	void update();
 
 private:
-	BWAPI::Unit* mUnit;
+	BWAPI::Unit mUnit;
 
 	Position mStoredPosition;
 	Position mStoredTargetPosition;

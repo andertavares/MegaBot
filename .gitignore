@@ -20,3 +20,4 @@
 *.tlog
 /XelNaga/AiurModule/Debug/*.log
 *.lastbuildstate
+/MegaBot/*.user

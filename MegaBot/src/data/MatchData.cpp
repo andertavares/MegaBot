@@ -15,7 +15,7 @@ using namespace std;
 
 MatchData* MatchData::instance = NULL;
 
-MatchData::MatchData() {
+MatchData::MatchData() : metaStrategyName("unknown") {
 	logger = Logging::getInstance();
 }
 
@@ -41,6 +41,14 @@ void MatchData::registerMatchFinish(int result) {
     Player* enemy = Broodwar->enemy();
 
 	logger->log("Match finished at %s", currentDateTime().c_str());
+}
+
+void MatchData::registerMetaStrategy(string name) {
+	metaStrategyName = name;
+}
+
+string MatchData::getMetaStrategyName() {
+	return metaStrategyName;
 }
 
 void MatchData::registerMyBehaviorName(string name) {
@@ -202,11 +210,15 @@ void MatchData::writeSummary() {
     if (gameResult == DRAW) ss << "Draw";
     ss << ";";
     ss << Broodwar->self()->getUnitScore() << ";";
+	ss << Broodwar->self()->getKillScore() << ";";
     ss << Broodwar->self()->getBuildingScore() << ";";
-    ss << Broodwar->self()->getKillScore() << ";";
+	ss << Broodwar->self()->getRazingScore() << ";";
+    
     ss << Broodwar->enemy()->getUnitScore() << ";";
+	ss << Broodwar->enemy()->getKillScore();
     ss << Broodwar->enemy()->getBuildingScore() << ";";
-    ss << Broodwar->enemy()->getKillScore();
+	ss << Broodwar->enemy()->getRazingScore() << ";";
+    
 
 	logger->log(ss.str().c_str());
 

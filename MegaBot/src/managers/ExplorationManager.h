@@ -1,7 +1,7 @@
 #ifndef __EXPLORATIONMANAGER_H__
 #define __EXPLORATIONMANAGER_H__
 
-#include "SpottedObject.h"
+#include "../gamedata/SpottedObject.h"
 #include <BWTA.h>
 
 using namespace BWAPI;

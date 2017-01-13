@@ -31,9 +31,6 @@
     <ClCompile Include="src\utils\asprintf\vasprintf-msvc.c">
       <Filter>utils\asprintf</Filter>
     </ClCompile>
-    <ClCompile Include="src\managers\SpottedObject.cpp">
-      <Filter>managers</Filter>
-    </ClCompile>
     <ClCompile Include="src\evaluators\MilitaryEvaluator.cpp">
       <Filter>evaluators</Filter>
     </ClCompile>
@@ -43,9 +40,6 @@
     <ClCompile Include="src\strategy\EpsilonGreedy.cpp">
       <Filter>strategy</Filter>
     </ClCompile>
-    <ClCompile Include="src\strategy\MetaStrategyFactory.cpp">
-      <Filter>strategy</Filter>
-    </ClCompile>
     <ClCompile Include="src\strategy\Probabilistic.cpp">
       <Filter>strategy</Filter>
     </ClCompile>
@@ -53,6 +47,24 @@
       <Filter>strategy</Filter>
     </ClCompile>
     <ClCompile Include="src\strategy\MetaStrategy.cpp">
+      <Filter>strategy</Filter>
+    </ClCompile>
+    <ClCompile Include="src\gamedata\GameStateManager.cpp">
+      <Filter>gamedata</Filter>
+    </ClCompile>
+    <ClCompile Include="src\gamedata\SpottedObject.cpp">
+      <Filter>gamedata</Filter>
+    </ClCompile>
+    <ClCompile Include="src\gamedata\GameState.cpp">
+      <Filter>gamedata</Filter>
+    </ClCompile>
+    <ClCompile Include="src\strategy\SingleChoice.cpp">
+      <Filter>strategy</Filter>
+    </ClCompile>
+    <ClCompile Include="src\utils\FileCounter.cpp">
+      <Filter>utils</Filter>
+    </ClCompile>
+    <ClCompile Include="src\strategy\MetaStrategyManager.cpp">
       <Filter>strategy</Filter>
     </ClCompile>
   </ItemGroup>
@@ -72,11 +84,17 @@
     <Filter Include="utils\asprintf">
       <UniqueIdentifier>{e97afd95-be5a-4501-91cf-38fe612f2766}</UniqueIdentifier>
     </Filter>
+    <Filter Include="evaluators">
+      <UniqueIdentifier>{15ab5b8c-4f8c-433d-b6f3-0adfb120c30e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="gamedata">
+      <UniqueIdentifier>{4c1ee300-6114-4d92-986c-4b8ae7f5367f}</UniqueIdentifier>
+    </Filter>
     <Filter Include="managers">
       <UniqueIdentifier>{b0a60027-ac65-4c40-94b8-9b98a139d117}</UniqueIdentifier>
     </Filter>
-    <Filter Include="evaluators">
-      <UniqueIdentifier>{15ab5b8c-4f8c-433d-b6f3-0adfb120c30e}</UniqueIdentifier>
+    <Filter Include="config">
+      <UniqueIdentifier>{57d54a49-243d-4e99-a2a2-710821f0e25d}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -101,9 +119,6 @@
     <ClInclude Include="src\utils\asprintf\asprintf.h">
       <Filter>utils\asprintf</Filter>
     </ClInclude>
-    <ClInclude Include="src\managers\SpottedObject.h">
-      <Filter>managers</Filter>
-    </ClInclude>
     <ClInclude Include="src\evaluators\MilitaryEvaluator.h">
       <Filter>evaluators</Filter>
     </ClInclude>
@@ -111,9 +126,6 @@
       <Filter>managers</Filter>
     </ClInclude>
     <ClInclude Include="src\strategy\EpsilonGreedy.h">
-      <Filter>strategy</Filter>
-    </ClInclude>
-    <ClInclude Include="src\strategy\MetaStrategyFactory.h">
       <Filter>strategy</Filter>
     </ClInclude>
     <ClInclude Include="src\strategy\Probabilistic.h">
@@ -125,5 +137,37 @@
     <ClInclude Include="src\strategy\MetaStrategy.h">
       <Filter>strategy</Filter>
     </ClInclude>
+    <ClInclude Include="src\gamedata\GameState.h">
+      <Filter>gamedata</Filter>
+    </ClInclude>
+    <ClInclude Include="src\gamedata\GameStateManager.h">
+      <Filter>gamedata</Filter>
+    </ClInclude>
+    <ClInclude Include="src\gamedata\SpottedObject.h">
+      <Filter>gamedata</Filter>
+    </ClInclude>
+    <ClInclude Include="src\strategy\SingleChoice.h">
+      <Filter>strategy</Filter>
+    </ClInclude>
+    <ClInclude Include="src\utils\FileCounter.h">
+      <Filter>utils</Filter>
+    </ClInclude>
+    <ClInclude Include="src\strategy\MetaStrategyManager.h">
+      <Filter>strategy</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="config\megabot_config.xml">
+      <Filter>config</Filter>
+    </None>
+    <None Include="config\megabot_protoss-nash.xml">
+      <Filter>config</Filter>
+    </None>
+    <None Include="config\megabot_protoss-uniform.xml">
+      <Filter>config</Filter>
+    </None>
+    <None Include="config\README.txt">
+      <Filter>config</Filter>
+    </None>
   </ItemGroup>
 </Project>

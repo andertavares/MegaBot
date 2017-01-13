@@ -9,11 +9,12 @@
 #include "Skynet.h"
 #include "NUSBotModule.h"
 #include "strategy/MetaStrategy.h"
-#include "strategy/MetaStrategyFactory.h"
+#include "strategy/MetaStrategyManager.h"
 #include "data/Configuration.h"
 #include "data/MatchData.h"
 #include "data/GameStateInfo.h"
 #include "utils/Logging.h"
+#include "gamedata/GameStateManager.h"
 #include <cstdlib>
 #include <ctime>
 
@@ -38,10 +39,12 @@ void MegaBot::onStart() {
     MatchData::getInstance()->registerMatchBegin();
     Configuration::getInstance()->parseConfig();
 
-	//initializes meta strategy (strategy selector)
-	metaStrategy = MetaStrategyFactory::getMetaStrategy();
+	//initializes and registers meta strategy (strategy selector)
+	metaStrategy = MetaStrategyManager::getMetaStrategy();
+	MatchData::getInstance()->registerMetaStrategy(metaStrategy->getName());
 	metaStrategy->onStart();
-	
+
+	//retrieves strategy to begin match
 	currentStrategy = metaStrategy->getCurrentStrategy();
 
     //Broodwar->sendText("%s on!", myBehaviorName.c_str());		//sends behavior communication message
@@ -52,6 +55,9 @@ void MegaBot::onStart() {
     //currentBehavior->onStart();
 
     MatchData::getInstance()->writeToCrashFile();
+
+	//initializes game state manager
+	GameStateManager::getInstance();
 
     //sets user input, speed and GUI 
     Broodwar->enableFlag(Flag::UserInput);
@@ -94,39 +100,49 @@ void MegaBot::onEnd(bool isWinner) {
     MatchData::getInstance()->registerMatchFinish(result);
     MatchData::getInstance()->writeSummary();
     MatchData::getInstance()->writeDetailedResult();
-    MatchData::getInstance()->updateCrashFile();
+    MatchData::getInstance()->updateCrashFile();	//TODO: valid only for epsilon-greedy!
 
 	currentStrategy->onEnd(isWinner);
 	logger->log("Finished.");
 }
 
 void MegaBot::onFrame() {
-    /*string strategyId = Configuration::getInstance()->strategyID;
-    if (strategyId == "epsilon-greedy") {
-        MetaStrategy::getInstance()->OnFrame();
+
+	if(Broodwar->getFrameCount() == 0){
+		logger->log("BEGIN: first onFrame.");
+	}
+	//just prints 'Alive...' so that we know things are ok
+	if (Broodwar->getFrameCount() % 100 == 0) {
+		Logging::getInstance()->log("Alive...");
     }
-    else if (strategyId == "fixed-intervals") {
-        Method1::getInstance()->OnFrame();
-        }*/
+
 	if (Broodwar->elapsedTime() / 60 >= 81) {	//leave stalled game
-        Broodwar->leaveGame();
+		logger->log("Leaving long game (81 minutes)");
+		Broodwar->leaveGame();
         return;
     }
 
+	if(Broodwar->getFrameCount() == 0){ logger->log("first metaStrategy->onFrame()"); }
 	metaStrategy->onFrame();	//might switch strategy so I update currentStrategy below
 
+	if(Broodwar->getFrameCount() == 0){ logger->log("first strategy->onFrame()"); }
 	currentStrategy = metaStrategy->getCurrentStrategy();
 	currentStrategy->onFrame();
 
-	 //draws some text
+	if(Broodwar->getFrameCount() == 0){ logger->log("first gameStateManager->onFrame()"); }
+	GameStateManager::getInstance()->onFrame();
+
+	//draws some text
     Broodwar->drawTextScreen(240, 20, "\x0F MegaBot v1.0.2");
 	Broodwar->drawTextScreen(240, 35, "\x0F Meta strategy: %s", metaStrategy->getName().c_str());
-	//Broodwar->drawTextScreen(240, 35, "\x0F Meta-Strategy: %s", metaStrategy->getCurrentStrategyName().c_str());
 	Broodwar->drawTextScreen(240, 50, "\x0F Strategy: %s", metaStrategy->getCurrentStrategyName().c_str());
-    //Broodwar->drawTextScreen(5, 25, "\x0F Enemy behavior: %s", enemyBehaviorName.c_str());
     Broodwar->drawTextScreen(240, 65, "\x0F Enemy: %s", Broodwar->enemy()->getName().c_str());
 	Broodwar->drawTextScreen(240, 80, "Frame count %d.", Broodwar->getFrameCount());
     Broodwar->drawTextScreen(240, 95, "Seconds: %d.", Broodwar->elapsedTime());
+
+	if(Broodwar->getFrameCount() == 0){
+		logger->log("END: first onFrame.");
+	}
 }
 
 void MegaBot::onSendText(std::string text) {
@@ -137,8 +153,9 @@ void MegaBot::onSendText(std::string text) {
 		logger->log("Will attempt a strategy switch to %s", text.substr(7, text.size()).c_str());
 		metaStrategy->forceStrategy(text.substr(7, text.size()));
 	}
-
-    currentStrategy->onSendText(text);
+	else {
+		currentStrategy->onSendText(text);
+	}
 }
 
 void MegaBot::onReceiveText(BWAPI::Player* player, std::string text) {
@@ -155,6 +172,7 @@ void MegaBot::onNukeDetect(BWAPI::Position target) {
 }
 
 void MegaBot::onUnitDiscover(BWAPI::Unit* unit) {
+	GameState::onUnitDiscover(unit);
     currentStrategy->onUnitDiscover(unit);
 }
 
@@ -163,6 +181,7 @@ void MegaBot::onUnitEvade(BWAPI::Unit* unit) {
 }
 
 void MegaBot::onUnitShow(BWAPI::Unit* unit) {
+	GameState::onUnitShow(unit);
     currentStrategy->onUnitShow(unit);
 }
 
@@ -171,10 +190,23 @@ void MegaBot::onUnitHide(BWAPI::Unit* unit) {
 }
 
 void MegaBot::onUnitCreate(BWAPI::Unit* unit) {
+	GameState::onUnitCreate(unit);
     currentStrategy->onUnitCreate(unit);
 }
 
 void MegaBot::onUnitDestroy(BWAPI::Unit* unit) {
+
+	logger->log(
+		"onUnitDestroy with %s (id=%d) of player %s", 
+		unit->getType().getName().c_str(),
+		unit->getID(),
+		unit->getPlayer()->getName().c_str()
+	);
+
+	if (unit->getPlayer()->getID() == Broodwar->enemy()->getID())	{
+		GameState::onUnitDestroy(unit);
+	}
+
     currentStrategy->onUnitDestroy(unit);
 }
 

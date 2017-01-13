@@ -17,7 +17,7 @@ string Configuration::READ_DIR = "bwapi-data/read/";
 const string Configuration::CONFIG_FILE = Configuration::INPUT_DIR + "megabot_config.xml";
 
 //xml field names
-const string Configuration::FIELD_STRATEGY_ID = "strategy";
+const string Configuration::FIELD_META_STRATEGY_ID = "meta-strategy";
 const string Configuration::FIELD_MATCH_DATA_FILE = "match-output";
 const string Configuration::FIELD_STRATEGY_FILE = "strategy-file";
 const string Configuration::FIELD_READ_DIR = "read-dir";
@@ -40,7 +40,7 @@ Configuration::Configuration() {
 	enemyInformationPrefix = "MegaBot-vs-";
     crashInformationPrefix = "crash_MegaBot-vs-";
 
-	strategyID = "epsilon-greedy"; //MegaBot::SKYNET;
+	metaStrategyID = "epsilon-greedy"; 
 	speed = 0;
 	enableGUI = true;
 
@@ -104,10 +104,10 @@ void Configuration::parseConfig() {
 	Logging::getInstance()->log("Config file '%s' found. Parsing...", CONFIG_FILE.c_str());
 	XMLElement* element;
 
-	//sets strategy
-	element = doc.FirstChildElement("config")->FirstChildElement(FIELD_STRATEGY_ID.c_str());
+	//sets meta-strategy
+	element = doc.FirstChildElement("config")->FirstChildElement(FIELD_META_STRATEGY_ID.c_str());
 	if (element) {
-		strategyID = string(element->Attribute("value"));
+		metaStrategyID = string(element->Attribute("value"));
 	}
 
 	//sets speed

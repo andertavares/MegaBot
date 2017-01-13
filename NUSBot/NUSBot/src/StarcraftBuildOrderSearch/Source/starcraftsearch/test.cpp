@@ -165,7 +165,7 @@ void testSingleSearch()
 
 int main()
 {
-    BWAPI::BWAPI_init();
+    //BWAPI::BWAPI_init();
 	DATA.init(BWAPI::Races::Zerg);
 	
 	testSmartSearch();

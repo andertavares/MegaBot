@@ -38,7 +38,7 @@ public:
 	static const int INFO = 1;
 
 	/** Registers debug messages */
-	static const int DEBUG = 2;
+	//static const int DEBUG = 2;
 
 protected:
     FILE* file_ptr;

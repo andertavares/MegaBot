@@ -33,7 +33,12 @@ If you're a StarCraft player and would like to test MegaBot against your skills,
 If you're a developer and would like to build MegaBot yourself, please refer to this [wiki page](https://github.com/andertavares/MegaBot/wiki/Build-instructions).
 
 ## The MegaBot team
+### Current
 - Anderson "Zealot" Tavares
+- Tiago "Goliath" Oliveira
+- Luiz "Commander" Chaimowicz
+
+### Former
 - Amanda "Valkyrie" Santos
 - Hector "Firebat" Azpúrua
-- Luiz "Commander" Chaimowicz
+
